@@ -1,13 +1,18 @@
-\documentclass{article}
-
-\usepackage{tabularx}
+\documentclass[12pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[margin=1in]{geometry}
+\usepackage[titletoc,title]{appendix}
+\usepackage{graphicx}
 \usepackage{booktabs}
+\usepackage{hyperref}
+\usepackage{tabularx}
+\usepackage{indentfirst}
 
 \title{Problem Statement and Goals\\\progname}
 
 \author{\authname}
 
-\date{}
+\date{\today}
 
 \input{../Comments}
 \input{../Common}
@@ -16,41 +21,199 @@
 
 \maketitle
 
+\newpage
+
 \begin{table}[hp]
 \caption{Revision History} \label{TblRevisionHistory}
-\begin{tabularx}{\textwidth}{llX}
+\begin{tabularx}{\textwidth}{lXX}
 \toprule
 \textbf{Date} & \textbf{Developer(s)} & \textbf{Change}\\
 \midrule
-Date1 & Name(s) & Description of changes\\
-Date2 & Name(s) & Description of changes\\
-... & ... & ...\\
+Sep 22, 2022 & Albert, Almen, David, Gary, Jonathan, Kabishan & Revision 0\\
 \bottomrule
 \end{tabularx}
 \end{table}
 
+\newpage
+\tableofcontents
+\newpage
+\listoftables
+\newpage
+
 \section{Problem Statement}
 
-\wss{You should check your problem statement with the
-\href{https://github.com/smiths/capTemplate/blob/main/docs/Checklists/ProbState-Checklist.pdf}
-{problem statement checklist}.}
-\wss{You can change the section headings, as long as you include the required information.}
+In a car centered city where you drive everywhere, finding a place to park can
+either be straightforward or a complete chore. How often do you enter a parking
+lot and immediately find a spot to your liking? One that's close to the store,
+or handicapped reserved. Do you find yourself more often driving up and down
+lanes looking left and right for a spot? While following others doing the same.
+What if there was a way that saved you the trouble and showed you an open spot?
 
 \subsection{Problem}
+\label{problem}
+Drivers waste their valuable time driving around parking lots looking for an
+open spot. We aim to drastically reduce this time by finding open spots and
+directing drivers to them.
 
 \subsection{Inputs and Outputs}
+Included in this section are high level inputs and outputs to characterize the
+\nameref{problem}.
 
-\wss{Characterize the problem in terms of ``high level'' inputs and outputs.  
-Use abstraction so that you can avoid details.}
+\subsubsection{Inputs}
+\begin{itemize}
+    \item Parking lot cameras or sensors
+    \item Parking lot location
+    \item Parking spot preference (handicapped, reserved)
+    \item User spot selection
+\end{itemize}
+
+\subsubsection{Outputs}
+\begin{itemize}
+    \item Location of open spots
+    \item Directions to the selected spots
+\end{itemize}
 
 \subsection{Stakeholders}
+For our problem, two stakeholders were identified, drivers and parking lot
+owner/manager.
 
+\subsubsection{Drivers}
+Any person who needs to park their car at a parking lot would be a key
+stakeholder for our project as they would be the main user of our product.
+Drivers are the main demographic that faces the problem of finding an empty spot
+in a parking lot. They would be able to use our product to find empty parking
+spots, which would be especially useful in a busy lot.
+
+\subsubsection{Parking Lot Owner/Manager}
+Parking lot owners/managers need to give permission to setup cameras or sensors
+on their property. They also don't want customers to waste their time in parking
+lots when they can be shopping. With fewer drivers wandering around, collisions
+and arguments are less likely to occur.
 \subsection{Environment}
+The system is used in a vehicle by a driver or passenger, so it must comply with
+laws relating to device usage by drivers.
 
-\wss{Hardware and software}
+\newpage
 
 \section{Goals}
 
-\section{Stretch Goals}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Jonathan %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{table}[hp]
+\begin{tabularx}{\textwidth}{|X|X|X|}
+\toprule
+\textbf{Goals} & \textbf{Description} & \textbf{Importance}\\
+\midrule
+Open Spot Detection & Analyze a video feed of a parking lot and detect whether
+parking spots are empty or occupied. & Detecting empty and occupied parking
+spots is the core functionality of our program. This goal must be achieved and
+the feature must be robust before we can develop other features and aspects of
+the project.\\
+\hline
+Video Translation & Accurately translate locations from a video feed to physical
+locations in the parking lot and creating a map of the parking lot. & Detecting
+where the parking spots are from a video feed and mapping it out is essential as
+we want to provide a map the users can easily understand. They can use that map
+to see which spot is most convenient for them as well as easily navigate to
+available spots.\\
+\hline
+Spot Guidance & Guide drivers to the shortest path to empty parking spots. &
+Just finding an open parking spot for the user would not be effective as they
+would still have to drive around the parking lot looking for the available spot.
+Navigating users to the available spot would save them more time as they would
+immediately know where to park and how to get there.\\
+\bottomrule
+\end{tabularx}
+\caption{Goals} \label{TblGoals} 
+\end{table}
 
+\begin{table}[hp]
+\begin{tabularx}{\textwidth}{|X|X|X|}
+\toprule
+\textbf{Goals} & \textbf{Description} & \textbf{Importance}\\
+\midrule
+Preference & Drivers can set a preference to specific types of parking spots. &
+The ability to set a preference for special parking spots such as Accessible
+spots would be important as well as convenient for applicable users. The
+preferred spots would be highlighted or automatically selected for users to
+easily navigate to.\\
+\hline
+Special Spot Recognition & Recognize special parking spots such as Accessible or
+Reserved spots & We do not want to navigate users to empty parking spots that
+they do not have the right to use, such as Reserved and Accessible spots. On the
+other hand, we want to highlight the special spots for those who can use them
+and/or have set a preference for a special parking spot. \\
+\hline
+Hands free interaction & Users can interact with the system in a hands-free
+manner and the system will give information to the user in a way that minimizes
+distraction. & Since it is illegal for drivers to touch their phone while
+driving, the system needs to be usable in other hands-free means. It is
+extremely important for users to be safe and not distracted while using our
+system in their vehicles.\\
+\bottomrule
+\end{tabularx}
+\caption{Goals continued} \label{TblGoals} 
+\end{table}
+
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% David %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Stretch Goals}
+%---------EXPAND DESCRIPTIONS/IMPORTANCE------
+\begin{table}[hp]
+\begin{tabularx}{\textwidth}{|X|X|X|}
+\toprule
+\textbf{Goals} & \textbf{Description} & \textbf{Importance}\\
+\midrule
+Immediate Spots & Prioritize giving drivers spots closest to their location.
+\wdy{And/or closest to the main entrance?} & Parking lots can be large with
+confusing layouts and spots should be prioritized by ease of access by vehicle
+and by foot. \\
+\hline
+Vandalism analysis & Appraise the risk of vandalism to a vehicle by analyzing
+body language, and detect when it is taking place. & Parking lots are publicly
+accessible and vehicles are always at risk of break-ins and damage. This feature
+may alleviate the worries that some drivers have regarding their vehicles. \\
+\hline
+Spacious Spots & Detection of spots with adequate space for a given vehicle,
+depending on vehicle dimensions and gaps left adjacent to the space. &
+Recommending an unusable space, for example due to poor parking by adjacent
+drivers, is a frustrating experience. Our application should minimize the amount
+of erroneous parking recommendations.\\
+\hline
+Reservations & Reserving a parking spot before arriving at the destination. &
+Reserving a space can save computation time at the moment of arrival by
+front-loading the search for an open parking space. This feature will also help
+ensure that a parking spot is not taken after it is given to the driver.\\
+\bottomrule
+\end{tabularx}
+\caption{Stretch Goals} \label{TblStretchGoals}
+\end{table}
+
+\begin{table}[hp]
+\begin{tabularx}{\textwidth}{|X|X|X|}
+\toprule
+\textbf{Goals} & \textbf{Description} & \textbf{Importance}\\
+\midrule
+Hazard Detection & Identification of parking hazards such as damaged pavement,
+large puddles, or loose debris. & Hazard detection will help alert drivers to
+obstructions in their parking space to minimize erroneous recommendations, in
+conjunction with the adequate space detection feature.\\
+\hline
+Improper Parking Detection & Detection of parking across multiple lines, in
+reserved areas such as fire lanes, or across driveways, among other
+possibilities. & This feature could be used by parking lot administrators to
+administer fines or other warnings. It will help maintain an orderly parking
+area, which could be a further incentive to potential partners and users.\\
+\hline
+Occupancy Tracking & Track the duration of occupancy for a given space and
+compare it to an estimation of the average parking duration of the area.
+Furthermore, analyze groups which appear to be preparing to leave the parking
+lot. & In the event that a parking lot becomes full, providing an estimate of
+when a spot may become available can be helpful to the end user. The common
+chore of following a exiting group back to their vehicle could be automated. \\
+\bottomrule
+\end{tabularx}
+\caption{Stretch Goals continued} \label{TblStretchGoals2}
+\end{table}
 \end{document}

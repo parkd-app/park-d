@@ -1,77 +1,476 @@
-\documentclass{article}
-
+\documentclass[12pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[margin=1in]{geometry}
+\usepackage[titletoc,title]{appendix}
+\usepackage{graphicx}
 \usepackage{booktabs}
+\usepackage{hyperref}
 \usepackage{tabularx}
+\usepackage{indentfirst}
+\usepackage{xcolor}
+\usepackage[normalem]{ulem}
 
 \title{Development Plan\\\progname}
 
 \author{\authname}
 
-\date{}
+\date{\today}
 
 \input{../Comments}
 \input{../Common}
 
 \begin{document}
 
+\maketitle
+
+\newpage
 \begin{table}[hp]
 \caption{Revision History} \label{TblRevisionHistory}
-\begin{tabularx}{\textwidth}{llX}
+\begin{tabularx}{\textwidth}{lll}
 \toprule
 \textbf{Date} & \textbf{Developer(s)} & \textbf{Change}\\
 \midrule
-Date1 & Name(s) & Description of changes\\
-Date2 & Name(s) & Description of changes\\
-... & ... & ...\\
+Sep 22, 2022 & Albert, Almen, David, Gary, Jonathan, Kabishan & Revision 0\\
 \bottomrule
 \end{tabularx}
 \end{table}
 
 \newpage
+\tableofcontents
+\newpage
+\listoftables
+\newpage
 
-\maketitle
-
-\wss{Put your introductory blurb here.}
-
+This document is the Development Plan for the project, Park'd, an application
+that aims to help the average driver quickly find an open parking space,
+especially on busy days with few spots available.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Almen %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Team Meeting Plan}
+\label{TeamMeetingPlan}
+The following is the plan for when, the location, frequency, and duration of the
+team meetings:
+\begin{table}[hp]
+\begin{tabularx}{\textwidth}{|l|l|X|}
+\toprule
+\textbf{Where} & \textbf{When} & \textbf{Duration}\\
+\midrule
+H.G. Thode Library & Every Wednesday at 10:30AM & 1 Hour\\
+Discord & Every Monday at 9:00PM & 2 Hour\\
+\bottomrule
+\end{tabularx}
+\caption{Team Meeting Plan} \label{tab:teamMeetingPlan}
+\end{table}
 
+\subsection{Meeting Roles}
+\label{meetingRoles}
+The table below, \nameref{meetingRolesTable}, identifies the assignment of roles
+during the meeting.
+\begin{table}[hp] 
+    \centering
+    \begin{tabularx}{\textwidth}{|X|X|}
+        \toprule
+        \textbf{Meeting Role} & \textbf{Name}\\
+        \midrule
+        Participant & Everyone\\
+        Chair & Jonathan Yapeter\\
+        Scribe & Albert Zhou\\
+        Timekeeper & Albert Zhou\\
+        \bottomrule
+    \end{tabularx}
+\caption{Meeting Roles} 
+\label{meetingRolesTable}
+\end{table}
+
+The responsibilities of the meeting roles identified in
+\nameref{meetingRolesTable} are as follows.
+\subsubsection{Participant}
+\begin{enumerate}
+    \item Understand the agenda and the purpose of the meeting 
+    \item Propose topics prior to the meeting that needs to be discussed
+    \item Contribute to the discussions of all agenda items
+\end{enumerate}
+\subsubsection{Chair}
+\begin{enumerate}
+    \item Guides the group through the predetermined agenda
+    \item Facilitates respectful discussion among all participants
+    \item Establish equal opportunities to speak
+    \item Clarify conclusions and next steps at the end of each meeting
+\end{enumerate}
+\subsubsection{Scribe}
+\label{scribe}
+\begin{enumerate}
+    \item Create the meeting minutes prior to the meeting
+    \item Notify all participants of the agenda before the meeting
+    \item Note all the decisions, conclusions, and action items presented during
+    the meeting
+    \item Compile notes in a standard template with consistent formatting
+\end{enumerate}
+\subsubsection{Timekeeper}
+\begin{enumerate}
+    \item Monitors, records, and manages the time it takes to accomplish an item
+    in the agenda
+\end{enumerate}
+
+\subsection{Rules of Agenda}
+The following are the rules of agenda for all in-person and online team
+meetings:
+\begin{enumerate}
+    \item An agenda must be created prior to every meeting. The following
+    guidelines should be followed when creating the agenda:
+    \begin{itemize}
+        \item First topic should be to review the agenda
+        \item An estimated allotted time for each topic
+        \item Topics must be formulated as questions
+        \item Identify the people responsible for each topic
+        \item Seek input from all team members
+    \end{itemize}
+    \item All members must be present during the meeting and attendance will be
+    recorded
+    \begin{itemize}
+        \item Scheduled absences must be communicated to the rest of the team at
+        least one day in advance of the meeting
+    \end{itemize}
+    \item Meeting minutes will be taken during every meeting by Albert, our
+    \nameref{scribe}.
+    \item Prior to current agenda, any conflicts and/or discussions from the
+    previous action items must be addressed 
+    \item All members must work and communicate respectfully to each other
+    during the meeting
+\end{enumerate}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Almen %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Team Communication Plan}
+The meetings mentioned in \nameref{TeamMeetingPlan} will be conducted in-person
+at H.G. Thode Library on campus or on Discord. Members are to be seated together
+in the first floor of Thode or in the appropriate voice channel by the start of
+the meeting. 
 
+To facilitate communication outside of designated meeting times, a Messenger
+group chat with all members of caPstOneGroup has been created. The expectation
+for all team members is to check the Messenger group chat at a minimum of twice
+per day and will respond to mentions at their earliest convenience. Any urgent
+issues that arise regarding milestones shall be brought up immediately in the
+Messenger group chat. 
+
+Git issues will be created with the appropriate Priority/Severity label and
+assigned to the team members involved if there are any tasks needed to be done
+or bugs needed to be fixed. Discussions regarding the project code will be
+predominantly done through these Git issues, however, can be reinforced in the
+Messenger group chat.
+
+\begin{table}[hp]
+\begin{tabularx}{\textwidth}{|l|X|X|X|}
+\toprule
+\textbf{Name} & \textbf{Discord} & \textbf{macid} & \textbf{GitHub}\\
+\midrule
+Albert Zhou & Ferman & zhouj103 & albertzevanescent\\
+Almen Ng & Mumbojumbo & nga18 & almen-ng\\
+David Yao & d i n g u s & yaod9 & davidwyao\\
+Gary Gong & Shawnty & gongc12 & GaryGong27\\
+Jonathan Yapeter & yapeter & yapetej & JAYapeter\\
+Kabishan Suvendran & midnightmarauder & suvendrk & Kabishan\\
+\bottomrule
+\end{tabularx}
+\caption{Team Meeting Plan} \label{tab:teamMeetingPlan}
+\end{table}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Almen %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Team Member Roles}
+The table below, \nameref{tab:memberRoles}, identifies the assignment of main
+roles of the team.
+\begin{table}[hp!] 
+    \centering
+    \begin{tabularx}{\textwidth}{|X|X|}
+        \toprule
+        \textbf{Name} & \textbf{Role(s)}\\
+        \midrule
+        All                         & Developer\\
+                                    & QA Tester\\
+                                    & DevOps \\
+        \hline
+        Albert Zhou                 & Scribe\\
+        \hline
+        Almen Ng                    & Project Lead\\
+        & Team Liaison\\
+        \hline
+        David Yao                   & Documentation/LaTeX Expert\\
+        \hline
+        Gary Gong                   & Machine Learning Expert \\
+        \hline
+        Jonathan Yapeter            & Git Expert \& Maintainer\\
+        \hline
+        Kabishan Suvendran          & User Interface Expert\\
+        \bottomrule
+    \end{tabularx}
+\caption{Member Roles} \label{tab:memberRoles}
+\end{table}
 
-\section{Workflow Plan}
-
+\subsection{Team Member Role Descriptions}
+This subsection will provide descriptions on all the team member roles
+identified and assigned in \nameref{tab:memberRoles}.
+\subsubsection{Developer}
 \begin{itemize}
-	\item How will you be using git, including branches, pull request, etc.?
-	\item How will you be managing issues, including template issues, issue
-	classificaiton, etc.?
+    \item Design and builds application features
+    \item Produce clean and efficient code based on specifications 
+    \item Troubleshoot and resolve any bugs that may arise 
+    \item Propose and execute improvements to the code base
+    \item Provide technical documentation to all code for reference
 \end{itemize}
 
+\subsubsection{QA Tester}
+\begin{itemize}
+    \item Test new and existing features
+    \item Automate unit and integration tests
+    \item Report any bugs or failures and suggest fixes 
+\end{itemize}
+
+\subsubsection{DevOps}
+\begin{itemize}
+    \item Automate repetitive tasks through GitHub actions/pipelines to decrease
+    the workload of team members
+    \item Facilitate performance testing and benchmarking to evaluate how
+    reliable the system runs
+    \item Introduce processes, tools and methodologies to support the software
+    development lifecycle
+\end{itemize}
+
+\subsubsection{Scribe}
+\begin{itemize}
+    \item Refer to \nameref{scribe} in \nameref{meetingRoles} for the
+    responsibilities of a Scribe
+\end{itemize}
+
+\subsubsection{Project Lead}
+\begin{itemize}
+    \item Ensure the team is on track with completing all milestones outlined in
+    the
+    \href{https://gitlab.cas.mcmaster.ca/courses/capstone/-/blob/main/CourseOutline/Capstone_Outline.pdf}{capstone
+    course outline} by the deadline
+    \item Devise plans that support project goals
+    \item Address any bottlenecks or conflicts that may arise 
+\end{itemize}
+
+\subsubsection{Team Liaison}
+\begin{itemize}
+    \item Disseminate information given by the instructors to the rest of the
+    team
+\end{itemize}
+
+\subsubsection{Documentation/LaTeX Expert}
+\begin{itemize}
+    \item Formats LaTeX documents for milestones with written reports
+    \item Fix any compilation errors regarding LaTeX documents that may arise
+    \item Create new LaTeX commands that may be needed
+    \item Create and enforce a standard for documenting code and features
+\end{itemize}
+
+\subsubsection{Machine Learning Expert}
+\label{mlexpert}
+\begin{itemize}
+    \item Answer any questions related to Machine Learning, like Computer Vision
+    \item Lead the building, training and deploying of models necessary for the
+    application
+\end{itemize}
+
+\subsubsection{Git Expert \& Maintainer}
+\begin{itemize}
+    \item Answer any questions related to Git, like PRs and Issues
+    \item Track all ongoing Git issues/PRs/tasks and make sure that they are
+    reviewed and merged in a timely manner
+    \item Ensure that all changes made in the Git repository are following
+    correct naming conventions, coding guidelines, and follow the proper
+    workflow as mentioned in \nameref{workflowPlan}.
+\end{itemize}
+
+\subsubsection{User Interface Expert}
+\begin{itemize}
+    \item Lead the design of the application to support user interface and user
+    experience principles
+\end{itemize}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Kabishan %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Workflow Plan}
+\label{workflowPlan}
+We will use GitHub to maintain the code, the documentation for said code and the
+milestone deliverables, including this report. All of the code or documentation
+that will be viewed and marked by the teaching assistant will be merged into the
+main branch before each milestone's due date. Changes will not be committed
+directly onto the main branch, since the main branch will be protected from
+erroneous pushes. Instead, each developer will create their own branch, create a
+PR and assign another team member to review and approve their changes before
+they are merged into the main branch. For changes related to the code, in
+addition to team approvals, the code must also pass all of the unit tests that
+were set up as a part of the Git Workflow, and Pylint will be used for source
+code analysis to detect any errors and enforcing coding standards. For changes
+related to LaTeX files, the files must compile and produce a PDF document before
+the changes are merged. 
+
+To manage issues, including template issues, issue classifications, and general
+inquiries about certain aspects of the code, our team will employ a project
+management tool, such as Zenhub, on which, we will use a project board to create
+and manage issues. On this board, we will sort each and every issue into several
+categories:
+\begin{itemize}
+    \item Untriaged (not assigned a priority or time frame for completion) \item
+    To Do (work that is yet to be worked on)
+    \item In Progress (being actively developed)
+    \item Code Review (code completed and PR opened)
+    \item Done (code approved and merged into main)
+\end{itemize}
+
+We will also use labels and tags, such as front-end, back-end, documentation and
+machine learning, to indicate which issues correspond to which component of the
+project. Using GitHub Issue tracker, we will reference specific issues, tag
+developers to notify them of the issue, set up meetings to discuss the issue,
+and finally link the PR that resolves the issue.
+
+As a part of our Workflow Plan, we will maintain a Contributor's Guide, in
+which, we will mention the specifics of pushing quality code and documentation.
+For example, each function, method and class should be documented based on their
+parameters, purpose, and return value. The exact formatting of the documentation
+will be based on the style guide for the chosen programming language.
+Furthermore, the documentation must be succinct, coherent, and must not contain
+spelling or grammar mistakes. This is also required of LaTeX documents, as well
+as project deliverables. Furthermore, another aspect of the Contributor's Guide
+is how pull requests are opened. Each pull request must be opened with a
+description that mentions what the code changes will do and it should be
+assigned to at least one other team member for approval.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% David %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Proof of Concept Demonstration Plan}
 
-What is the main risk, or risks, for the success of your project?  What will you
-demonstrate during your proof of concept demonstration to convince yourself that
-you will be able to overcome this risk?
+The Proof of Concept (POC) demonstration plan highlights the risks we have
+discovered in the creation of our project, as well as how the demonstration
+should show that those risks can be overcome.
 
-\section{Technology}
-
+\subsection{Risks}
 \begin{itemize}
-\item Specific programming language
-\item Specific linter tool (if appropriate)
-\item Specific unit testing framework
-\item Investigation of code coverage measuring tools
-\item Specific plans for Continuous Integration (CI), or an explanation that CI
-  is not being done
-\item Specific performance measuring tools (like Valgrind), if
-  appropriate
-\item Libraries you will likely be using?
-\item Tools you will likely be using?
+    \item \textbf{Finding a suitable parking area to test}: A parking lot
+    administrator will need to agree to either make their video equipment
+    available for use in the program, or allow such equipment to be installed. A
+    video feed is integral to the proposed functioning of our program, because
+    of the need for machine vision in analyzing parking activity.
+    \item \textbf{Computation time}: Machine learning is computationally
+    expensive, so a poorly optimized program may not respond with the promptness
+    required for a real-time driving aid platform. 
 \end{itemize}
 
+\subsection{POC Demo}
+Our proof of concept will demonstrate the program's capability to detect the
+state of a parking space. It will be a recorded run with a single parking spot.
+The program will first poll the state of the spot while empty, and then a
+vehicle will pull into the spot once the correct status has been determined. The
+demonstration's relation to the given risks is as follows:
+\begin{itemize}
+    \item \textbf{Finding a suitable parking area to test}: Our need for a
+    suitable parking spot will be fulfilled by this time if the POC
+    demonstration is to go ahead as planned. If no such place is found, some
+    group members will volunteer their driveways as simulated parking spots. In
+    addition, given our program's usage of video feeds, we are also prepared to
+    proceed using publicly available online feeds of parking lots.
+    \item \textbf{Computation time}: Only the baseline functionality for our
+    program, the detection of parking spot occupation, is being tested as part
+    of the POC demonstration. By showing a baseline for the computation time
+    that we should expect from this task, we will then decide what additional
+    features we can afford to add from our stretch goals. If even the baseline
+    task is too intensive, we will explore either moving the back-end to a more
+    powerful machine, or finding a non-machine learning algorithm to accomplish
+    the task.
+\end{itemize}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Gary %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Technology}
+The following are the technologies we will be using for our project.
+\begin{itemize}
+    \item Programming languages
+    \begin{itemize}
+        \item We will be using Python for training the machine learning model as
+        well as making a back-end service 
+        \item JavaScript and HTML CSS will be used for developing the front-end
+        web page of our project
+    \end{itemize}
+    \item IDE
+    \begin{itemize}
+        \item Front-end: Visual studio code
+        \item Back-end/ML: PyCharm
+    \end{itemize}
+    \item Linter and Code coverage measure tools
+    \begin{itemize}
+        \item We will be using Pylint and flake 8 for different purposes
+        including check for errors, tries to enforce a coding standard, looks
+        for code smells
+    \end{itemize}
+    \item Testing
+    \begin{itemize}
+        \item Pytest will be used for making unit test cases
+    \end{itemize}
+    \item Libraries
+    \begin{itemize}
+        \item OpenCV,TensorFlow Numpy will be used for training neural networks
+        and configuring training data sets.
+        \item Flask will be used for creating back-end services of our project
+    \end{itemize}
+    \item Performance measuring tools
+    \begin{itemize}
+        \item Not applicable
+    \end{itemize}
+    \item DevOps
+    \begin{itemize}
+        \item Basic DevOps plans including static code analysis, linting,
+        running unit test cases using Pylint and Pytest will be conducted when
+        pull requests are created.
+    \end{itemize}
+    \item Documentation
+    \begin{itemize}
+        \item Doxygen will be used for generating documentations for the
+        back-end services and APIs
+        \item Development document will be edited through overleaf LaTex editor
+        in a collaborative fashion
+    \end{itemize}
+    \item Hardware
+    \begin{itemize}
+        \item Cameras from the parking lot 
+    \end{itemize}
+\end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Gary %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Coding Standard}
+The back-end part of the project and the algorithm part for training the machine
+learning model will follow the \href{https://peps.python.org/pep-0008/} {PEP8}
+python coding standard. The linter in the workflow plan will ensure the
+standards are followed for the code written.
 
 \section{Project Scheduling}
+Project scheduling is based on the course deadlines and will be tracked using
+\href{https://www.zenhub.com/}{Zenhub}, a project management tool that is
+directly integrated into GitHub through an extension. Zenhub's roadmap tool
+displays a timeline and blocks during which given tasks should be completed.
+Roadmaps will also integrate data from our issues. Zenhub also has a counter
+feature that allows you to approximate an estimated amount of time it takes to
+complete an issue which would help us get a better idea of what our timeline
+would look like.
 
-\wss{How will the project be scheduled?}
+To determine when a major milestones are due, we will take the course deadlines,
+discuss approximately how much time it will take to complete each task, and
+define a definitive date to complete the major milestones by while allocating
+some time prior to the actual course deadlines for any spillover.
+
+For decomposing of larger tasks into smaller ones, we will discuss what is
+needed for those tasks, write out issues for each individual task, then create a
+\href{https://blog.zenhub.com/working-with-epics-in-github/}{Zenhub epic}, which
+is a way to group all related sub tasks represented by issues into one
+overarching issue.
+
+In terms of assigning tasks, we will have a discussion on who is best suited to
+accomplish the task while also providing opportunities for other members to
+contribute based on their interest. Another factor that need to be considered is
+the amount of time each person has per week to accomplish a task. Using the
+Zenhub counter feature, we will be able to divide the tasks up so each member
+will spend around 9-12 hours a week for the course. For example, if a task
+involves computer vision and it would take 9 hours to complete, the
+\nameref{mlexpert} will only be assigned this task and potentially one smaller
+task that takes less than 3 hours.
 
 \end{document}
