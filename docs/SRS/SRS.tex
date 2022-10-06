@@ -1,1336 +1,1458 @@
-\documentclass[12pt]{article}
-
-\usepackage{amsmath, mathtools}
-\usepackage{amsfonts}
-\usepackage{amssymb}
+\documentclass[12pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[margin=1in]{geometry}
+\usepackage[titletoc,title]{appendix}
+\usepackage[normalem]{ulem}
+\usepackage[shortlabels]{enumitem}
 \usepackage{graphicx}
-\usepackage{colortbl}
-\usepackage{xr}
-\usepackage{hyperref}
-\usepackage{longtable}
-\usepackage{xfrac}
-\usepackage{tabularx}
-\usepackage{float}
-\usepackage{siunitx}
 \usepackage{booktabs}
-\usepackage{caption}
-\usepackage{pdflscape}
-\usepackage{afterpage}
+\usepackage{tabularx}
+\usepackage{hyperref}
+\usepackage{indentfirst}
+\usepackage{xcolor}
+\usepackage{fancyhdr}
+\usepackage{lscape}
+\usepackage{float}
+\usepackage{multirow}
+\usepackage{comment}
+\usepackage{biblatex}
 
-\usepackage[round]{natbib}
+\usepackage{biblatex} 
+\addbibresource{SRS_ref.bib}
 
-%\usepackage{refcheck}
+\usepackage{xifthen}
+\def\namedlabel#1#2{\begingroup #2%
+    \def\@currentlabel{#2}%
+    \phantomsection\label{#1}\endgroup }
 
-\hypersetup{
-    bookmarks=true,         % show bookmarks bar?
-      colorlinks=true,       % false: boxed links; true: colored links
-    linkcolor=red,          % color of internal links (change box color with linkbordercolor)
-    citecolor=green,        % color of links to bibliography
-    filecolor=magenta,      % color of file links
-    urlcolor=cyan           % color of external links
-}
+\newcommand{\newterm}[1]{\label{Term:#1} \MakeUppercase #1}
+\newcommand{\term}[2][]{\ifthenelse{\equal{#1}{}}{\hyperref[Term:#2]{\textbf{#2}}}{\hyperref[Term:#1]{\textbf{#2}}}}
+
+\newcounter{businesseventnum}
+\newcounter{funcreqnum}
+
+\title{Software Requirements Specification for \progname: \\ Your Go-To  Parking Guide} 
+\author{\authname}
+\date{\today}
 
 \input{../Comments}
 \input{../Common}
 
-% For easy change of table widths
-\newcommand{\colZwidth}{1.0\textwidth}
-\newcommand{\colAwidth}{0.13\textwidth}
-\newcommand{\colBwidth}{0.82\textwidth}
-\newcommand{\colCwidth}{0.1\textwidth}
-\newcommand{\colDwidth}{0.05\textwidth}
-\newcommand{\colEwidth}{0.8\textwidth}
-\newcommand{\colFwidth}{0.17\textwidth}
-\newcommand{\colGwidth}{0.5\textwidth}
-\newcommand{\colHwidth}{0.28\textwidth}
-
-% Used so that cross-references have a meaningful prefix
-\newcounter{defnum} %Definition Number
-\newcommand{\dthedefnum}{GD\thedefnum}
-\newcommand{\dref}[1]{GD\ref{#1}}
-\newcounter{datadefnum} %Datadefinition Number
-\newcommand{\ddthedatadefnum}{DD\thedatadefnum}
-\newcommand{\ddref}[1]{DD\ref{#1}}
-\newcounter{theorynum} %Theory Number
-\newcommand{\tthetheorynum}{T\thetheorynum}
-\newcommand{\tref}[1]{T\ref{#1}}
-\newcounter{tablenum} %Table Number
-\newcommand{\tbthetablenum}{T\thetablenum}
-\newcommand{\tbref}[1]{TB\ref{#1}}
-\newcounter{assumpnum} %Assumption Number
-\newcommand{\atheassumpnum}{P\theassumpnum}
-\newcommand{\aref}[1]{A\ref{#1}}
-\newcounter{goalnum} %Goal Number
-\newcommand{\gthegoalnum}{P\thegoalnum}
-\newcommand{\gsref}[1]{GS\ref{#1}}
-\newcounter{instnum} %Instance Number
-\newcommand{\itheinstnum}{IM\theinstnum}
-\newcommand{\iref}[1]{IM\ref{#1}}
-\newcounter{reqnum} %Requirement Number
-\newcommand{\rthereqnum}{P\thereqnum}
-\newcommand{\rref}[1]{R\ref{#1}}
-\newcounter{nfrnum} %NFR Number
-\newcommand{\rthenfrnum}{NFR\thenfrnum}
-\newcommand{\nfrref}[1]{NFR\ref{#1}}
-\newcounter{lcnum} %Likely change number
-\newcommand{\lthelcnum}{LC\thelcnum}
-\newcommand{\lcref}[1]{LC\ref{#1}}
-
-\usepackage{fullpage}
-
-\newcommand{\deftheory}[9][Not Applicable]
-{
-\newpage
-\noindent \rule{\textwidth}{0.5mm}
-
-\paragraph{RefName: } \textbf{#2} \phantomsection 
-\label{#2}
-
-\paragraph{Label:} #3
-
-\noindent \rule{\textwidth}{0.5mm}
-
-\paragraph{Equation:}
-
-#4
-
-\paragraph{Description:}
-
-#5
-
-\paragraph{Notes:}
-
-#6
-
-\paragraph{Source:}
-
-#7
-
-\paragraph{Ref.\ By:}
-
-#8
-
-\paragraph{Preconditions for \hyperref[#2]{#2}:}
-\label{#2_precond}
-
-#9
-
-\paragraph{Derivation for \hyperref[#2]{#2}:}
-\label{#2_deriv}
-
-#1
-
-\noindent \rule{\textwidth}{0.5mm}
-
-}
-
 \begin{document}
 
-\title{Software Requirements Specification for \progname: subtitle describing software} 
-\author{\authname}
-\date{\today}
-	
 \maketitle
-
-~\newpage
-
+\newpage
 \pagenumbering{roman}
-
 \tableofcontents
+\listoftables
+\listoffigures
 
-~\newpage
-
-\section*{Revision History}
-
-\begin{tabularx}{\textwidth}{p{3cm}p{2cm}X}
-\toprule {\bf Date} & {\bf Version} & {\bf Notes}\\
+\newpage 
+\begin{table}[h!]
+\caption{Revision History}
+\begin{tabularx}{\textwidth}{p{3cm}p{2cm}X} \toprule {\bf Date} & {\bf Version}
+& {\bf Notes}\\
 \midrule
-Date 1 & 1.0 & Notes\\
-Date 2 & 1.1 & Notes\\
+Oct 3, 2022 & Albert, Almen, David, Gary, Jonathan, Kabishan & Revision 0\\
 \bottomrule
 \end{tabularx}
+\end{table}
 
-~\newpage
-
-\section{Reference Material}
-
-This section records information for easy reference.
-
-\subsection{Table of Units}
-
-Throughout this document SI (Syst\`{e}me International d'Unit\'{e}s) is employed
-as the unit system.  In addition to the basic units, several derived units are
-used as described below.  For each unit, the symbol is given followed by a
-description of the unit and the SI name.
-~\newline
-
-\renewcommand{\arraystretch}{1.2}
-%\begin{table}[ht]
-  \noindent \begin{tabular}{l l l} 
-    \toprule		
-    \textbf{symbol} & \textbf{unit} & \textbf{SI}\\
-    \midrule 
-    \si{\metre} & length & metre\\
-    \si{\kilogram} & mass	& kilogram\\
-    \si{\second} & time & second\\
-    \si{\celsius} & temperature & centigrade\\
-    \si{\joule} & energy & joule\\
-    \si{\watt} & power & watt (W = \si{\joule\per\second})\\
-    \bottomrule
-  \end{tabular}
-  %	\caption{Provide a caption}
-%\end{table}
-
-\plt{Only include the units that your SRS actually uses.}
-
-\plt{Derived units, like newtons, pascal, etc, should show their derivation
-    (the units they are derived from) if their constituent units are in the
-    table of units (that is, if the units they are derived from are used in the
-    document).  For instance, the derivation of pascals as
-    $\si{\pascal}=\si{\newton\per\square\meter}$ is shown if newtons and m are
-    both in the table.  The derivations of newtons would not be shown if kg and
-    s are not both in the table.}
-
-\plt{The symbol for units named after people use capital letters, but the name
-  of the unit itself uses lower case.  For instance, pascals use the symbol Pa,
-  watts use the symbol W, teslas use the symbol T, newtons use the symbol N,
-  etc.  The one exception to this is degree Celsius.  Details on writing metric
-  units can be found on the 
-  \href{https://www.nist.gov/pml/weights-and-measures/writing-metric-units}
-  {NIST} web-page.}
-
-\subsection{Table of Symbols}
-
-The table that follows summarizes the symbols used in this document along with
-their units.  The choice of symbols was made to be consistent with the heat
-transfer literature and with existing documentation for solar water heating
-systems.  The symbols are listed in alphabetical order.
-
-\renewcommand{\arraystretch}{1.2}
-%\noindent \begin{tabularx}{1.0\textwidth}{l l X}
-\noindent \begin{longtable*}{l l p{12cm}} \toprule
-\textbf{symbol} & \textbf{unit} & \textbf{description}\\
-\midrule 
-$A_C$ & \si[per-mode=symbol] {\square\metre} & coil surface area
-\\
-$A_\text{in}$ & \si[per-mode=symbol] {\square\metre} & surface area over 
-which heat is transferred in
-\\ 
-\bottomrule
-\end{longtable*}
-\plt{Use your problems actual symbols.  The si package is a good idea to use for
-  units.}
-
-\subsection{Abbreviations and Acronyms}
-
-\renewcommand{\arraystretch}{1.2}
-\begin{tabular}{l l} 
-  \toprule		
-  \textbf{symbol} & \textbf{description}\\
-  \midrule 
-  A & Assumption\\
-  DD & Data Definition\\
-  GD & General Definition\\
-  GS & Goal Statement\\
-  IM & Instance Model\\
-  LC & Likely Change\\
-  PS & Physical System Description\\
-  R & Requirement\\
-  SRS & Software Requirements Specification\\
-  \progname{} & \plt{put an expanded version of your program name here (as appropriate)}\\
-  T & Theoretical Model\\
-  \bottomrule
-\end{tabular}\\
-
-\plt{Add any other abbreviations or acronyms that you add}
-
-\subsection{Mathematical Notation}
-
-\plt{This section is optional, but should be included for projects that make use
-  of notation to convey mathematical information.  For instance, if typographic
-  conventions (like bold face font) are used to distinguish matrices, this
-  should be stated here.  If symbols are used to show mathematical operations,
-  these should be summarized here.  In some cases the easiest way to summarize
-  the notation is to point to a text or other source that explains the
-  notation.}
-
-\plt{This section was added to the template because some students use very
-  domain specific notation.  This notation will not be readily understandable to
-  people outside of your domain.  It should be explained.}
-
+\noindent \textbf{Modifications to the Volere\cite{volere} Template}
+\begin{itemize}
+    \item Added the section \hyperref[traceabilityMatrixSection]{Traceability
+    Matrix for Functional and Non-Functional Requirements}
+    \item Added \hyperref[reflection]{Reflection} to the
+    \hyperref[appendix]{Appendix}
+    \item Added the section \hyperref[priorityreqs]{Priority Requirements} 
+\end{itemize}
 \newpage
 
 \pagenumbering{arabic}
 
-\plt{This SRS template is based on \citet{SmithAndLai2005, SmithEtAl2007}.  It
-  will get you started.  You should not modify the section headings, without
-  first discussing the change with the course instructor.  Modification means
-  you are not following the template, which loses some of the advantage of a
-  template, especially standardization.  Although the bits shown below do not
-  include type information, you may need to add this information for your
-  problem.  If you are unsure, please can ask the instructor.}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Project Drivers
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Project Drivers}
+This section discusses the purpose behind the project, \progname, and identifies
+the stakeholders of project.
 
-\plt{Feel free to change the appearance of the report by modifying the LaTeX
-  commands.}
+\subsection{The Purpose of the Project}
+The following provides insight on the problem to be solved and the goals of the
+project.
 
-\plt{This template document assumes that a single program is being documented.
-  If you are documenting a family of models, you should start with a commonality
-  analysis.  A separate template is provided for this.  For program
-  families you should look at \cite{Smith2006, SmithMcCutchanAndCarette2017}.
-  Single family member programs are often programs based on a single physical
-  model.  General purpose tools are usually documented as a family.  Families of
-  physical models also come up.}
+\subsubsection{The User Business or Background of the Project Effort}
+The project, \progname, aims to provide a solution to a bothersome daily chore,
+finding parking spaces, by prompting drivers of open parking spaces and
+navigating the drivers to them. This project rose from the difficulty to find
+parking spaces in \term{McMaster} University as there are multiple parking lots
+scattered within and outside of the main campus and there is no way of knowing
+which lots are full upon arrival. Users of \progname \space will be able to view
+all the available parking spaces at a parking lot, select a parking space, and
+be directed to the parking space in real time based on the shortest path.
 
-\plt{The SRS is not generally written, or read, sequentially.  The SRS is a
-  reference document.  It is generally read in an ad hoc order, as the need
-  arises.  For writing an SRS, and for reading one for the first time, the
-  suggested order of sections is:
+\subsubsection{Goals of the Project}
+The main goal for \progname \space is to reduce the amount of time drivers takes
+to find a parking space. This becomes advantageous as drivers would be able to
+spend their time on more meaningful things and lessen the frustration in doing
+such a tedious task.
+
+\subsection{The Stakeholders}
+For this project, there are a variety of different stakeholders. 
+
+\subsubsection{The Client}
+The client of this project is the instructor of SFWRENG 4G06A/B, Dr. Spencer
+Smith, and the teaching assistant (TA) of caPstOneGroup, Christopher William
+Schankula. As the clients, they will provide instructions on what deliverables
+need to be completed, offer assistance wherever possible, and evaluate the
+degree to which the project meets the requirements outlined in the \term{SRS}.
+
+\subsubsection{The Customers}
+The customers of this project are the individuals who are interested in looking
+for an open parking space in Ontario. The project targets mainly licensed
+Ontario drivers of all ages, however, it is available for the general public to
+access and use.
+
+\subsubsection{Other Stakeholders}
+The developers of \progname, caPstOneGroup, are considered stakeholders of the
+project as their knowledge and skills necessary for the development of the
+project and they are interested in the success of the project. In addition,
+parking lot owners and managers are also stakeholders as they need to give
+permission to setup cameras or sensors on their property and would want
+customers to spend less time in parking lots when they can be shopping, and
+reduce the amount of collisions, traffic, and arguments that may occur.
+
+
+\subsubsection{The Hands-On Users of the Product}
+The hands-on users of the product can be defined into two group, Ontario
+licensed drivers and the parking lot owners/managers. Firstly, Ontario licensed
+drivers would be the main users of the application as they are the ones actively
+using the application to find empty parking spaces and being navigated to them.
+The drivers must be capable of navigating to the website, comprehend directions
+written and spoken in English, and know the basic operations of a computer and
+mobile device, like selecting and dragging. As well, they must recognize Ontario
+road signs and symbols and realize that the application is to be considered as a
+guide and the drivers must still abide to all laws of the road, including being
+hands free on the road and staying within the speed limits. The next group of
+people are parking lot owners and managers. They would be the ones responsible
+for installing cameras in their parking lots and maintain the parking layout.
+Parking lot owners/managers must be able to navigate to the website, understand
+English instructions, and know the basic operations of a computer including but
+not limited to selecting and dragging.
+
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Project Constraints
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Project Constraints}
+Outlined in this section are the restrictions on the project.
+\subsection{Mandated Constraints}
+The following are the mandated constraints of \progname.
+\subsubsection{Solution Design Constraints}
+\noindent \textbf{Description:} \\ The system shall provide real-time parking
+lot information to all users fairly with no considerable lag \\
+\textbf{Rationale:} \\  The system shall provide real-time parking lot
+information so that the user can get the most updated information and decide
+where to park their vehicles. Situations like a spot is being taken by other
+user but not yet reflected in our software is not allowed. \\
+\textbf{Fit Criterion:} The updated information on parking lot should be
+reflected in the GUI and approved by testers in the parking lot. \\
+\\
+\noindent \textbf{Description:} \\ The system shall operates on a Windows and
+Linux based machine, the web page should display and function with browsers with
+V8 engine. \\
+\textbf{Rationale:} \\  These two OS are the most common OS in the market \\
+\textbf{Fit Criterion:} The system should run on both system with no errors 
+
+\subsubsection{Implementation Environment of the Current System}
 \begin{itemize}
-\item Goal Statement
-\item Instance Models
-\item Requirements
-\item Introduction
-\item Specific System Description
+    \item Back-end service will be implemented  using \term{Python} 3.7 with
+    Flask framework.
+    \item Machine learning model will be trained and tested using ]term{Python}
+    3.7 with the Tensorflow and OpenCV libaries.
+    \item Front-end web page will be implemented using HTML,CSS and JavaScript
+    with React.js framework.
+    \item MySQL will be used as the database and SQLAlchemy ORM will be used for
+    accessing data for our application.
+    \item The \term{ML} model will be deployed on Microsoft Azure cloud service.
 \end{itemize}
-}
-
-\plt{Guiding principles for the SRS document:
+We will be hosting our back-end service and deploy our machine learning models
+on Azure where they provide free access for \term{McMaster} students. 
+\subsubsection{Partner or Collaborative Applications}
 \begin{itemize}
-\item Do not repeat the same information at the same abstraction level.  If
-  information is repeated, the repetition should be at a different abstraction
-  level.  For instance, there will be overlap between the scope section and the
-  assumptions, but the scope section will not go into as much detail as the
-  assumptions section.
+    \item Parking lot surveillance system.
+    \item Camera related hardware.
 \end{itemize}
-}
+\subsubsection{Off-the-Shelf Software}
+\begin{itemize}
+    \item N/A
+\end{itemize}
+\subsubsection{Anticipated Workplace Environment}
+\begin{itemize}
+    \item Parking lot 
+    \item On the way where people commute
+\end{itemize}
+\subsubsection{Schedule Constraints}
+\begin{itemize}
+    \item Proof of concept demonstration: November 20
+    \item Design document revision 0: January 18
+    \item V\&V report revision 0: March 8
+\end{itemize}
+\subsubsection{Budget Constraints}
+\begin{itemize}
+    \item N/A
+\end{itemize}
+\subsubsection{Enterprise Constraints}
+\begin{itemize}
+    \item N/A
+\end{itemize}
 
-\plt{The template description comments should be disabled before submitting this
-  document for grading.}
+\newpage
+\subsection{Naming Conventions and Terminology}
+\label{sub:Naming Conventions and Terminology}
+\begin{table}[h!]
+    \centering
+    \caption{Table of Naming Conventions and Terminology}
+    \label{tab:Definitions}
+    \begin{tabular}{p{0.21\linewidth}  p{0.70\linewidth}}
+    \toprule
+    \textbf{Term} & \textbf{Definition}\\
+    \midrule
+    \newterm{SRS} & A document that describes what the software will do and it's
+    requirements\\
+    \hline
+    \newterm{GPS} & Global Positioning System is a system that finds your
+    location using satellites.\\
+    \hline
+    \newterm{RNN} & Residual neural network is a artificial neural network best
+    suited for image recognition task \\
+    \hline
+    \newterm{Driver} & A person using the application that has a drivers'
+    license\\
+    \hline
+    \newterm{Python} & A high level programming language that will be used to
+    train and test our Machine Learning models and our backend\\
+    \hline
+    \newterm{ML} & Machine Learning\\
+    \hline
+    \newterm{McMaster} & A university located in Hamilton, Ontario\\
+    \bottomrule
+    \end{tabular}
+\end{table}
 
-\plt{You can borrow any wording from the text given in the template.  It is part
-  of the template, and not considered an instance of academic integrity.  Of
-  course, you need to cite the source of the template.}
+\subsection{Relevant Facts and Assumptions}
+\subsubsection{Facts}
+\begin{itemize}
+    \item Parking spaces are denoted by white or yellow lines.
+    \item Parking space dimension requirements vary by municipality. In
+    Hamilton, spaces must measure at least 2.6 by 5.5 metres, as laid out in
+    their
+    \href{http://www2.hamilton.ca/NR/rdonlyres/D4866111-3F89-42C3-9594-1E7E7F3028AD/0/ZBL05200Section5Parking.pdf}{zoning
+    by-laws}.
+    \item Video surveillance footage should only be used for the purpose that
+    surveillance is being undertaken, or for purposes that are permitted by law.
+\end{itemize}
+\subsubsection{Assumptions}
+\begin{itemize}
+    \item Drivers have an elementary proficiency in English
+    \item Drivers have their licenses and know road terminology
+    \item Drivers abide to all road rules and traffic laws
+    \item The cameras will be at a high enough location to get a good view over
+    the parking lot.
+    \item All reserved parking are denoted by the same signs and symbols
+\end{itemize}
 
-\plt{When the documentation is done, it should be possible to trace back to the
-  source of every piece of information.  Some information will come from
-  external sources, like terminology.  Other information will be derived, like
-  General Definitions.}
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Functional Requirements
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Functional Requirements}
 
-\plt{An SRS document should have the following qualities: unambiguous,
-  consistent, complete, validatable, abstract and traceable.}
-
-\plt{The overall goal of the SRS is that someone that meets the Characteristics
-  of the Intended Reader (Section~\ref{sec_IntendedReader}) can learn,
-  understand and verify the captured domain knowledge.  They should not have to
-  trust the authors of the SRS on any statements.  They should be able to
-  independently verify/derive every statement made.}
-
-\section{Introduction}
-
-\plt{The introduction section is written to introduce the problem.  It starts
-  general and focuses on the problem domain. The general advice is to start with
-a paragraph or two that describes the problem, followed by a ``roadmap''
-paragraph.  A roadmap orients the reader by telling them what sub-sections to
-expect in the Introduction section.}
-
-\subsection{Purpose of Document}
-
-\plt{This section summarizes the purpose of the SRS document.  It does not focus
-  on the problem itself.  The problem is described in the ``Problem
-  Description'' section (Section~\ref{Sec_pd}).  The purpose is for the document
-  in the context of the project itself, not in the context of this course.
-  Although the ``purpose'' of the document is to get a grade, you should not
-  mention this.  Instead, ``fake it'' as if this is a real project.  The purpose
-  section will be similar between projects.  The purpose of the document is the
-  purpose of the SRS, including communication, planning for the design stage,
-  etc.}
-
-\subsection{Scope of Requirements} 
-
-\plt{Modelling the real world requires simplification.  The full complexity of
-  the actual physics, chemistry, biology is too much for existing models, and
-  for existing computational solution techniques.  Rather than say what is in
-  the scope, it is usually easier to say what is not.  You can think of it as
-  the scope is initially everything, and then it is constrained to create the
-  actual scope.  For instance, the problem can be restricted to 2 dimensions, or
-  it can ignore the effect of temperature (or pressure) on the material
-  properties, etc.}  
-
-\plt{The scope section is related to the assumptions section
-  (Section~\ref{sec_assumpt}).  However, the scope and the assumptions are not
-  at the same level of abstraction.  The scope is at a high level.  The focus is
-  on the ``big picture'' assumptions.  The assumptions section lists, and
-  describes, all of the assumptions.}
-
-\subsection{Characteristics of Intended Reader} \label{sec_IntendedReader}
-
-\plt{This section summarizes the skills and knowledge of the readers of the
-  SRS.  It does NOT have the same purpose as the ``User Characteristics''
-  section (Section~\ref{SecUserCharacteristics}).  The intended readers are the
-  people that will read, review and maintain the SRS.  They are the people that
-  will conceivably design the software that is intended to meet the
-  requirements.  The user, on the other hand, is the person that uses the
-  software that is built.  They may never read this SRS document.  Of course,
-  the same person could be a ``user'' and an ``intended reader.''}
-
-\plt{The intended reader characteristics should be written as unambiguously and
-  as specifically as possible.  Rather than say, the user should have an
-  understanding of physics, say what kind of physics and at what level.  For
-  instance, is high school physics adequate, or should the reader have had a
-  graduate course on advanced quantum mechanics?}
-
-\subsection{Organization of Document}
-
-\plt{This section provides a roadmap of the SRS document.  It will help the
-  reader orient themselves.  It will provide direction that will help them
-  select which sections they want to read, and in what order.  This section will
-  be similar between project.}
-
-\section{General System Description}
-
-This section provides general information about the system.  It identifies the
-interfaces between the system and its environment, describes the user
-characteristics and lists the system constraints.  \plt{This text can likely be
-  borrowed verbatim.}
-
-\plt{The purpose of this section is to provide general information about the
-  system so the specific requirements in the next section will be easier to
-  understand. The general system description section is designed to be
-  changeable independent of changes to the functional requirements documented in
-  the specific system description. The general system description provides a
-  context for a family of related models.  The general description can stay the
-  same, while specific details are changed between family members.}
-
-\subsection{System Context}
-
-\plt{Your system context will include a figure that shows the abstract view of
-  the software.  Often in a scientific context, the program can be viewed
-  abstractly following the design pattern of Inputs $\rightarrow$ Calculations
-  $\rightarrow$ Outputs.  The system context will therefore often follow this
-  pattern.  The user provides inputs, the system does the calculations, and then
-  provides the outputs to the user.  The figure should not show all of the
-  inputs, just an abstract view of the main categories of inputs (like material
-  properties, geometry, etc.).  Likewise, the outputs should be presented from
-  an abstract point of view.  In some cases the diagram will show other external
-  entities, besides the user.  For instance, when the software product is a
-  library, the user will be another software program, not an actual end user.
-  If there are system constraints that the software must work with external
-  libraries, these libraries can also be shown on the System Context diagram.
-  They should only be named with a specific library name if this is required by
-  the system constraint.}
-
-\begin{figure}[h!]
-\begin{center}
- \includegraphics[width=0.6\textwidth]{SystemContextFigure}
-\caption{System Context}
-\label{Fig_SystemContext} 
-\end{center}
+\subsection{The Scope of the Work and the Product}
+\subsubsection{The Context of the Work}
+\begin{figure}[ht]
+    \includegraphics[scale=0.6]{context.jpg}
+    \caption{Context diagram}
 \end{figure}
 
-\plt{For each of the entities in the system context diagram its responsibilities
-  should be listed.  Whenever possible the system should check for data quality,
-  but for some cases the user will need to assume that responsibility.  The list
-  of responsibilites should be about the inputs and outputs only, and they
-  should be abstract.  Details should not be presented here.  However, the
-  information should not be so abstract as to just say ``inputs'' and
-  ``outputs''.  A summarizing phrase can be used to characterize the inputs.
-  For instance, saying ``material properties'' provides some information, but it
-  stays away from the detail of listing every required properties.}
+\newpage
+\clearpage
+\subsubsection{Work Partitioning}
+\begin{table}[h!]
+\caption{Work Partitioning Events}
+    \centering
+    \begin{tabular}{|c|p{3.5cm}|c|p{3.5cm}|}
+    \hline
+    \textbf{Event Number} & \centering\textbf{Event Name} & \textbf{Input} &
+    \textbf{Output} \\
+    \hline
+    1 & System start & User data & Parking lot map\\
+    \hline
+    2 & Find an open spot & Parking lot data & Available spot list\\
+    \hline
+    3 & Filter spots & Filter specification & Available spot list\\
+    \hline
+    4 & Valid spot selection & Spot selection & Spot traversal directions\\
+    \hline
+    5 & Invalid spot selection & Spot selection & Invalid selection\\
+    \hline
+    6 & Spot traversal & None & Available spot list\\
+    \hline
+    7 & Traversal complete & Spot reached & System feedback\\
+    \hline
+    8 & Settings change & Settings list & None\\
+    \hline
+    9 & Traversal termination & Termination selection & Parking lot map\\
+    \hline
+    10 & Lot status & Parking lot data & Parking lot stats\\
+    \hline
+    11 & Layout edit & Parking lot Layout & None\\
+    \hline
+    \end{tabular}
+\end{table}
 
-\begin{itemize}
-\item User Responsibilities:
-\begin{itemize}
-\item 
-\end{itemize}
-\item \progname{} Responsibilities:
-\begin{itemize}
-\item Detect data type mismatch, such as a string of characters instead of a
-  floating point number
-\item 
-\end{itemize}
-\end{itemize}
+\begin{table}[h]
+\caption{Work Partitioning Summaries}
+    \centering
+    \begin{tabular}{|c|p{10cm}|}
+    \hline
+    \textbf{Event Number} & \textbf{Summary} \\
+    \hline
+    1 & Starting the system. Location data is needed to determine which parking
+    lot data to use and where the user is in the parking lot.\\
+    \hline
+    2 & Use cameras in the parking lot and an AI to recognize open/special
+    spots. List these spots to the user.\\
+    \hline
+    3 & Toggle seeing special spots in the list of available spots.\\
+    \hline
+    4 & Choose a spot in the list of available spots and get directions to it.\\
+    \hline
+    5 & Choose a spot not on the list of available spots or was filtered out.
+    Inform the user to make an appropriate selection.\\
+    \hline
+    6 & The user follows the directions to the spot. If the status of the spot
+    changes, the user will be prompted to change spots.\\
+    \hline
+    7 & The user reaches the spot. The system data is updated and the user is
+    asked for feedback.\\
+    \hline
+    8 & Adjust system settings like sound, and vehicle details\\
+    \hline
+    9 & Quit traversing to the current spot and return to the map.\\
+    \hline
+    10 & Collect statistical data about the parking lot from cameras over time.
+    The owner can use this data to make business decisions.\\
+    \hline
+    11 & Allows the owner to add/remove/modify spots in the layout.\\
+    \hline
+    \end{tabular}
+\end{table}
 
-\subsection{User Characteristics} \label{SecUserCharacteristics}
-
-\plt{This section summarizes the knowledge/skills expected of the user.
-  Measuring usability, which is often a required non-function requirement,
-  requires knowledge of a typical user.  As mentioned above, the user is a
-  different role from the ``intended reader,'' as given in
-  Section~\ref{sec_IntendedReader}.  As in Section~\ref{sec_IntendedReader}, the
-  user characteristics should be specific an unambiguous.  For instance, ``The
-  end user of \progname{} should have an understanding of undergraduate Level 1
-  Calculus and Physics.''}
-
-\subsection{System Constraints}
-
-\plt{System constraints differ from other type of requirements because they
-  limit the developers' options in the system design and they identify how the
-  eventual system must fit into the world. This is the only place in the SRS
-  where design decisions can be specified.  That is, the quality requirement for
-  abstraction is relaxed here.  However, system constraints should only be
-  included if they are truly required.}
-
-\section{Specific System Description}
-
-This section first presents the problem description, which gives a high-level
-view of the problem to be solved.  This is followed by the solution characteristics
-specification, which presents the assumptions, theories, definitions and finally
-the instance models.  \plt{Add any project specific details that are relevant
-  for the section overview.}
-
-\subsection{Problem Description} \label{Sec_pd}
-
-\progname{} is intended to solve ... \plt{What problem does your program solve?
-The description here should be in the problem space, not the solution space.}
-
-\subsubsection{Terminology and  Definitions}
-
-\plt{This section is expressed in words, not with equations.  It provide the
-  meaning of the different words and phrases used in the domain of the problem.
-The terminology is used to introduce concepts from the world outside of the
-mathematical model  The terminology provides a real world connection to give the
-mathematical model meaning.}
-
-This subsection provides a list of terms that are used in the subsequent
-sections and their meaning, with the purpose of reducing ambiguity and making it
-easier to correctly understand the requirements:
-
-\begin{itemize}
-
-\item 
-
-\end{itemize}
-
-\subsubsection{Physical System Description} \label{sec_phySystDescrip}
-
-\plt{The purpose of this section is to clearly and unambiguously state the
-  physical system that is to be modelled. Effective problem solving requires a
-  logical and organized approach. The statements on the physical system to be
-  studied should cover enough information to solve the problem. The physical
-  description involves element identification, where elements are defined as
-  independent and separable items of the physical system. Some example elements
-  include acceleration due to gravity, the mass of an object, and the size and
-  shape of an object. Each element should be identified and labelled, with their
-  interesting properties specified clearly. The physical description can also
-  include interactions of the elements, such as the following: i) the
-  interactions between the elements and their physical environment; ii) the
-  interactions between elements; and, iii) the initial or boundary conditions.}
-
-The physical system of \progname{}, as shown in Figure~?,
-includes the following elements:
-
-\begin{itemize}
-
-\item[PS1:] 
-
-\item[PS2:] ...
-
-\end{itemize}
-
-\plt{A figure here makes sense for most SRS documents}
-
-% \begin{figure}[h!]
-% \begin{center}
-% %\rotatebox{-90}
-% {
-%  \includegraphics[width=0.5\textwidth]{<FigureName>}
-% }
-% \caption{\label{<Label>} <Caption>}
-% \end{center}
-% \end{figure}
-
-\subsubsection{Goal Statements}
-
-\plt{The goal statements refine the ``Problem Description''
-  (Section~\ref{Sec_pd}).  A goal is a functional objective the system under
-  consideration should achieve. Goals provide criteria for sufficient
-  completeness of a requirements specification and for requirements
-  pertinence. Goals will be refined in Section “Instanced Models”
-  (Section~\ref{sec_instance}). Large and complex goals should be decomposed
-  into smaller sub-goals.  The goals are written abstractly, with a minimal
-  amount of technical language.  They should be understandable by non-domain
-  experts.}
-
-\noindent Given the \plt{inputs}, the goal statements are:
-
-\begin{itemize}
-
-\item[GS\refstepcounter{goalnum}\thegoalnum \label{G_meaningfulLabel}:] \plt{One
-    sentence description of the goal.  There may be more than one.  Each Goal
-    should have a meaningful label.}
-
-\end{itemize}
-
-\subsection{Solution Characteristics Specification}
-
-\plt{This section specifies the information in the solution domain of the system
-  to be developed. This section is intended to express what is required in
-  such a way that analysts and stakeholders get a clear picture, and the
-  latter will accept it. The purpose of this section is to reduce the problem
-  into one expressed in mathematical terms. Mathematical expertise is used to
-  extract the essentials from the underlying physical description of the
-  problem, and to collect and substantiate all physical data pertinent to the
-  problem.}
-
-\plt{This section presents the solution characteristics by successively refining
-  models.  It starts with the abstract/general Theoretical Models (TMs) and
-  refines them to the concrete/specific Instance Models (IMs).  If necessary
-  there are intermediate refinements to General Definitions (GDs).  All of these
-  refinements can potentially use Assumptions (A) and Data Definitions (DD).
-  TMs are refined to create new models, that are called GMs or IMs. DDs are not
-  refined; they are just used. GDs and IMs are derived, or refined, from other
-  models. DDs are not derived; they are just given. TMs are also just given, but
-  they are refined, not used.  If a potential DD includes a derivation, then
-  that means it is refining other models, which would make it a GD or an IM.}
-
-\plt{The above makes a distinction between ``refined'' and ``used.'' A model is
-  refined to another model if it is changed by the refinement. When we change a
-  general 3D equation to a 2D equation, we are making a refinement, by applying
-  the assumption that the third dimension does not matter. If we use a
-  definition, like the definition of density, we aren't refining, or changing
-  that definition, we are just using it.}
-
-\plt{The same information can be a TM in one problem and a DD in another.  It is
-  about how the information is used.  In one problem the definition of
-  acceleration can be a TM, in another it would be a DD.}
-
-\plt{There is repetition between the information given in the different chunks
-  (TM, GDs etc) with other information in the document.  For instance, the
-  meaning of the symbols, the units etc are repeated.  This is so that the
-  chunks can stand on their own when being read by a reviewer/user.  It also
-  facilitates reuse of the models in a different context.}
-
-\noindent \plt{The relationships between the parts of the document are show in
-  the following figure.  In this diagram ``may ref'' has the same role as
-  ``uses'' above.  The figure adds ``Likely Changes,'' which are able to
-  reference (use) Assumptions.}
+\newpage
+\subsubsection{Individual Product Use Cases}
 
 \begin{figure}[H]
-  \includegraphics[scale=0.9]{RelationsBetweenTM_GD_IM_DD_A.pdf}
+    \centering
+    \includegraphics[width=12cm, height=13cm]{SRS/use_case.jpg}
+    \caption{Use case diagram that displays the main functionalities of the application.}
 \end{figure}
 
-The instance models that govern \progname{} are presented in
-Subsection~\ref{sec_instance}.  The information to understand the meaning of the
-instance models and their derivation is also presented, so that the instance
-models can be verified.
-
-\subsubsection{Assumptions} \label{sec_assumpt}
-
-\plt{The assumptions are a refinement of the scope.  The scope is general, where
-  the assumptions are specific.  All assumptions should be listed, even those
-  that domain experts know so well that they are rarely (if ever) written down.}
-\plt{The document should not take for granted that the reader knows which
-  assumptions have been made. In the case of unusual assumptions, it is
-  recommended that the documentation either include, or point to, an explanation
-  and justification for the assumption.}
-
-This section simplifies the original problem and helps in developing the
-theoretical model by filling in the missing information for the physical
-system. The numbers given in the square brackets refer to the theoretical model
-[T], general definition [GD], data definition [DD], instance model [IM], or
-likely change [LC], in which the respective assumption is used.
-
-\begin{itemize}
-
-\item[A\refstepcounter{assumpnum}\theassumpnum \label{A_meaningfulLabel}:]
-  \plt{Short description of each assumption.  Each assumption
-    should have a meaningful label.  Use cross-references to identify the
-    appropriate traceability to T, GD, DD etc., using commands like dref, ddref
-    etc.  Each assumption should be atomic - that is, there should not be an
-    explicit (or implicit) ``and'' in the text of an assumption.}
-
-\end{itemize}
-
-\subsubsection{Theoretical Models}\label{sec_theoretical}
-
-\plt{Theoretical models are sets of abstract mathematical equations or axioms
-  for solving the problem described in Section ``Physical System Description''
-  (Section~\ref{sec_phySystDescrip}). Examples of theoretical models are
-  physical laws, constitutive equations, relevant conversion factors, etc.}
-
-This section focuses on the general equations and laws that \progname{} is based
-on.  \plt{Modify the examples below for your problem, and add additional models
-  as appropriate.}
-
-~\newline
-
-\noindent
-\deftheory
-% #2 refname of theory
-{T:COE}
-% #3 label
-{Conservation of thermal energy}
-% #4 equation
-{
-  $-{\bf \nabla \cdot q} + g$ = $\rho C \frac{\partial T}{\partial t}$
-}
-% #5 description
-{
-  The above equation gives the conservation of energy for transient heat transfer in a material
-  of specific heat capacity $C$ (\si{\joule\per\kilogram\per\celsius}) and density $\rho$ 
-  (\si{\kilogram\per\cubic\metre}), where $\bf q$ is the thermal flux vector (\si{\watt\per\square\metre}),
-  $g$ is the volumetric heat generation
-  (\si{\watt\per\cubic\metre}), $T$ is the temperature
-  (\si{\celsius}),  $t$ is time (\si{\second}), and $\nabla$ is
-  the gradient operator.  For this equation to apply, other forms
-  of energy, such as mechanical energy, are assumed to be negligible in the
-  system (\aref{A_OnlyThermalEnergy}).  In general, the material properties ($\rho$ and $C$) depend on temperature.
-}
-% #6 Notes
-{
-None.
-}
-% #7 Source
-{
-  \url{http://www.efunda.com/formulae/heat_transfer/conduction/overview_cond.cfm}
-}
-% #8 Referenced by
-{
-  \dref{ROCT}
-}
-% #9 Preconditions
-{
-None
-}
-% #1 derivation - not applicable by default
-{}
-
-\plt{``Ref.\ By'' is used repeatedly with the different types of information.
-  This stands for Referenced By.  It means that the models, definitions and
-  assumptions listed reference the current model, definition or assumption.
-  This information is given for traceability.  Ref. By provides a pointer in the
-  opposite direction to what we commonly do.  You still need to have a reference
-  in the other direction pointing to the current model, definition or
-  assumption.  As an example, if T1 is referenced by G2, that means that G2 will
-  explicitly include a reference to T1.}
-
-~\newline
-
-\subsubsection{General Definitions}\label{sec_gendef}
-
-\plt{General Definitions (GDs) are a refinement of one or more TMs, and/or of
-  other GDs.  The GDs are less abstract than the TMs.  Generally the reduction
-  in abstraction is possible through invoking (using/referencing) Assumptions.
-  For instance, the TM could be Newton's Law of Cooling stated abstracting.  The
-  GD could take the general law and apply it to get a 1D equation.}
-
-This section collects the laws and equations that will be used in building the
-instance models.
-
-\plt{Some projects may not have any content for this section, but the section
-  heading should be kept.}  \plt{Modify the examples below for your problem, and
-  add additional definitions as appropriate.}
-
-~\newline
-
-\noindent
-\begin{minipage}{\textwidth}
-\renewcommand*{\arraystretch}{1.5}
-\begin{tabular}{| p{\colAwidth} | p{\colBwidth}|}
-\hline
-\rowcolor[gray]{0.9}
-Number& GD\refstepcounter{defnum}\thedefnum \label{NL}\\
-\hline
-Label &\bf Newton's law of cooling \\
-\hline
-% Units&$MLt^{-3}T^0$\\
-% \hline
-SI Units&\si{\watt\per\square\metre}\\
-\hline
-Equation&$ q(t) = h \Delta T(t)$  \\
-\hline
-Description &
-Newton's law of cooling describes convective cooling from a surface.  The law is
-stated as: the rate of heat loss from a body is proportional to the difference
-in temperatures between the body and its surroundings.
-\\
-& $q(t)$ is the thermal flux (\si{\watt\per\square\metre}).\\
-& $h$ is the heat transfer coefficient, assumed independent of $T$ (\aref{A_hcoeff})
-	(\si{\watt\per\square\metre\per\celsius}).\\
-&$\Delta T(t)$= $T(t) - T_{\text{env}}(t)$ is the time-dependent thermal gradient
-between the environment and the object (\si{\celsius}).
-\\
-\hline
-  Source & Citation here \\
-  \hline
-  Ref.\ By & \ddref{FluxCoil}, \ddref{FluxPCM}\\
-  \hline
-\end{tabular}
-\end{minipage}\\
-
-\subsubsection*{Detailed derivation of simplified rate of change of temperature}
-
-\plt{This may be necessary when the necessary information does not fit in the
-  description field.}
-\plt{Derivations are important for justifying a given GD.  You want it to be
-  clear where the equation came from.}
-
-\subsubsection{Data Definitions}\label{sec_datadef}
-
-\plt{The Data Definitions are definitions of symbols and equations that are
-  given for the problem.  They are not derived; they are simply used by other
-  models.  For instance, if a problem depends on density, there may be a data
-  definition for the equation defining density.  The DDs are given information
-  that you can use in your other modules.}
-
-\plt{All Data Definitions should be used (referenced) by at least one other
-  model.}
-
-This section collects and defines all the data needed to build the instance
-models. The dimension of each quantity is also given.  \plt{Modify the examples
-  below for your problem, and add additional definitions as appropriate.}
-
-~\newline
-
-\noindent
-\begin{minipage}{\textwidth}
-\renewcommand*{\arraystretch}{1.5}
-\begin{tabular}{| p{\colAwidth} | p{\colBwidth}|}
-\hline
-\rowcolor[gray]{0.9}
-Number& DD\refstepcounter{datadefnum}\thedatadefnum \label{FluxCoil}\\
-\hline
-Label& \bf Heat flux out of coil\\
-\hline
-Symbol &$q_C$\\
-\hline
-% Units& $Mt^{-3}$\\
-% \hline
-  SI Units & \si{\watt\per\square\metre}\\
-  \hline
-  Equation&$q_C(t) = h_C (T_C - T_W(t))$, over area $A_C$\\
-  \hline
-  Description & 
-                $T_C$ is the temperature of the coil (\si{\celsius}).  $T_W$ is the temperature of the water (\si{\celsius}).  
-                The heat flux out of the coil, $q_C$ (\si{\watt\per\square\metre}), is found by
-                assuming that Newton's Law 
-                of Cooling applies (\aref{A_Newt_coil}).  This law (\dref{NL}) is used on the surface of
-                the coil, which has area $A_C$ (\si{\square\metre}) and heat 
-                transfer coefficient $h_C$
-                (\si{\watt\per\square\metre\per\celsius}).  This equation
-                assumes that the temperature of the coil is constant over time (\aref{A_tcoil}) and that it does not vary along the length
-                of the coil (\aref{A_tlcoil}).
-  \\
-  \hline
-  Sources& Citation here \\
-  \hline
-  Ref.\ By & \iref{ewat}\\
-  \hline
-\end{tabular}
-\end{minipage}\\
-
-\subsubsection{Data Types}\label{sec_datatypes}
-
-\plt{This section is optional.  In many scientific computing programs it isn't
-  necessary, since the inputs and outpus are straightforward types, like reals,
-  integers, and sequences of reals and integers.  However, for some problems it
-  is very helpful to capture the type information.}
-
-\plt{The data types are not derived; they are simply stated and used by other
-  models.}
-
-\plt{All data types must be used by at least one of the models.}
-
-\plt{For the mathematical notation for expressing types, the recommendation is
-  to use the notation of~\citet{HoffmanAndStrooper1995}.}
-
-This section collects and defines all the data types needed to document the
-models. \plt{Modify the examples below for your problem, and add additional
-  definitions as appropriate.}
-
-~\newline
-
-\noindent
-\begin{minipage}{\textwidth}
-\renewcommand*{\arraystretch}{1.5}
-\begin{tabular}{| p{\colAwidth} | p{\colBwidth}|}
-  \hline
-  \rowcolor[gray]{0.9}
-  Type Name & Name for Type\\
-  \hline
-  Type Def & mathematical definition of the type\\
-  \hline
-  Description & description here
-  \\
-  \hline
-  Sources & Citation here, if the type is borrowed from another source\\
-  \hline
-\end{tabular}
-\end{minipage}\\
-
-\subsubsection{Instance Models} \label{sec_instance}    
-
-\plt{The motivation for this section is to reduce the problem defined in
-  ``Physical System Description'' (Section~\ref{sec_phySystDescrip}) to one
-  expressed in mathematical terms. The IMs are built by refining the TMs and/or
-  GDs.  This section should remain abstract.  The SRS should specify the
-  requirements without considering the implementation.}
-
-This section transforms the problem defined in Section~\ref{Sec_pd} into 
-one which is expressed in mathematical terms. It uses concrete symbols defined 
-in Section~\ref{sec_datadef} to replace the abstract symbols in the models 
-identified in Sections~\ref{sec_theoretical} and~\ref{sec_gendef}.
-
-The goals \plt{reference your goals} are solved by \plt{reference your instance
-  models}.  \plt{other details, with cross-references where appropriate.}
-\plt{Modify the examples below for your problem, and add additional models as
-  appropriate.}
-
-~\newline
-
-%Instance Model 1
-
-\noindent
-\begin{minipage}{\textwidth}
-\renewcommand*{\arraystretch}{1.5}
-\begin{tabular}{| p{\colAwidth} | p{\colBwidth}|}
-  \hline
-  \rowcolor[gray]{0.9}
-  Number& IM\refstepcounter{instnum}\theinstnum \label{ewat}\\
-  \hline
-  Label& \bf Energy balance on water to find $T_W$\\
-  \hline
-  Input&$m_W$, $C_W$, $h_C$, $A_C$, $h_P$, $A_P$, $t_\text{final}$, $T_C$, 
-  $T_\text{init}$, $T_P(t)$ from \iref{epcm}\\
-  & The input is constrained so that $T_\text{init} \leq T_C$ (\aref{A_charge})\\
-  \hline
-  Output&$T_W(t)$, $0\leq t \leq t_\text{final}$, such that\\
-  &$\frac{dT_W}{dt} = \frac{1}{\tau_W}[(T_C - T_W(t)) + {\eta}(T_P(t) - T_W(t))]$,\\
-  &$T_W(0) = T_P(0) = T_\text{init}$ (\aref{A_InitTemp}) and $T_P(t)$ from \iref{epcm} \\
-  \hline
-  Description&$T_W$ is the water temperature (\si{\celsius}).\\
-  &$T_P$ is the PCM temperature (\si{\celsius}).\\
-  &$T_C$ is the coil temperature (\si{\celsius}).\\
-  &$\tau_W = \frac{m_W C_W}{h_C A_C}$ is a constant (\si{\second}).\\
-  &$\eta = \frac{h_P A_P}{h_C A_C}$ is a constant (dimensionless).\\
-  & The above equation applies as long as the water is in liquid form,
-  $0<T_W<100^o\text{C}$, where $0^o\text{C}$ and $100^o\text{C}$ are the melting
-  and boiling points of water, respectively (\aref{A_OpRange}, \aref{A_Pressure}).
-  \\
-  \hline
-  Sources& Citation here \\
-  \hline
-  Ref.\ By & \iref{epcm}\\
-  \hline
-\end{tabular}
-\end{minipage}\\
-
-%~\newline
-
-\subsubsection*{Derivation of ...}
-
-\plt{The derivation shows how the IM is derived from the TMs/GDs.  In cases
-  where the derivation cannot be described under the Description field, it will
-  be necessary to include this subsection.}
-
-\subsubsection{Input Data Constraints} \label{sec_DataConstraints}    
-
-Table~\ref{TblInputVar} shows the data constraints on the input output
-variables.  The column for physical constraints gives the physical limitations
-on the range of values that can be taken by the variable.  The column for
-software constraints restricts the range of inputs to reasonable values.  The
-software constraints will be helpful in the design stage for picking suitable
-algorithms.  The constraints are conservative, to give the user of the model the
-flexibility to experiment with unusual situations.  The column of typical values
-is intended to provide a feel for a common scenario.  The uncertainty column
-provides an estimate of the confidence with which the physical quantities can be
-measured.  This information would be part of the input if one were performing an
-uncertainty quantification exercise.
-
-The specification parameters in Table~\ref{TblInputVar} are listed in
-Table~\ref{TblSpecParams}.
-
-\begin{table}[!h]
-  \caption{Input Variables} \label{TblInputVar}
-  \renewcommand{\arraystretch}{1.2}
-\noindent \begin{longtable*}{l l l l c} 
-  \toprule
-  \textbf{Var} & \textbf{Physical Constraints} & \textbf{Software Constraints} &
-                             \textbf{Typical Value} & \textbf{Uncertainty}\\
-  \midrule 
-  $L$ & $L > 0$ & $L_{\text{min}} \leq L \leq L_{\text{max}}$ & 1.5 \si[per-mode=symbol] {\metre} & 10\%
-  \\
-  \bottomrule
-\end{longtable*}
-\end{table}
-
-\noindent 
-\begin{description}
-\item[(*)] \plt{you might need to add some notes or clarifications}
-\end{description}
-
-\begin{table}[!h]
-\caption{Specification Parameter Values} \label{TblSpecParams}
-\renewcommand{\arraystretch}{1.2}
-\noindent \begin{longtable*}{l l} 
-  \toprule
-  \textbf{Var} & \textbf{Value} \\
-  \midrule 
-  $L_\text{min}$ & 0.1 \si{\metre}\\
-  \bottomrule
-\end{longtable*}
-\end{table}
-
-\subsubsection{Properties of a Correct Solution} \label{sec_CorrectSolution}
-
-\noindent
-A correct solution must exhibit \plt{fill in the details}.  \plt{These
-  properties are in addition to the stated requirements.  There is no need to
-  repeat the requirements here.  These additional properties may not exist for
-  every problem.  Examples include conservation laws (like conservation of
-  energy or mass) and known constraints on outputs, which are usually summarized
-  in tabular form.  A sample table is shown in Table~\ref{TblOutputVar}}
-
-\begin{table}[!h]
-\caption{Output Variables} \label{TblOutputVar}
-\renewcommand{\arraystretch}{1.2}
-\noindent \begin{longtable*}{l l} 
-  \toprule
-  \textbf{Var} & \textbf{Physical Constraints} \\
-  \midrule 
-  $T_W$ & $T_\text{init} \leq T_W \leq T_C$ (by~\aref{A_charge})
-  \\
-  \bottomrule
-\end{longtable*}
-\end{table}
-
-\plt{This section is not for test cases or techniques for verification and
-  validation.  Those topics will be addressed in the Verification and Validation
-  plan.}
-
-\section{Requirements}
-
-\plt{The requirements refine the goal statement.  They will make heavy use of
-  references to the instance models.}
-
-This section provides the functional requirements, the business tasks that the
-software is expected to complete, and the nonfunctional requirements, the
-qualities that the software is expected to exhibit.
-
 \subsection{Functional Requirements}
+\refstepcounter{businesseventnum}
+\begin{enumerate}[{BE}\thebusinesseventnum.] 
+\item The driver wishes to start the system.
+\refstepcounter{funcreqnum}
+\begin{enumerate}[{FR}\thefuncreqnum.] 
+    \item The system must prompt the driver to turn on the driver's location
+    data.\\
+    \textbf{Rationale:} Location data is required to navigate the driver from
+    their current position to their desired parking space in the parking lot.
+\end{enumerate}
+\refstepcounter{funcreqnum}
+\begin{enumerate}[{FR}\thefuncreqnum.] 
+    \item The system must present the driver with a map of their surroundings.\\
+    \textbf{Rationale:} Upon start-up, the system presenting the map of the
+    driver's surroundings will help the driver orient themselves in their
+    current location.
+\end{enumerate}
+\end{enumerate}
 
-\noindent \begin{itemize}
+\refstepcounter{businesseventnum}
+\begin{enumerate}[{BE}\thebusinesseventnum.] 
+\item The driver wishes to find an open parking spot.
+\refstepcounter{funcreqnum}
+\begin{enumerate}[{FR}\thefuncreqnum.] 
+    \item The system shall use parking lot camera footage and sensors to survey
+    the parking lot. \label{poc1}\\
+    \textbf{Rationale:} To determine available spaces in the parking lot, camera
+    footage of the parking lot and sensor information need to be collected for
+    the parking spaces.
+\end{enumerate}
+\refstepcounter{funcreqnum}
+\begin{enumerate}[{FR}\thefuncreqnum.] 
+    \item The system shall recognize special parking spots.\\
+    \textbf{Formal Specification: } \[\forall SP | SP \in P  \bullet Detect(SP)
+    = true\]\\
+    \textbf{Rationale:} The system needs to know about these spots so that they
+    appear to only those who need them.
+\end{enumerate}
+\refstepcounter{funcreqnum}
+\begin{enumerate}[{FR}\thefuncreqnum.] 
+    \item The system shall determine the physical location of parking spots.
+    \label{poc2}\\
+    \textbf{Rationale:} Drivers will be directed to their spot, so their
+    destination has to be determined by the camera location.
+\end{enumerate}
+\refstepcounter{funcreqnum}
+\begin{enumerate}[{FR}\thefuncreqnum.] 
+    \item The system must prompt the driver to provide the parking lot that they
+    wish to navigate to.
+\end{enumerate}
+\refstepcounter{funcreqnum}
+\begin{enumerate}[{FR}\thefuncreqnum.] 
+    \item The system must display the available parking spaces of the specified
+    destination.
+\end{enumerate}
+\end{enumerate}
 
-\item[R\refstepcounter{reqnum}\thereqnum \label{R_Inputs}:] \plt{Requirements
-    for the inputs that are supplied by the user.  This information has to be
-    explicit.}
+\refstepcounter{businesseventnum}
+\begin{enumerate}[{BE}\thebusinesseventnum.] 
+\item The driver wishes to filter the available parking spots.
+\refstepcounter{funcreqnum}
+\begin{enumerate}[{FR}\thefuncreqnum.] 
+    \item The system shall allow the driver to select between viewing available
+    normal, accessibility and reserved parking spaces.\\
+    \textbf{Rationale:} The driver should be able to view and select between all
+    possible types of parking spaces. For example, a wheelchair bound driver
+    would only need to see accessible parking spaces, whereas, an able-bodied
+    driver would only need to see normal parking spaces to avoid parking in an
+    accessible or reserved parking space.
+\end{enumerate}
+\refstepcounter{funcreqnum}
+\begin{enumerate}[{FR}\thefuncreqnum.] 
+    \item The system by default must display only normal, non-reserved parking
+    spaces.\\
+    \textbf{Rationale:} Most drivers will not be authorized to use disabled
+    parking spaces or reserved parking spaces, such as those for public transit
+    vehicles. Without any other input, the system should display only the spaces
+    that the most drivers can use.
+\end{enumerate}
+\end{enumerate}
 
-\item[R\refstepcounter{reqnum}\thereqnum \label{R_OutputInputs}:] \plt{It isn't
-    always required, but often echoing the inputs as part of the output is a
-    good idea.}
+\refstepcounter{businesseventnum}
+\begin{enumerate}[{BE}\thebusinesseventnum.] 
+\item The driver wishes to select an open parking spot.
+\refstepcounter{funcreqnum}
+\begin{enumerate}[{FR}\thefuncreqnum.] 
+    \item The system shall allow the driver to select an available parking
+    space.\\
+    \textbf{Rationale:} The driver must be allowed to select an available
+    parking space to receive instructions to park at the desired parking space.
+\end{enumerate}
 
-\item[R\refstepcounter{reqnum}\thereqnum \label{R_Calculate}:] \plt{Calculation
-    related requirements.}
+\refstepcounter{funcreqnum}
+\begin{enumerate}[{FR}\thefuncreqnum.] 
+    \item The system shall display driving directions to the driver upon
+    selecting an available parking space.\\
+    \textbf{Rationale:} The driver should be informed on how to reach the
+    parking space they selected from their current position.
+\end{enumerate}
 
-\item[R\refstepcounter{reqnum}\thereqnum \label{R_VerifyOutput}:]
-  \plt{Verification related requirements.}
+\refstepcounter{funcreqnum}
+\begin{enumerate}[{FR}\thefuncreqnum.] 
+    \item The system shall provide a default recommendation if the driver does
+    not wish to select a specific parking space. \label{poc3}\\
+    \textbf{Rationale:} Providing the input to select a specific parking space
+    may be difficult on small displays because of the relative size difference
+    between a parking lot and a space.
+\end{enumerate}
 
-\item[R\refstepcounter{reqnum}\thereqnum \label{R_Output}:] \plt{Output related
-    requirements.}
+\refstepcounter{funcreqnum}
+\begin{enumerate}[{FR}\thefuncreqnum.] 
+    \item The system shall display navigation directions to the default
+    recommended parking space if the driver makes no space selection within
+    $\hyperlink{default_delay}{DEFAULT\_DELAY}$ seconds.
+\end{enumerate}
+\end{enumerate}
 
+\refstepcounter{businesseventnum}
+\begin{enumerate}[{BE}\thebusinesseventnum.] 
+\item The driver wishes to select an invalid parking spot.
+\refstepcounter{funcreqnum}
+\begin{enumerate}[{FR}\thefuncreqnum.] 
+    \item The system shall notify the driver if they attempt to select an
+    unavailable parking space.\\
+    \textbf{Rationale:} The driver should be informed that they cannot park in a
+    spot that is already occupied by another vehicle.
+\end{enumerate}
+\refstepcounter{funcreqnum}
+\begin{enumerate}[{FR}\thefuncreqnum.] 
+    \item The system shall notify the driver if they attempt to select a
+    reserved or disabled parking space, if they have not filtered for those
+    spaces.\\
+    \textbf{Rationale:} The driver should be informed that they cannot park in a
+    spot that requires other authorization.
+\end{enumerate}
+\end{enumerate}
+
+\refstepcounter{businesseventnum}
+\begin{enumerate}[{BE}\thebusinesseventnum.] 
+\item The driver wishes to drive to the parking space.
+\refstepcounter{funcreqnum}
+\begin{enumerate}[{FR}\thefuncreqnum.] 
+    \item The system shall provide real time directions to the driver to the
+    selected parking space.
+\end{enumerate}
+\refstepcounter{funcreqnum}
+\begin{enumerate}[{FR}\thefuncreqnum.] 
+    \item The system shall recommend a new available parking space to the driver
+    upon the initial selected parking space being taken.
+\end{enumerate}
+\refstepcounter{funcreqnum}
+\begin{enumerate}[{FR}\thefuncreqnum.] 
+    \item The system shall provide the option to select a new parking space upon
+    the initial selected parking space being taken.
+\end{enumerate}
+\end{enumerate}
+
+\refstepcounter{businesseventnum}
+\begin{enumerate}[{BE}\thebusinesseventnum.] 
+\item The driver reaches the selected parking spot.
+\refstepcounter{funcreqnum}
+\begin{enumerate}[{FR}\thefuncreqnum.] 
+    \item The system shall prompt the driver that they have reached the parking
+    spot. \label{poc4}
+\end{enumerate}
+
+\refstepcounter{funcreqnum}
+\begin{enumerate}[{FR}\thefuncreqnum.] 
+    \item The system shall change the status of the parking space from available
+    to unavailable when the driver enters the parking space. \label{poc5}\\
+    \textbf{Rationale:} Using the driver's location within the parking lot, the
+    status of the parking space should be updated, such that future drivers do
+    not pick the same parking space.
+\end{enumerate}
+\refstepcounter{funcreqnum}
+\begin{enumerate}[{FR}\thefuncreqnum.] 
+    \item The system shall non-intrusively prompt the driver for feedback
+    regarding their experience after parking.\\
+    \textbf{Rationale:} Driver feedback will be important to improve our
+    system's experience, as well as to alert us of any issues they have
+    encountered.
+\end{enumerate}
+\end{enumerate}
+
+\refstepcounter{businesseventnum}
+\begin{enumerate}[{BE}\thebusinesseventnum.] 
+\item The driver wishes to change the settings of the application.
+\refstepcounter{funcreqnum}
+\begin{enumerate}[{FR}\thefuncreqnum.] 
+    \item The system shall provide a means of viewing and modifying the
+    settings.
+\end{enumerate}
+
+\refstepcounter{funcreqnum}
+\begin{enumerate}[{FR}\thefuncreqnum.] 
+    \item The system's settings menu shall include volume and sound adjustment,
+    unit identification, vehicle details, and notification preferences.
+\end{enumerate}
+\end{enumerate}
+
+\refstepcounter{businesseventnum}
+\begin{enumerate}[{BE}\thebusinesseventnum.] 
+\item The driver wishes to terminate the current navigation route.
+\refstepcounter{funcreqnum}
+\begin{enumerate}[{FR}\thefuncreqnum.] 
+    \item The system shall provide a means to terminate the current navigation.
+\end{enumerate}
+\refstepcounter{funcreqnum}
+\begin{enumerate}[{FR}\thefuncreqnum.] 
+    \item The system shall present the driver in their current location on the
+    map upon termination of the route.
+\end{enumerate}
+\end{enumerate}
+
+\refstepcounter{businesseventnum}
+\begin{enumerate}[{BE}\thebusinesseventnum.] 
+\item The parking lot owner/manager wishes to view the current status of their
+parking lot.
+\refstepcounter{funcreqnum}
+\begin{enumerate}[{FR}\thefuncreqnum.] 
+    \item The system must provide a separate administrative view for parking lot
+    owners/managers.
+\end{enumerate}
+\refstepcounter{funcreqnum}
+\begin{enumerate}[{FR}\thefuncreqnum.] 
+    \item The system must provide a means for individual parking lot
+    owners/managers to enter their own administrative console.
+\end{enumerate}
+\refstepcounter{funcreqnum}
+\begin{enumerate}[{FR}\thefuncreqnum.] 
+    \item The system's administrative console shall provide a means for the
+    parking lot owner/manager to view the availability of all parking spaces in
+    their lot.
+\end{enumerate}
+\refstepcounter{funcreqnum}
+\begin{enumerate}[{FR}\thefuncreqnum.] 
+    \item The system shall track analytics on how many spaces are
+    available/unavailable and categorize them in terms of their type.
+\end{enumerate}
+\end{enumerate}
+
+\refstepcounter{businesseventnum}
+\begin{enumerate}[{BE}\thebusinesseventnum.] 
+\item The parking lot owner/manager wishes to edit their parking lot layout.
+\refstepcounter{funcreqnum}
+\begin{enumerate}[{FR}\thefuncreqnum.] 
+    \item The system's administrative console shall include a means for
+    individual parking lot owners/managers to edit their parking lot layout.
+\end{enumerate}
+\refstepcounter{funcreqnum}
+\begin{enumerate}[{FR}\thefuncreqnum.] 
+    \item The system's administrative console shall include editing features
+    such as redefining parking spaces and marking spaces as reserved.
+\end{enumerate}
+\end{enumerate}
+
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Non-functional Requirements
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Non-functional Requirements}
+\subsection{Look and Feel Requirements}
+\subsubsection{Appearance Requirements}
+\begin{enumerate}[{LF}1.] 
+    \item The user interface must only consist of information immediately
+    relevant to the driver. \label{pocnf1} \\
+    \textbf{Fit Criterion:} For every element of the interface, all
+    \textbf{Park'd} developers agree on its necessity.
+\end{enumerate}
+
+\subsubsection{Style Requirements}
+\begin{enumerate}[resume*]  
+    \item The driver must interpret the design as modern and reminiscent of
+    other navigation apps.\\
+    \textbf{Fit Criterion:} 80\% of testers indicate a visual similarity with
+    Google Maps, Apple Maps, or Waze.
+\end{enumerate}
+
+\subsection{Usability and Humanity Requirements}
+\subsubsection{Ease of Use Requirements}
+\begin{enumerate}[{UH}1.] 
+    \item Operations from the working screen take no more than
+    $\hyperlink{max_taps}{MAX\_TAPS}$ taps to complete.\\
+    \textbf{Fit Criterion:} This requirement is stated with quantifiable terms
+    and does not need a fit criterion to validate it. 
+    \item Drivers must find the user interface familiar coming from navigation
+    apps such as Google Maps.\\
+    \textbf{Fit Criterion:} 80\% of testers indicate that the interface is
+    similar to Google Maps.
+\end{enumerate}
+
+\subsubsection{Personalization and Internationalization Requirements}
+\noindent \emph{N/A}
+
+\subsubsection{Learning Requirements}
+\begin{enumerate}[resume*] 
+    \item The system's basic parking functionality should be useable with no
+    prior instruction. \label{pocnf2}\\
+    \textbf{Fit Criterion:} 80\% of testers navigate to a designated parking
+    spot without any prior instruction. 
+\end{enumerate}
+
+\subsubsection{Understandability and Politeness Requirements}
+\begin{enumerate}[resume*] 
+    \item Any symbols must be understandable to the driver. \label{pocnf3} \\
+    \textbf{Fit Criterion:} All symbols used adhere to the standard set forth by
+    the Ontario Ministry of Transportation.
+\end{enumerate}
+
+\subsubsection{Accessibility Requirements}
+\noindent \emph{N/A}
+
+\subsection{Performance Requirements}
+\subsubsection{Speed and Latency Requirements}
+\begin{enumerate}[{PE}1.] 
+    \item The system must maintain a minimum of
+    $\hyperlink{min_framerate}{MIN\_FRAMERATE}$ during normal operation.\\
+    \textbf{Fit Criterion:} This requirement is stated with quantifiable terms
+    and does not need a fit criterion to validate it. 
+\end{enumerate}
+
+\subsubsection{Safety-Critical Requirements}
+\begin{enumerate}[resume*] 
+    \item The system must never direct driver user off of the road, for example,
+    onto the sidewalk.\\
+    \textbf{Fit Criterion:} Computer constructed maps of the parking lot will be
+    inspected by the developers to ensure no deviations from the marked
+    surfaces.
+    \item The system must never direct the user to park in a reserved area such
+    as a fire lane or across a driveway.\\
+    \textbf{Fit Criterion:} Computer constructed maps of the parking lot will be
+    inspected by the developers to ensure only marked parking spots are
+    recognized.
+\end{enumerate}
+
+\subsubsection{Precision or Accuracy Requirements}
+\noindent \emph{N/A}
+
+\subsubsection{Reliability and Availability Requirements}
+\noindent \emph{N/A}
+
+\subsubsection{Robustness or Fault-Tolerance Requirements}
+\begin{enumerate}[resume*] 
+    \item In the event of lost connection to the system back-end, the most
+    recent recommended parking spot will remain on the display.\\
+    \textbf{Fit Criterion:} This requirement is stated with quantifiable terms
+    and does not need a fit criterion to validate it. 
+\end{enumerate}
+
+\subsubsection{Capacity Requirements}
+\begin{enumerate}[resume*] 
+    \item The system back-end must support
+    $\hyperlink{concurrent_users}{CONCURRENT\_USERS}$ using the system at the
+    same time.\\
+    \textbf{Fit Criterion:} This requirement is stated with quantifiable terms
+    and does not need a fit criterion to validate it. 
+\end{enumerate}
+
+\subsubsection{Scalability or Extensibility Requirements}
+\begin{enumerate}[resume*] 
+    \item The system shall support $\hyperlink{parking_lots}{PARKING\_LOTS}$
+    parking areas within six months.\\
+    \textbf{Fit Criterion:} This requirement is stated with quantifiable terms
+    and does not need a fit criterion to validate it. 
+\end{enumerate}
+
+\subsubsection{Longevity Requirements}
+\noindent \emph{N/A}
+
+\subsection{Operational and Environmental Requirements}
+\subsubsection{Expected Physical Environment}
+\begin{enumerate}[{OE}1.] 
+    \item The system shall be operated by a driver in a vehicle. \label{pocnf4}
+    \\
+    \textbf{Fit Criterion:} The system is designed for a vehicle app or a device
+    to travel with.
+\end{enumerate}
+
+\subsubsection{Requirements for Interfacing with Adjacent Systems}
+\noindent \emph{N/A}
+
+\subsubsection{Productization Requirements}
+\noindent \emph{N/A}
+
+\subsubsection{Release Requirements}
+\begin{enumerate}[resume*] 
+    \item The system shall have a new release at least once a month as GitHub
+    commits.\\
+    \textbf{Fit Criterion:} Check GitHub commit log for update frequency.
+\end{enumerate}
+
+\subsection{Maintainability and Support Requirements}
+\subsubsection{Maintenance Requirements}
+\begin{enumerate}[{MA}1.] 
+    \item The system's software and hardware down time shall not affect each
+    other.\\
+    \textbf{Fit Criterion:} The software and hardware components are operable
+    without the other.
+\end{enumerate}
+
+\subsubsection{Supportability Requirements}
+\begin{enumerate}[resume*] 
+    \item The system shall provide drivers with instructions and contacts in the
+    interface.\\
+    \textbf{Fit Criterion:} At least
+    $\hyperlink{supportability_satisfaction}{SUPPORTABILITY\_SATISFACTION}$ of
+    surveyed drivers are satisfied with their support.
+\end{enumerate}
+
+\subsubsection{Adaptability Requirements}
+\noindent \emph{N/A}
+
+\subsection{Security Requirements}
+\subsubsection{Access Requirements}
+\begin{enumerate}[{SR}1.] 
+    \item The system's parking lot data shall be accessible only to the team and
+    to the property owner(s).\label{pocnf5} \\
+    \textbf{Fit Criterion:} The data is password protected.
+\end{enumerate}
+
+\subsubsection{Integrity Requirements}
+\begin{enumerate}[resume*] 
+    \item The system shall prevent inaccurate data from being stored.\\
+    \textbf{Fit Criterion:} Stress test the system with accurate and inaccurate
+    data and measure the data's accuracy.
+\end{enumerate}
+
+\subsubsection{Privacy Requirements}
+\begin{enumerate}[resume*] 
+    \item The system shall ask for permission to use the driver's location
+    data.\\
+    \textbf{Fit Criterion:} The system has a driver location agreement form.
+\end{enumerate}
+
+\subsubsection{Audit Requirements}
+\noindent \emph{N/A}
+
+\subsubsection{Immunity Requirements}
+\noindent \emph{N/A}
+
+\subsection{Cultural and Political Requirements}
+\subsubsection{Cultural Requirements}
+\noindent \emph{N/A}
+
+\subsubsection{Political Requirements}
+\noindent \emph{N/A}
+
+\subsection{Legal Requirements}
+\subsubsection{Compliance Requirements}
+\begin{enumerate}[{LR}1.] 
+    \item The system shall follow laws relating to device usage while driving.\\
+    \textbf{Fit Criterion:} The laws relating to device usage while driving
+    should be referenced and checked for compliance.
+\end{enumerate}
+\subsubsection{Standards Requirements}
+\noindent \emph{N/A}
+
+\subsection{Health and Safety Requirements}
+\begin{enumerate}[{HS}1.] 
+    \item The system shall not include flashing graphics or disturbing
+    imagery.\\
+    \textbf{Fit Criterion:} Drivers surveyed should not find the system
+    distracting or disturbing.
+\end{enumerate}
+
+\newpage
+\section{Priority Requirements}
+\label{priorityreqs}
+High priority requirements are identified here, as well as requirements that are
+unlikely to change.
+
+\subsection{Requirements for the Proof of Concept}
+\textbf{November 7:} The following requirements will need to be met at least one
+week before the proof of concept demonstrations begin, from November 14-25. The
+proof of concept plan can be found within the
+\href{https://github.com/parkd-app/park-d/blob/main/docs/DevelopmentPlan/DevelopmentPlan.pdf}
+{Development Plan}. This is to allow time for debugging and polish. These
+requirements are fundamental to the basic function of the system.
+\begin{itemize}
+    \item \hyperref[poc1]{BE2FR3}: The system must have access to useable
+    parking area footage.
+    \item \hyperref[poc2]{BE2FR5}: The system must be able to process footage to
+    construct a valid parking space.
+    \item \hyperref[poc3]{BE4FR12}: The system will be demonstrated with a
+    single parking space.
+    \item \hyperref[poc4]{BE7FR19}: The system must recognize and relay to the
+    driver when they have arrived to the space.
+    \item \hyperref[poc5]{BE7FR20}: The system must mark the space as full once
+    a vehicle has entered it.
+    \item \hyperref[pocnf1]{LF1}: The user interface should not need to be
+    simplified over time.
+    \item \hyperref[pocnf2]{UH3}: With only basic functionality, minimal
+    instruction should be needed.
+    \item \hyperref[pocnf3]{UH4}: We should not introduce any symbols that would
+    be unfamiliar to the driver.
+    \item \hyperref[pocnf4]{OE1}: The system will be developed for drivers.
+    \item \hyperref[pocnf5]{SR1}: The video feed should never be accessible from
+    the front-end, because it is processed by the back-end.
 \end{itemize}
 
-\plt{Every IM should map to at least one requirement, but not every requirement
-  has to map to a corresponding IM.}
+\subsection{Requirements for Full Revisions}
+\textbf{January 31:} All other requirements set out in this document are to be
+met two weeks before the Revision 0 demonstration, which will occur between
+February 6-17. The additional margin is because extensive debugging and testing
+will likely be needed at this stage. At this time, the team will also begin to
+consider the addition of further requirements to meet our stretch goals.
 
-\subsection{Nonfunctional Requirements}
+\textbf{March 13:} Revision 1 will likely include the addition of some stretch
+goals, for which requirements will be added to this document. Those requirements
+will need to be fulfilled at least one week prior to the Revision 1
+demonstrations, on March 20-31.
 
-\plt{List your nonfunctional requirements.  You may consider using a fit
-  criterion to make them verifiable.}
-\plt{The goal is for the nonfunctional requirements to be unambiguous, abstract
-  and verifiable.  This isn't easy to show succinctly, so a good strategy may be
-to give a ``high level'' view of the requirement, but allow for the details to
-be covered in the Verification and Validation document.}
-\plt{An absolute requirement on a quality of the system is rarely needed.  For
-  instance, an accuracy of 0.0101 \% is likely fine, even if the requirement is
-  for 0.01 \% accuracy.  Therefore, the emphasis will often be more on
-  describing now well the quality is achieved, through experimentation, and
-  possibly theory, rather than meeting some bar that was defined a priori.}
-\plt{You do not need an entry for correctness in your NFRs.  The purpose of the
-  SRS is to record the requirements that need to be satisfied for correctness.
-  Any statement of correctness would just be redundant. Rather than discuss
-  correctness, you can characterize how far away from the correct (true)
-  solution you are allowed to be.  This is discussed under accuracy.}
+\subsection{Requirements Unlikely to Change}
+Non-functional requirements relating to the user experience are unlikely to
+change because they do not rely on any specific software or hardware
+limitations. Instead, they specify how we will make some design decisions on the
+front-end to benefit drivers and administrators. 
 
-\noindent \begin{itemize}
+Requirements relating to the law such as parking in disabled parking spaces are
+unlikely to change because these laws are well established and unlikely to
+change. It would be irresponsible to release an application that recommends
+breaking the law and risking a ticket or a tow.
 
-\item[NFR\refstepcounter{nfrnum}\thenfrnum \label{NFR_Accuracy}:]
-  \textbf{Accuracy} \plt{Characterize the accuracy by giving the context/use for
-    the software.  Maybe something like, ``The accuracy of the computed
-    solutions should meet the level needed for $<$engineering or scientific
-    application$>$.  The level of accuracy achieved by \progname{} shall be
-    described following the procedure given in Section~X of the Verification and
-    Validation Plan.''  A link to the VnV plan would be a nice extra.}
-
-\item[NFR\refstepcounter{nfrnum}\thenfrnum \label{NFR_Usability}:] \textbf{Usability}
-  \plt{Characterize the usability by giving the context/use for the software.
-    You should likely reference the user characteristics section.  The level of
-    usability achieved by the software shall be described following the
-    procedure given in Section~X of the Verification and Validation Plan.  A
-    link to the VnV plan would be a nice extra.}
-
-\item[NFR\refstepcounter{nfrnum}\thenfrnum \label{NFR_Maintainability}:]
-  \textbf{Maintainability} \plt{The effort required to make any of the likely
-    changes listed for \progname{} should be less than FRACTION of the original
-    development time.  FRACTION is then a symbolic constant that can be defined
-    at the end of the report.}
-
-\item[NFR\refstepcounter{nfrnum}\thenfrnum \label{NFR_Portability}:]
-  \textbf{Portability} \plt{This NFR is easier to write than the others.  The
-    systems that \progname{} should run on should be listed here.  When possible
-    the specific versions of the potential operating environments should be
-    given.  To make the NFR verifiable a statement could be made that the tests
-    from a given section of the VnV plan can be successfully run on all of the
-    possible operating environments.}
-
-\item Other NFRs that might be discussed include verifiability,
-  understandability and reusability.
-
-\end{itemize}
-
-\section{Likely Changes}    
-
-\noindent \begin{itemize}
-
-\item[LC\refstepcounter{lcnum}\thelcnum\label{LC_meaningfulLabel}:] \plt{Give
-    the likely changes, with a reference to the related assumption (aref), as appropriate.}
-
-\end{itemize}
-
-\section{Unlikely Changes}    
-
-\noindent \begin{itemize}
-
-\item[LC\refstepcounter{lcnum}\thelcnum\label{LC_meaningfulLabel}:] \plt{Give
-    the unlikely changes.  The design can assume that the changes listed will
-    not occur.}
-
-\end{itemize}
-
-\section{Traceability Matrices and Graphs}
-
-The purpose of the traceability matrices is to provide easy references on what
-has to be additionally modified if a certain component is changed.  Every time a
-component is changed, the items in the column of that component that are marked
-with an ``X'' may have to be modified as well.  Table~\ref{Table:trace} shows the
-dependencies of theoretical models, general definitions, data definitions, and
-instance models with each other. Table~\ref{Table:R_trace} shows the
-dependencies of instance models, requirements, and data constraints on each
-other. Table~\ref{Table:A_trace} shows the dependencies of theoretical models,
-general definitions, data definitions, instance models, and likely changes on
-the assumptions.
-
-\plt{You will have to modify these tables for your problem.}
-
-\plt{The traceability matrix is not generally symmetric.  If GD1 uses A1, that
-  means that GD1's derivation or presentation requires invocation of A1.  A1
-  does not use GD1.  A1 is ``used by'' GD1.}
-
-\plt{The traceability matrix is challenging to maintain manually.  Please do
-  your best.  In the future tools (like Drasil) will make this much easier.}
-
-\afterpage{
+\newpage
+\section{Traceability Between Functional and Non-Functional Requirements}
+\label{traceabilityMatrixSection}
+\subsection{Traceability Between Test Cases and Requirements}
 \begin{landscape}
-\begin{table}[h!]
-\centering
-\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}
-\hline
-	& \aref{A_OnlyThermalEnergy}& \aref{A_hcoeff}& \aref{A_mixed}& \aref{A_tpcm}& \aref{A_const_density}& \aref{A_const_C}& \aref{A_Newt_coil}& \aref{A_tcoil}& \aref{A_tlcoil}& \aref{A_Newt_pcm}& \aref{A_charge}& \aref{A_InitTemp}& \aref{A_OpRangePCM}& \aref{A_OpRange}& \aref{A_htank}& \aref{A_int_heat}& \aref{A_vpcm}& \aref{A_PCM_state}& \aref{A_Pressure} \\
-\hline
-\tref{T_COE}        & X& & & & & & & & & & & & & & & & & & \\ \hline
-\tref{T_SHE}        & & & & & & & & & & & & & & & & & & & \\ \hline
-\tref{T_LHE}        & & & & & & & & & & & & & & & & & & & \\ \hline
-\dref{NL}           & & X& & & & & & & & & & & & & & & & & \\ \hline
-\dref{ROCT}         & & & X& X& X& X& & & & & & & & & & & & & \\ \hline
-\ddref{FluxCoil}    & & & & & & & X& X& X& & & & & & & & & & \\ \hline
-\ddref{FluxPCM}     & & & X& X& & & & & & X& & & & & & & & & \\ \hline
-\ddref{D_HOF}       & & & & & & & & & & & & & & & & & & & \\ \hline
-\ddref{D_MF}        & & & & & & & & & & & & & & & & & & & \\ \hline
-\iref{ewat}         & & & & & & & & & & & X& X& & X& X& X& & & X \\ \hline
-\iref{epcm}         & & & & & & & & & & & & X& X& & & X& X& X& \\ \hline
-\iref{I_HWAT}       & & & & & & & & & & & & & & X& & & & & X \\ \hline
-\iref{I_HPCM}       & & & & & & & & & & & & & X& & & & & X & \\ \hline
-\lcref{LC_tpcm}     & & & & X& & & & & & & & & & & & & & & \\ \hline
-\lcref{LC_tcoil}    & & & & & & & & X& & & & & & & & & & & \\ \hline
-\lcref{LC_tlcoil}   & & & & & & & & & X& & & & & & & & & & \\ \hline
-\lcref{LC_charge}   & & & & & & & & & & & X& & & & & & & & \\ \hline
-\lcref{LC_InitTemp} & & & & & & & & & & & & X& & & & & & & \\ \hline
-\lcref{LC_htank}    & & & & & & & & & & & & & & & X& & & & \\
-\hline
-\end{tabular}
-\caption{Traceability Matrix Showing the Connections Between Assumptions and Other Items}
-\label{Table:A_trace}
+\begin{table}[htbp]
+\caption{Traceability Matrix for Functional and Non-Functional Requirements -
+Part 1} \label{traceMatrix1}
+\begin{tabularx}{\textwidth}{cc|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}
+\cline{3-16}
+& & \multicolumn{14}{ c|}{Non-Functional Requirements} \\ \cline{3-16} & & LF1
+& LF2 & UH1 & UH2 & UH3 & UH4 & PE1 & PE2 & PE3 & PE4 & PE5 & PE6 & OE1 & OE2
+\\ \cline{1-16} \multicolumn{1}{ |c| }{\multirow{31}{*}{Functional Requirements}
+} & \multicolumn{1}{|c| } {FR1}   &X&X&X&X& &X&X&X&X& &X& &X& \\ \cline{2-16}
+\multicolumn{1}{|c| }{} 	                  & \multicolumn{1}{|c| }{FR2}
+&X&X&X&X& &X&X&X&X& & & &X& \\ \cline{2-16} \multicolumn{1}{|c| }{}
+& \multicolumn{1}{|c| } {FR3}   & & & & & & & &X&X& & & & & \\ \cline{2-16}
+\multicolumn{1}{|c| }{}                        & \multicolumn{1}{ |c| } {FR4}  &
+& & & & & & & & &X& & & & \\ \cline{2-16} \multicolumn{1}{|c| }{}
+& \multicolumn{1}{ |c| } {FR5}  & & & & & & & &X&X&X& & & & \\ \cline{2-16}
+\multicolumn{1}{|c| }{}                        & \multicolumn{1}{ |c| } {FR6}
+&X&X&X&X&X&X&X& & & & & &X& \\ \cline{2-16} \multicolumn{1}{|c| }{}
+& \multicolumn{1}{ |c| } {FR7}  &X&X& &X&X&X&X&X&X&X& & & & \\ \cline{2-16}
+\multicolumn{1}{|c| }{}                        & \multicolumn{1}{ |c| } {FR8}
+&X&X&X&X&X&X&X& & & & & &X& \\ \cline{2-16} \multicolumn{1}{|c| }{}
+& \multicolumn{1}{ |c| } {FR9}  & & & & &X& &X& & & & & & & \\ \cline{2-16}
+\multicolumn{1}{|c| }{}                        & \multicolumn{1}{ |c| } {FR10} &
+& & & &X& &X&X&X&X& & &X& \\ \cline{2-16} \multicolumn{1}{|c| }{}
+& \multicolumn{1}{ |c| } {FR11} &X&X& &X&X&X&X&X&X&X& & &X& \\ \cline{2-16}
+\multicolumn{1}{|c| }{}                        & \multicolumn{1}{ |c| } {FR12} &
+& & & & & &X&X&X&X& & &X& \\ \cline{2-16} \multicolumn{1}{|c| }{}
+& \multicolumn{1}{ |c| } {FR13} & & & & &X& &X&X&X&X& & &X& \\ \cline{2-16}
+\multicolumn{1}{|c| }{}                        & \multicolumn{1}{ |c| } {FR14}
+&X&X& &X& &X&X&X&X& & & &X& \\ \cline{2-16} \multicolumn{1}{|c| }{}
+& \multicolumn{1}{ |c| } {FR15} &X&X& &X& &X&X&X&X& & & &X& \\ \cline{2-16}
+\multicolumn{1}{|c| }{}                        & \multicolumn{1}{ |c| } {FR16} &
+& & & &X& &X&X&X&X&X& &X& \\ \cline{2-16} \multicolumn{1}{|c| }{}
+& \multicolumn{1}{ |c| } {FR17} & & & & &X& &X&X&X& & & &X& \\ \cline{2-16}
+\multicolumn{1}{|c| }{}                        & \multicolumn{1}{ |c| } {FR18}
+&X&X& &X&X&X&X&X&X&X& & &X& \\ \cline{2-16} \multicolumn{1}{|c| }{}
+& \multicolumn{1}{ |c| } {FR19} &X&X& &X&X&X&X&X&X& & & &X& \\ \cline{2-16}
+\multicolumn{1}{|c| }{}                        & \multicolumn{1}{ |c| } {FR20} &
+& & & & & &X& & & & & & & \\ \cline{2-16} \multicolumn{1}{|c| }{}
+&   
+\multicolumn{1}{ |c| } {FR21} &X&X& &X&X&X&X& & & & & &X& \\ \cline{2-16}
+\multicolumn{1}{|c| }{}                        &   
+\multicolumn{1}{ |c| } {FR22} &X&X& &X& &X&X& & & & & &X& \\ \cline{2-16}
+\multicolumn{1}{|c| }{}                        &   
+\multicolumn{1}{ |c| } {FR23} &X&X& &X& &X&X& & & & & &X& \\ \cline{2-16}
+\multicolumn{1}{|c| }{}                        &   
+\multicolumn{1}{ |c| } {FR24} & & & & &X& &X& & & & & &X& \\ \cline{2-16}
+\multicolumn{1}{|c| }{}                        &   
+\multicolumn{1}{ |c| } {FR25} &X&X& &X&X&X&X& & & & & &X& \\ \cline{2-16}
+\multicolumn{1}{|c| }{}                        &   
+\multicolumn{1}{ |c| } {FR26} & & & & & & &X& & & & & & & \\ \cline{2-16}
+\multicolumn{1}{|c| }{}                        &   
+\multicolumn{1}{ |c| } {FR27} & & & & & & & & & & & & & & \\ \cline{2-16}
+\multicolumn{1}{|c| }{}                        &   
+\multicolumn{1}{ |c| } {FR28} & & & & & & &X& & & & & & & \\ \cline{2-16}
+\multicolumn{1}{|c| }{}                        &   
+\multicolumn{1}{ |c| } {FR29} & & & & & & & & & & & & & & \\ \cline{2-16}
+\multicolumn{1}{|c| }{}                        &   
+\multicolumn{1}{ |c| } {FR30} & & & & & & &X& & & & & & & \\ \cline{2-16}
+\multicolumn{1}{|c| }{}                        &   
+\multicolumn{1}{ |c| } {FR31} & & & & & & &X& & & & & & & \\ \cline{1-16}
+\end{tabularx}
+\end{table}
+\newpage
+\begin{table}[htbp]
+\caption{Traceability Matrix for Functional and Non-Functional Requirements -
+Part 2} \label{traceMatrix1}
+\begin{tabularx}{\textwidth}{cc|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}
+\cline{3-9}
+& & \multicolumn{7}{ c|}{Non-Functional Requirements} \\ \cline{3-9} & & MA1  &
+MA2 & SR1 & SR2 & SR3 & LR1 & HS1  \\ \cline{1-9} \multicolumn{1}{ |c|
+}{\multirow{31}{*}{Functional Requirements} } & \multicolumn{1}{|c| } {FR1} & &
+& & &X& & \\ \cline{2-9} \multicolumn{1}{|c| }{} 	                  &
+\multicolumn{1}{|c| }{FR2} & &X& & &X& &X  \\ \cline{2-9} \multicolumn{1}{|c|
+}{}                        & \multicolumn{1}{|c| } {FR3} & & &X&X& & & \\
+\cline{2-9} \multicolumn{1}{|c| }{}                        & \multicolumn{1}{
+|c| } {FR4}  &X&   &  X&X&&& \\ \cline{2-9} \multicolumn{1}{|c| }{}
+& \multicolumn{1}{ |c| } {FR5}  &   &  X&X&&&& \\ \cline{2-9}
+\multicolumn{1}{|c| }{}                        & \multicolumn{1}{ |c| } {FR6} &
+X &   & &&X&X& \\ \cline{2-9} \multicolumn{1}{|c| }{}                        &
+\multicolumn{1}{ |c| } {FR7} &   &   & &&&&X \\ \cline{2-9} \multicolumn{1}{|c|
+}{}                        & \multicolumn{1}{ |c| } {FR8} & X &   & &&&& \\
+\cline{2-9} \multicolumn{1}{|c| }{}                        & \multicolumn{1}{
+|c| } {FR9} & X &   &X&&&& \\ \cline{2-9} \multicolumn{1}{|c| }{}
+& \multicolumn{1}{ |c| } {FR10} & X &   & &&&X& \\ \cline{2-9}
+\multicolumn{1}{|c| }{}                        & \multicolumn{1}{ |c| } {FR11} &
+X &   & &&&X&X \\ \cline{2-9} \multicolumn{1}{|c| }{}                        &
+\multicolumn{1}{ |c| } {FR12} & X &   & &&&X&X \\ \cline{2-9}
+\multicolumn{1}{|c| }{}                        & \multicolumn{1}{ |c| } {FR13} &
+X &   & &&&X&X \\ \cline{2-9} \multicolumn{1}{|c| }{}                        &
+\multicolumn{1}{ |c| } {FR14} &   &   & &X&&& \\ \cline{2-9} \multicolumn{1}{|c|
+}{}                        & \multicolumn{1}{ |c| } {FR15} &   &   & &X&&& \\
+\cline{2-9} \multicolumn{1}{|c| }{}                        & \multicolumn{1}{
+|c| } {FR16} &X   &   & &&X&& \\ \cline{2-9} \multicolumn{1}{|c| }{}
+& \multicolumn{1}{ |c| } {FR17} &   &  X& &&&& \\ \cline{2-9}
+\multicolumn{1}{|c| }{}                        & \multicolumn{1}{ |c| } {FR18} &
+&  X& &&&& \\ \cline{2-9} \multicolumn{1}{|c| }{}                        &
+\multicolumn{1}{ |c| } {FR19} &X  &   & &&&& \\ \cline{2-9} \multicolumn{1}{|c|
+}{}                        & \multicolumn{1}{ |c| } {FR20} &   &   &&X&&& \\
+\cline{2-9} \multicolumn{1}{|c| }{}                        &   
+\multicolumn{1}{ |c| } {FR21} &   &   & &&&X&X \\ \cline{2-9}
+\multicolumn{1}{|c| }{}                        &   
+\multicolumn{1}{ |c| } {FR22} &   &  &X&&X&& \\ \cline{2-9} \multicolumn{1}{|c|
+}{}                        &   
+\multicolumn{1}{ |c| } {FR23} &   &  &X&X&X&X&X \\ \cline{2-9}
+\multicolumn{1}{|c| }{}                        &   
+\multicolumn{1}{ |c| } {FR24} &   &  &X&&&X& \\ \cline{2-9} \multicolumn{1}{|c|
+}{}                        &   
+\multicolumn{1}{ |c| } {FR25} &   &   & &&X&X&X \\ \cline{2-9}
+\multicolumn{1}{|c| }{}                        &   
+\multicolumn{1}{ |c| } {FR26} &   &  &X&X&&& \\ \cline{2-9} \multicolumn{1}{|c|
+}{}                        &   
+\multicolumn{1}{ |c| } {FR27} &   &  &X&X&&& \\ \cline{2-9} \multicolumn{1}{|c|
+}{}                        &   
+\multicolumn{1}{ |c| } {FR28} &   &   &&X&&& \\ \cline{2-9} \multicolumn{1}{|c|
+}{}                        &   
+\multicolumn{1}{ |c| } {FR29} &   &   & &&X&& \\ \cline{2-9} \multicolumn{1}{|c|
+}{}                        &   
+\multicolumn{1}{ |c| } {FR30} &   &  &X&X&X&& \\ \cline{2-9} \multicolumn{1}{|c|
+}{}                        &   
+\multicolumn{1}{ |c| } {FR31} &   &   &&X&X&& \\ \cline{1-9}
+\end{tabularx}
 \end{table}
 \end{landscape}
-}
-
-\begin{table}[h!]
-\centering
-\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}
-\hline        
-	& \tref{T_COE}& \tref{T_SHE}& \tref{T_LHE}& \dref{NL}& \dref{ROCT} & \ddref{FluxCoil}& \ddref{FluxPCM} & \ddref{D_HOF}& \ddref{D_MF}& \iref{ewat}& \iref{epcm}& \iref{I_HWAT}& \iref{I_HPCM} \\
-\hline
-\tref{T_COE}     & & & & & & & & & & & & & \\ \hline
-\tref{T_SHE}     & & & X& & & & & & & & & & \\ \hline
-\tref{T_LHE}     & & & & & & & & & & & & & \\ \hline
-\dref{NL}        & & & & & & & & & & & & & \\ \hline
-\dref{ROCT}      & X& & & & & & & & & & & & \\ \hline
-\ddref{FluxCoil} & & & & X& & & & & & & & & \\ \hline
-\ddref{FluxPCM}  & & & & X& & & & & & & & & \\ \hline
-\ddref{D_HOF}    & & & & & & & & & & & & & \\ \hline
-\ddref{D_MF}     & & & & & & & & X& & & & & \\ \hline
-\iref{ewat}      & & & & & X& X& X& & & & X& & \\ \hline
-\iref{epcm}      & & & & & X& & X& & X& X& & & X \\ \hline
-\iref{I_HWAT}    & & X& & & & & & & & & & & \\ \hline
-\iref{I_HPCM}    & & X& X& & & & X& X& X& & X& & \\
-\hline
-\end{tabular}
-\caption{Traceability Matrix Showing the Connections Between Items of Different Sections}
-\label{Table:trace}
-\end{table}
-
-\begin{table}[h!]
-\centering
-\begin{tabular}{|c|c|c|c|c|c|c|c|}
-\hline
-	& \iref{ewat}& \iref{epcm}& \iref{I_HWAT}& \iref{I_HPCM}& \ref{sec_DataConstraints}& \rref{R_RawInputs}& \rref{R_MassInputs} \\
-\hline
-\iref{ewat}            & & X& & & & X& X \\ \hline
-\iref{epcm}            & X& & & X& & X& X \\ \hline
-\iref{I_HWAT}          & & & & & & X& X \\ \hline
-\iref{I_HPCM}          & & X& & & & X& X \\ \hline
-\rref{R_RawInputs}     & & & & & & & \\ \hline
-\rref{R_MassInputs}    & & & & & & X& \\ \hline
-\rref{R_CheckInputs}   & & & & & X& & \\ \hline
-\rref{R_OutputInputs}  & X& X& & & & X& X \\ \hline
-\rref{R_TempWater}     & X& & & & & & \\ \hline 
-\rref{R_TempPCM}       & & X& & & & & \\ \hline
-\rref{R_EnergyWater}   & & & X& & & & \\ \hline
-\rref{R_EnergyPCM}     & & & & X& & & \\ \hline
-\rref{R_VerifyOutput}  & & & X& X& & & \\ \hline
-\rref{R_timeMeltBegin} & & X& & & & & \\ \hline
-\rref{R_timeMeltEnd}   & & X& & & & & \\ 
-\hline
-\end{tabular}
-\caption{Traceability Matrix Showing the Connections Between Requirements and Instance Models}
-\label{Table:R_trace}
-\end{table}
-
-The purpose of the traceability graphs is also to provide easy references on
-what has to be additionally modified if a certain component is changed.  The
-arrows in the graphs represent dependencies. The component at the tail of an
-arrow is depended on by the component at the head of that arrow. Therefore, if a
-component is changed, the components that it points to should also be
-changed. Figure~\ref{Fig_ATrace} shows the dependencies of theoretical models,
-general definitions, data definitions, instance models, likely changes, and
-assumptions on each other. Figure~\ref{Fig_RTrace} shows the dependencies of
-instance models, requirements, and data constraints on each other.
-
-% \begin{figure}[h!]
-% 	\begin{center}
-% 		%\rotatebox{-90}
-% 		{
-% 			\includegraphics[width=\textwidth]{ATrace.png}
-% 		}
-% 		\caption{\label{Fig_ATrace} Traceability Matrix Showing the Connections Between Items of Different Sections}
-% 	\end{center}
-% \end{figure}
-
-
-% \begin{figure}[h!]
-% 	\begin{center}
-% 		%\rotatebox{-90}
-% 		{
-% 			\includegraphics[width=0.7\textwidth]{RTrace.png}
-% 		}
-% 		\caption{\label{Fig_RTrace} Traceability Matrix Showing the Connections Between Requirements, Instance Models, and Data Constraints}
-% 	\end{center}
-% \end{figure}
-
-\section{Development Plan}
-
-\plt{This section is optional.  It is used to explain the plan for developing
-  the software.  In particular, this section gives a list of the order in which
-  the requirements will be implemented.  In the context of a course  this is
-  where you can indicate which requirements will be implemented as part of the
-  course, and which will be ``faked'' as future work.  This section can be
-  organized as a prioritized list of requirements, or it could should the
-  requirements that will be implemented for ``phase 1'', ``phase 2'', etc.}
-
-\section{Values of Auxiliary Constants}
-
-\plt{Show the values of the symbolic parameters introduced in the report.}
-
-\plt{The definition of the requirements will likely call for SYMBOLIC\_CONSTANTS.
-Their values are defined in this section for easy maintenance.}
-
-\plt{The value of FRACTION, for the Maintainability NFR would be given here.}
 
 \newpage
-
-\bibliographystyle {plainnat}
-\bibliography {../../refs/References}
-
-\newpage
-
-\noindent \plt{The following is not part of the template, just some things to consider
-  when filing in the template.}
-
-\noindent \plt{Grammar, flow and \LaTeX advice:
-\begin{itemize}
-\item For Mac users \texttt{*.DS\_Store} should be in \texttt{.gitignore}
-\item \LaTeX{} and formatting rules
-\begin{itemize}
-\item Variables are italic, everything else not, includes subscripts (link to
-  document)
-\begin{itemize}
-\item \href{https://physics.nist.gov/cuu/pdf/typefaces.pdf}{Conventions}
-\item Watch out for implied multiplication
-\end{itemize}
-\item Use BibTeX
-\item Use cross-referencing
-\end{itemize}
-\item Grammar and writing rules
-\begin{itemize}
-\item Acronyms expanded on first usage (not just in table of acronyms)
-\item ``In order to'' should be ``to''
-\end{itemize}
-\end{itemize}}
-
-\noindent \plt{Advice on using the template:
-\begin{itemize}
-\item Difference between physical and software constraints
-\item Properties of a correct solution means \emph{additional} properties, not
-  a restating of the requirements (may be ``not applicable'' for your problem).
-  If you have a table of output constraints, then these are properties of a
-  correct solution.
-\item Assumptions have to be invoked somewhere
-\item ``Referenced by'' implies that there is an explicit reference
-\item Think of traceability matrix, list of assumption invocations and list of
-  reference by fields as automatically generatable
-\item If you say the format of the output (plot, table etc), then your
-  requirement could be more abstract
-\end{itemize}
-}
-
-\newpage{}
-\section*{Appendix --- Reflection}
-
-The information in this section will be used to evaluate the team members on the
-graduate attribute of Lifelong Learning.  Please answer the following questions:
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Project Issues
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Project Issues}
+\subsection{Open Issues}
 \begin{enumerate}
-  \item What knowledge and skills will the team collectively need to acquire to
-  successfully complete this capstone project?  Examples of possible knowledge
-  to acquire include domain specific knowledge from the domain of your
-  application, or software engineering knowledge, mechatronics knowledge or
-  computer science knowledge.  Skills may be related to technology, or writing,
-  or presentation, or team management, etc.  You should look to identify at
-  least one item for each team member.
-  \item For each of the knowledge areas and skills identified in the previous
-  question, what are at least two approaches to acquiring the knowledge or
-  mastering the skill?  Of the identified approaches, which will each team
-  member pursue, and why did they make this choice?
+    \item There are many laws regarding the use of smartphones when operating a
+    vehicle. We must make sure that our application complies with any laws that
+    may apply as well as allow drivers to interact with our application in a way
+    that puts safety and the law first.
+    
+    \item We plan to use the Global Positioning System location of the driver's
+    phone to track them around the parking lot. This will help us guide them to
+    an available parking spot. However, the accuracy of \term{GPS} may not be
+    high enough to consistently track the driver's location around a parking
+    lot.
 \end{enumerate}
+
+\subsection{Off-the-Shelf Solutions}
+\begin{enumerate}
+    \item ParKam App\\
+    ParKam is an application that is very similar to what we are trying to
+    develop. They also use cameras to detect parking spots and navigate users to
+    available spots. Although they have not entered the North American market,
+    they seem to be doing pretty well in other countries such as Australia,
+    Brazil, Dubai, the Netherlands, and Israel where they are based. We also
+    could not find any videos of the app working so we could not judge how well
+    their solution works.
+    
+    \item Spot Sensor\\
+    From personal experience, some indoor or underground parking lots in Toronto
+    have sensors above each parking spot. It uses some sort of ultrasonic sensor
+    to detect if a car is occupying the spot. If the spot is empty, a light on
+    the sensor turns green and if the spot is occupied, the light turns red.
+    This solution is pretty good as you can quite easily spot the green light
+    and see which area the empty spot is. However, there are several issues with
+    this solution. One main problem is that it requires installing hardware at
+    every parking spot. Furthermore, the light does not tell you exactly how to
+    get to the parking spot.
+\end{enumerate}
+
+\subsection{New Problems}
+\subsubsection{Effects on the Current Environment}
+The Park'd app should relieve traffic around parking lots as less people would
+be driving around a parking lot looking for empty spots. This should allow more
+cars to quickly get to a parking spot and less cars roaming the parking lot.
+This would also make the parking lots safer for pedestrian since less traffic
+would reduce the chance for accidents.
+
+\subsubsection{Effects on the Installed Systems}
+N/A
+
+\subsubsection{Potential User Problems}
+A major potential user problem would be users getting distracted when using the
+app in their car. Users getting distracted when using our application could
+cause accidents which would be unacceptable. We have to make sure that safety is
+our number one priority when developing the app. Users should be able to use the
+app hands-free and without distractions when they are operating a vehicle.
+
+\subsubsection{Limitations in the Anticipated Implementation Environment That May Inhibit the New Product}
+
+N/A
+
+\subsubsection{Follow-up Problems}
+
+N/A
+
+\subsection{Tasks}
+\label{subsec:Tasks}
+The different tasks and schedule to successfully develop our application is
+outlined in the Gantt chart provided.
+
+\subsection{Migration to the New Product}
+
+\subsubsection{Requirements for Migration to the New Product}
+N/A
+
+\subsubsection{Data That Has to Be Modified or Translated for the New System}
+N/A
+
+\subsection{Risks}
+\begin{enumerate}
+    \item Inadequate time management is a key risk to the development of our
+    app. While working on creating the app, our team is also busy working and
+    studying for other courses throughout the year. It is important for the team
+    to keep in mind that we have other responsibilities to take care of besides
+    this project. We often set very big goals for ourselves and we need to keep
+    each other in check to make sure we are being realistic with our goals and
+    work. We only have two terms to complete this project, which may seem like a
+    lot of time now but it will pass by quickly and we have to stay on top of
+    our plans.
+    
+    \item There are some technologies that are new for most or all of our team
+    members. One of these technologies is machine vision and machine learning.
+    The team will have to learn about these technologies as we develop our
+    project. This could pose risks of obstructions and road blocks in our
+    development which could take more time than usual to figure out as we are
+    learning as we go.
+\end{enumerate}
+
+\subsection{Costs}
+\begin{enumerate}
+    \item Monetary Costs: \\
+    Some of the technologies we plan to use, such as hosting services, have free
+    versions or credit that are available for University students. Cameras would
+    be useful to capture our own footage of scale models or real parking lots
+    for training and testing purposes. This can be done for free with any
+    smartphone or webcam any team member owns. We can also use a RaspberryPi and
+    camera module to have a standalone system that can record footage and even
+    send a live feed. A RaspberryPi and camera module would cost around \$50
+    dollars.
+    
+    \item Time Costs: \\
+    Time costs are difficult to estimate as each requirement or feature will
+    take different amounts of time to complete. Unforeseen issues may also
+    affect the duration to develop certain features. A rough estimate based on
+    our six business events would be 1.5 months, assuming an average of one week
+    of development per business event to get our application to a state that can
+    be considered a Minimum Viable Product. On top of this, we would still have
+    to complete testing, documentation, and improving our existing features
+    before moving on to stretch goals. 
+    
+\end{enumerate}
+
+\subsection{User Documentation and Training}
+
+\subsubsection{User Documentation Requirements}
+The following is a list of documentation that will be available to the user:
+\begin{enumerate}
+    \item User manual \\
+    The User manual explains every feature of the application and how to use it
+    to find a parking spot. This can be organized by the business events
+    outlined in Section 3.2. 
+    \item Installation manual \\
+    The Installation manual explains how the user can install the application
+    onto their device in easy-to-follow steps.
+\end{enumerate}
+These documents will be updated and modified as the team sees fit throughout the
+development process. 
+\subsubsection{Training Requirements}
+No specific training will be required for users to utilize our application. The
+contents in the user manual and installation manual should be sufficient to get
+users to start using our application.
+\subsection{Waiting Room}
+Refer to Section 3 of the Problem Statement document for Stretch Goals that the
+team plans to develop if time allows.
+\subsection{Ideas for Solutions}
+N/A
+
+\newpage
+\section{Appendix}
+\label{appendix}
+\subsection{Symbolic Parameters}
+The definition of the requirements will likely call for SYMBOLIC\_CONSTANTS.
+Their values are defined in this section for easy maintenance.\\ \\
+$\hypertarget{concurrent_users}{CONCURRENT\_USERS}$ = 10 \\
+$\hypertarget{default_delay}{DEFAULT\_DELAY}$ = 10 \\
+$\hypertarget{min_framerate}{MIN\_FRAMERATE}$ = 15 \\
+$\hypertarget{max_taps}{MAX\_TAPS}$ = 2 \\
+$\hypertarget{parking_lots}{PARKING\_LOTS}$ = 2 \\
+$\hypertarget{supportability_satisfaction}{SUPPORTABILITY\_SATISFACTION}$ = 80\%
+\\
+
+\subsection{Reflection}
+\label{reflection}
+\subsubsection{Presentation Skills}
+One of the skills that our team will collectively need to acquire is our
+presentation skills. Presenting in a professional setting is a nerve-wracking
+task, especially while being evaluated on our performance. For the team members
+that are pursuing the management program, this skill has been developed to a
+greater extent, but there is still room for improvement, since the audience for
+management projects vary vastly from the audience for the capstone project, as
+we will be presenting to teaching assistants, the professor, onlookers at the
+EXPO competition and even prospect students if chosen to present at May @ Mac.
+\\
+\\
+\noindent \textbf{Learning Approaches}
+\begin{enumerate}
+    \item Improvisational Skills: It is highly likely that something will go
+    wrong or important content was missed during the presentation. At this
+    moment, team members will have to go off the script to keep the show going
+    and to cover all the material required. 
+    \item Meditation Skills: When things do go wrong, remaining calm will allow
+    you to avoid voicing incoherent and irrelevant ideas, and derailing the
+    focus of other team members.
+\end{enumerate}
+
+\begin{itemize}
+    \item Almen: I believe that the approach of mastering improvisational skills
+    would be beneficial to me. I like keeping things very structured, and that
+    includes what is being said during a presentation. It provides a sense of
+    security for me knowing what is happening next. However, knowing the nature
+    of in-person presentations, there are a lot of factors that can affect the
+    overall structure including members forgetting their part, members are
+    unable to make it to the presentation due to unforeseen circumstances, etc.
+    On top of that, questions will be brought up that may not have been planned
+    for and it is up to us to come up with an appropriate response to them. In
+    the event that that happens, I will have to think on my toes which is
+    normally something that I am unprepared for. This is why I chose working on
+    improvisational skills as a way to work on my presentation skills.
+    \item Albert: My history with class presentations have always been on the
+    more theatrical side. Messing things up could be played for laughs and no
+    one would be thinking lesser. But, with a formal presentation, it isn't an
+    option. I should improve my skills through mediation, so that mess ups don't
+    ruin the professional tone. Maybe it could be done so well that it's like it
+    was all part of the plan.
+    \item David: My priority would be improving my improvisational skills,
+    because sometimes I have issues thinking on the spot about what I need to
+    say next. Nerves is definitely an issue as well but my strategy of plowing
+    through any slip-ups I make has worked well. The consequences of not knowing
+    what to say or saying the wrong thing are more serious.
+    \item Gary:I believe I can improve my presentation skills through mastering
+    improvisational skills as it almost always happen in a presentation where
+    you get interrupted by a question or some member forget their parts, and you
+    have to improvise in the crunch time to make sure the presentation continues
+    smoothly.
+    \item Jonathan: I have always been a firm believer that the presentation is
+    sometimes just as important as the product. Many people buy average products
+    just from the presentation and how it is marketed. One common example are
+    restaurants and cafes that serve average food but the plating is pretty or
+    the ambiance is nice. In the context of our project, a solid and smooth
+    presentation will give a better impression to our audience and in turn, they
+    will have a better impression of the product itself. To better guarantee a
+    solid presentation, strong improvisational skills are necessary to smooth
+    out any bumps that will occur. Being stuck in a presentation because of some
+    issue is the worst thing that can happen and having good improvisational
+    skills can help alleviate that problem.
+    \item Kabishan: I believe that I can improve my presentation skills by
+    mastering meditation skills. In doing so, not only will I be an asset to the
+    presentation, but I will also improve my ability to cope with stressful
+    situations outside of the capstone project. I often find myself unable to
+    think coherently or cohesively during stressful situations, so taking this
+    approach will allow me to calm down and think more rationally.
+\end{itemize}
+
+\subsubsection{Time Management}
+Another skill our team will need to collectively acquire is time management.
+With such a large scale project and course, there are many deliverables that
+need to be completed by a certain deadlines and a lot of work needed to be done.
+On top of the other assignments and midterms that we have with other courses, it
+is crucial to be able to manage our time wisely to ensure that we output
+something we are proud of and that is well thought out. \\[.1in]
+\noindent \textbf{Learning Approaches}
+\begin{enumerate}
+    \item Start sooner rather than later. More often than not, the amount of
+    work that needs to be done is often overlooked until we actually start
+    working on it. In times where we may think that the task would be easy and
+    start later would be the times where we would be rushing at the end to
+    complete it the most. By starting early, we would know exactly what needs to
+    be done, ask any questions that we have about topics we are unclear about,
+    and have more time to complete the work for this project as well as others. 
+    \item Determine our priorities and keeping track of them and their
+    deadlines. With all the capstone deliverables and other course work that we
+    have, it can be overwhelming to juggle between the different deadlines,
+    unsure of which one to start or complete first. By defining our priorities,
+    it can give us a direction as to what needs to be done and what goals need
+    to be accomplished. Furthermore, using software like Google Calendar or
+    Notion can help us stay on track with deadlines and also provide reminders
+    on when upcoming due dates are.
+\end{enumerate}
+
+\begin{itemize}
+    \item Almen: I believe the best approach would be to start sooner. With
+    everyone's different course work and schedules, knowing exactly what we need
+    to do will provide us ample time to accommodate for course work and
+    unexpected work items.
+    \item Albert: I've always been a start sooner and get small bits of work
+    done and have time at the end to change all that work, but, with a group of
+    6, we may have to start before the previous deliverable is finished to fit
+    in enough time for sync ups in everyone's schedule.
+    \item David: Starting sooner is best so I can avoid other deadlines.
+    Scheduling ahead of time is unreliable because we can't predict how long
+    each task will actually take. There will also be sufficient time to fix any
+    issues that crop up.
+    \item Gary: I would prefer to start sooner rather later so that we can find
+    issues at early stage and keep ourself in the right track.
+    \item Jonathan: I think that starting sooner would be the better approach as
+    we would give ourselves more time to accomplish our goals as well as
+    allowing larger margin of error for any problems or roadblocks that may come
+    up. However, starting sooner is not always easy to do and procrastination is
+    inevitable. In that sense, keeping track of our priorities and deadlines
+    will be key to making sure that we complete the work that must be done
+    before spending more time on aspects that can be considered a bonus.
+    \item Kabishan: I believe I would benefit from pursuing both approaches in
+    this regard, for starting sooner than later enables me to work through
+    problems at my own pace rather than rushing through all of the work near the
+    end. This would help me avoid silly mistakes and would give me ample time to
+    think of new ways to approach problems. With regards to the second approach,
+    it is best to prioritize my work in terms of deadlines or importance, which
+    I can easily determine by using software like Outlook Calendar or GitHub
+    Issues. This would also help me keep track of all of my deliverables for the
+    capstone project.
+\end{itemize}
+
+\subsubsection{Team Trust}
+A skill often ignored in student groups is team trust. We all know the pain of
+having someone not do their part and wait until the last minute to say something
+and have everyone else scramble to get it done. It's too late to think about
+what they should've done, so should build this skill now. One should trust
+others enough to say "I need help I can't get this done" and have understanding.
+We should aim to trust each other, not as students trying to do well, but as
+individuals of team caPstOneGroup making something great. \\[.1in]
+\noindent \textbf{Learning Approaches}
+\begin{enumerate}
+    \item Collaborate on other courses.
+    \item Include team building exercises in meetings.
+\end{enumerate}
+
+\begin{itemize}
+    \item Almen: I would prefer collaborating on other coursework with the team
+    as we have a lot of assignments, it is difficult to find time to work on
+    building that team trust outside working on other courses.
+    \item Albert: I prefer collaborating on other courses as there's already too
+    much work, and, with more work, someone is more likely to ask for help.
+    \item David: Collaborative study is a fantastic way to build relationships
+    and team chemistry. It can be far more effective than studying alone, and it
+    is a good way to get an idea of what my teammate's strengths are.
+    \item Gary: Collaborating on other courses would be suitable for me to build
+    team trust since there is already too much work and if we can build team
+    trust while working in other courses, that would be kill two birds with one
+    stone.
+    \item Jonathan: I think collaborating on other courses would be a great way
+    to build team trust. Since we are all in the same program, we share many
+    courses and can collaborate and help each other to do better in our courses.
+    Also, if collaborate with each other on other courses, we could finish any
+    work we have sooner and can allocate more time to develop our application.
+    \item Kabishan: I believe that by pursuing team building exercises in
+    meetings, I can improve this skill, for even a fun activity, such as playing
+    board games, can reveal our personalities and allow us to better understand
+    each other. By strengthening this facet of our relationship, we can also
+    improve our trust in each other.
+\end{itemize}
+
+\subsubsection{Front-end Development}
+Web frameworks will be unfamiliar to some members of our team, so all team
+members will need to familiarize themselves to make a good user interface. Even
+though not everyone will be working directly on the front-end, it will be
+helpful to have some knowledge while working on the back-end to help account for
+any information the front-end would need. Front-end requirements will help
+tailor back-end design decisions. \\
+\\
+\noindent \textbf{Learning approaches}:
+\begin{enumerate}
+    \item Use knowledge acquired from the web development group project in
+    SFWRENG 4HC3, Human-Computer Interfaces.
+    \item Self-study using a online tutorials.
+\end{enumerate}
+
+\begin{itemize}
+    \item Almen: With experience with front-end development, I believe that the
+    best approach would be to self-study using online tutorials. This way, I can
+    work at my own pace and refine what skills I would need to learn.
+    \item Albert: As someone with no web development experience, the resources
+    from SFWRENG 4HC3 make it seem like it's simple to do, but difficult to get
+    right. More effort is needed getting it to look right than to work right. 
+    \item David: I have no front-end experience so both avenues will be
+    necessary for me. 4HC3 requires a certain degree of self-study anyway
+    because the web frameworks that will be needed are not part of the
+    instructional plan.
+    \item Gary: I had experience with front-end development three years ago and
+    I have forgotten some of them, therefore the best approach for me is to
+    review and self-study again.
+    \item Jonathan: Since I already have some experience working with web
+    frameworks and front-end development, I will try to learn and apply the
+    knowledge from our SFWRENG 4HC3 course to apply good design practices that
+    can help make our interfaces more intuitive and easy-to-use.
+    \item Kabishan: I will use both approaches, where I will initially use the
+    resources provided in the Human-Computer Interface course to get my bearings
+    and then I will use a self-study online tutorial to seek additional
+    materials. This will allow me to become a front-end developer that is more
+    conscious about interface and interaction design.
+\end{itemize}
+
+\subsubsection{Machine Learning}
+Most of the team does not have experience with developing and training Machine
+Learning models, which is a key aspect of our project. We have already
+designated Gary to lead our development in the Machine Learning aspects but it
+is important for every team member to have a basic understanding of how the
+models work. This way, we would be able to better gauge the progress of the
+project and set more realistic goals for ourselves. \\
+\\
+\noindent \textbf{Learning approaches}:
+\begin{enumerate}
+    \item Designate a time during some meetings for Gary to explain the basics
+    of how to develop and train Machine Learning models.
+    \item Learn individually through online videos and tutorials.
+\end{enumerate}
+
+\begin{itemize}
+    \item Almen: I believe that it would be best to have Gary, our machine
+    learning expert, to designated time to teach us concepts regarding training
+    and developing machine learning models. This is because machine learning can
+    be a very daunting topic to learn and having someone who knows what is
+    needed would be the best.
+    \item Albert: Machine learning has always seemed intimidating and math
+    heavy, so I hope Gary can break it down easier than finding info online.
+    \item David: I hope that Gary will be a helpful mentor for all of us with
+    his prior \term{ML} experience. On the side, individual study will also be
+    important because of Gary's time constraints.
+    \item Gary: I will be responsible for explaining the details for trainging
+    and testing the \term{ML} model.
+    \item Jonathan: I would personally do both approaches. The machine learning
+    component is something that I want to focus on developing for this project
+    and I would need to learn more in-depth on my own time before working with
+    Gary to see how to put it all together in the context of our application.
+    \item Kabishan: I find that I learn better when mentored by a domain expert,
+    so I will be resorting to the option in which Gary will be explaining the
+    basics of machine learning. Of course, for questions to which even Gary does
+    not have the answers, I will be using the internet.
+\end{itemize}
+
+\subsubsection{Project Deployment}
+Project deployment and hosting a web service on the cloud could be hard for some
+of the group members. There are configuration including domain names needs to be
+set up and building docker image pipeline. This is essential for the success of
+our project and proof of concept demo. \\[.1in]
+\noindent \textbf{Learning approaches}:
+\begin{enumerate}
+    \item Designate a time during some meetings for Gary to explain the process
+    and make sure everyone can deploy their code into production.
+    \item Learn individually through online videos and tutorials on Microsoft
+    Azure help centre.
+\end{enumerate}
+
+\begin{itemize}
+    \item Almen: For project deployment, I would try to learn through designated
+    meetings conducted by Gary while supplementing the knowledge with online
+    videos and tutorials as I believe it would be beneficial to learn in future
+    endeavours.
+    \item Albert: Like with machine learning, I hope Gary can lead a peasant
+    such as myself to his level of understanding.
+    \item David: I will use online videos and tutorials to brush up on my
+    knowledge, while also attending any designated meetings to discuss the
+    content.
+    \item Gary: I will try to review the process individually through the Azure
+    documentation because this is the most effective way.
+    \item Jonathan: For project deployment, I would try to learn from videos and
+    tutorials online as I believe it is an important skill to have for future
+    projects and employment.
+    \item Kabishan: Once again, I find that I learn better when being mentored
+    by someone more experienced, as reading documentation can be tiresome and
+    often irrelevant. As such, I shall consult Gary for learning the basics of
+    project deployment and will seek alternate means to answer more advanced
+    queries.
+\end{itemize}
+
+\printbibliography
 
 \end{document}
