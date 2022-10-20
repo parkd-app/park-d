@@ -1,8 +1,30 @@
-\documentclass{article}
-
+\documentclass[12pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[margin=1in]{geometry}
+\usepackage[titletoc,title]{appendix}
+\usepackage[normalem]{ulem}
+\usepackage[shortlabels]{enumitem}
+\usepackage{graphicx}
 \usepackage{booktabs}
 \usepackage{tabularx}
+\usepackage{hyperref}
+\usepackage{indentfirst}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{fancyhdr}
+\usepackage{pdflscape}
+\usepackage{float}
+\usepackage{multirow}
+\usepackage{comment}
+\usepackage{etoolbox}
+\usepackage{enumitem}
 
+\hypersetup{ colorlinks=true,       % false: boxed links; true: colored links
+    linkcolor=red,          %
+    citecolor=green,        % color of links to bibliography
+    filecolor=magenta,      % color of file links
+    urlcolor=cyan           % color of external links
+}
+\renewcommand{\thesubsection}{4.6}
 \title{Hazard Analysis\\\progname}
 
 \author{\authname}
@@ -14,22 +36,289 @@
 
 \begin{document}
 
+\maketitle
+\thispagestyle{empty}
+
+~\newpage
+
+\pagenumbering{roman}
+
 \begin{table}[hp]
 \caption{Revision History} \label{TblRevisionHistory}
-\begin{tabularx}{\textwidth}{llX}
+\begin{tabularx}{\textwidth}{lll}
 \toprule
 \textbf{Date} & \textbf{Developer(s)} & \textbf{Change}\\
 \midrule
-Date1 & Name(s) & Description of changes\\
-Date2 & Name(s) & Description of changes\\
-... & ... & ...\\
+Oct 13 2022 & Albert, Almen, David, Gary, Jonathan, Kabishan & Revision 0\\
 \bottomrule
 \end{tabularx}
 \end{table}
 
+~\newpage
+
+\tableofcontents
+
+~\newpage
+
+\listoftables
+
+~\newpage
+
+\pagenumbering{arabic}
+
+\section{Introduction}
+
+This document is the hazard analysis of Park'd. A hazard is a property or
+condition in the system together with a condition in the environment that has
+the potential to cause harm or damage = loss (From Nancy Leveson's work).
+
+\section{Scope and Purpose of Hazard Analysis}
+The scope of the document is to identify the causes, effects, solutions, and new
+requirements for possible hazards within the system boundaries.
+
+\section{System Boundaries and Components}
+The system boundary and components consists of the following:
+\begin{itemize}
+    \item Camera
+    \begin{itemize}
+        \item An external hardware that captures the video and images of parking
+        lots and transmits this information as input for our machine-learning
+        model
+    \end{itemize}
+    \item Park-d web application Band-end server system
+    \begin{itemize}
+        \item Communication System (Communication protocol library for different
+        system components)
+        \begin{itemize}
+            \item A system responsible for the communication of the different
+            components of the application.(Communicating through HTTP call or
+            RPC call)
+            \item A system responsible for recovery when a communication failure
+            occurs.
+    \end{itemize}
+    \item Driver Navigation System
+    \begin{itemize}
+        \item A system Provides the user with the navigation information for our
+        application when a user arrives at the parking lot
+    \end{itemize}
+    \item Administrative Map System
+    \begin{itemize}
+        \item A system specifically designed for parking lot owners to allow
+        them to upload the physical layout of their parking lot
+    \end{itemize}
+    \item Machine-Learning Model
+    \begin{itemize}
+        \item This system serves to analyze the real-time video data of the
+        parking lot and outputs vacant parking spot information upon user
+        request.
+    \end{itemize}
+    \item Database Storage System
+    \begin{itemize}
+        \item The data storage system stores the necessary user information and
+        parking lot information for our backend services
+    \end{itemize}
+    \end{itemize}
+    \item Cloud server
+    \begin{itemize}
+        \item The cloud server provides the ability to host our services
+        remotely, load balancing, and take web requests from users.
+    \end{itemize}
+    \item Local machine
+    \begin{itemize}
+        \item The local machine including a cellphone or laptop allows user to
+        check parking lot information and sending requests to our services. 
+    \end{itemize}
+\end{itemize}
+
+\section{Critical Assumptions}
+There are no critical assumptions being made.
+
 \newpage
 
-\maketitle
+\newgeometry{left=2cm,bottom=2cm}
 
+\begin{landscape}
+\begin{table}[hp]
+\section{Failure Mode and Effect Analysis}
+
+\begin{tabular}{|p{0.09\linewidth}|p{0.12\linewidth}|p{0.15\linewidth}|p{0.25\linewidth}|p{0.2\linewidth}|p{0.075\linewidth}|p{0.05\linewidth}|}
+\hline
+Functions & Failure Modes & Effects of Failure & Causes of Failure & Recommended
+Actions & SR & Ref.\\
+\hline
+Navigation & No driving instructions provided & Driver cannot navigate to
+desired parking space & Path finding algorithm ran out of memory to compute the
+driving instructions & Inform the driver that driving instructions could not be
+found and to try again later to avoid driver frustration &
+\hyperref[isr13]{SR.13} & H1-1\\\cline{2-7} & Impossible driving instructions
+provided & Driver cannot navigate to desired parking space & Path finding
+algorithm provided directions that are blocked by obstacles & Allow driver to
+report the obstacle and request another route &  \hyperref[isr4]{SR.4} &
+H1-2\\\cline{2-7} & Lengthy driving instructions provided & Driver travels a
+distance that exceeds the minimum distance required to reach the parking space &
+Path finding algorithm could not find an optimal path in the requested amount of
+time & Inform the driver that driving instructions with least travel could not
+be found and to try again later to avoid driver frustration &
+\hyperref[isr13]{SR.13} & H1-3\\
+\hline
+Spot detection & System classifies reserved or accessibility parking spaces as
+normal parking spaces & Driver unknowingly parks in a parking space that is not
+available to them & \begin{enumerate}[a., leftmargin=0.5cm, noitemsep,
+nolistsep]\item Painted indicator for reserved or accessibility parking has
+faded or obscured by nearby vehicles or shadows \item Some spaces are converted
+to reserved spaces \end{enumerate} & Allow parking lot managers to edit the
+parking lot layout to fix the errors &  \begin{enumerate}[a., leftmargin=0.5cm,
+noitemsep, nolistsep]\item \hyperref[asr2]{SR.2}, \hyperref[asr3]{SR.3},
+\hyperref[isr4]{SR.4} \item \hyperref[asr2]{SR.2}, \hyperref[asr3]{SR.3},
+\hyperref[isr4]{SR.4}\end{enumerate}& H2-1\\\cline{2-7} & System unable to
+detect any parking space & User cannot park at any parking space in the parking
+lot & Weather conditions, such as snow, have hidden the parking space boundaries
+& Use backup data if a large percentage of parking spots become obscured &
+\hyperref[isr7]{SR.7} & H2-2\\
+\hline
+\end{tabular}
+\caption{Failure Mode and Effect Analysis Table} \label{TblFMEA}
+\end{table}
+
+\begin{table}[hp]
+\begin{tabular}{|p{0.09\linewidth}|p{0.12\linewidth}|p{0.15\linewidth}|p{0.25\linewidth}|p{0.2\linewidth}|p{0.075\linewidth}|p{0.05\linewidth}|}
+\hline
+Functions & Failure Modes & Effects of Failure & Causes of Failure & Recommended
+Actions & SR & Ref.\\
+\hline
+Selecting Parking Space & System associates selection with wrong parking space &
+\begin{enumerate}[a., leftmargin=0.5cm, noitemsep, nolistsep] \item Driver is
+provided with wrong directions \item Wrong space is marked as occupied until
+camera marks the space as still empty \end{enumerate} & Space database error;
+Selection does not translate to the same space in the database & The system must
+not deviate from the format it uses to store other parking spaces &
+\hyperref[isr8]{SR.8} & H3-1\\\cline{2-7} & System allows selection of reserved
+parking spaces while unauthorized & Driver is directed to spaces they are not
+authorized to use & \begin{enumerate}[a., leftmargin=0.5cm, noitemsep,
+nolistsep] \item Image recognition algorithm mislabels spot \item Interface
+fails to hide unauthorized spaces \end{enumerate} & Invalid spaces should be
+marked accordingly in the app; Spaces should be stored along with any of their
+special properties & \begin{enumerate}[a., leftmargin=0.5cm, noitemsep,
+nolistsep]\item \hyperref[isr9]{SR.9} \item \hyperref[isr9]{SR.9}
+\end{enumerate}& H3-2\\
+\hline
+Parking Lot Mapping & System maps a parking space where there is none & Driver
+is directed to park illegally & Image recognition algorithm fault & Allow for
+manual corrections to the constructed map & \hyperref[asr2]{SR.2},
+\hyperref[asr3]{SR.3} & H4-1\\\cline{2-7} & Recognized parking space is not
+associated with the database & Gaps exist in the displayed map on a valid
+parking space & Space database error; Parking space is recognized but not made
+accessible in the database & Raise an error if the system fails to associate a
+key with a given parking space & \hyperref[isr10]{SR.10} & H4-2\\\cline{2-7} &
+Paths leading to parking spaces are not mapped & Driver cannot navigate to
+desired parking space & \begin{enumerate}[a., leftmargin=0.5cm, noitemsep,
+nolistsep] \item No driving instructions provided \item Driving instructions are
+impossible to follow \end{enumerate} & Driving paths through the parking lot
+should already be stored for any potential space & \begin{enumerate}[a.,
+leftmargin=0.5cm, noitemsep, nolistsep]\item \hyperref[isr12]{SR.12} \item
+\hyperref[isr12]{SR.12}\end{enumerate}& H4-3\\
+\hline
+\end{tabular}
+\caption{Failure Mode and Effect Analysis Table, Part 2} \label{TblFMEA2}
+\end{table}
+
+\begin{table}[hp]
+\begin{tabular}{|p{0.09\linewidth}|p{0.12\linewidth}|p{0.15\linewidth}|p{0.25\linewidth}|p{0.2\linewidth}|p{0.075\linewidth}|p{0.05\linewidth}|}
+\hline
+Functions & Failure Modes & Effects of Failure & Causes of Failure & Recommended
+Actions & SR & Ref.\\
+\hline
+Viewing Parking Lot & System displays wrong parking lot layout & Driver does not
+see accurate information about the layout of the parking lot & Fault in Parking
+Lot Mapping algorithm & Allow driver to manually mark layout mistakes as
+feedback to the system & \hyperref[isr4]{SR.4} & H5-1\\\cline{2-7} & System
+displays wrong parking spot information & Driver does not see accurate
+information about the status of parking spots & Fault in Parking Spot Detection
+algorithm & Allow driver to manually mark parking spot status as feedback to the
+system & \hyperref[isr4]{SR.4} & H5-2\\
+\hline
+Editing Parking Lot Layout & System does not save the changes made to the layout
+& Parking lot manager is not able to apply changes they made to the parking lot
+& Database not updated properly with changes made to the layout & Allow parking
+lot manager to force an update to the layout stored in the database; Ensure
+database is checking for manual changes to the layout of the parking lot &
+\hyperref[isr5]{SR.5}, \hyperref[isr6]{SR.6} \hyperref[isr11]{SR.11} &
+H6-1\\\cline{2-7} & System does not display tools to edit the layout of the
+parking lot & Parking lot manager is not able to edit the layout of the parking
+lot & System not displaying user interface for editing & Allow parking lot
+manager to restart or refresh the editing view/interface &
+\hyperref[isr5]{SR.5}, \hyperref[isr6]{SR.6}, \hyperref[isr11]{SR.11} & H-2\\
+\hline
+\end{tabular}
+\caption{Failure Mode and Effect Analysis Table, Part 3} \label{TblFMEA3}
+\end{table}
+
+\end{landscape}
+
+\newpage
+
+\restoregeometry
+
+\section{Safety and Security Requirements}
+The requirements that should be added to \progname's SRS based on the FMEA
+analysis are written in \textcolor{red}{red}.
+\subsubsection{Access Requirements}
+\begin{enumerate}[{SR}1.] 
+    \item The system's parking lot data shall be accessible only to the team and
+    to the parking lot owner(s).\label{asr1} \\
+    \textbf{Fit Criterion:} The data is password protected.
+    \textcolor{red}{\item Only the parking lot owner(s) shall have the option to
+    edit the parking space layout} \label{asr2} \\
+    \textcolor{red}{\textbf{Fit Criterion:} The administrative console is the
+    only view that has the option to edit the parking space}
+    \textcolor{red}{\item Only the parking space manager(s) of a parking lot are
+    allowed to have access to the administrative console for their parking lot}
+    \label{asr3}\\
+    \textcolor{red}{\textbf{Fit Criterion:} The administrative console of a
+    parking lot can only edit and view analytics of the parking lot}
+\end{enumerate}
+
+\subsubsection{Integrity Requirements}
+\begin{enumerate}[resume*] 
+    \item The system shall prevent inaccurate data from being stored.
+    \label{isr4}\\
+    \textbf{Fit Criterion:} Stress test the system with accurate and inaccurate
+    data and measure the data's accuracy. \textcolor{red}{\item Unsaved parking
+    layout information should be stored locally if the information cannot be
+    uploaded to the server} \label{isr5} \textcolor{red}{\item Unsaved parking
+    layout information should attempt to upload to the server every 30 seconds}
+    \label{isr6} \textcolor{red}{\item Parking layouts will be automatically
+    backed up daily} \label{isr7} \textcolor{red}{\item No parking space should
+    be stored in a different format in the database from other parking spaces}
+    \label{isr8} \textcolor{red}{\item The system should only allow a parking
+    spot to have 1 special property} \label{isr9}\\
+    \textcolor{red}{\textbf{Fit Criterion:} A parking space is either labeled as
+    accessibility, electric vehicle, or reserved} \textcolor{red}{\item Parking
+    lot managers must be prompted when there is a failed attempt to add a
+    parking spot to the database} \label{isr10} \textcolor{red}{\item Parking
+    lot owners should be able to prompt the upload of their parking lot layout
+    to the database and server} \label{isr11} \textcolor{red}{\item Correct
+    paths should be stored to all parking spaces} \label{isr12}
+    \textcolor{red}{\item Users are informed when an error occurs when the
+    system is determining the navigation path} \label{isr13}
+\end{enumerate}
+
+\subsubsection{Privacy Requirements}
+\begin{enumerate}[resume*] 
+    \item The system shall ask for permission to use the driver's location
+    data.\\
+    \textbf{Fit Criterion:} The system has a driver location agreement form.
+\end{enumerate}
+
+\subsubsection{Audit Requirements}
+\noindent \emph{N/A}
+
+\subsubsection{Immunity Requirements}
+\noindent \emph{N/A}
+
+\section{Roadmap}
+From the new safety and security requirements discovered, they are all
+reasonable and can be implemented within the project time frame. SR1-13 are
+expected to be implemented by Revision 1.
 
 \end{document}
