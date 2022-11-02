@@ -26,11 +26,13 @@
 \newpage
 \begin{table}[hp]
 \caption{Revision History} \label{TblRevisionHistory}
-\begin{tabularx}{\textwidth}{lll}
+\begin{tabularx}{\textwidth}{p{3cm}p{2.5cm}X}
 \toprule
 \textbf{Date} & \textbf{Developer(s)} & \textbf{Change}\\
 \midrule
 Sep 22, 2022 & Albert, Almen, David, Gary, Jonathan, Kabishan & Revision 0\\
+\midrule
+Nov 2, 2022 & Almen & Adding to Technologies\\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -44,7 +46,6 @@ Sep 22, 2022 & Albert, Almen, David, Gary, Jonathan, Kabishan & Revision 0\\
 This document is the Development Plan for the project, Park'd, an application
 that aims to help the average driver quickly find an open parking space,
 especially on busy days with few spots available.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Almen %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Team Meeting Plan}
 \label{TeamMeetingPlan}
 The following is the plan for when, the location, frequency, and duration of the
@@ -138,7 +139,6 @@ meetings:
     during the meeting
 \end{enumerate}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Almen %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Team Communication Plan}
 The meetings mentioned in \nameref{TeamMeetingPlan} will be conducted in-person
 at H.G. Thode Library on campus or on Discord. Members are to be seated together
@@ -174,7 +174,6 @@ Kabishan Suvendran & midnightmarauder & suvendrk & Kabishan\\
 \caption{Team Meeting Plan} \label{tab:teamMeetingPlan}
 \end{table}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Almen %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Team Member Roles}
 The table below, \nameref{tab:memberRoles}, identifies the assignment of main
 roles of the team.
@@ -288,8 +287,6 @@ identified and assigned in \nameref{tab:memberRoles}.
     experience principles
 \end{itemize}
 
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Kabishan %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Workflow Plan}
 \label{workflowPlan}
 We will use GitHub to maintain the code, the documentation for said code and the
@@ -337,7 +334,6 @@ is how pull requests are opened. Each pull request must be opened with a
 description that mentions what the code changes will do and it should be
 assigned to at least one other team member for approval.
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% David %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Proof of Concept Demonstration Plan}
 
 The Proof of Concept (POC) demonstration plan highlights the risks we have
@@ -380,7 +376,6 @@ demonstration's relation to the given risks is as follows:
 \end{itemize}
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Gary %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Technology}
 The following are the technologies we will be using for our project.
 \begin{itemize}
@@ -401,10 +396,16 @@ The following are the technologies we will be using for our project.
         \item We will be using Pylint and flake 8 for different purposes
         including check for errors, tries to enforce a coding standard, looks
         for code smells
+        \item \href{https://coverage.readthedocs.io/en/6.5.0/}{Coverage.py}
+        would be used to measure the code coverage for Python programs
+        \item \href{https://istanbul.js.org/}{Istanbul} will be used to measure
+        the code coverage for UI test cases with Selenium.
     \end{itemize}
     \item Testing
     \begin{itemize}
-        \item Pytest will be used for making unit test cases
+        \item Pytest will be used for making unit test cases for Python programs
+        \item \href{https://www.selenium.dev/}{Selenium} will be used for making
+        UI test automation.
     \end{itemize}
     \item Libraries
     \begin{itemize}
@@ -435,7 +436,6 @@ The following are the technologies we will be using for our project.
     \end{itemize}
 \end{itemize}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Gary %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Coding Standard}
 The back-end part of the project and the algorithm part for training the machine
 learning model will follow the \href{https://peps.python.org/pep-0008/} {PEP8}
