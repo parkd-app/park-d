@@ -9,13 +9,12 @@
 \usepackage{tabularx}
 \usepackage{hyperref}
 \usepackage{indentfirst}
-\usepackage{xcolor}
 \usepackage{fancyhdr}
-\usepackage{lscape}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{pdflscape}
 \usepackage{float}
 \usepackage{multirow}
 \usepackage{comment}
-\usepackage{biblatex}
 
 \usepackage{biblatex} 
 \addbibresource{SRS_ref.bib}
@@ -54,6 +53,9 @@
 & {\bf Notes}\\
 \midrule
 Oct 3, 2022 & Albert, Almen, David, Gary, Jonathan, Kabishan & Revision 0\\
+\midrule
+Nov 2, 2022 & Almen, David & Adding Security Requirements outlined in the Hazard
+Analysis \\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -773,6 +775,14 @@ parking lot.
     \item The system's parking lot data shall be accessible only to the team and
     to the property owner(s).\label{pocnf5} \\
     \textbf{Fit Criterion:} The data is password protected.
+    \item Only the parking lot owner(s) shall have the option to edit the
+    parking space layout \label{asr2} \\
+    \textbf{Fit Criterion:} The administrative console is the only view that has
+    the option to edit the parking space
+    \item Only the parking space manager(s) of a parking lot are allowed to have
+    access to the administrative console for their parking lot \label{asr3}\\
+    \textbf{Fit Criterion:} The administrative console of a parking lot can only
+    edit and view analytics of the parking lot
 \end{enumerate}
 
 \subsubsection{Integrity Requirements}
@@ -780,6 +790,26 @@ parking lot.
     \item The system shall prevent inaccurate data from being stored.\\
     \textbf{Fit Criterion:} Stress test the system with accurate and inaccurate
     data and measure the data's accuracy.
+    \item Unsaved parking layout information should be stored locally if the
+    information cannot be uploaded to the server \label{isr5}
+    \item Unsaved parking layout information should attempt to upload to the
+    server every $\hyperlink{attempt_upload_time}{ATTEMPT\_UPLOAD\_TIME}$
+    seconds \label{isr6}
+    \item Parking layouts will be automatically backed up daily \label{isr7}
+    \item No parking space should be stored in a different format in the
+    database from other parking spaces \label{isr8}
+    \item The system should only allow a parking spot to have
+    $\hyperlink{max_special_property}{MAXIMUM\_SPECIAL\_PROPERTY}$ special
+    property \label{isr9}\\
+    \textbf{Fit Criterion:} A parking space is either labeled as accessibility,
+    electric vehicle, or reserved
+    \item Parking lot managers must be prompted when there is a failed attempt
+    to add a parking spot to the database \label{isr10}
+    \item Parking lot owners should be able to prompt the upload of their
+    parking lot layout to the database and server \label{isr11}
+    \item Correct paths should be stored to all parking spaces \label{isr12}
+    \item Users are informed when an error occurs when the system is determining
+    the navigation path \label{isr13}
 \end{enumerate}
 
 \subsubsection{Privacy Requirements}
@@ -950,59 +980,115 @@ Part 1} \label{traceMatrix1}
 \caption{Traceability Matrix for Functional and Non-Functional Requirements -
 Part 2} \label{traceMatrix1}
 \begin{tabularx}{\textwidth}{cc|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}
-\cline{3-9}
-& & \multicolumn{7}{ c|}{Non-Functional Requirements} \\ \cline{3-9} & & MA1  &
-MA2 & SR1 & SR2 & SR3 & LR1 & HS1  \\ \cline{1-9} \multicolumn{1}{ |c|
-}{\multirow{31}{*}{Functional Requirements} } & \multicolumn{1}{|c| } {FR1} & &
-& & &X& & \\ \cline{2-9} \multicolumn{1}{|c| }{} 	                  &
-\multicolumn{1}{|c| }{FR2} & &X& & &X& &X  \\ \cline{2-9} \multicolumn{1}{|c|
-}{}                        & \multicolumn{1}{|c| } {FR3} & & &X&X& & & \\
-\cline{2-9} \multicolumn{1}{|c| }{}                        & \multicolumn{1}{
-|c| } {FR4}  &X&   &  X&X&&& \\ \cline{2-9} \multicolumn{1}{|c| }{}
-& \multicolumn{1}{ |c| } {FR5}  &   &  X&X&&&& \\ \cline{2-9}
-\multicolumn{1}{|c| }{}                        & \multicolumn{1}{ |c| } {FR6} &
-X &   & &&X&X& \\ \cline{2-9} \multicolumn{1}{|c| }{}                        &
-\multicolumn{1}{ |c| } {FR7} &   &   & &&&&X \\ \cline{2-9} \multicolumn{1}{|c|
-}{}                        & \multicolumn{1}{ |c| } {FR8} & X &   & &&&& \\
-\cline{2-9} \multicolumn{1}{|c| }{}                        & \multicolumn{1}{
-|c| } {FR9} & X &   &X&&&& \\ \cline{2-9} \multicolumn{1}{|c| }{}
-& \multicolumn{1}{ |c| } {FR10} & X &   & &&&X& \\ \cline{2-9}
-\multicolumn{1}{|c| }{}                        & \multicolumn{1}{ |c| } {FR11} &
-X &   & &&&X&X \\ \cline{2-9} \multicolumn{1}{|c| }{}                        &
-\multicolumn{1}{ |c| } {FR12} & X &   & &&&X&X \\ \cline{2-9}
-\multicolumn{1}{|c| }{}                        & \multicolumn{1}{ |c| } {FR13} &
-X &   & &&&X&X \\ \cline{2-9} \multicolumn{1}{|c| }{}                        &
-\multicolumn{1}{ |c| } {FR14} &   &   & &X&&& \\ \cline{2-9} \multicolumn{1}{|c|
-}{}                        & \multicolumn{1}{ |c| } {FR15} &   &   & &X&&& \\
-\cline{2-9} \multicolumn{1}{|c| }{}                        & \multicolumn{1}{
-|c| } {FR16} &X   &   & &&X&& \\ \cline{2-9} \multicolumn{1}{|c| }{}
-& \multicolumn{1}{ |c| } {FR17} &   &  X& &&&& \\ \cline{2-9}
-\multicolumn{1}{|c| }{}                        & \multicolumn{1}{ |c| } {FR18} &
-&  X& &&&& \\ \cline{2-9} \multicolumn{1}{|c| }{}                        &
-\multicolumn{1}{ |c| } {FR19} &X  &   & &&&& \\ \cline{2-9} \multicolumn{1}{|c|
-}{}                        & \multicolumn{1}{ |c| } {FR20} &   &   &&X&&& \\
-\cline{2-9} \multicolumn{1}{|c| }{}                        &   
-\multicolumn{1}{ |c| } {FR21} &   &   & &&&X&X \\ \cline{2-9}
+\cline{3-16}
+& & \multicolumn{14}{ c|}{Non-Functional Requirements} \\ \cline{3-16} & & MA1
+& MA2 & SR1 & SR2 & SR3 & SR4 & SR5 & SR6 & SR7 & SR8 & SR9 & SR10 & SR11 & SR12
+\\ \cline{1-16} \multicolumn{1}{ |c| }{\multirow{31}{*}{Functional Requirements}
+} & \multicolumn{1}{|c| } {FR1}   &&&&&&&&&&&&&& \\ \cline{2-16}
+\multicolumn{1}{|c| }{} 	                  & \multicolumn{1}{|c| }{FR2}
+&&X&&&&&&&&&&&& \\ \cline{2-16} \multicolumn{1}{|c| }{}                        &
+\multicolumn{1}{|c| } {FR3}   &&&X&&&X&&&&X&&&&X \\ \cline{2-16}
+\multicolumn{1}{|c| }{}                        & \multicolumn{1}{ |c| } {FR4}
+&X&&X&&&X&&&&X&X&&& \\ \cline{2-16} \multicolumn{1}{|c| }{}
+& \multicolumn{1}{ |c| } {FR5}  &&X&X&&&&&&&&&&&X \\ \cline{2-16}
+\multicolumn{1}{|c| }{}                        & \multicolumn{1}{ |c| } {FR6}
+&X&&&&&&&&&&&&& \\ \cline{2-16} \multicolumn{1}{|c| }{}                        &
+\multicolumn{1}{ |c| } {FR7}  &&&&&&&&&&&&&& \\ \cline{2-16} \multicolumn{1}{|c|
+}{}                        & \multicolumn{1}{ |c| } {FR8}  &X&&&&&&&&&&&&& \\
+\cline{2-16} \multicolumn{1}{|c| }{}                        & \multicolumn{1}{
+|c| } {FR9}  &X&&X&&&&&&&&X&&& \\ \cline{2-16} \multicolumn{1}{|c| }{}
+& \multicolumn{1}{ |c| } {FR10} &X&&&&&&&&&&&&& \\ \cline{2-16}
+\multicolumn{1}{|c| }{}                        & \multicolumn{1}{ |c| } {FR11}
+&X&&&&&&&&&&&&&X \\ \cline{2-16} \multicolumn{1}{|c| }{}
+& \multicolumn{1}{ |c| } {FR12} &X&&&&&&&&&&&&& \\ \cline{2-16}
+\multicolumn{1}{|c| }{}                        & \multicolumn{1}{ |c| } {FR13}
+&X&&&&&&&&&&&&&X \\ \cline{2-16} \multicolumn{1}{|c| }{}
+& \multicolumn{1}{ |c| } {FR14} &&&&&&X&&&&&&&& \\ \cline{2-16}
+\multicolumn{1}{|c| }{}                        & \multicolumn{1}{ |c| } {FR15}
+&&&&&&X&&&&&&&& \\ \cline{2-16} \multicolumn{1}{|c| }{}                        &
+\multicolumn{1}{ |c| } {FR16} &X&&&&&&&&&&&&&X \\ \cline{2-16}
+\multicolumn{1}{|c| }{}                        & \multicolumn{1}{ |c| } {FR17}
+&&X&&&&&&&&&&&&\\ \cline{2-16} \multicolumn{1}{|c| }{}                        &
+\multicolumn{1}{ |c| } {FR18} &&X&&&&&&&&&&&& \\ \cline{2-16}
+\multicolumn{1}{|c| }{}                        & \multicolumn{1}{ |c| } {FR19}
+&X&&&&&&&&&&&&& \\ \cline{2-16} \multicolumn{1}{|c| }{}                        &
+\multicolumn{1}{ |c| } {FR20} &&&&&&X&&&&&&&& \\ \cline{2-16}
 \multicolumn{1}{|c| }{}                        &   
-\multicolumn{1}{ |c| } {FR22} &   &  &X&&X&& \\ \cline{2-9} \multicolumn{1}{|c|
+\multicolumn{1}{ |c| } {FR21} &&&&&&&&&&&&&& \\ \cline{2-16} \multicolumn{1}{|c|
 }{}                        &   
-\multicolumn{1}{ |c| } {FR23} &   &  &X&X&X&X&X \\ \cline{2-9}
+\multicolumn{1}{ |c| } {FR22} &&&X&&&&&&&&&&& \\ \cline{2-16}
 \multicolumn{1}{|c| }{}                        &   
-\multicolumn{1}{ |c| } {FR24} &   &  &X&&&X& \\ \cline{2-9} \multicolumn{1}{|c|
-}{}                        &   
-\multicolumn{1}{ |c| } {FR25} &   &   & &&X&X&X \\ \cline{2-9}
+\multicolumn{1}{ |c| } {FR23} &&&X&&&X&&&&&&&& \\ \cline{2-16}
 \multicolumn{1}{|c| }{}                        &   
-\multicolumn{1}{ |c| } {FR26} &   &  &X&X&&& \\ \cline{2-9} \multicolumn{1}{|c|
+\multicolumn{1}{ |c| } {FR24} &&&X&&&&&&&&&&& \\ \cline{2-16}
+\multicolumn{1}{|c| }{}                        &   
+\multicolumn{1}{ |c| } {FR25} &&&&&&&&&&&&&& \\ \cline{2-16} \multicolumn{1}{|c|
 }{}                        &   
-\multicolumn{1}{ |c| } {FR27} &   &  &X&X&&& \\ \cline{2-9} \multicolumn{1}{|c|
-}{}                        &   
-\multicolumn{1}{ |c| } {FR28} &   &   &&X&&& \\ \cline{2-9} \multicolumn{1}{|c|
-}{}                        &   
-\multicolumn{1}{ |c| } {FR29} &   &   & &&X&& \\ \cline{2-9} \multicolumn{1}{|c|
-}{}                        &   
-\multicolumn{1}{ |c| } {FR30} &   &  &X&X&X&& \\ \cline{2-9} \multicolumn{1}{|c|
-}{}                        &   
-\multicolumn{1}{ |c| } {FR31} &   &   &&X&X&& \\ \cline{1-9}
+\multicolumn{1}{ |c| } {FR26} &&&X&&X&X&&&&&&&& \\ \cline{2-16}
+\multicolumn{1}{|c| }{}                        &   
+\multicolumn{1}{ |c| } {FR27} &&&X&&X&X&&&&&&&& \\ \cline{2-16}
+\multicolumn{1}{|c| }{}                        &   
+\multicolumn{1}{ |c| } {FR28} &&&&&X&X&&&&&&&& \\ \cline{2-16}
+\multicolumn{1}{|c| }{}                        &   
+\multicolumn{1}{ |c| } {FR29} &&&&&X&&&&&&&&& \\ \cline{2-16}
+\multicolumn{1}{|c| }{}                        &   
+\multicolumn{1}{ |c| } {FR30} &&&X&X&X&X&X&X&X&&&X&X& \\ \cline{2-16}
+\multicolumn{1}{|c| }{}                        &   
+\multicolumn{1}{ |c| } {FR31} &&&&X&X&X&X&X&X&&&X&X& \\ \cline{1-16}
+\end{tabularx}
+\end{table}
+
+\newpage
+\begin{table}[htbp]
+\caption{Traceability Matrix for Functional and Non-Functional Requirements -
+Part 3} \label{traceMatrix1}
+\begin{tabularx}{\textwidth}{cc|c|c|c|c|c|}
+\cline{3-6}
+& & \multicolumn{4}{ c|}{Non-Functional Requirements} \\ \cline{3-6} & & SR13  &
+SR14 & LR1 & HS1\\ \cline{1-6} \multicolumn{1}{ |c|
+}{\multirow{31}{*}{Functional Requirements} } & \multicolumn{1}{|c| } {FR1}
+&&X&& \\ \cline{2-6} \multicolumn{1}{|c| }{} 	                  &
+\multicolumn{1}{|c| }{FR2}    &&X&&X \\ \cline{2-6} \multicolumn{1}{|c| }{}
+& \multicolumn{1}{|c| } {FR3}   &&&& \\ \cline{2-6} \multicolumn{1}{|c| }{}
+& \multicolumn{1}{ |c| } {FR4}  &&&& \\ \cline{2-6} \multicolumn{1}{|c| }{}
+& \multicolumn{1}{ |c| } {FR5}  &&&& \\ \cline{2-6} \multicolumn{1}{|c| }{}
+& \multicolumn{1}{ |c| } {FR6}  &&X&X& \\ \cline{2-6} \multicolumn{1}{|c| }{}
+& \multicolumn{1}{ |c| } {FR7}  &&&&X \\ \cline{2-6} \multicolumn{1}{|c| }{}
+& \multicolumn{1}{ |c| } {FR8}  &&&& \\ \cline{2-6} \multicolumn{1}{|c| }{}
+& \multicolumn{1}{ |c| } {FR9}  &&&& \\ \cline{2-6} \multicolumn{1}{|c| }{}
+& \multicolumn{1}{ |c| } {FR10} &&&X& \\ \cline{2-6} \multicolumn{1}{|c| }{}
+& \multicolumn{1}{ |c| } {FR11} &X&&X&X \\ \cline{2-6} \multicolumn{1}{|c| }{}
+& \multicolumn{1}{ |c| } {FR12} &&&X&X \\ \cline{2-6} \multicolumn{1}{|c| }{}
+& \multicolumn{1}{ |c| } {FR13} &X&&X&X \\ \cline{2-6} \multicolumn{1}{|c| }{}
+& \multicolumn{1}{ |c| } {FR14} &&&& \\ \cline{2-6} \multicolumn{1}{|c| }{}
+& \multicolumn{1}{ |c| } {FR15} &&&& \\ \cline{2-6} \multicolumn{1}{|c| }{}
+& \multicolumn{1}{ |c| } {FR16} &X&X&& \\ \cline{2-6} \multicolumn{1}{|c| }{}
+& \multicolumn{1}{ |c| } {FR17} &&&&\\ \cline{2-6} \multicolumn{1}{|c| }{}
+& \multicolumn{1}{ |c| } {FR18} &&&& \\ \cline{2-6} \multicolumn{1}{|c| }{}
+& \multicolumn{1}{ |c| } {FR19} &&&& \\ \cline{2-6} \multicolumn{1}{|c| }{}
+& \multicolumn{1}{ |c| } {FR20} &&&& \\ \cline{2-6} \multicolumn{1}{|c| }{}
+&   
+\multicolumn{1}{ |c| } {FR21} &&&X&X \\ \cline{2-6} \multicolumn{1}{|c| }{}
+&   
+\multicolumn{1}{ |c| } {FR22} &&X&& \\ \cline{2-6} \multicolumn{1}{|c| }{}
+&   
+\multicolumn{1}{ |c| } {FR23} &&X&X&X \\ \cline{2-6} \multicolumn{1}{|c| }{}
+&   
+\multicolumn{1}{ |c| } {FR24} &&&X& \\ \cline{2-6} \multicolumn{1}{|c| }{}
+&   
+\multicolumn{1}{ |c| } {FR25} &&X&X&X \\ \cline{2-6} \multicolumn{1}{|c| }{}
+&   
+\multicolumn{1}{ |c| } {FR26} &&&& \\ \cline{2-6} \multicolumn{1}{|c| }{}
+&   
+\multicolumn{1}{ |c| } {FR27} &&&& \\ \cline{2-6} \multicolumn{1}{|c| }{}
+&   
+\multicolumn{1}{ |c| } {FR28} &&&& \\ \cline{2-6} \multicolumn{1}{|c| }{}
+&   
+\multicolumn{1}{ |c| } {FR29} &&X&& \\ \cline{2-6} \multicolumn{1}{|c| }{}
+&   
+\multicolumn{1}{ |c| } {FR30} &&X&& \\ \cline{2-6} \multicolumn{1}{|c| }{}
+&   
+\multicolumn{1}{ |c| } {FR31} &&X&& \\ \cline{1-6}
 \end{tabularx}
 \end{table}
 \end{landscape}
@@ -1037,7 +1123,7 @@ X &   & &&&X&X \\ \cline{2-9} \multicolumn{1}{|c| }{}                        &
     their solution works.
     
     \item Spot Sensor\\
-    From personal experience,, some indoor or underground parking lots in Toronto
+    From personal experience, some indoor or underground parking lots in Toronto
     have sensors above each parking spot. It uses some sort of ultrasonic sensor
     to detect if a car is occupying the spot. If the spot is empty, a light on
     the sensor turns green and if the spot is occupied, the light turns red.
@@ -1169,6 +1255,8 @@ $\hypertarget{max_taps}{MAX\_TAPS}$ = 2 \\
 $\hypertarget{parking_lots}{PARKING\_LOTS}$ = 2 \\
 $\hypertarget{supportability_satisfaction}{SUPPORTABILITY\_SATISFACTION}$ = 80\%
 \\
+$\hypertarget{attempt_upload_time}{ATTEMPT\_UPLOAD\_TIME}$ = 30 \\
+$\hypertarget{max_special_property}{MAXIMUM\_SPECIAL\_PROPERTY}$ = 1 \\
 
 \subsection{Reflection}
 \label{reflection}
@@ -1452,6 +1540,8 @@ our project and proof of concept demo. \\[.1in]
     project deployment and will seek alternate means to answer more advanced
     queries.
 \end{itemize}
+
+\newpage
 
 \printbibliography
 
