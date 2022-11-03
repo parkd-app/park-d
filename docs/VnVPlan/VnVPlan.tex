@@ -1,15 +1,20 @@
 \documentclass[12pt, titlepage]{article}
-
+\usepackage[utf8]{inputenc}
+\usepackage[margin=1in]{geometry}
+\usepackage[titletoc,title]{appendix}
+\usepackage{graphicx}
 \usepackage{booktabs}
 \usepackage{tabularx}
 \usepackage{hyperref}
-\hypersetup{
-    colorlinks,
-    citecolor=blue,
-    filecolor=black,
-    linkcolor=red,
-    urlcolor=blue
-}
+\usepackage{indentfirst}
+\usepackage{fancyhdr}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{pdflscape}
+\usepackage{float}
+\usepackage{multirow}
+\usepackage{comment}
+\hypersetup{ colorlinks, citecolor=blue, filecolor=black, linkcolor=red,
+    urlcolor=blue }
 \usepackage[round]{natbib}
 
 \input{../Comments}
@@ -17,9 +22,10 @@
 
 \begin{document}
 
-\title{Project Title: System Verification and Validation Plan for \progname{}} 
+\title{System Verification and Validation Plan for \progname{}} 
 \author{\authname}
 \date{\today}
+
 	
 \maketitle
 
@@ -27,11 +33,10 @@
 
 \section{Revision History}
 
-\begin{tabularx}{\textwidth}{p{3cm}p{2cm}X}
-\toprule {\bf Date} & {\bf Version} & {\bf Notes}\\
+\begin{tabularx}{\textwidth}{p{3cm}p{2cm}X} \toprule {\bf Date} & {\bf Version}
+& {\bf Notes}\\
 \midrule
-Date 1 & 1.0 & Notes\\
-Date 2 & 1.1 & Notes\\
+Nov. 2, 2022 & 1.0 & Revision 0\\
 \bottomrule
 \end{tabularx}
 
@@ -40,364 +45,2305 @@ Date 2 & 1.1 & Notes\\
 \tableofcontents
 
 \listoftables
-\wss{Remove this section if it isn't needed}
-
-\listoffigures
-\wss{Remove this section if it isn't needed}
 
 \newpage
 
 \section{Symbols, Abbreviations and Acronyms}
 
-\renewcommand{\arraystretch}{1.2}
-\begin{tabular}{l l} 
+\begin{tabular}{p{0.4\linewidth}  p{0.5\linewidth}}
   \toprule		
-  \textbf{symbol} & \textbf{description}\\
+  \textbf{Symbol/Abbreviation/Acronym} & \textbf{Description}\\
   \midrule 
   T & Test\\
+  BE & Business Event\\
+  SRS & Software Requirements Specification\\
+  NFR & Non-Functional Requirement\\
+  FR & Functional Requirement\\
+  HTTP Request & A message sent by a client to initiate an action on the server
+  through Hypertext Transfer Protocol\\
   \bottomrule
 \end{tabular}\\
-
-\wss{symbols, abbreviations or acronyms -- you can simply reference the SRS
-  \citep{SRS} tables, if appropriate}
 
 \newpage
 
 \pagenumbering{arabic}
 
-This document ... \wss{provide an introductory blurb and roadmap of the
-  Verification and Validation plan}
+This document outlines caPstOneGroup's plan for verification and validation of
+the correct and intended specification, implementation, and behaviour of our
+software system, Park'd. It specifies plans to verify these elements, as well as
+tests for the requirements in our
+\href{https://github.com/parkd-app/park-d/blob/main/docs/SRS/SRS.pdf}{Software
+Requirements Specification}.
+\wss{provide an introductory blurb and roadmap of the Verification and Validation plan}
 
 \section{General Information}
-
+This section provides a brief overview of the software and it's general
+functions, the objective of the verification and validation plan, and outlines
+relevant documentation to support the verification and validation plan.
 \subsection{Summary}
+We are testing the software named Park'd, our parking assistant application.
+Park'd aims to help drivers find parking spaces by using machine learning
+algorithms to locate empty spaces from overhead cameras. Our application then
+directs drivers to those spaces, taking into account restrictions like reserved
+or accessible spaces. It will maintain a database of spaces as well as a
+navigation layout for a given parking lot.
 
 \wss{Say what software is being tested.  Give its name and a brief overview of
   its general functions.}
 
 \subsection{Objectives}
-
-\wss{State what is intended to be accomplished.  The objective will be around
-  the qualities that are most important for your project.  You might have
-  something like: ``build confidence in the software correctness,''
-  ``demonstrate adequate usability.'' etc.  You won't list all of the qualities,
-  just those that are most important.}
+Our primary objective, through this verification and validation plan, is to
+ensure that our product delivers on the functionality outlined in the functional
+and non-functional requirements outlined in the
+\href{https://github.com/parkd-app/park-d/blob/main/docs/SRS/SRS.pdf}{SRS}
+without fail. Another objective of enacting this plan is to build confidence in
+our software correctness and software consistency. By passing the tests outlined
+in this report and thus, providing the intended outputs, the software will
+ensure correctness. It would also guarantee consistency, as the system should
+always return the same output for a given input. We also wish to use this plan
+to demonstrate a satisfactory level of usability, as passing the outlined tests
+will give us the confidence that end users will not encounter unintended bugs or
+glitches with the system.
 
 \subsection{Relevant Documentation}
 
 \wss{Reference relevant documentation.  This will definitely include your SRS
-  and your other project documents (MG, MIS, etc).  You can include these even
-  before they are written, since by the time the project is done, they will be
-  written.}
+  and your other project documents (design documents, like MG, MIS, etc).  You
+  can include these even before they are written, since by the time the project
+  is done, they will be written.}
 
-\citet{SRS}
+This Verification and Validation Plan document describes tests for functional
+and non-functional requirements laid out in the
+\href{https://github.com/parkd-app/park-d/blob/main/docs/SRS/SRS.pdf}{Software
+Requirements Specification} document. Details of the components and modules
+being tested can be found in the
+\href{https://github.com/parkd-app/park-d/blob/main/docs/Design/MG/MG.pdf}{Module
+Guide} and
+\href{https://github.com/parkd-app/park-d/blob/main/docs/Design/MIS/MIS.pdf}{Module
+Interface Specification} documents.
 
 \section{Plan}
+This section outlines plans to verify the SRS, the design, the Verification and
+Validation plan itself, the implementation, and the automated testing.
+Furthermore, it also outlines the plan to validate the software. 
 
 \wss{Introduce this section.   You can provide a roadmap of the sections to
   come.}
 
 \subsection{Verification and Validation Team}
+\begin{table}[hp]
+\centering
+\begin{tabular}{|c|c|c|}
+\hline
+\textbf{Name} & \textbf{Roles} & \textbf{Documentation}\\
+\hline
+Albert & Implementation Verification &
+\hyperref[sec:implementation]{Implementation}\\
+Almen & Automated Testing and Verification Tools &
+\hyperref[sec:automation]{Automation}\\
+David & SRS Verification & \hyperref[sec:srs]{SRS}\\
+Gary & Software Validation & \hyperref[sec:validation]{Validation}\\
+Jonathan & Verification and Validation Verification & \hyperref[sec:vnv]{VnV}\\
+Kabishan & Design Verification & \hyperref[sec:design]{Design}\\
+\hline
+\end{tabular}
+\caption{Team Members}
+\end{table}
 
-\wss{You, your classmates and the course instructor.  Maybe your supervisor.
-  You shoud do more than list names.  You should say what each person's role is
-  for the project.  A table is a good way to summarize this information.}
+Each individual is in charge of the plan whose role they are assigned. They are
+not solely responsible for the implementation of the relevant plan. \wss{Your
+teammates.  Maybe your supervisor. You shoud do more than list names.  You
+should say what each person's role is for the project's verification.  A table
+is a good way to summarize this information.}
 
 \subsection{SRS Verification Plan}
+\label{sec:srs}
+The
+\href{https://github.com/parkd-app/park-d/blob/main/docs/SRS/SRS.pdf}{Software
+Requirements Specification} verification plan ensures that our requirements
+efficiently cover the breadth of the system, and that they are feasible to
+implement. Verification will be conducted with group members, as well as
+classmates. It will be in the form of a questionnaire to be applied to some or
+all requirements, as well as ad hoc feedback where necessary. Given the large
+number of requirements in our project, an individual should not necessarily
+review every requirement.
 
-\wss{List any approaches you intend to use for SRS verification.  This may just
-  be ad hoc feedback from reviewers, like your classmates, or you may have
-  something more rigorous/systematic in mind..}
+Our SRS comprises project drivers which include the purpose and the
+stakeholders, project constraints, functional and non-functional requirements,
+and potential project issues. Each component should be covered by the
+questionnaire, and reviewed thoroughly by reviewers.
 
-\wss{Remember you have an SRS checklist}
+The questionnaire should cover the following points:
+\begin{itemize}
+    \item What stakeholders are missing? Are there any listed that are
+    irrelevant?
+    \item Are there any missed constraints?
+    \item Are there any erroneous facts or assumptions?
+    \item Do requirements specify "what", and not "how"?
+    \item Are requirements unambiguous, verifiable, and abstract?
+    \item What requirements are missing? Are there any listed that are
+    unnecessary?
+    \item Are there any potential issues that are not listed?
+\end{itemize}
+
+The SRS verification plan aims to cover the entire document, and is considered
+complete when there are no outstanding issues.
+
+\wss{List any approaches you intend to use for SRS verification.  This may
+  include ad hoc feedback from reviewers, like your classmates, or you may plan
+  for something more rigorous/systematic.}
+
+\wss{Maybe create an SRS checklist?}
+
+% Kabishan's part
 
 \subsection{Design Verification Plan}
+\label{sec:design}
+The design verification plan will ensure that our design infrastructure will
+take the necessary inputs and deliver the intended outputs with completeness and
+correctness. 
 
-\wss{Plans for design verification}
+Our system is multi-tiered, in that it is comprised of a back-end and front-end
+system. The back-end system consists of a machine learning model that will
+identify the parking spaces and their availability, and path finding algorithms
+that direct the driver to their desired parking space. The front-end system
+allows the user to interact with this information. Therefore, the design
+verification plan will be twofold. The design verification for the back-end
+system will be performed by our internal team members, as we possess intimate
+knowledge of the frameworks, and thus, would be able to identify the subtleties
+as to where our design infrastructure could fail. 
+
+For the back-end system, we will be verifying the following:
+\begin{itemize}
+    \item Machine learning model accepts the camera and sensor footage
+    \item Machine learning model identifies normal, accessibility, and reserved
+    parking spaces from the camera and sensor footage
+    \item Machine learning model updates the availability of a parking space
+    based on the presence of a vehicle and the driver's geographical information
+    \item Machine learning model outputs the aforementioned information to the
+    front-end system
+    \item Path finding algorithm accepts the driver's geographical information
+    and their desired parking space
+    \item Path finding algorithm calculates instructions to navigate the driver
+    to their desired parking space
+    \item Path finding algorithm delivers these instructions to the front-end
+    system
+\end{itemize}
+
+The front-end system consists of an interface, authored in a framework of our
+choice that will communicate with the back-end to retrieve parking availability
+information and driving instructions. It will also send requests to the back-end
+system to update information, such as when a driver selects a parking space, at
+which point, the spot becomes unavailable. For the outward facing interface, our
+design verification approach involves both internal team members and external
+members, such as fellow classmates. This approach will help us eliminate any
+biases that we, the developers, may have against testing the system and this
+allows others to try to break the system.
+
+For the front-end system, we will be verifying the following:
+\begin{itemize}
+    \item Interface retrieves normal, reserved, and accessibility parking space
+    information from back-end system
+    \item Interface displays the aforementioned information to the user
+    \item Interface accepts input from the driver to change an available parking
+    space to unavailable
+    \item Upon selecting a parking space, the interface provides the back-end
+    with the driver's geographical information
+    \item Interface will accept the driving instructions from the back-end
+    system
+    \item Interface will display the driving instructions to the driver
+\end{itemize}
+
+\subsection{Verification and Validation Plan Verification Plan}
+\label{sec:vnv}
+
+\wss{The verification and validation plan is an artifact that should also be verified.}
 
 \wss{The review will include reviews by your classmates}
 
-\wss{Remember you have MG and MIS checklists}
+\wss{Create a checklists?}
+
+This Verification and Validation Plan also needs to be verified and validated.
+The plan to accomplish this will include reviews and checklists to ensure that
+every aspect of the Verification and Validation plan accurately and sufficiently
+describe the development team's plans to verify and validate the system. A
+review will be completed by the the members of the development team as well as
+our peers. This review will cover the following points:
+\begin{itemize}
+    \item Plan to verify and validate the Software Requirements Specification of
+    the system is described and explained in a clear manner
+    \item Plan to verify and validate the design of the system is described and
+    explained in a clear manner
+    \item Plan to verify and validate the implementation of the system is
+    described and explained in a clear manner
+    \item Tools that will be used for automated testing and verification are
+    described and explained in a clear manner
+    \item Plan to verify and validate the software of the system is described
+    and explained in a clear manner
+    \item Tests for all business events are explained thoroughly are deemed
+    valid tests for its requirement
+\end{itemize}
+
+After reviewing our peers' feedback, if all members of the development team
+agree that the Verification and Validation Plan satisfies the above criteria,
+the plan is considered complete.
 
 \subsection{Implementation Verification Plan}
+\label{sec:implementation}
 
 \wss{You should at least point to the tests listed in this document and the unit
   testing plan.}
 
-\wss{In this section you would also give any details of any plans for static verification of
-  the implementation.  Potential techniques include code walkthroughs, code
-  inspection, static analyzers, etc.}
+\wss{In this section you would also give any details of any plans for static
+  verification of the implementation.  Potential techniques include code
+  walkthroughs, code inspection, static analyzers, etc.}
+  
+The implementation verification plan will verify that our implementation has the
+correct behaviour specified in our
+\href{https://github.com/parkd-app/park-d/blob/main/docs/SRS/SRS.pdf}{SRS}. The
+plan will be split in two: \hyperref[sec:5.1]{functional} and
+\hyperref[sec:5.2]{nonfunctional} requirements.
+
+For functional requirements, we will split them up according to the back end and
+front end system. For the back end, testing the machine learning algorithm will
+be done with dynamic and manual and automatic testing. At first, we will test
+manually with a small set of data to teach the AI. Then we will test
+automatically with a large amount of data to develop the AI further. For the
+requirements that use the machine learning algorithm, we will use manual dynamic
+tests and verify the correct output. For the front end, we will use automatic
+dynamic tests for requirements such as logging in. The remaining will be done
+manually.
+
+For non function requirements, we will split them up based on system and user
+requirements. System requirements will be verified with dynamic testing, similar
+to functional requirements. Instead of checking the output we will verify the
+system's properties. For \hyperref[sec:5.2.2]{user requirements}, we will create
+a \hyperref[sec:7.2]{usability survey} and evaluate based on user feedback.
 
 \subsection{Automated Testing and Verification Tools}
+\label{sec:automation}
 
 \wss{What tools are you using for automated testing.  Likely a unit testing
   framework and maybe a profiling tool, like ValGrind.  Other possible tools
   include a static analyzer, make, continuous integration tools, test coverage
-  tools, etc.  Explain your plans for summarizing code coverage metrics.
-  Linters are another important class of tools.  For the programming language
-  you select, you should look at the available linters.  There may also be tools
+  tools, etc.  Explain your plans for summarizing code coverage metrics. Linters
+  are another important class of tools.  For the programming language you
+  select, you should look at the available linters.  There may also be tools
   that verify that coding standards have been respected, like flake9 for
   Python.}
 
+\wss{If you have already done this in the development plan, you can point to
+that document.}
+
 \wss{The details of this section will likely evolve as you get closer to the
   implementation.}
+  
+The automation testing and verification tools is outlined and discussed in the
+\href{https://github.com/parkd-app/park-d/blob/main/docs/DevelopmentPlan/DevelopmentPlan.pdf}{Development
+Plan}.
+
+With regards to code coverage metrics, as mentioned in the
+\href{https://github.com/parkd-app/park-d/blob/main/docs/DevelopmentPlan/DevelopmentPlan.pdf}{Development
+Plan}, the plan is to use
+\href{https://coverage.readthedocs.io/en/6.5.0/}{Coverage.py} and
+\href{https://istanbul.js.org/}{Istanbul} to measure the code coverage for our
+Python and Selenium test cases respectively. The goal is to achieve a minimum of
+80\% code coverage, putting emphasis on creating high quality test cases that
+test the most critical components of the system.
 
 \subsection{Software Validation Plan}
+\label{sec:validation}
 
-\wss{If there is any external data that can be used for validation, you should
-  point to it here.  If there are no plans for validation, you should state that
-  here.}
+To address the problem of developers including features based on their own
+understanding and changing requirements without effectively communicating with
+the client, a software validation plan is needed to determine whether the
+software satisfies specified requirements. We intend to hold a review session
+with the stakeholders to verify whether we have built the right product.
+Different review sessions should be hold with different types of stakeholders,
+for example, functional requirements 1 to 25 are verified in collaboration with
+a driver who uses the software. Whereas the rest is verified with the parking
+lot owner/manager.
+
+The plan is as follows: 
+\begin{itemize}
+    \item Each requirement is tested by conducting an acceptance test with the
+    stakeholders. 
+    \item The acceptance test scenarios and test cases are identified from the
+    business events from the SRS document. The test cases should cover all the
+    business events.
+    \item Execute test cases and report bugs if any. Test results should be
+    recorded accordingly and re-test bugs once fixed.
+    \item Confirm with the stakeholders whether the business objective has been
+    met. The team must resolve any issue discovered in the previous steps before
+    this.
+\end{itemize}
+
 
 \section{System Test Description}
 	
 \subsection{Tests for Functional Requirements}
+\label{sec:5.1}
+Every functional requirement in the
+\href{https://github.com/parkd-app/park-d/blob/main/docs/SRS/SRS.pdf}{SRS} is
+assigned a corresponding test in this section. Non-functional requirements are
+tested in the next section.
 
-\wss{Subsets of the tests may be in related, so this section is divided into
-  different areas.  If there are no identifiable subsets for the tests, this
-  level of document structure can be removed.}
-
-\wss{Include a blurb here to explain why the subsections below
-  cover the requirements.  References to the SRS would be good.}
-
-\subsubsection{Area of Testing1}
-
-\wss{It would be nice to have a blurb here to explain why the subsections below
-  cover the requirements.  References to the SRS would be good.  If a section
-  covers tests for input constraints, you should reference the data constraints
-  table in the SRS.}
+\wss{Include a blurb here to explain why the sections below cover the
+  requirements. References to the SRS would be good here. If a section covers
+  tests for input constraints, you should reference the data constraints table
+  in the SRS.}
 		
-\paragraph{Title for Test}
+\subsubsection{BE1}
 
 \begin{enumerate}
 
-\item{test-id1\\}
+\item{BE1-FR1-T1}
 
-Control: Manual versus Automatic
+Control: Functional, Dynamic, Manual
 					
-Initial State: 
+Initial State: System started, device location is disabled
 					
-Input: 
+Input: N/A
 					
-Output: \wss{The expected result for the given inputs}
+Output: System prompts the driver to turn on location.
 
-Test Case Derivation: \wss{Justify the expected value given in the Output field}
+Test Case Derivation: Location needs to be enabled to allow the application to
+direct the user to a space.
 					
-How test will be performed: 
+How test will be performed: Tester will launch the application while their
+device's location is disabled.
 					
-\item{test-id2\\}
+\item{BE1-FR2-T1}
 
-Control: Manual versus Automatic
+Control: Functional, Dynamic, Manual
 					
-Initial State: 
+Initial State: System started, device location is enabled
 					
-Input: 
+Input: N/A
 					
-Output: \wss{The expected result for the given inputs}
+Output: System displays to the driver a map of their surroundings.
 
-Test Case Derivation: \wss{Justify the expected value given in the Output field}
+Test Case Derivation: The driver needs to see where they are located relative to
+nearby parking lots so they can navigate to the desired lot.
 
-How test will be performed: 
+How test will be performed: Tester will launch the application with their
+device's location enabled.
 
 \end{enumerate}
 
-\subsubsection{Area of Testing2}
+\subsubsection{BE2}
 
-...
+\begin{enumerate}
 
+\item{BE2-FR3-T1}
+
+Control: Structural, Dynamic, Automatic
+					
+Initial State: The backend machine vision system is running
+					
+Input: Video feed
+					
+Output: The backend system recognizes the video feed and processes the image.
+
+Test Case Derivation: A video feed will need to be fed to the system for it to
+do its work. The function of recognizing parking spaces is meant to be fulfilled
+using this feed.
+					
+How test will be performed: The backend system will be run with a given video.
+
+\item{BE2-FR4-T1}
+
+Control: Structural, Dynamic, Automatic
+					
+Initial State: The backend system is running with a video feed displaying a
+disabled space.
+					
+Input: Test space that is known to be marked as disabled
+					
+Output: The backend system recognizes the space and marks it in the database as
+a disabled space.
+
+Test Case Derivation: Disabled spaces are to be marked accordingly so they are
+not suggested to drivers who cannot use them.
+					
+How test will be performed: The system will run with a known disabled space to
+ascertain correct functioning of its space detection.
+
+\item{BE2-FR5-T1}
+
+Control: Structural, Dynamic, Automatic
+					
+Initial State: The backend system is running with a video feed displaying a
+valid space
+					
+Input: Test space with known location
+					
+Output: The test space and the correct location input to the database.
+
+Test Case Derivation: The location given by the system should be the same as
+that determined by us beforehand.
+					
+How test will be performed: The system will run with a space with known location
+to ascertain correct functioning of its space detection.
+
+\item{BE2-FR6-T1}
+
+Control: Functional, Dynamic, Manual
+					
+Initial State: System running with driver location enabled
+					
+Input: Driver selects the option to navigate to a parking lot
+					
+Output: System displays a prompt for the driver to select their desired parking
+area.
+
+Test Case Derivation: The system should make it obvious that the driver should
+select a destination.
+					
+How test will be performed: Tester will select the option to navigate to a
+parking lot with location enabled.
+
+\item{BE2-FR7-T1}
+
+Control: Functional, Dynamic, Manual
+					
+Initial State: System running with driver location enabled, parking lot selected
+					
+Input: N/A
+					
+Output: System displays the number of spaces available at the selected
+destination.
+
+Test Case Derivation: The system should inform the driver of conditions at their
+selected destination before they arrive.
+					
+How test will be performed: Tester will select the option to navigate to a
+parking lot with location enabled and observe the output.
+
+\end{enumerate}
+
+\subsubsection{BE3}
+
+\begin{enumerate}
+
+\item{BE3-FR8-T1}
+
+Control: Functional, Dynamic, Manual
+					
+Initial State: System running with driver location enabled, parking lot selected
+					
+Input: Driver selects the option to filter the visible spaces
+					
+Output: Depending on the input, only normal, accessible, and reserved spaces are
+displayed.
+
+Test Case Derivation: Some drivers need to be able to find specially designated
+spaces.
+					
+How test will be performed: Tester will select the option to filter the visible
+spaces at a selected parking lot.
+
+\item{BE3-FR9-T1}
+
+Control: Functional, Dynamic, Manual
+					
+Initial State: System running with driver location enabled, parking lot selected
+					
+Input: N/A
+					
+Output: Reserved and disabled spaces are not displayed.
+
+Test Case Derivation: These spaces are not to be displayed to drivers unless
+they are qualified to use them.
+					
+How test will be performed: Tester will observe the output of the system with a
+selected parking lot and no further inputs.
+
+\end{enumerate}
+
+\subsubsection{BE4}
+
+\begin{enumerate}
+
+\item{BE4-FR10-T1}
+
+Control: Functional, Dynamic, Manual
+					
+Initial State: System running with driver location enabled, parking lot selected
+					
+Input: Driver selects a parking space at the selected parking lot
+					
+Output: System displays the selected parking space.
+
+Test Case Derivation: The system should give feedback that the driver has
+selected a space, and that it will work with that space.
+					
+How test will be performed: Tester will select a parking space.
+
+\item{BE4-FR11-T1}
+
+Control: Functional, Dynamic, Manual
+					
+Initial State: System started, parking spaces available, but no parking space
+selected
+					
+Input: Selecting the parking space
+					
+Output: Driver is shown directions from their location to the desired parking
+space.
+
+Test Case Derivation: The directions should begin at the driver's location and
+end at the parking space's location, otherwise, the driver will be provided
+wrong directions.
+					
+How test will be performed: Tester will pick a parking space and validate that
+the directions take them from their current position to the parking space.
+
+\item{BE4-FR12-T1}
+
+Control: Functional, Dynamic, Manual
+					
+Initial State: System started, parking spaces available, but no parking space
+selected
+					
+Input: Driver selects default recommendation for parking space
+					
+Output: Driver is given directions to reach the parking space provided as a
+recommendation.
+
+Test Case Derivation: To limit the driver's interaction with the interface
+whilst driving, the recommendation should be available for parking and should
+meet the needs of the user (e.g. default accessibility parking for those with
+disabilities)
+					
+How test will be performed: Tester will toggle between normal and accessibility
+parking modes and check that the system provides a default parking space that is
+available.
+
+\item{BE4-FR13-T1}
+
+Control: Functional, Dynamic, Manual
+					
+Initial State: System started, parking spaces available, but no parking space
+selected
+					
+Input: N/A
+					
+Output: The system will display navigation directions to the default recommended
+parking space after $\hyperlink{default_delay}{DEFAULT\_DELAY}$ seconds.
+
+Test Case Derivation: After $\hyperlink{default_delay}{DEFAULT\_DELAY}$ seconds,
+the driver must receive instructions, since they should minimize their
+interaction with the interface while driving.
+					
+How test will be performed: Tester will toggle between normal and accessibility
+parking modes and wait for $\hyperlink{default_delay}{DEFAULT\_DELAY}$ seconds
+to check that the system provides directions to a default parking space that is
+available.
+
+\end{enumerate}
+
+\subsubsection{BE5}
+
+\begin{enumerate}
+
+\item{BE5-FR14-T1}
+
+Control: Functional, Dynamic, Manual
+					
+Initial State: System started 
+					
+Input: Driver selects a parking space that is unavailable.
+					
+Output: System informs the driver that they cannot park in a spot that is
+already occupied by another vehicle.
+
+Test Case Derivation: Driver should not be allowed to park in a spot that houses
+another vehicle.
+					
+How test will be performed: Tester will attempt to select an unavailable parking
+space and validate that they receive a notification from the system.
+
+\item{BE5-FR15-T1}
+
+Control: Functional, Dynamic, Manual
+					
+Initial State: System started, reserved or accessibility parking spaces
+available, driver has not filtered out reserved or accessibility spaces
+					
+Input: Driver selects a reserved or accessibility parking space.
+					
+Output: The system will inform the driver that they have tried to select a
+parking space that does not meet their needs. 
+
+Test Case Derivation: Drivers should not be allowed to park in spaces that they
+are not entitled to.
+					
+How test will be performed: Tester will not filter reserved and accessibility
+parking spaces. Upon selecting one of the aforementioned spaces, the tester will
+be notified by the system.
+
+\end{enumerate}
+
+\subsubsection{BE6}
+
+\begin{enumerate}
+
+\item{BE6-FR16-T1}
+
+Control: Functional, Dynamic, Manual
+					
+Initial State: System started, parking space selected
+					
+Input: Driver's geographical location
+					
+Output: As the driver commutes, the directions should update such that the
+parking space remains stationary and the user's location is dynamic
+
+Test Case Derivation: If there are obstacles on the road, the driver's change in
+location should lead the system to recalculate the path to the parking space
+					
+How test will be performed: Tester will follow the instructions and ask another
+tester to stand in front of their vehicle. The directions should change at this
+moment.
+
+\item{BE6-FR17-T1}
+
+Control: Functional, Dynamic, Manual
+					
+Initial State: System started, parking space selected, other parking spaces
+available
+					
+Input: N/A
+					
+Output: Once the initial parking space is no longer available, the system shows
+a recommendation to the driver.
+
+Test Case Derivation: Driver should not be led to a parking space that is taken,
+as this will result in frustration and traffic congestion.
+					
+How test will be performed: Tester will drive to the initial parking space.
+Another tester will park at the initial parking space. The first tester will
+receive a recommendation to another parking space.
+
+\item{BE6-FR18-T1}
+
+Control: Functional, Dynamic, Manual
+					
+Initial State: System started, parking space selected, other parking spaces
+available
+					
+Input: N/A
+					
+Output: Once the initial parking space is no longer available, the system lets
+the user pick another space from those that are available.
+
+Test Case Derivation: User should be allowed to pick another parking space if
+their initial parking space is taken.
+					
+How test will be performed: Tester will drive to the initial parking space.
+Another tester will park at the initial parking space. The first tester will be
+given the ability to pick another parking space.
+
+\end{enumerate}
+
+\subsubsection{BE7}
+
+\begin{enumerate}
+
+\item{BE7-FR19-T1}
+
+Control: Functional, Dynamic, Manual
+					
+Initial State: System started, parking spot selected
+					
+Input: Driver's geographical location
+					
+Output: The system shall inform the driver when they have reached their parking
+spot.
+
+Test Case Derivation: If the driver is not informed, they might not be aware
+that they have reached the parking spot of their selection.
+					
+How test will be performed: Tester will drive to their selected parking space
+and validate that they receive a notification.
+
+\item{BE7-FR20-T1}
+
+Control: Functional, Dynamic, Manual
+					
+Initial State: System started
+					
+Input: Driver's geographical location
+					
+Output: The parking space changes from available to unavailable.
+
+Test Case Derivation: Other drivers are aware that the parking space is
+unavailable, such that they will not pick the location when parking in the
+future.
+					
+How test will be performed: Tester confirms that while driving, the selected
+parking space is available. When they park, the selected parking space should
+become unavailable.
+
+\item{BE7-FR21-T1}
+
+Control: Functional, Dynamic, Manual
+					
+Initial State: System started, parking spot reached
+					
+Input: Driver's feedback
+					
+Output: The feedback is saved.
+
+Test Case Derivation: Storing the driver's feedback will allow the team to
+detect issues and dissatisfaction with the system.
+					
+How test will be performed: Tester will reach a parking spot, verify that they
+receive a feedback prompt, and confirm the feedback is saved.
+
+\end{enumerate}
+
+\subsubsection{BE8}
+
+\begin{enumerate}
+    
+    \item{BE8-FR22-T1}
+
+    Control: Functional, Dynamic, Manual
+    					
+    Initial State: System started
+    					
+    Input: New settings
+    					
+    Output: The system settings change to the ones given
+    
+    Test Case Derivation: Not changing the settings would make being able to
+    enter new ones useless.
+    					
+    How test will be performed: Tester will check the current settings, apply
+    new ones, and verify the change to the system.
+
+    \item{BE8-FR23-T1}
+
+    Control: Functional, Dynamic, Manual
+    					
+    Initial State: System started
+    					
+    Input: N/A
+    					
+    Output: System settings including volume and sound adjustment, unit
+    identification, vehicle details, and notification preferences
+    
+    Test Case Derivation: These settings are specified under the functional
+    requirement.
+    					
+    How test will be performed: Tester will open the settings and verify these
+    settings are present.
+\end{enumerate}
+
+\subsubsection{BE9}
+
+\begin{enumerate}
+
+    \item{BE9-FR24-T1}
+
+    Control: Functional, Dynamic, Manual
+    					
+    Initial State: System started, parking spot selected, parking spot path
+    found
+    					
+    Input: Cancel signal
+    					
+    Output: Parking spot selection and path are discarded
+    
+    Test Case Derivation: The driver is no longer going to this spot so they
+    should no longer be given the path.
+    					
+    How test will be performed: Tester will choose a parking slot to go to,
+    cancel the path, and verify that the selection and path are gone.
+
+    \item{BE9-FR25-T1}
+
+    Control: Functional, Dynamic, Manual
+    					
+    Initial State: System started, parking spot selected, parking spot path
+    found
+    					
+    Input: Cancel signal
+    					
+    Output: The driver's location
+    
+    Test Case Derivation: Once the path is terminated, the driver will may to
+    choose another parking spot.
+    					
+    How test will be performed: Tester will choose a parking slot to go to,
+    cancel the path, and verify that they return to spot selection.
+
+\end{enumerate}
+
+\subsubsection{BE10}
+
+\begin{enumerate}
+
+    \item{BE10-FR26-T1}
+
+    Control: Functional, Dynamic, Manual
+    					
+    Initial State: System started
+    					
+    Input: N/A
+    					
+    Output: Admin console login
+    
+    Test Case Derivation: The admin console is a protected and is intended only
+    for parking lot owners/managers.
+    					
+    How test will be performed: Tester will verify the admin console requires
+    admin credentials.
+
+    \item{BE10-FR27-T1}
+
+    Control: Functional, Dynamic, Manual
+    					
+    Initial State: System started
+    					
+    Input: Admin credentials
+    					
+    Output: Admin console
+    
+    Test Case Derivation: The admin console is a protected console for parking
+    lot owners/managers.
+    					
+    How test will be performed: Tester will verify the admin console is
+    accessible only with the admin credentials.
+
+    \item{BE10-FR28-T1}
+
+    Control: Functional, Dynamic, Manual
+    					
+    Initial State: System started, accessing admin console
+    					
+    Input: N/A
+    					
+    Output: Occupancy map
+    
+    Test Case Derivation: The occupancy map will show the availability of all
+    parking spaces in the parking lot as specified under the functional
+    requirement.
+    					
+    How test will be performed: Tester will access the admin console and verify
+    the occupancy map is accurate to the parking lot.
+
+    \item{BE10-FR29-T1}
+
+    Control: Functional, Dynamic, Manual
+    					
+    Initial State: System started, accessing admin console
+    					
+    Input: N/A
+    					
+    Output: Parking analytics
+    
+    Test Case Derivation: The parking analytics will show trends in the
+    availability of all parking spaces in the parking lot as specified under the
+    functional requirement.
+    					
+    How test will be performed: Tester will access the admin console and verify
+    the parking analytics are given.
+\end{enumerate}
+
+\subsubsection{BE11}
+
+\begin{enumerate}
+
+    \item{BE11-FR30-T1}
+
+    Control: Functional, Dynamic, Manual
+    					
+    Initial State: System started, accessing admin console
+    					
+    Input: Parking lot layout change
+    					
+    Output: The parking lot layout changes to the one given
+    
+    Test Case Derivation: Parking lot owners/managers will want to modify the
+    layout in case it changes.
+    					
+    How test will be performed: Tester will access the admin console, make a
+    change to the parking lot layout, and verify the new layout is kept.
+
+    \item{BE11-FR31-T1}
+
+    Control: Functional, Dynamic, Manual
+    					
+    Initial State: System started, accessing admin console
+    					
+    Input: Parking lot spot change
+    					
+    Output: The parking lot spot changes to the one given
+    
+    Test Case Derivation: Parking lot owners/managers will want to redefine a
+    parking spot in case of adding/removing/moving reserved spots.
+    					
+    How test will be performed: Tester will access the admin console, redefine a
+    parking spot, and verify the spot has changed.
+
+    \end{enumerate}
+    
 \subsection{Tests for Nonfunctional Requirements}
+\label{sec:5.2}
 
 \wss{The nonfunctional requirements for accuracy will likely just reference the
   appropriate functional tests from above.  The test cases should mention
-  reporting the relative error for these tests.}
+  reporting the relative error for these tests.  Not all projects will
+  necessarily have nonfunctional requirements related to accuracy}
 
 \wss{Tests related to usability could include conducting a usability test and
-  survey.}
+  survey. The survey will be in the Appendix.}
 
-\subsubsection{Area of Testing1}
-		
-\paragraph{Title for Test}
+\wss{Static tests, review, inspections, and walkthroughs, will not follow the
+format for the tests given below.}
+
+Non functional requirements can be found in the
+\href{https://github.com/parkd-app/park-d/blob/main/docs/SRS/SRS.pdf}{SRS}. They
+are organized by type and subtype.
+
+\subsubsection{Look and Feel Requirements}
+\label{sec:5.2.1}
+\paragraph{Appearance Requirements}
 
 \begin{enumerate}
 
-\item{test-id1\\}
+\item{NFR-LF1-T1}
 
-Type: 
+Type: Functional, Dynamic, Manual
 					
-Initial State: 
+Initial State: System is launched
 					
-Input/Condition: 
+Input/Condition: Go through all pages and uses all interface functions and
+features
 					
-Output/Result: 
+Output/Result: N/A
 					
-How test will be performed: 
+How test will be performed: Each tester will go through the whole app and try to
+use all available functions and features. If an interface feature, such as a
+button, is unanimously deemed unnecessary, it will be removed.
 					
-\item{test-id2\\}
+\end{enumerate}
 
-Type: Functional, Dynamic, Manual, Static etc.
+\paragraph{Style Requirements}
+
+\begin{enumerate}
+
+\item{NFR-LF2-T1}
+
+Type: Functional, Dynamic, Manual
 					
-Initial State: 
+Initial State: System is launched
 					
-Input: 
+Input/Condition: Go through all pages and uses all interface functions and
+features
 					
-Output: 
+Output/Result: N/A
 					
-How test will be performed: 
+How test will be performed: Navigation app users will be surveyed. Users will be
+given $\hyperlink{exploration_time}{EXPLORATION\_TIME}$ to explore the app,
+after which they will answer whether or not the app is visually/stylistically
+similar to existing popular navigation apps such as Google Maps, Apple Maps, and
+Waze.
+					
+\end{enumerate}
+
+\subsubsection{Usability and Humanity Requirements}
+\label{sec:5.2.2}
+\paragraph{Ease of Use Requirements}
+
+\begin{enumerate}
+
+\item{NFR-UH1-T1}
+
+Type: Functional, Dynamic, Manual
+					
+Initial State: System is launched
+					
+Input/Condition: Go through all pages and uses all interface functions and
+features
+					
+Output/Result: N/A
+					
+How test will be performed: Testers will test all functions considered atomic
+and make sure that none take more than $\hyperlink{max_taps}{MAX\_TAPS}$,
+defined in the SRS document, to complete.
+				
+\item{NFR-UH2-T1}
+
+Type: Functional, Dynamic, Manual
+					
+Initial State: System is launched
+					
+Input/Condition: Go through all pages and uses all interface functions and
+features
+					
+Output/Result: N/A
+					
+How test will be performed: Navigation app users will be surveyed. Users will be
+given $\hyperlink{exploration_time}{EXPLORATION\_TIME}$ to explore the app,
+after which they will answer whether or not the app is as easy to use as to
+existing popular navigation apps such as Google Maps, Apple Maps, and Waze.
+					
+\end{enumerate}
+
+\paragraph{Learning Requirements}
+
+\begin{enumerate}
+
+\item{NFR-UH3-T1}
+
+Type: Functional, Dynamic, Manual
+					
+Initial State: System is launched
+					
+Input/Condition: Go through steps to find an available parking spot
+					
+Output/Result: N/A
+					
+How test will be performed: Random variety of users will be surveyed. Users will
+be given $\hyperlink{exploration_time}{EXPLORATION\_TIME}$ to figure out how to
+find and navigate to an available parking spot without any prior instructions.
+Testers will record how many users successfully complete the task.
+					
+\end{enumerate}
+
+\paragraph{Understandability and Politeness Requirements}
+
+\begin{enumerate}
+
+\item{NFR-UH4-T1}
+
+Type: Functional, Dynamic, Manual
+					
+Initial State: System is launched
+					
+Input/Condition: Valid address of a parking lot
+					
+Output/Result: Symbols identifying special parking spaces (i.e. accessibility,
+electric vehicle, or reserved) are displayed.
+					
+How test will be performed: Testers will check that all graphic files of symbols
+used in the application conform to any regulations set out by the Ontario
+Ministry of Transportation.
+					
+\end{enumerate}
+
+\subsubsection{Performance Requirements}
+\label{sec:5.2.3}
+\paragraph{Speed and Latency Requirements}
+
+\begin{enumerate}
+
+\item{NFR-PE1-T1}
+
+Type: Functional, Dynamic, Manual
+					
+Initial State: System is launched
+					
+Input/Condition: Use all the functions and features of the system
+					
+Output/Result: The system must maintain a minimum of
+$\hyperlink{min_framerate}{MIN\_FRAMERATE}$ at all times
+					
+How test will be performed: This test would be performed on multiple devices
+(i.e. PC, mobile device). The tester would open up the system on a device and
+monitor the framerate while performing operations on the application.
+					
+\end{enumerate}
+
+\paragraph{Safety-Critical Requirements}
+
+\begin{enumerate}
+
+\item{NFR-PE2-T1}
+
+Type: Functional, Dynamic, Manual
+					
+Initial State: System is launched in a vehicle
+					
+Input/Condition: Address of a parking lot is entered and an empty parking spot
+located near a sidewalk or at the corner of a parking lot is selected.
+					
+Output/Result: The system successfully provides directions without going on a
+sidewalk or off the road.
+					
+How test will be performed: The tester will launch the system on their device
+and select an available parking spot located beside a sidewalk. The tester will
+then follow the directions provided by the system until the tester reaches the
+designated parking spot without going off the road or on a sidewalk.
+
+\item{NFR-PE3-T1}
+
+Type: Functional, Dynamic, Manual
+					
+Initial State: System is launched in a vehicle
+					
+Input/Condition: Address of a parking lot is entered and an empty parking spot
+located near a restricted area like a fire lane is selected.
+					
+Output/Result: System directs the user to park only in a designated space.
+					
+How test will be performed: Select different available parking spot as a
+destination for the navigation especially those edge cases spots near fire lanes
+and drive ways. Make sure the suggested spot actually exists, and is not in a
+space that only resembles a parking space.
+					
+\end{enumerate}
+
+\paragraph{Robustness or Fault-Tolerance Requirements}
+
+\begin{enumerate}
+
+\item{NFR-PE4-T1}
+
+Type: Structural, Dynamic, Manual
+					
+Initial State: The back-end service is disabled.
+					
+Input/Condition: System is launched.
+					
+Output/Result: The most recent parking spot information before back-end service
+is disabled should be displayed.
+					
+How test will be performed: The developers will disable the API in the back-end
+service that is responsible for sending spot information back to the system.
+Then the system is launched which sends a request to acquire parking spot
+information. Since the remote cache should store the information of the most
+recent parking spot information, the system should still receive the most recent
+information from the cache.
+					
+\end{enumerate}
+
+\paragraph{Capacity Requirements}
+
+\begin{enumerate}
+
+\item{NFR-PE5-T1}
+
+Type: Structural, Dynamic, Manual
+					
+Initial State: The system is operating normally.
+					
+Input/Condition: Sending $\hyperlink{concurrent_users}{CONCURRENT\_USERS}$
+concurrent requests.
+					
+Output/Result: The system must be able to handle the
+$\hyperlink{concurrent_users}{CONCURRENT\_USERS}$ different request with a valid
+response
+					
+How test will be performed: The developers will create
+$\hyperlink{concurrent_users}{CONCURRENT\_USERS}$ different API requests with
+different parameters that requests different parking lot information. Then
+relevant API testing frameworks would be used to send
+\\$\hyperlink{concurrent_users}{CONCURRENT\_USERS}$ different web requests at
+the same time. The developers should observe the system critical metrics such as
+CPU utilization rate and RAM usage and relevant API response time on the
+dashboard.
+					
+\end{enumerate}
+
+\paragraph{Scalability or Extensibility Requirements}
+
+\begin{enumerate}
+
+\item{NFR-PE6-T1}
+
+Type: Functional, Dynamic, Manual
+					
+Initial State: System has at least $\hyperlink{parking_lots}{PARKING\_LOTS}$
+parking lot layout in \\$\hyperlink{timeframe}{TIMEFRAME}$ and is launched in a
+vehicle.
+					
+Input/Condition: Valid addresses of $\hyperlink{parking_lots}{PARKING\_LOTS}$
+parking lots and an empty parking space for each.
+					
+Output/Result: Correct directions and information on the parking lot is
+displayed.
+					
+How test will be performed: The tester should enter a valid address of a parking
+lot, select an empty parking space, and follow the directions provided by the
+application. Upon successful completion, the tester should enter a different
+valid address of a parking lot, select an empty parking space, and follow the
+directions provided by the application. The success of the test is determined if
+the tester is able to successfully navigate to each empty parking space located
+in $\hyperlink{parking_lots}{PARKING\_LOTS}$ different parking lots.
+					
+\end{enumerate}
+
+\subsubsection{Operational and Environmental Requirements}
+\label{sec:5.2.4}
+\paragraph{Expected Physical Environment}
+
+\begin{enumerate}
+\item{NFR-OE1-T1}
+
+Type: Functional, Dynamic, Manual
+					
+Initial State: System is opened on a mobile device in a vehicle
+					
+Input/Condition: Input an address, select a parking space, and follow the
+directions given by the application to the parking space.
+			
+Output/Result: The tester is able to complete all of the tasks in a vehicle and
+is able to park successfully.
+					
+How test will be performed: A tester will be in a vehicle, opens the system on
+their device and inputs a parking lot address and a space to navigate to. The
+tester will then start the vehicle and navigate to the parking space with the
+directions given by the application. The test will complete when the tester is
+parked in the parking space.
+\end{enumerate}
+
+\paragraph{Release Requirements}
+
+\begin{enumerate}
+\item{NFR-OE2-T1}
+
+Type: Structural, Dynamic, Manual
+					
+Initial State: N/A
+					
+Input/Condition: N/A
+					
+Output/Result: N/A
+					
+How test will be performed: Every month, the developers will check the GitHub
+commit log for a new update.
+\end{enumerate}
+
+\subsubsection{Maintainability and Support Requirements}
+\label{sec:5.2.5}
+\paragraph{Maintenance Requirements}
+
+\begin{enumerate}
+
+\item{NFR-MA1-T1}
+
+Type: Functional, Dynamic, Manual
+					
+Initial State: System is running in its normal state
+					
+Input/Condition: Either the software or hardware component of the system will go
+under maintenance.
+					
+Output/Result: Component that is not under maintenance does not throw an
+unexpected error.
+					
+How test will be performed: The developers will take the software component down
+for maintenance and check that the hardware component does not throw an
+unexpected error or fail, and vice versa with taking down the hardware component
+down and checking the software component for unexpected errors.
+					
+\end{enumerate}
+
+\paragraph{Supportability Requirements}
+
+\begin{enumerate}
+
+\item{NFR-MA2-T1}
+
+Type: Functional, Dynamic, Manual
+					
+Initial State: System is running on the user's device
+					
+Input/Condition: N/A
+					
+Output/Result: N/A
+					
+How test will be performed: Random users will be surveyed. Users will be give 5
+minutes to look through instructions provided in the interface and answer the
+survey if they are satisfied with the instructions and contacts provided. At
+least\\ $\hyperlink{supportability_satisfaction}{SUPPORTABILITY\_SATISFACTION}$
+of surveyed users should be satisfied with the instructions and contacts
+provided.
+					
+\end{enumerate}
+
+%%%%%%%%%%%%%%%%%%% SECURITY REQUIREMENTS %%%%%%%%%%%%%%%%%%%
+\subsubsection{Security Requirements}
+\label{sec:5.2.6}
+%%%%%%%%%%%%%%%%%%% ACCESS REQUIREMENTS %%%%%%%%%%%%%%%%%%%
+\paragraph{Access Requirements}
+
+\begin{enumerate}
+%%%%%%%%%%%%%%%%%%% SR-1 %%%%%%%%%%%%%%%%%%%
+\item{NFR-SR1-T1}
+
+Type: Functional, Dynamic, Automatic
+					
+Initial State: Administrative website is launched and a login screen is
+presented.
+					
+Input/Condition: Valid username and password for the parking lot owners/team.
+					
+Output/Result: Redirection to the administrative console with proper parking lot
+data of their parking lot.
+					
+How test will be performed: A Selenium automation script will be created that
+will input a valid username and password and check to ensure that the login is
+successful and that the proper parking lot data of their parking lot is
+displayed.
+
+\item{NFR-SR1-T2}
+
+Type: Functional, Dynamic, Automatic
+					
+Initial State: Administrative website is launched and a login screen is
+presented.
+					
+Input/Condition: Invalid username and password for parking lot owners/team.
+					
+Output/Result: Prompt indicating that the login was unsuccessful.
+					
+How test will be performed: A Selenium automation script will be created that
+will input an invalid username and password and check to ensure that the login
+was unsuccessful, no redirection occurs, and that a prompt is shown that the
+login was unsuccessful.
+
+\item{NFR-SR1-T3}
+
+Type: Functional, Dynamic, Automatic
+					
+Initial State: Driver application is launched.
+					
+Input/Condition: Address of a parking lot.
+					
+Output/Result: Unable to see analytics and parking lot data.
+					
+How test will be performed: A Selenium automation script will be created that
+will input a valid address of a parking lot and ensure that analytics and
+parking lot data are not displayed.
+
+%%%%%%%%%%%%%%%%%%% SR-2 %%%%%%%%%%%%%%%%%%%
+\item{NFR-SR2-T1}
+
+Type: Functional, Dynamic, Automatic
+					
+Initial State: Logged in to the administrative console 
+					
+Input/Condition: Edit function is enabled and is selected for the designated
+parking lot.
+					
+Output/Result: Edit view is displayed allowing for editing of the designated
+parking lot.
+					
+How test will be performed: A Selenium automation script will be created that
+will select the edit option and ensure that all the editing options are
+available for the designated parking lot.
+
+\item{NFR-SR2-T2}
+
+Type: Functional, Dynamic, Automatic
+					
+Initial State: Driver application is launched.
+					
+Input/Condition: Address of a parking lot.
+					
+Output/Result: Edit function is not shown.
+					
+How test will be performed: A Selenium automation script will be created that
+will input a valid address of a parking lot and ensure that no editing
+functionality is enabled.
+
+%%%%%%%%%%%%%%%%%%% SR-3 %%%%%%%%%%%%%%%%%%%
+\item{NFR-SR3-T1}
+
+Type: Functional, Dynamic, Automatic
+					
+Initial State: Logged in to the administrative console 
+					
+Input/Condition: Search for a parking lot that is not the designated parking
+lot.
+					
+Output/Result: Edit functionality disabled and analytics are not displayed.
+
+How test will be performed: A Selenium automation script will be created that
+will input a valid address of a parking lot that is not the designated parking
+lot and ensure that no editing functionality is enabled and analytics are not
+displayed for the parking lot.
 
 \end{enumerate}
 
-\subsubsection{Area of Testing2}
+\paragraph{Integrity Requirements}
 
-...
+\begin{enumerate}
+
+%%%%%%%%%%%%%%%%%%% SR-4 %%%%%%%%%%%%%%%%%%%
+\item{NFR-SR4-T1}
+
+Type: Structural, Dynamic, Manual
+					
+Initial State: Logged into the database on the server
+					
+Input/Condition: Change the status of an empty parking lot entry in the database
+to full and refresh the database
+					
+Output/Result: The database entry would revert the status of the parking lot
+entry to the correct one, saying it is empty.
+
+How test will be performed: The developers would enter the database and change
+an empty parking lot entry in the database to full, refresh the database, and
+ensure that the entry was reverted back to the correct status, which is empty.
+
+%%%%%%%%%%%%%%%%%%% SR-5 %%%%%%%%%%%%%%%%%%%
+\item{NFR-SR5-T1}
+
+Type: Functional, Dynamic, Manual
+					
+Initial State: Logged in to the Administrative console
+					
+Input/Condition: Edit and save the parking lot layout and disconnect the system
+from the internet.
+					
+Output/Result: Parking lot layout is cached and a prompt is shown indicating
+that the unsaved layout is cached and the location.
+
+How test will be performed: The tester will manually login to the administrative
+console with proper credentials, edit the designated parking lot, and disconnect
+from the internet. The tester will then see a prompt with saying the layout was
+successfully cached locally and the link to the location.
+
+%%%%%%%%%%%%%%%%%%% SR-6 %%%%%%%%%%%%%%%%%%%
+\item{NFR-SR6-T1}
+
+Type: Functional, Dynamic, Manual
+					
+Initial State: Logged in to the Administrative console
+					
+Input/Condition: Edit and save the parking lot layout and disconnect the system
+from the internet.
+					
+Output/Result: System attempts to upload a cached parking lot layout every
+\\$\hyperlink{attempt_upload_time}{ATTEMPT\_UPLOAD\_TIME}$ seconds and provides
+a message that includes the countdown till the next attempt to upload.
+
+How test will be performed: The tester will manually login to the administrative
+console with proper credentials, edit and save the designated parking lot, and
+disconnect from the internet. The tester will then check the developer console
+for HTTP requests every $\hyperlink{attempt_upload_time}{ATTEMPT\_UPLOAD\_TIME}$
+seconds to upload to the server as well as a message that provides the countdown
+till the next upload.
+
+%%%%%%%%%%%%%%%%%%% SR-7 %%%%%%%%%%%%%%%%%%%
+\item{NFR-SR7-T1}
+
+Type: Structural, Dynamic, Automatic
+					
+Initial State: Logged into the database on the server
+					
+Input/Condition: Check the last time the parking lot layouts on the server have
+been backed up.
+					
+Output/Result: Each entry must have been backed up at 11:59PM daily.
+
+How test will be performed: An automated pipeline would be created and ran daily
+to facilitate the checking of each of the parking lot layouts.
+
+%%%%%%%%%%%%%%%%%%% SR-8 %%%%%%%%%%%%%%%%%%%
+\item{NFR-SR8-T1}
+
+Type: Structural, Dynamic, Automatic
+					
+Initial State: Logged into the database on the server
+					
+Input/Condition: Attempt to add an entry with a different format in the database
+from other parking spaces.
+					
+Output/Result: The database would produce an error and deny the addition of the
+inconsistent entry.
+
+How test will be performed: An automated test script will be created to test the
+data consistency of the database through attempting to add an invalid entry and
+ensuring that an error is produced and the addition is denied.
+
+%%%%%%%%%%%%%%%%%%% SR-9 %%%%%%%%%%%%%%%%%%%
+\item{NFR-SR9-T1}
+
+Type: Structural, Dynamic, Automatic
+					
+Initial State: Logged into the database on the server
+					
+Input/Condition: Attempt to add an entry with more than \\
+$\hyperlink{max_special_property}{MAXIMUM\_SPECIAL\_PROPERTY}$ special property.
+					
+Output/Result: The database would produce an error and deny the addition of the
+inconsistent entry.
+
+How test will be performed: An automated test script will be created to test the
+data consistency of the database through attempting to add an entry with more
+than $\hyperlink{max_special_property}{MAXIMUM\_SPECIAL\_PROPERTY}$ special
+property and ensuring that an error is produced and the addition is denied.
+
+%%%%%%%%%%%%%%%%%%% SR-10 %%%%%%%%%%%%%%%%%%%
+\item{NFR-SR10-T1}
+
+Type: Structural, Dynamic, Manual
+					
+Initial State: Database is offline and logged in to the Administrative console
+					
+Input/Condition: Attempt to edit and save the parking lot layout.
+					
+Output/Result: Parking lot layout is cached and a prompt is shown indicating
+that the changes are unable to be uploaded to the database and that it is cached
+locally.
+
+How test will be performed: The developers would have to manually change the
+database to offline, log into the administrative console, edit a parking lot
+layout, and observe to see if a prompt is shown indicating that the changes are
+unable to be uploaded to the database and that it is cached locally.
+
+%%%%%%%%%%%%%%%%%%% SR-11 %%%%%%%%%%%%%%%%%%%
+\item{NFR-SR11-T1}
+
+Type: Functional, Dynamic, Automatic
+					
+Initial State: Logged in to the Administrative console
+					
+Input/Condition: Edit a parking lot layout and prompt the upload of the layout
+to the database server.
+					
+Output/Result: Initiates the upload of the parking lot layout, prompts the user
+that an upload is underway, and a prompt will appear upon success indicating
+that the layout is successfully uploaded.
+
+How test will be performed: A Selenium automation script will be created that
+will edit a parking lot layout and prompt the upload of the layout to the
+database server. It will verify that the upload was initiated and completed
+successfully along with the prompts that the upload is underway and that the
+layout is successfully uploaded respectively.
+
+%%%%%%%%%%%%%%%%%%% SR-12 %%%%%%%%%%%%%%%%%%%
+\item{NFR-SR12-T1}
+
+Type: Functional, Dynamic
+					
+Initial State: Logged into the database on the server, download the parking lot
+layout data represented in terms of a weighted undirected graph
+					
+Input/Condition: Find the shortest path between a given starting node to a
+designated end node
+					
+Output/Result: The return value should be the set of edges from the starting
+node to the end node
+					
+How test will be performed: The parking lot layout data is retrieved from the
+database and reconstructed as a weighted undirected graph. Then the developers
+dynamically test the connection and path between a starting node and designated
+node by running a path finding algorithm such as Breath-first search.
+%%%%%%%%%%%%%%%%%%% SR-13 %%%%%%%%%%%%%%%%%%%
+\item{NFR-SR13-T1}
+
+Type: Functional, Dynamic, Manual
+					
+Initial State: System is operating, but the navigation request is set to be
+rejected by the back-end service
+					
+Input/Condition: User requests navigation
+					
+Output/Result: The system prompts a message indicating an error has occured.
+					
+How test will be performed: The navigation request is set to be rejected by the
+back-end services by the developer. The developer then can test whether a error
+message prompt appears when it cannot get the response from the server.
+
+\end{enumerate}
+\paragraph{Privacy Requirements}
+
+\begin{enumerate}
+
+\item{NFR-SR14-T1}
+
+Type: Functional, Dynamic, Manual
+					
+Initial State: System is running on the user's device
+					
+Input/Condition: N/A
+					
+Output/Result: N/A
+					
+How test will be performed: Testers will check that a form pops up on the first
+time launching the system to ask for permission to use the user's location.
+					
+\end{enumerate}
+
+\subsubsection{Legal Requirements}
+\label{sec:5.2.7}
+\paragraph{Compliance Requirements}
+
+\begin{enumerate}
+
+\item{NFR-LR1-T1}
+
+Type: Functional, Dynamic, Manual
+					
+Initial State: The system is operating
+					
+Input/Condition: The user is in navigation mode and while moving, the user
+attempt to interact with the website
+					
+Output/Result: A notification window should pop out, informing the driver to
+follow the regulations
+					
+How test will be performed: Developer will sit in the passenger seats with
+navigation on, while the other developer will drive the vehicle. The developer
+on the passenger seat will attempt to use the website but is prompted to follow
+the regulations.
+					
+\end{enumerate}
+
+\subsubsection{Health and Safety Requirements}
+\label{sec:5.2.8}
+\paragraph{Compliance Requirements}
+
+\begin{enumerate}
+
+\item{NFR-HS1-T1}
+
+Type: Functional, Dynamic, Manual
+					
+Initial State: System is operating.
+					
+Input/Condition: User navigates between web pages from the system
+					
+Output/Result: The browser renders different web pages from the system
+					
+How test will be performed: Developer will manually test and navigate between
+different web pages from the system and make sure no flashing graphics or
+disturbing imagery exists
+					
+\end{enumerate}
 
 \subsection{Traceability Between Test Cases and Requirements}
-
 \wss{Provide a table that shows which test cases are supporting which
-  requirements.}
+  requirements.} Included in this section are traceability matrices that maps
+  test cases to functional requirements and non-functional requirements outlined
+  in the
+  \href{https://github.com/parkd-app/park-d/blob/main/docs/SRS/SRS.pdf}{SRS}.
+\newpage
+\begin{landscape}
+\begin{table}[htbp]
+\caption{Traceability Matrix for Test Cases and Functional Requirements - Part
+1} \label{traceMatrix1}
+\begin{tabularx}{\textwidth}{cc|c|c|c|c|c|c|c|c|c|c|c|c|c|}
+\cline{3-15}
+& & \multicolumn{13}{ c|}{Functional Requirements} \\ \cline{3-15} & & FR1  &
+FR2 & FR3 & FR4 & FR5 & FR6 & FR7 & FR8 & FR9 & FR10 & FR11 & FR12 & FR13  \\
+\cline{1-15} \multicolumn{1}{ |c| }{\multirow{13}{*}{Test Cases} } &
+\multicolumn{1}{|c| } {BE1-FR1-T1}   &X&&&&&&&&&&&& \\ \cline{2-15}
+\multicolumn{1}{|c| }{} 	                  & \multicolumn{1}{|c| }{BE1-FR2-T1}
+&&X&&&&&&&&&&& \\ \cline{2-15} \multicolumn{1}{|c| }{}                        &
+\multicolumn{1}{|c| } {BE2-FR3-T1}   &&&X&&&&&&&&&&\\ \cline{2-15}
+\multicolumn{1}{|c| }{}                        & \multicolumn{1}{ |c| }
+{BE2-FR4-T1}  &&&&X&&&&&&&&& \\ \cline{2-15} \multicolumn{1}{|c| }{} &
+\multicolumn{1}{ |c| } {BE2-FR5-T1}  &&&&&X&&&&&&&&\\ \cline{2-15}
+\multicolumn{1}{|c| }{}                        & \multicolumn{1}{ |c| }
+{BE2-FR6-T1}  &&&&&&X&&&&&&& \\ \cline{2-15} \multicolumn{1}{|c| }{} &
+\multicolumn{1}{ |c| } {BE2-FR7-T1}  &&&&&&&X&&&&&& \\ \cline{2-15}
+\multicolumn{1}{|c| }{}                        & \multicolumn{1}{ |c| }
+{BE3-FR8-T1}  &&&&&&&&X&&&&& \\ \cline{2-15} \multicolumn{1}{|c| }{} &
+\multicolumn{1}{ |c| } {BE3-FR9-T1}  &&&&&&&&&X&&&&\\ \cline{2-15}
+\multicolumn{1}{|c| }{}                        & \multicolumn{1}{ |c| }
+{BE4-FR10-T1} &&&&&&&&&&X&&& \\ \cline{2-15} \multicolumn{1}{|c| }{} &
+\multicolumn{1}{ |c| } {BE4-FR11-T1} &&&&&&&&&&&X&& \\ \cline{2-15}
+\multicolumn{1}{|c| }{}                        & \multicolumn{1}{ |c| }
+{BE4-FR12-T1} &&&&&&&&&&&&X& \\ \cline{2-15} \multicolumn{1}{|c| }{} &
+\multicolumn{1}{ |c| } {BE4-FR13-T1} &&&&&&&&&&&&&X \\ \cline{1-15}
+\end{tabularx}
+\end{table}
+
+\newpage
+\begin{table}[htbp]
+\caption{Traceability Matrix for Test Cases and Functional Requirements - Part
+2} \label{traceMatrix1}
+\begin{tabularx}{\textwidth}{cc|c|c|c|c|c|c|c|c|c|c|c|c|}
+\cline{3-14}
+& & \multicolumn{12}{ c|}{Functional Requirements} \\ \cline{3-14} & & FR14  &
+FR15 & FR16 & FR17 & FR18 & FR19 & FR20 & FR21 & FR22 & FR23 & FR24 & FR25  \\
+\cline{1-14} \multicolumn{1}{ |c| }{\multirow{12}{*}{Test Cases} } &
+\multicolumn{1}{|c| } {BE5-FR14-T1}   &X&&&&&&&&&&& \\ \cline{2-14}
+\multicolumn{1}{|c| }{} 	                  & \multicolumn{1}{|c| }{BE5-FR15-T1}
+&&X&&&&&&&&&& \\ \cline{2-14} \multicolumn{1}{|c| }{}                        &
+\multicolumn{1}{|c| } {BE6-FR16-T1}   &&&X&&&&&&&&&\\ \cline{2-14}
+\multicolumn{1}{|c| }{}                        & \multicolumn{1}{ |c| }
+{BE6-FR17-T1}  &&&&X&&&&&&&& \\ \cline{2-14} \multicolumn{1}{|c| }{} &
+\multicolumn{1}{ |c| } {BE6-FR18-T1}  &&&&&X&&&&&&&\\ \cline{2-14}
+\multicolumn{1}{|c| }{}                        & \multicolumn{1}{ |c| }
+{BE7-FR19-T1}  &&&&&&X&&&&&& \\ \cline{2-14} \multicolumn{1}{|c| }{} &
+\multicolumn{1}{ |c| } {BE7-FR20-T1}  &&&&&&&X&&&&& \\ \cline{2-14}
+\multicolumn{1}{|c| }{}                        & \multicolumn{1}{ |c| }
+{BE7-FR21-T1}  &&&&&&&&X&&&& \\ \cline{2-14} \multicolumn{1}{|c| }{} &
+\multicolumn{1}{ |c| } {BE8-FR22-T1}  &&&&&&&&&X&&&\\ \cline{2-14}
+\multicolumn{1}{|c| }{}                        & \multicolumn{1}{ |c| }
+{BE8-FR23-T1} &&&&&&&&&&X&& \\ \cline{2-14} \multicolumn{1}{|c| }{} &
+\multicolumn{1}{ |c| } {BE9-FR24-T1} &&&&&&&&&&&X& \\ \cline{2-14}
+\multicolumn{1}{|c| }{}                        & \multicolumn{1}{ |c| }
+{BE9-FR25-T1} &&&&&&&&&&&&X \\ \cline{1-14}
+\end{tabularx}
+\end{table}
+
+\newpage
+\begin{table}[htbp]
+\caption{Traceability Matrix for Test Cases and Functional Requirements - Part
+3} \label{traceMatrix1}
+\begin{tabularx}{\textwidth}{cc|c|c|c|c|c|c|}
+\cline{3-8}
+& & \multicolumn{6}{ c|}{Functional Requirements} \\ \cline{3-8} & & FR26  &
+FR27 & FR28 & FR29 & FR30 & FR31  \\ \cline{1-8} \multicolumn{1}{ |c|
+}{\multirow{6}{*}{Test Cases} } & \multicolumn{1}{|c| } {BE10-FR26-T1}   &X&&&&&
+\\ \cline{2-8} \multicolumn{1}{|c| }{} 	                  & \multicolumn{1}{|c|
+}{BE10-FR27-T1}    &&X&&&& \\ \cline{2-8} \multicolumn{1}{|c| }{} &
+\multicolumn{1}{|c| } {BE10-FR28-T1}   &&&X&&&\\ \cline{2-8} \multicolumn{1}{|c|
+}{}                        & \multicolumn{1}{ |c| } {BE10-FR29-T1}  &&&&X&& \\
+\cline{2-8} \multicolumn{1}{|c| }{} & \multicolumn{1}{ |c| } {BE11-FR30-T1}
+&&&&&X&\\ \cline{2-8} \multicolumn{1}{|c| }{}                        &
+\multicolumn{1}{ |c| } {BE11-FR31-T1}  &&&&&&X \\ \cline{1-8}
+\end{tabularx}
+\end{table}
+
+\newpage
+\begin{table}[htbp]
+\caption{Traceability Matrix for Test Cases and Non-Functional Requirements -
+Look \& Feel, Usability \& Humanity, and Performance} \label{traceMatrix1}
+\begin{tabularx}{\textwidth}{cc|c|c|c|c|c|c|c|c|c|c|c|c|}
+\cline{3-14}
+& & \multicolumn{12}{ c|}{Non-Functional Requirements} \\ \cline{3-14} & & LF1 &
+LF2 & UH1 & UH2 & UH3 & UH4 & PE1 & PE2 & PE3 & PE4 & PE5 & PE6 \\
+\cline{1-14} \multicolumn{1}{ |c| }{\multirow{13}{*}{Test Cases} } &
+\multicolumn{1}{|c| } {NFR-LF1-T1}   &X&&&&&&&&&&& \\ \cline{2-14}
+\multicolumn{1}{|c| }{} 	                  & \multicolumn{1}{|c| }{NFR-LF2-T1}
+&&X&&&&&&&&&& \\ \cline{2-14} \multicolumn{1}{|c| }{}                        &
+\multicolumn{1}{|c| } {NFR-UH1-T1}   &&&X&&&&&&&&&\\ \cline{2-14}
+\multicolumn{1}{|c| }{}                        & \multicolumn{1}{ |c| }
+{NFR-UH2-T1}  &&&&X&&&&&&&& \\ \cline{2-14} \multicolumn{1}{|c| }{} &
+\multicolumn{1}{ |c| } {NFR-UH3-T1}  &&&&&X&&&&&&&\\ \cline{2-14}
+\multicolumn{1}{|c| }{}                        & \multicolumn{1}{ |c| }
+{NFR-UH4-T1}  &&&&&&X&&&&&& \\ \cline{2-14} \multicolumn{1}{|c| }{} &
+\multicolumn{1}{ |c| } {NFR-PE1-T1}  &&&&&&&X&&&&& \\ \cline{2-14}
+\multicolumn{1}{|c| }{}                        & \multicolumn{1}{ |c| }
+{NFR-PE2-T1}  &&&&&&&&X&&&& \\ \cline{2-14} \multicolumn{1}{|c| }{} &
+\multicolumn{1}{ |c| } {NFR-PE3-T1}  &&&&&&&&&X&&&\\ \cline{2-14}
+\multicolumn{1}{|c| }{}                        & \multicolumn{1}{ |c| }
+{NFR-PE4-T1} &&&&&&&&&&X&& \\ \cline{2-14} \multicolumn{1}{|c| }{} &
+\multicolumn{1}{ |c| } {NFR-PE5-T1} &&&&&&&&&&&X& \\ \cline{2-14}
+\multicolumn{1}{|c| }{}                        & \multicolumn{1}{ |c| }
+{NFR-PE6-T1} &&&&&&&&&&&&X \\ \cline{1-14}
+\end{tabularx}
+\end{table}
+
+\newpage
+\begin{table}[htbp]
+\caption{Traceability Matrix for Test Cases and Non-Functional Requirements -
+Operational \& Environmental and Maintainability \& Support}
+\label{traceMatrix1}
+\begin{tabularx}{\textwidth}{cc|c|c|c|c|}
+\cline{3-6}
+& & \multicolumn{4}{ c|}{Non-Functional Requirements} \\ \cline{3-6} & & OE1  &
+OE2 & MA1 & MA2  \\ \cline{1-6} \multicolumn{1}{ |c| }{\multirow{4}{*}{Test
+Cases} } & \multicolumn{1}{|c| } {NFR-OE1-T1}   &X&&& \\ \cline{2-6}
+\multicolumn{1}{|c| }{} 	                  & \multicolumn{1}{|c| }{NFR-OE2-T1}
+&&X&& \\ \cline{2-6} \multicolumn{1}{|c| }{}                        &
+\multicolumn{1}{|c| } {NFR-MA1-T1}   &&&X&\\ \cline{2-6} \multicolumn{1}{|c| }{}
+& \multicolumn{1}{ |c| } {NFR-MA2-T1}  &&&&X\\ \cline{1-6}
+\end{tabularx}
+\end{table}
+
+\newpage
+\begin{table}[htbp]
+\caption{Traceability Matrix for Test Cases and Non-Functional Requirements -
+Security} \label{traceMatrix1}
+\begin{tabularx}{\textwidth}{cc|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}
+\cline{3-16}
+& & \multicolumn{14}{ c|}{Non-Functional Requirements} \\ \cline{3-16} & & SR1 &
+SR2 & SR3 & SR4 & SR5 & SR6 & SR7 & SR8 & SR9 & SR10 & SR11 & SR12 & SR13 & SR14
+\\ \cline{1-16} \multicolumn{1}{ |c| }{\multirow{14}{*}{Test Cases} } &
+\multicolumn{1}{|c| } {NFR-SR1-T1}   &X&&&&&&&&&&&&& \\ \cline{2-16}
+\multicolumn{1}{|c| }{} 	                  & \multicolumn{1}{|c| }{NFR-SR1-T2}
+&X&&&&&&&&&&&&& \\ \cline{2-16} \multicolumn{1}{|c| }{}                        &
+\multicolumn{1}{|c| } {NFR-SR1-T3}   &X&&&&&&&&&&&&&\\ \cline{2-16}
+\multicolumn{1}{|c| }{}                        & \multicolumn{1}{ |c| }
+{NFR-SR2-T1}  &&X&&&&&&&&&&&& \\ \cline{2-16} \multicolumn{1}{|c| }{} &
+\multicolumn{1}{ |c| } {NFR-SR2-T2}  &&X&&&&&&&&&&&&\\ \cline{2-16}
+\multicolumn{1}{|c| }{}                        & \multicolumn{1}{ |c| }
+{NFR-SR3-T1}  &&&X&&&&&&&&&&& \\ \cline{2-16} \multicolumn{1}{|c| }{} &
+\multicolumn{1}{ |c| } {NFR-SR4-T1}  &&&&X&&&&&&&&&& \\ \cline{2-16}
+\multicolumn{1}{|c| }{}                        & \multicolumn{1}{ |c| }
+{NFR-SR5-T1}  &&&&&X&&&&&&&&& \\ \cline{2-16} \multicolumn{1}{|c| }{} &
+\multicolumn{1}{ |c| } {NFR-SR6-T1}  &&&&&&X&&&&&&&&\\ \cline{2-16}
+\multicolumn{1}{|c| }{}                        & \multicolumn{1}{ |c| }
+{NFR-SR7-T1} &&&&&&&X&&&&&&& \\ \cline{2-16} \multicolumn{1}{|c| }{} &
+\multicolumn{1}{ |c| } {NFR-SR8-T1} &&&&&&&&X&&&&&& \\ \cline{2-16}
+\multicolumn{1}{|c| }{}                        & \multicolumn{1}{ |c| }
+{NFR-SR9-T1} &&&&&&&&&X&&&&& \\ \cline{2-16} \multicolumn{1}{|c| }{} &
+\multicolumn{1}{ |c| } {NFR-SR10-T1} &&&&&&&&&&X&&&& \\ \cline{2-16}
+\multicolumn{1}{|c| }{}                        & \multicolumn{1}{ |c| }
+{NFR-SR11-T1} &&&&&&&&&&&X&&& \\ \cline{2-16} \multicolumn{1}{|c| }{} &
+\multicolumn{1}{ |c| } {NFR-SR12-T1} &&&&&&&&&&&&X&& \\ \cline{2-16}
+\multicolumn{1}{|c| }{}                        & \multicolumn{1}{ |c| }
+{NFR-SR13-T1} &&&&&&&&&&&&&X& \\ \cline{2-16} \multicolumn{1}{|c| }{} &
+\multicolumn{1}{ |c| } {NFR-SR14-T1} &&&&&&&&&&&&&&X \\ \cline{1-16}
+\end{tabularx}
+\end{table}
+
+\newpage
+\begin{table}[htbp]
+\caption{Traceability Matrix for Test Cases and Non-Functional Requirements -
+Legal and Health \& Safety} \label{traceMatrix1}
+\begin{tabularx}{\textwidth}{cc|c|c|c|c|}
+\cline{3-4}
+& & \multicolumn{2}{ c|}{Non-Functional Requirements} \\ \cline{3-4} & & LR1  &
+HS1  \\ \cline{1-4} \multicolumn{1}{ |c| }{\multirow{2}{*}{Test Cases} } &
+\multicolumn{1}{|c| } {NFR-LR1-T1}   &X& \\ \cline{2-4} \multicolumn{1}{|c| }{}
+& \multicolumn{1}{|c| }{NFR-HS1-T1}    &&X \\ \cline{1-4}
+\end{tabularx}
+\end{table}
+\end{landscape}
+
 
 \section{Unit Test Description}
 
-\wss{Reference your MIS and explain your overall philosophy for test case
-  selection.}  
-\wss{This section should not be filled in until after the MIS has
-  been completed.}
+% \wss{Reference your MIS (detailed design document) and explain your overall
+%   philosophy for test case selection.}  
+% \wss{This section should not be filled in until after the MIS (detailed design
+%   document) has been completed.}
+N/A. To be added after the MIS is completed.
 
 \subsection{Unit Testing Scope}
 
-\wss{What modules are outside of the scope.  If there are modules that are
-  developed by someone else, then you would say here if you aren't planning on
-  verifying them.  There may also be modules that are part of your software, but
-  have a lower priority for verification than others.  If this is the case,
-  explain your rationale for the ranking of module importance.}
+% \wss{What modules are outside of the scope.  If there are modules that are
+%   developed by someone else, then you would say here if you aren't planning on
+%   verifying them.  There may also be modules that are part of your software,
+%   but have a lower priority for verification than others.  If this is the
+%   case, explain your rationale for the ranking of module importance.}
 
 \subsection{Tests for Functional Requirements}
 
-\wss{Most of the verification will be through automated unit testing.  If
-  appropriate specific modules can be verified by a non-testing based
-  technique.  That can also be documented in this section.}
+% \wss{Most of the verification will be through automated unit testing.  If
+%   appropriate specific modules can be verified by a non-testing based
+%   technique.  That can also be documented in this section.}
 
-\subsubsection{Module 1}
+% \subsubsection{Module 1}
 
-\wss{Include a blurb here to explain why the subsections below cover the module.
-  References to the MIS would be good.  You will want tests from a black box
-  perspective and from a white box perspective.  Explain to the reader how the
-  tests were selected.}
+% \wss{Include a blurb here to explain why the subsections below cover the
+%   module. References to the MIS would be good.  You will want tests from a
+%   black box perspective and from a white box perspective.  Explain to the
+%   reader how the tests were selected.}
 
-\begin{enumerate}
+% \begin{enumerate}
 
-\item{test-id1\\}
+% \item{test-id1\\}
 
-Type: \wss{Functional, Dynamic, Manual, Automatic, Static etc. Most will
-  be automatic}
+% Type: \wss{Functional, Dynamic, Manual, Automatic, Static etc. Most will be
+%   automatic}
 					
-Initial State: 
+% Initial State: 
 					
-Input: 
+% Input: 
 					
-Output: \wss{The expected result for the given inputs}
+% Output: \wss{The expected result for the given inputs}
 
-Test Case Derivation: \wss{Justify the expected value given in the Output field}
+% Test Case Derivation: \wss{Justify the expected value given in the Output
+% field}
 
-How test will be performed: 
+% How test will be performed: 
 					
-\item{test-id2\\}
+% \item{test-id2\\}
 
-Type: \wss{Functional, Dynamic, Manual, Automatic, Static etc. Most will
-  be automatic}
+% Type: \wss{Functional, Dynamic, Manual, Automatic, Static etc. Most will be
+%   automatic}
 					
-Initial State: 
+% Initial State: 
 					
-Input: 
+% Input: 
 					
-Output: \wss{The expected result for the given inputs}
+% Output: \wss{The expected result for the given inputs}
 
-Test Case Derivation: \wss{Justify the expected value given in the Output field}
+% Test Case Derivation: \wss{Justify the expected value given in the Output
+% field}
 
-How test will be performed: 
+% How test will be performed: 
 
-\item{...\\}
+% \item{...\\}
     
-\end{enumerate}
+% \end{enumerate}
 
-\subsubsection{Module 2}
+% \subsubsection{Module 2}
 
-...
+% ...
 
 \subsection{Tests for Nonfunctional Requirements}
 
-\wss{If there is a module that needs to be independently assessed for
-  performance, those test cases can go here.  In some projects, planning for
-  nonfunctional tests of units will not be that relevant.}
+% \wss{If there is a module that needs to be independently assessed for
+%   performance, those test cases can go here.  In some projects, planning for
+%   nonfunctional tests of units will not be that relevant.}
 
-\wss{These tests may involve collecting performance data from previously
-  mentioned functional tests.}
+% \wss{These tests may involve collecting performance data from previously
+%   mentioned functional tests.}
 
-\subsubsection{Module ?}
+% \subsubsection{Module ?}
 		
-\begin{enumerate}
+% \begin{enumerate}
 
-\item{test-id1\\}
+% \item{test-id1\\}
 
-Type: \wss{Functional, Dynamic, Manual, Automatic, Static etc. Most will
-  be automatic}
+% Type: \wss{Functional, Dynamic, Manual, Automatic, Static etc. Most will be
+%   automatic}
 					
-Initial State: 
+% Initial State: 
 					
-Input/Condition: 
+% Input/Condition: 
 					
-Output/Result: 
+% Output/Result: 
 					
-How test will be performed: 
+% How test will be performed: 
 					
-\item{test-id2\\}
+% \item{test-id2\\}
 
-Type: Functional, Dynamic, Manual, Static etc.
+% Type: Functional, Dynamic, Manual, Static etc.
 					
-Initial State: 
+% Initial State: 
 					
-Input: 
+% Input: 
 					
-Output: 
+% Output: 
 					
-How test will be performed: 
+% How test will be performed: 
 
-\end{enumerate}
+% \end{enumerate}
 
-\subsubsection{Module ?}
+% \subsubsection{Module ?}
 
-...
+% ...
 
 \subsection{Traceability Between Test Cases and Modules}
 
-\wss{Provide evidence that all of the modules have been considered.}
+% \wss{Provide evidence that all of the modules have been considered.}
 				
-\bibliographystyle{plainnat}
+% \bibliographystyle{plainnat}
 
-\bibliography{../../refs/References}
+% \bibliography{../../refs/References}
 
 \newpage
 
 \section{Appendix}
 
-This is where you can place additional information.
+Additional information that supports this documentation is provided in the
+following sections.
 
 \subsection{Symbolic Parameters}
-
-The definition of the test cases will call for SYMBOLIC\_CONSTANTS.
-Their values are defined in this section for easy maintenance.
-
+\noindent $\hypertarget{max_taps}{MAX\_TAPS}$ = 2 \\
+$\hypertarget{min_framerate}{MIN\_FRAMERATE}$ = 15\\
+$\hypertarget{concurrent_users}{CONCURRENT\_USERS}$ = 10\\
+$\hypertarget{parking_lots}{PARKING\_LOTS}$ = 2\\
+$\hypertarget{default_delay}{DEFAULT\_DELAY}$ = 10\\
+$\hypertarget{attempt_upload_time}{ATTEMPT\_UPLOAD\_TIME}$ = 30 \\
+$\hypertarget{max_special_property}{MAXIMUM\_SPECIAL\_PROPERTY}$ = 1 \\
+$\hypertarget{supportability_satisfaction}{SUPPORTABILITY\_SATISFACTION}$ = 80\%
+\\
+$\hypertarget{exploration_time}{EXPLORATION\_TIME}$ = 5 minutes\% \\
+$\hypertarget{timeframe}{TIMEFRAME}$ = 6 months\% \\
 \subsection{Usability Survey Questions?}
-
-\wss{This is a section that would be appropriate for some projects.}
-
-\newpage{}
-\section*{Appendix --- Reflection}
-
-The information in this section will be used to evaluate the team members on the
-graduate attribute of Lifelong Learning.  Please answer the following questions:
+\label{sec:7.2}
 
 \begin{enumerate}
-  \item 
-  \item 
+    \item How responsive was the system in providing directions to your desired
+    parking space? [1: Lowest, 5 Highest]
+    \item How responsive was the system in providing new directions when your
+    desired parking space became unavailable? [1: Lowest, 5 Highest]
+    \item Were you able to reach your desired parking space using the given
+    directions? [Yes/No]
+    \item Is the system visually/stylistically similar to Google Maps, Apple
+    Maps, or Waze? [Yes/No]
+    \item Is the system as easy to use as Google Maps, Apple Maps, or Waze?
+    [Yes/No]
+    \item Were you able to use the system to find an available parking spot?
+    [Yes/No]
+    \item Were you satisfied with the instructions and contacts provided in the
+    interface? [Yes/No]
+    \item How often would you use this system when looking for parking spaces?
+    [1: Very Infrequently, 2: Somewhat Infrequently, 3: Occasionally, 4:
+    Somewhat Frequently, 5: Frequently]
 \end{enumerate}
+
+
+\newpage{}
+\subsection{Reflection}
+
+\wss{The information in this section will be used to evaluate the team members
+on the graduate attribute of Lifelong Learning.  Please answer the following
+questions:}
+
+
+\begin{enumerate}
+  \item \wss{What knowledge and skills will the team collectively need to
+  acquire to successfully complete the verification and validation of your
+  project? Examples of possible knowledge and skills include dynamic testing
+  knowledge, static testing knowledge, specific tool usage etc.  You should look
+  to identify at least one item for each team member.}
+
+  \item \wss{For each of the knowledge areas and skills identified in the
+  previous question, what are at least two approaches to acquiring the knowledge
+  or mastering the skill?  Of the identified approaches, which will each team
+  member pursue, and why did they make this choice?}
+\end{enumerate}
+
+\subsubsection{Manual Testing}
+Despite the advent of automated testing tools, which are indeed useful, not all
+features of our system can be tested this way. For example, to validate one of
+our requirements, we need to test that a new set of directions are provided to
+the user if the current set of directions are infeasible to follow. As such, we
+need to test this feature by asking one of the testers to stand in front of the
+vehicle and check that the driver receives a new set of instructions. This
+verification cannot simply be done using an automated approach. \\
+\\
+\noindent \textbf{Learning Approaches}
+\begin{enumerate}
+    \item Observation Skills: It is inadequate to simply fail a test on the
+    principle that the output did not match the expected result. In order to
+    hone your manual testing skills, you must pay close attention to all of your
+    actions and the corresponding system response, such that the failure can be
+    reproduced in the future.
+    \item Analytical Skills: To improve your manual testing skills, you must
+    think critically about the reason why the test scenario failed because the
+    system may have been in a state that it should have not been in.
+    Furthermore, by being more analytical, you can think of more ways to break
+    the system and thus, reduce the number of bugs and glitches.
+\end{enumerate}
+
+\begin{itemize}
+    \item Almen: To improve my manual testing skills, I believe working on my
+    analytical skills should be the priority. With such a complex system, having
+    analytical skills would help with breaking it up into smaller components to
+    gain better understanding of the components of the system and how they
+    interact with each other and collecting data needed to make decisions and
+    suggestions.
+    \item Kabishan: I believe that I can improve my manual testing skills by
+    mastering my analytical skills. In doing so, not only will I test our system
+    to a higher depth, but I will also improve my ability to test my software
+    solutions at work. I will improve my analytical skills by consulting my
+    notes from 3S03, the Software Testing course, and attempting manual testing
+    interview questions online.
+    \item Jonathan: To further improve my manual testing skills, I believe that
+    focusing on my observation skills would be useful. A failure to meet a test
+    case is not always as clear-cut as it may seem. The context of the failure
+    and use case may give further insight to the underlying issue. Improving my
+    observation skills would allow me to better identify these details when
+    manually testing our system.
+    \item David: I will focus on observation skills so I can verify that an
+    error has been resolved by reproducing the steps exactly. This way I can
+    more reliably know when the program is behaving as expected. It will also
+    help me look closely at the code to predict why an error may have arisen.
+    \item Albert: I will look to improve my observation skills as there are too
+    many times that a test fails because I wasn't paying enough attention and
+    put the wrong initial conditions.
+    \item Gary: I will try to improve my analytical skills because as the
+    complexity of our software increases, we have to separate the system into
+    different individual parts for testing and then integrate it later.
+\end{itemize}
+
+\subsubsection{Learning a New Automation Framework}
+Learning how to use new automation frameworks, specifically Selenium, could be
+challenging for group members who do not have experience with it.\\
+
+\noindent \textbf{Learning Approaches}
+\begin{enumerate}
+    \item Dedicate a time during our meetings for Almen, who has professional
+    experience using Selenium, to explain how to use Selenium and ensure that
+    people have the general knowledge to automate UI test cases.
+    \item Learn individually through online documentation, videos, and tutorials
+    on Selenium's website.
+\end{enumerate}
+
+\begin{itemize}
+    \item Almen: Already proficient in developing UI test cases, I would
+    gravitate towards the later option to strengthen my understanding on the
+    matter and aid my team whenever it arises.
+    \item Jonathan: As I do not have any experience with automated testing
+    frameworks, I would prefer to dedicate meetings with Almen. This would allow
+    me to more efficiently learn how the framework works and specifically how it
+    integrates with our specific system and use cases.
+    \item Kabishan: My automated testing experience lies mostly in iOS and
+    Android testing through Appium. While the foundations of creating test cases
+    are the same, irrespective of platform, scheduling some time with Almen will
+    allow me to expedite the exploration of any nuances and subtleties of the
+    Selenium framework.
+    \item David: I will aim to self-learn the Selenium framework, and hopefully
+    Almen can provide advice for any specific questions I may have.
+    \item Albert: As someone with experience, it would be best to follow Almen
+    as she already knows the scope of the framework for our purposes.
+    \item Gary: I would prefer to have meeting with Almen and learning about
+    this framework as this is more efficient. Learning from documentation can be
+    time-consuming and not all the details are needed for the purpose of testing
+    this project.
+\end{itemize}
+
+\subsubsection{Validating Plans}
+It is just as important to know how to verify and validate our test plans as it
+is to create the test plans. It can be difficult to set the criteria that
+effectively and sufficiently validate the plans. \\
+
+\noindent \textbf{Learning Approaches}
+\begin{enumerate}
+    \item Learn individually from books or online resources about how
+    professionals in the industry verify and validate their plans effectively.
+    \item Collaborate with professors and peers to see how their thought process
+    when laying out their plans and how they verify and validate them.
+\end{enumerate}
+
+\begin{itemize}
+    \item Jonathan: I believe that this is an aspect that I have a lot of room
+    to improve in. Because of that, I think a mix of both learning approaches
+    would suit me best. In my opinion, collaborating with professors and peers
+    would be easier to learn from. However, I think that it is also important to
+    learn how industry professionals go about verifying and validating their
+    plans. 
+    \item David: I will collaborate with peers and classmates to see how they
+    are verifying their plans. A variety of perspectives is beneficial in
+    learning the best way to do something, and I will be able to combine the
+    best practices from each person I ask.
+    \item Kabishan: In order to better verify and validate our test plan, I will
+    learn from books and online resources, and I will also ask professionals in
+    the industry about how they perform this task. As enticing as the second
+    option sounds, it would be very difficult for me to arrange a time with my
+    professors and my peers to master this skill.
+    \item Albert: I wish to collaborate with others as it is a more hands on
+    experience and can provide more help than what was asked for.
+    \item Gary: I personally believe it is always better to learn from
+    professional in the industry about how they verify their products and plans
+    effectively because they have done it countless number of times and they
+    have very mature methodology.
+    \item Almen: I would like to approach the latter option of collaborating
+    with professors and peers as this provides first hand insight on what is
+    needed to verify and validate plans. The former option might have a lot of
+    unnecessary content that may not be relevant to us.
+\end{itemize}
+
+\subsubsection{Structuring Peer Review}
+A well-structured peer review allows us to derive deeper insight on topics that
+are important, rather than surface-level feedback on the topic of the reviewer's
+choice. It's important to know how to write good questionnaires, for example,
+while directing our reviewers' attention to the most impactful topics in our
+documentation and design. \\
+
+\noindent \textbf{Learning Approaches}
+\begin{enumerate}
+    \item Learn from the surveying principles taught in SFWRENG 4HC3, including
+    questionnaire and interview formatting
+    \item Study peer review formats from previous courses and online resources
+\end{enumerate}
+
+\begin{itemize}
+    \item David: I will apply the practices we learn in SFWRENG 4HC3 in
+    structuring peer review. We have practice with these from assessments in
+    that course, and it will be interesting to apply my learning to other
+    courses.
+    \item Kabishan: In order to ask better questions, and therefore derive more
+    effective feedback from our users, I will learn from the surveying
+    principles taught in SFWRENG 4HC3. For example, instead of asking open-ended
+    questions, which are difficult to compare for multiple participants, asking
+    with a range of answers would be better.
+    \item Jonathan: I would prefer to apply the principles and knowledge we have
+    learned about reviewing from SFWRENG 4HC3. I have found many of the
+    principles we have covered in that course interesting and applicable to our
+    project.
+    \item Albert: There's a lot of research done for understanding people and
+    asking the correct questions. Using these resources may be overwhelming, but
+    can provide more information than from one course.
+    \item Gary: I am happy to apply the knowledge I learned from 4HC3 class and
+    I will look through the resources provided from that course to understand
+    these principles better.
+    \item Almen: I wish to apply my knowledge taught in SFWRENG 4HC3 as the
+    course has provided a lot of valuable information in constructing proper
+    questionnaires that has been previously assessed in the course.
+\end{itemize}
+
+\subsubsection{Static Testing}
+Static testing can be very difficult and time consuming for those not used to
+it. It requires a full understanding of the program and is not only about
+getting the right output. \\
+
+\noindent \textbf{Learning Approaches}
+\begin{enumerate}
+    \item Practice with small programs on our own and compare against static
+    testing tools
+    \item Work together on static testing a part of the system and let the main
+    contributors lead the testing.
+\end{enumerate}
+
+\begin{itemize}
+    \item Albert: I have never used static testing tools before, so I think
+    comparing my abilities to them will provide a good indication of my
+    abilities.
+    \item Kabishan: During SFWRENG 3S03, I worked on several practice problems
+    that required me to use static testing to identify faulty code that may
+    never be uncovered at run-time. In addition to this knowledge, I will
+    practice with small programs on my own and compare my results against static
+    testing tools, such as SonarQube, to ensure that our project does not crash
+    during execution.
+    \item David: I will practice on small programs of my own, such as previous
+    projects. This will be a good way to see where my shortcomings are, and it
+    will be good practice because I won't have worked on these projects for a
+    significant time.
+    \item Jonathan: I think that practicing on smaller programs would be a more
+    effective way to learn about static testing and improve my skills in that
+    area. I would then be able to apply the skills I have learned to our project
+    when putting our modules through static testing.
+    \item Gary: I have learned some static testing tools before but I haven't
+    used it for a while, so I think the best way for me to refresh the memory is
+    to practice with a small dummy program and refresh the memory.
+    \item Almen: I personally would choose to practice on a smaller program,
+    such as ones that can be found online, and do a code review on the program.
+    I would then compare it with static testing tools to validate what I have
+    found. That why, I would be able to improve my skills in static testing and
+    be able to contribute to static testing of the project.
+\end{itemize}
+
+\subsubsection{API Testing}
+Having a back-end service that is intended to handle user web request also needs
+to be tested through an API testing tool, such as Postman. API testing can speed
+up the testing process compared with UI testing by simply changing the input
+parameters of each web request sent to the server and provides a form of early
+validation for the data and response of the back-end system.\\
+
+\noindent \textbf{Learning Approaches}
+\begin{enumerate}
+    \item Download Postman software and follow their user guidelines and check
+    their documentation on the website.
+    \item Ask a group member who has relevant experience with it.
+\end{enumerate}
+
+\begin{itemize}
+    \item Jonathan: As I have no experience with the framework, I think that
+    downloading the Postman software and going through their guidelines and
+    documentation would be the best way for me to learn about the API testing
+    framework. I would probably supplement this with online videos or tutorials
+    to further understand how the framework works.
+    \item Kabishan: Even though I have previously tested endpoints using another
+    software, ReadyAPI, I believe that I can still benefit from following the
+    user guide provided by Postman, as there may be industry proven techniques
+    that identify certain oversights when designing the back-end API. 
+    \item David: I plan to download the software and follow their guidelines and
+    documentation myself. Postman's website hosts tutorials which I hope I will
+    find useful. Any questions I have can be directed to a group member with
+    experience to speed up the learning process.
+    \item Albert: Learning a new tool can be an interesting experience but can
+    also take up a lot of time. Getting tests wrong because you were using the
+    tool wrong can lead to even more time loss. Relying on someone else who is
+    experienced with it would be best.
+    \item Almen: I believe that having organizing a knowledge transfer session
+    with a group member with experience in this should be done as they would
+    provide a lot more relevant information that will be useful to the project.
+    Checking the documentation can be overwhelming and not all the information
+    will be used.
+    \item Gary: I have prior experience with API testing and Postman therefore I
+    can check the documentation when questions comes up.
+\end{itemize}
 
 \end{document}
