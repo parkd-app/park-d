@@ -9,6 +9,7 @@ import Dropdown from 'react-dropdown';
 // import logo from './logo.svg';
 import './App.css';
 import Analytics from './Analytics';
+import Map from './Map';
 
 function App() {
   const [hidden, setHidden] = useState(true)
@@ -33,6 +34,10 @@ function App() {
           </form> : null}
       </body>
     <div>
+        { /* Map Component */ }
+        <div>
+          <Map/>
+        </div>
         { /* Labelling Component */ }
         <div>
           <Labelling/>

@@ -1,0 +1,27 @@
+tr {
+    display: block;
+    float: left;
+  }
+  th {
+    display: block;
+    text-align: left;
+    padding: 10px;
+    width: 250px;
+    border: 1px solid #000;
+  }
+  .parkingRow {
+    display: flex;
+    justify-content: left;
+  }
+  .spaceEmpty {
+    background-color: #0a970a;
+    height: 180px;
+    width: 120px;
+    margin: 30px;
+  }
+  .spaceFull {
+    background-color: #b20e6b;
+    height: 180px;
+    width: 120px;
+    margin: 30px;
+  }
