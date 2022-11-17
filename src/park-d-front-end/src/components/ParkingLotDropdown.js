@@ -12,7 +12,6 @@ const ParkingLotDropdown = () => {
   return(
     <Select 
       options={options}
-      isClearable="true"
       theme={(theme) => ({
         ...theme,
         borderRadius: 5,
