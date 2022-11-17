@@ -1,6 +1,8 @@
 .App-icon {
   height: 5vmin;
   padding-bottom: 5vmin;
+  text-align: center;
+  margin-top: 2em;
 }
 
 .App-name {

@@ -6,7 +6,9 @@ import settingsIcon from './settings.png';
 import React, { useState } from "react";
 import Dropdown from 'react-dropdown';
 
+// import logo from './logo.svg';
 import './App.css';
+import Analytics from './Analytics';
 
 function App() {
   const [hidden, setHidden] = useState(true)
@@ -36,6 +38,7 @@ function App() {
           <Labelling/>
         </div>
     </div>
+      <Analytics/>
     </div>
   );
 }
