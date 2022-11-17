@@ -13,15 +13,15 @@ tr {
     display: flex;
     justify-content: left;
   }
-  .spaceEmpty {
-    background-color: #0a970a;
+  .space {
+    background-color: #929292;
     height: 180px;
     width: 120px;
     margin: 30px;
   }
-  .spaceFull {
+  .space.empty {
+    background-color: #0a970a;
+  }
+  .space.full {
     background-color: #b20e6b;
-    height: 180px;
-    width: 120px;
-    margin: 30px;
   }
