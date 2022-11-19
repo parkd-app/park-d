@@ -4,13 +4,11 @@ import logoName from './parkd.png';
 import settingsIcon from './settings.png';
 
 import React, { useState } from "react";
-import Dropdown from 'react-dropdown';
 
 import './App.css';
 
 function App() {
   const [hidden, setHidden] = useState(true)
-  const lotOptions = ['Lot 1', 'Lot 2', 'Lot 3']
 
   return (
     <div className="App">
@@ -20,15 +18,16 @@ function App() {
         <img src={settingsIcon} className="Settings-icon" alt="settingsIconName" />
       </header>
       <body>
-        <Dropdown className='Select-Lot-Dropdown' options={lotOptions} placeholder="Select a parking lot"/>
-        <button onClick={() => setHidden(s => !s)}>Parking Preferences</button>
-          {!hidden ?
-          <form id="parkingPref">
-          <input type="checkbox" id="checkReserved" name="checkReserved"/>
-          <label for="checkReserved">Reserved</label><br></br>
-          <input type="checkbox" id="checkHandicapped" name="checkHandicapped"/>
-          <label for="checkHandicapped">Handicapped</label>
-          </form> : null}
+        <div className="ParkingPref">
+            {!hidden ?
+            <form className="ParkingPref-Form" id="parkingPref">
+            <input type="checkbox" id="checkReserved" name="checkReserved"/>
+            <label for="checkReserved">Reserved</label><br></br>
+            <input type="checkbox" id="checkHandicapped" name="checkHandicapped"/>
+            <label for="checkHandicapped">Handicapped</label>
+            </form> : null}
+            <button onClick={() => setHidden(s => !s)}>Parking Preferences</button>
+          </div>
       </body>
     <div>
         { /* Labelling Component */ }
