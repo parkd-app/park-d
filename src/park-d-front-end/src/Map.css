@@ -14,14 +14,23 @@ tr {
     justify-content: left;
   }
   .space {
-    background-color: #929292;
+    border-style: solid;
+    border-width: 30px;
+    border-color: #8d8d8d;
+    position: relative;
     height: 180px;
     width: 120px;
-    margin: 30px;
+    margin: 15px;
   }
   .space.empty {
-    background-color: #0a970a;
+    border-color: #268d2b;
   }
   .space.full {
-    background-color: #b20e6b;
+    border-color: #b13030;
+  }
+  .icon {
+    position: absolute;
+    top: 40%;
+    width: 100%;
+    text-align: center;
   }
