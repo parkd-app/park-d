@@ -1,40 +1,48 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Analytics.css';
 
+// set url to fetch parking data
+const jsonURL = 'http://localhost:8000/parking_spaces'
+
 function Get(yourUrl){
-    var Httpreq = new XMLHttpRequest(); // a new request
+    var Httpreq = new XMLHttpRequest();
     Httpreq.open("GET",yourUrl,false);
     Httpreq.send(null);
     return Httpreq.responseText;          
 }
 
 function Analytics() {
-    const [availableSpots, setAvailableSpots] = useState(0);
-    const [occupiedSpots, setOccupiedSpots] = useState(0);
-    var json_obj;
+    //spotNum[0] = # of available spots, spotNum[1] = # of occupied spots
+    const [spotNum, setSpotNum] = useState([0,0]);
 
-    const handleClick = async() => {
-        json_obj = JSON.parse(Get("http://localhost:8000/parking_spaces"));
-        var newAvailableSpots = 0;
-        var newOccupiedSpots = 0;
-        for (var i = 0; i < json_obj.length; i++) {
-            if (json_obj[i].status) {
-                newAvailableSpots += 1;
-            } else {
-                newOccupiedSpots += 1;
+    // periodically check parking data
+    useEffect(() => {
+        let interval = setInterval(() => {
+            let json_obj = JSON.parse(Get(jsonURL));
+            let availableSpots = 0;
+            let occupiedSpots = 0;
+            for (var i = 0; i < json_obj.length; i++) {
+                if (json_obj[i].status) {
+                    availableSpots += 1;
+                } else {
+                    occupiedSpots += 1;
+                }
             }
+            setSpotNum([availableSpots, occupiedSpots]);
+        }, 2000);
+        return () => {
+            clearInterval(interval);
         }
-        setAvailableSpots(newAvailableSpots);
-        setOccupiedSpots(newOccupiedSpots);
-    }
+      });
+
     return (
         <div>
-            <button onClick={handleClick}>Update Analytics</button>
+            <div><h2>Analytics</h2></div>
             <div>
-                {"Available spots: " + availableSpots}
+                {"Available spots: " + spotNum[0]}
             </div>
             <div>
-                {"Occupied spots: " + occupiedSpots}
+                {"Occupied spots: " + spotNum[1]}
             </div>
         </div>
     );

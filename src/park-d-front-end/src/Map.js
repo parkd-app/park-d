@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheckCircle, faXmarkCircle, faWheelchair } from '@fortawesome/free-solid-svg-icons';
+import { faCheckCircle, faXmarkCircle } from '@fortawesome/free-solid-svg-icons';
 
 import './Map.css';
 
