@@ -1,59 +1,41 @@
 import React, { useState } from 'react';
 import './Analytics.css';
 
+function Get(yourUrl){
+    var Httpreq = new XMLHttpRequest(); // a new request
+    Httpreq.open("GET",yourUrl,false);
+    Httpreq.send(null);
+    return Httpreq.responseText;          
+}
+
 function Analytics() {
+    const [availableSpots, setAvailableSpots] = useState(0);
+    const [occupiedSpots, setOccupiedSpots] = useState(0);
+    var json_obj;
 
-    const [data, setData] = useState({data: []});
-    const [isLoading, setIsLoading] = useState(false);
-    const [err, setErr] = useState('');
-
-    const handleClick = async () => {
-        setIsLoading(true);
-
-        try {
-        // const response = await fetch('https://reqres.in/api/users', {
-        const response = await fetch('localhost:3000/rt_parking_info', {
-            method: 'GET',
-            headers: {
-            Accept: 'application/json',
-            },
-        });
-
-        if (!response.ok) {
-            throw new Error(`Error! status: ${response.status}`);
+    const handleClick = async() => {
+        json_obj = JSON.parse(Get("http://localhost:8000/parking_spaces"));
+        var newAvailableSpots = 0;
+        var newOccupiedSpots = 0;
+        for (var i = 0; i < json_obj.length; i++) {
+            if (json_obj[i].status) {
+                newAvailableSpots += 1;
+            } else {
+                newOccupiedSpots += 1;
+            }
         }
-
-        const result = await response.json();
-
-        console.log('result is: ', JSON.stringify(result, null, 4));
-
-        setData(result);
-        } catch (err) {
-        setErr(err.message);
-        } finally {
-        setIsLoading(false);
-        }
-    };
-
-  console.log(data);
-
+        setAvailableSpots(newAvailableSpots);
+        setOccupiedSpots(newOccupiedSpots);
+    }
     return (
         <div>
-            {err && <h2>{err}</h2>}
-
-            <button onClick={handleClick}>Fetch data</button>
-
-            {isLoading && <h2>Loading...</h2>}
-
-            {data.data.map(spot => {
-            return (
-                <div key={spot.id}>
-                <h2>{spot.id}</h2>
-                <h2>{spot.status}</h2>
-                <br />
-                </div>
-            );
-            })}
+            <button onClick={handleClick}>Update Analytics</button>
+            <div>
+                {"Available spots: " + availableSpots}
+            </div>
+            <div>
+                {"Occupied spots: " + occupiedSpots}
+            </div>
         </div>
     );
 }
