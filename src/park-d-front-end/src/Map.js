@@ -14,7 +14,6 @@ function Map() {
             let json_obj = JSON.parse(Get(jsonURL));
             let statuses = json_obj.map(space => space.status)
             setState(statuses);
-            console.log(states)
         }, 2000);
         return () => {
             clearInterval(interval);
