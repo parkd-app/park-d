@@ -1,3 +1,6 @@
+.App-header {
+  width: 100%;
+}
 .App-icon {
   height: 5vmin;
   padding-bottom: 5vmin;
@@ -5,19 +8,26 @@
 
 .App-name {
   height: 10vmin;
-  padding-right: 40%;
   padding-left: 40%;
 }
 
 .Settings-icon {
+  float: right;
   height: 2.5vmin;
-  padding-bottom: 7.5vmin;
-  padding-left: 1.5%;
 }
 
-.Select-Lot-Dropdown {
+.Settings-icon {
   float: right;
-  text-align: left;
-  border: 50px;
-  width: 150px;
+  height: 2.5vmin;
+}
+
+.ParkingPref {
+  position: fixed;
+  left: 5%;
+  bottom: 5%;
+}
+
+.ParkingPref-Form {
+  border: auto;
+  border-style: solid;
 }
