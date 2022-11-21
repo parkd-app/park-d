@@ -13,18 +13,11 @@ function Labelling() {
 
     return (
         <div>
-            <input 
-                className="showLabelBtn"
-                type="submit" 
-                value={showLabel ? "Hide Label" : "Show Label"}
-                onClick={onClick}
-            />
-            
             { showLabel ? 
-                <div style={{ padding: "30px", display: "flex", justifyContent: "center" }}>
+                <div style={{ display: "flex", justifyContent: "center" }}>
                     <tbody>
                         <tr>
-                            <th style={{ textAlign:"center" }}>Label</th>
+                            <th style={{ textAlign:"center" }}>Legend</th>
                             <th>
                                 <div className="labelRow">
                                     <FontAwesomeIcon 
@@ -73,6 +66,12 @@ function Labelling() {
                         </tr>
                     </tbody>
                 </div> : null }
+                <input 
+                className="showLabelBtn"
+                type="submit" 
+                value={showLabel ? "Hide Legend" : "Show Legend"}
+                onClick={onClick}
+            />
         </div>
     );
 }

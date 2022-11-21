@@ -36,16 +36,16 @@ function App() {
       </body>
     <div>
         { /* Map Component */ }
-        <div>
+        <div className='Map'>
           <Map/>
         </div>
         { /* Labelling Component */ }
-        <div>
+        <div className='Labelling'>
           <Labelling/>
         </div>
     </div>
-      <Analytics/>
-      <ParkingLotDropdown/>
+    <div className='Analytics'><Analytics/></div>
+    <div className='ParkingLotDropdown'><ParkingLotDropdown/></div>
     </div>
   );
 }
