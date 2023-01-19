@@ -159,7 +159,7 @@ described by giving their type signature followed by their specification.
 \section{Module Decomposition}
 
 The following table is taken directly from the
-\href{https://github.com/parkd-app/park-d/blob/main/docs/Design/MG/MG.pdf}{Module
+\href{https://github.com/parkd-app/park-d/blob/main/docs/Design/SoftArchitecture/MG.pdf}{Module
 Guide} document for this project.
 
 \begin{table}[h!]
@@ -773,8 +773,8 @@ None
 
 \noindent new ParkingSpot($id$):
 \begin{itemize}
-\item transition: $spotId, type, enabled, reserved, handicapped, occupied :=
-id, "spot", \\
+\item transition: $spotId, type, enabled, reserved, handicapped, occupied := id,
+"spot", \\
 true, false, false, false$
 \item output: $out := self$
 \item exception: exc := None
