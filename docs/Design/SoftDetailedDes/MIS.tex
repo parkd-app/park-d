@@ -19,11 +19,12 @@
 \usepackage[section]{placeins}
 \usepackage{caption}
 \usepackage{fullpage}
+\usepackage{makecell}
 
-\hypersetup{
-bookmarks=true,     % show bookmarks bar?
+\hypersetup{ bookmarks=true,     % show bookmarks bar?
 colorlinks=true,       % false: boxed links; true: colored links
-linkcolor=red,          % color of internal links (change box color with linkbordercolor)
+linkcolor=red,          % color of internal links (change box color with
+%linkbordercolor)
 citecolor=blue,      % color of links to bibliography
 filecolor=magenta,  % color of file links
 urlcolor=cyan          % color of external links
@@ -50,11 +51,10 @@ urlcolor=cyan          % color of external links
 
 \section{Revision History}
 
-\begin{tabularx}{\textwidth}{p{3cm}p{2cm}X}
-\toprule {\bf Date} & {\bf Version} & {\bf Notes}\\
+\begin{tabularx}{\textwidth}{p{3cm}p{2cm}X} \toprule {\bf Date} & {\bf Version}
+& {\bf Notes}\\
 \midrule
-Date 1 & 1.0 & Notes\\
-Date 2 & 1.1 & Notes\\
+Jan 18, 2023 & 1.0 & Revision 0\\
 \bottomrule
 \end{tabularx}
 
@@ -62,9 +62,22 @@ Date 2 & 1.1 & Notes\\
 
 \section{Symbols, Abbreviations and Acronyms}
 
-See SRS Documentation at \wss{give url}
+See SRS Documentation at
+\href{https://github.com/parkd-app/park-d/blob/main/docs/SRS/SRS.pdf}{Park'd
+Software Requirements Specification}.\\
 
-\wss{Also add any additional symbols, abbreviations or acronyms}
+\noindent
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{l l} 
+  \toprule		
+  \textbf{Symbol} & \textbf{Description}\\
+  \midrule 
+  \progname & Parking Lot Application\\
+  MIS & Module Interface Specification \\
+  MG & Module Guide\\
+  SRS & Software Requirements Specifications\\
+  \bottomrule
+\end{tabular}\\
 
 \newpage
 
@@ -76,25 +89,33 @@ See SRS Documentation at \wss{give url}
 
 \section{Introduction}
 
-The following document details the Module Interface Specifications for
-\wss{Fill in your project name and description}
+The following document details the Module Interface Specifications for Park'd,
+our parking assistant application. Park'd aims to help drivers find parking
+spaces by using machine learning algorithms to locate empty spaces from overhead
+cameras. Our application then directs drivers to those spaces, taking into
+account restrictions like reserved or accessible spaces. It will maintain a
+database of spaces as well as a navigation layout for a given parking lot.
 
-Complementary documents include the System Requirement Specifications
-and Module Guide.  The full documentation and implementation can be
-found at \url{...}.  \wss{provide the url for your repo}
+Complementary documents include the SRS and MG documents. The full documentation
+and implementation can be found at
+\href{https://github.com/parkd-app/park-d/tree/main/docs/Design/MIS/MIS.pdf}{Module
+Interface Specification} and
+\href{https://github.com/parkd-app/park-d/tree/main/docs/Design/MG/MG.pdf}{Module
+Guide} documents, respectively.
 
 \section{Notation}
 
-\wss{You should describe your notation.  You can use what is below as
-  a starting point.}
-
-The structure of the MIS for modules comes from \citet{HoffmanAndStrooper1995},
+The structure of the MIS for modules comes from \emph{Software Design, Automated
+Testing, and Maintenance: A Practical Approach} \cite{HoffmanAndStrooper1995},
 with the addition that template modules have been adapted from
-\cite{GhezziEtAl2003}.  The mathematical notation comes from Chapter 3 of
-\citet{HoffmanAndStrooper1995}.  For instance, the symbol := is used for a
-multiple assignment statement and conditional rules follow the form $(c_1
-\Rightarrow r_1 | c_2 \Rightarrow r_2 | ... | c_n \Rightarrow r_n )$.
+\emph{Fundamentals of Software Engineering} \cite{GhezziEtAl2003}.  The
+mathematical notation comes from Chapter 3 of \emph{Software Design, Automated
+Testing, and Maintenance: A Practical Approach} \cite{HoffmanAndStrooper1995}.
+For instance, the symbol := is used for a multiple assignment statement and
+conditional rules follow the form $(c_1 \Rightarrow r_1 | c_2 \Rightarrow r_2 |
+... | c_n \Rightarrow r_n )$.
 
+\newpage
 The following table summarizes the primitive data types used by \progname. 
 
 \begin{center}
@@ -105,24 +126,41 @@ The following table summarizes the primitive data types used by \progname.
 \textbf{Data Type} & \textbf{Notation} & \textbf{Description}\\ 
 \midrule
 character & char & a single symbol or digit\\
-integer & $\mathbb{Z}$ & a number without a fractional component in (-$\infty$, $\infty$) \\
-natural number & $\mathbb{N}$ & a number without a fractional component in [1, $\infty$) \\
+integer & $\mathbb{Z}$ & a number without a fractional component in (-$\infty$,
+$\infty$) \\
+natural number & $\mathbb{N}$ & a number without a fractional component in [1,
+$\infty$) \\
 real & $\mathbb{R}$ & any number in (-$\infty$, $\infty$)\\
+null & $\epsilon$ & empty value \\
+Boolean & $\mathbb{B}$ & true or false\\
+String & String & a sequence of characters\\
+Seq & Seq & an ordered collection of elements\\
+exists & $\exists$ & true if there exists an element that satisfies a property,
+false otherwise\\
+for all & $\forall$ & true if all elements satisfy a property, false otherwise\\
+implies & $\Rightarrow$ & true if the left operator is true then output the
+right operator, false otherwise\\
+in & $\in$ & true if a an element is in a Seq\\
+and & $\land$ & true if both operators are true, false otherwise\\
+subset & $\subseteq$ & true if a set contains another, false otherwise\\
 \bottomrule
 \end{tabular} 
 \end{center}
 
 \noindent
-The specification of \progname \ uses some derived data types: sequences, strings, and
-tuples. Sequences are lists filled with elements of the same data type. Strings
-are sequences of characters. Tuples contain a list of values, potentially of
-different types. In addition, \progname \ uses functions, which
+The specification of \progname \ uses some derived data types: sequences,
+strings, and tuples. Sequences are lists filled with elements of the same data
+type. Strings are sequences of characters. Tuples contain a list of values,
+potentially of different types. In addition, \progname \ uses functions, which
 are defined by the data types of their inputs and outputs. Local functions are
 described by giving their type signature followed by their specification.
 
+\newpage
 \section{Module Decomposition}
 
-The following table is taken directly from the Module Guide document for this project.
+The following table is taken directly from the
+\href{https://github.com/parkd-app/park-d/blob/main/docs/Design/MG/MG.pdf}{Module
+Guide} document for this project.
 
 \begin{table}[h!]
 \centering
@@ -131,21 +169,24 @@ The following table is taken directly from the Module Guide document for this pr
 \textbf{Level 1} & \textbf{Level 2}\\
 \midrule
 
-{Hardware-Hiding} & ~ \\
+{Hardware-Hiding Module} & Camera capture module \\
 \midrule
 
-\multirow{7}{0.3\textwidth}{Behaviour-Hiding} & Input Parameters\\
-& Output Format\\
-& Output Verification\\
-& Temperature ODEs\\
-& Energy Equations\\ 
-& Control Module\\
-& Specification Parameters Module\\
+\multirow{7}{0.3\textwidth}{Behaviour-Hiding Module} & Admin console module\\
+& Admin module\\
+& Parking lot layout module\\
+& Parking layout element module\\
+& Parking spot module\\
+& Authentication module\\
+& User module\\
+& User action handler module\\
+& Vehicle module\\
+& View module\\
 \midrule
 
-\multirow{3}{0.3\textwidth}{Software Decision} & {Sequence Data Structure}\\
-& ODE Solver\\
-& Plotting\\
+\multirow{3}{0.3\textwidth}{Software Decision Module} & Navigation module\\
+& Parking Stats module\\
+& Machine learning model module\\
 \bottomrule
 
 \end{tabular}
@@ -154,88 +195,1098 @@ The following table is taken directly from the Module Guide document for this pr
 \end{table}
 
 \newpage
-~\newpage
 
-\section{MIS of \wss{Module Name}} \label{Module} \wss{Use labels for
-  cross-referencing}
-
-\wss{You can reference SRS labels, such as R\ref{R_Inputs}.}
-
-\wss{It is also possible to use \LaTeX for hypperlinks to external documents.}
+\section{MIS of Authentication Module} 
+\label{auth:Module}
 
 \subsection{Module}
-
-\wss{Short name for the module}
+AuthT
 
 \subsection{Uses}
-
+\hyperref[user:Module]{UserT}
 
 \subsection{Syntax}
 
 \subsubsection{Exported Constants}
+None
+
+\subsubsection{Exported Types}
+AuthT = ?
 
 \subsubsection{Exported Access Programs}
 
-\begin{center}
-\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
+\begin{tabular}{p{4cm} p{4cm} p{2cm} p{4cm}}
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-\wss{accessProg} & - & - & - \\
+authenticateUser & String, String & UserT & MissingUserException \\
 \hline
 \end{tabular}
-\end{center}
 
 \subsection{Semantics}
 
 \subsubsection{State Variables}
-
-\wss{Not all modules will have state variables.  State variables give the module
-  a memory.}
+None
 
 \subsubsection{Environment Variables}
-
-\wss{This section is not necessary for all modules.  Its purpose is to capture
-  when the module has external interaction with the environment, such as for a
-  device driver, screen interface, keyboard, file, etc.}
+\textit{users}: Seq of UserT 
 
 \subsubsection{Assumptions}
-
-\wss{Try to minimize assumptions and anticipate programmer errors via
-  exceptions, but for practical purposes assumptions are sometimes appropriate.}
+None
 
 \subsubsection{Access Routine Semantics}
 
-\noindent \wss{accessProg}():
+\noindent authenticateUser(\textit{id}, \textit{pass}):
 \begin{itemize}
-\item transition: \wss{if appropriate} 
-\item output: \wss{if appropriate} 
-\item exception: \wss{if appropriate} 
+\item output: $out := \exists (i : \mathbb{N} | i < |users| \land
+users[i].getUserId() = \\ id \land users[i].getPassword() = pass)) \Rightarrow
+users[i]$
+
+\item exception: $exc := \neg \exists (i : \mathbb{N} | i < |users| \land
+users[i].getUserId() = \\ id \land users[i].getPassword() = pass)) \Rightarrow
+MissingUserException$
 \end{itemize}
 
-\wss{A module without environment variables or state variables is unlikely to
-  have a state transition.  In this case a state transition can only occur if
-  the module is changing the state of another module.}
+\newpage
 
-\wss{Modules rarely have both a transition and an output.  In most cases you
-  will have one or the other.}
+\section{MIS of User Module} 
+\label{user:Module}
+
+\subsection{Template Module}
+UserT
+
+\subsection{Uses}
+\hyperref[vehicle:Module]{VehicleT}
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+None
+
+\subsubsection{Exported Types}
+UserT = ?
+
+\subsubsection{Exported Access Programs}
+
+
+\begin{tabular}{p{2cm} p{5cm} p{2cm} p{4cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+new UserT & String, String, VehicleT & UserT & UserCreationException \\
+getUserId & ~ & String & ~ \\
+getPassword & ~ & String & ~ \\
+getVehicle & ~ & VehicleT & ~ \\
+\hline
+\end{tabular}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+\textit{userId}: String \\
+\textit{password}: String \\
+\textit{vehicle}: VehicleT
+
+\subsubsection{Environment Variables}
+None
+
+\subsubsection{Assumptions}
+None
+
+\subsubsection{Access Routine Semantics}
+
+\noindent new UserT(\textit{id}, \textit{pass}, \textit{veh}):
+\begin{itemize}
+\item transition: \textit{userId}, \textit{password}, \textit{vehicle} :=
+\textit{id}, \textit{pass}, \textit{veh} 
+\item output: \textit{out} := self
+\item exception: exc := $((|id| = 0) \vee (|pass| = 0) \vee (veh = \epsilon)
+\Rightarrow \text{UserCreationException})$
+\end{itemize}
+
+\noindent getUserId():
+\begin{itemize} 
+\item output: \textit{out} := \textit{userId} 
+\item exception: none
+\end{itemize}
+
+\noindent getPassword():
+\begin{itemize} 
+\item output: \textit{out} := \textit{password} 
+\item exception: none
+\end{itemize}
+
+\noindent getVehicle():
+\begin{itemize} 
+\item output: \textit{out} := \textit{vehicle} 
+\item exception: none
+\end{itemize}
+
+\newpage
+
+\section{MIS of Vehicle Module} 
+\label{vehicle:Module}
+
+\subsection{Template Module}
+VehicleT
+
+\subsection{Uses}
+None
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+None
+
+\subsubsection{Exported Types}
+VehicleT = ?
+
+\subsubsection{Exported Access Programs}
+
+\begin{tabular}{p{4cm} p{3cm} p{2cm} p{5cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+new VehicleT & $\mathbb{R}$, $\mathbb{R}$ & ~ & VehicleCreationException \\
+getLength & ~ & $\mathbb{R}$ & ~ \\
+getWidth & ~ & $\mathbb{R}$ & ~ \\
+\hline
+\end{tabular}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+\textit{length}: $\mathbb{R}$ \\
+\textit{width}: $\mathbb{R}$
+
+\subsubsection{Environment Variables}
+None
+
+\subsubsection{Assumptions}
+None
+
+\subsubsection{Access Routine Semantics}
+
+\noindent new VehicleT(\textit{len, wid}):
+\begin{itemize}
+\item transition: \textit{length}, \textit{width} := \textit{len}, \textit{wid} 
+\item output: \textit{out} := self
+\item exception: exc := $((len \leq 0) \vee (wid \leq 0) \Rightarrow
+\text{VehicleCreationException})$
+\end{itemize}
+
+\noindent getLength():
+\begin{itemize} 
+\item output: \textit{out} := \textit{length} 
+\item exception: none
+\end{itemize}
+
+\noindent getWidth():
+\begin{itemize} 
+\item output: \textit{out} := \textit{width} 
+\item exception: none
+\end{itemize}
+
+\newpage
+
+\section{MIS of Admin Console Module} 
+\label{adminConsole:Module}
+
+\subsection{Module}
+AdminConsoleT
+
+\subsection{Uses}
+\hyperref[admin:Module]{AdminT}
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+None
+
+\subsubsection{Exported Types}
+AdminConsoleT = ?
+
+\subsubsection{Exported Access Programs}
+
+\begin{tabular}{l l l l}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+authenticateAdmin & String, String & AdminT & MissingAdminException \\
+\hline
+\end{tabular}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+None
+
+\subsubsection{Environment Variables}
+\textit{admins}: Seq of AdminT 
+
+\subsubsection{State Invariant}
+None
+
+\subsubsection{Assumptions}
+None
+
+\subsubsection{Access Routine Semantics}
+
+\noindent authenticateAdmin($id, pass$):
+\begin{itemize}
+\item output: $out := \exists (i : \mathbb{N} | i < |admins| \land
+admins[i].getAdminId() = id \land \\ admins[i].getPassword() = pass))
+\Rightarrow admins[i]$
+\item exception: $exc := \neg \exists (i : \mathbb{N} | i < |admins| \land
+admins[i].getAdminId() = id \land \\ admins[i].getPassword() = pass))
+\Rightarrow MissingAdminException$
+\end{itemize}
+
+\newpage
+
+\section{MIS of Admin Module} 
+\label{admin:Module}
+
+\subsection{Template Module}
+AdminT
+
+\subsection{Uses}
+\hyperref[parkingLotLayout:Module]{ParkingLotLayoutT},
+\hyperref[parkingLayoutElem:Module]{ParkingLayoutElemT}, 
+\hyperref[parkingSpot:Module]{ParkingSpotT}
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+None
+
+\subsubsection{Exported Types}
+AdminT = ?
+
+\subsubsection{Exported Access Programs}
+
+\begin{tabular}{l l l l}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+new AdminT & String, String & AdminT & AdminCreationException \\
+getAdminId & ~ & String & ~ \\
+getPassword & ~ & String & ~ \\
+getLayout & String & ParkingLotLayoutT & LayoutNotFoundException \\
+changeLayout & String, ParkingLayoutElemT & ~ & LayoutNotFoundException \\
+\hline
+\end{tabular}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+$adminId$: String \\
+$password$: String \\
+$layouts$: seq of ParkingLotLayoutT
+
+\subsubsection{Environment Variables}
+None
+
+\subsubsection{State Invariant}
+None
+
+\subsubsection{Assumptions}
+None
+
+\subsubsection{Access Routine Semantics}
+
+\noindent new AdminT($id, pass$):
+\begin{itemize}
+\item transition: $adminId, password, layouts :=  id, pass, \langle \rangle$
+\item output: $out := self$
+\item exception: $exc := ((|id| = 0) \vee (|pass| = 0) \Rightarrow
+AdminCreationException)$
+\end{itemize}
+
+\noindent getAdminId():
+\begin{itemize} 
+\item output: $out := adminId$
+\item exception: none
+\end{itemize}
+
+\noindent getPassword():
+\begin{itemize} 
+\item output: $out := password$
+\item exception: none
+\end{itemize}
+
+\noindent getLayout($layoutId$):
+\begin{itemize} 
+\item output: $out := \exists (i:\mathbb{N}|i < n : layout[i].getLayoutId() =
+layoutId) \Rightarrow layout[i]$
+\item exception: $exc := \neg \exists (i:\mathbb{N}|i < n :
+layout[i].getLayoutId() = layoutId) \Rightarrow \\ LayoutNotFoundException$
+\end{itemize}
+
+\noindent changeLayout($layoutId, newSpot$):
+\begin{itemize} 
+\item transition: $layout := \langle i:\mathbb{N} | i < n :
+layout[i].getLayoutSpotId() = spotId \Rightarrow \\
+layout[i].changeElem(newSpot.getElemId(), newSpot) | true \Rightarrow layout[i]
+\rangle$
+\item exception: $exc := \neg \exists (i:\mathbb{N}|i < n :
+layout[i].getLayoutId() = layoutId) \Rightarrow \\ LayoutNotFoundException$
+\end{itemize}
+
+\newpage
+
+\section{MIS of Parking Lot Layout Module} 
+\label{parkingLotLayout:Module}
+
+\subsection{Template Module}
+ParkingLotLayoutT
+
+\subsection{Uses}
+\hyperref[parkingLayoutElem:Module]{ParkingLayoutElemT}
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+None
+
+\subsubsection{Exported Types}
+ParkingLotLayoutT = ?
+
+\subsubsection{Exported Access Programs}
+
+\begin{tabular}{l l l l}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+new ParkingLotLayoutT & String, $\mathbb{N}$ & ParkingLotLayoutT &
+LayoutCreationException \\
+setAllRoads & ~ & ~ & ~ \\
+getLayoutId & ~ & String & ~ \\
+getSize & ~ & $\mathbb{N}$ & ~ \\
+changeElem & \begin{tabular}{@{}lc@{}}String, \\ ParkingLayoutElemT\end{tabular}
+& ~ & ~ \\
+getLayout & ~ & \begin{tabular}{@{}lc@{}}Seq of \\
+ParkingLayoutElemT\end{tabular} & ~ \\
+getElem & String & ParkingLayoutElemT & ElemNotFoundException \\
+getElemIndex & String & $\mathbb{N}$ & ElemNotFoundException \\
+\hline
+\end{tabular}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+$layoutId$: String \\
+$n$: $\mathbb{N}$\\
+$layout$: seq of ParkingLayoutElemT
+
+\subsubsection{Environment Variables}
+None
+
+\subsubsection{State Invariant}
+$|layout| = n^2$.
+
+\subsubsection{Assumptions}
+None
+
+\subsubsection{Access Routine Semantics}
+
+\noindent new ParkingLotLayoutT($id, size$):
+\begin{itemize}
+\item transition: $layoutId, n, layout :=  id, size, \langle \rangle$
+\item output: $out := self$
+\item exception: exc := $((|id| = 0) \Rightarrow AdminCreationException)$
+\end{itemize}
+
+\noindent setAllRoads():
+\begin{itemize} 
+\item output: $layout := i:\mathbb{N} | i < n^2 : layout || \langle new
+ParkingLayoutElem("road_" + i, "road) \rangle $
+\item exception: none
+\end{itemize}
+
+\noindent getLayoutId():
+\begin{itemize} 
+\item output: $out := layoutId$
+\item exception: none
+\end{itemize}
+
+\noindent getSize():
+\begin{itemize} 
+\item output: $out := n$
+\item exception: none
+\end{itemize}
+
+\noindent changeElem($elemId, newElem$):
+\begin{itemize} 
+\item transition: $layout := \langle i:\mathbb{N} | i < n :
+layout[i].getElemId() = elemId \Rightarrow newElem | true \Rightarrow layout[i]
+\rangle$
+\item exception: none
+\end{itemize}
+
+\noindent getLayout():
+\begin{itemize} 
+\item output: $out := layout$
+\item exception: none
+\end{itemize}
+
+\noindent getElem($elemId$):
+\begin{itemize} 
+\item output: $out := \exists (i:\mathbb{N}|i < n : layout[i].getLayoutId() =
+elemId) \Rightarrow layout[i]$
+\item exception: $exc := \neg \exists (i:\mathbb{N}|i < n :
+layout[i].getLayoutId() = elemId) \Rightarrow \\ ElemNotFoundException$
+\end{itemize}
+
+\noindent getElemIndex($elemId$):
+\begin{itemize} 
+\item output: $out := \exists (i:\mathbb{N}|i < n : layout[i].getLayoutId() =
+elemId) \Rightarrow i$
+\item exception: $exc := \neg \exists (i:\mathbb{N}|i < n :
+layout[i].getLayoutId() = elemId) \Rightarrow \\ ElemNotFoundException$
+\end{itemize}
+
+\newpage
+
+\section{MIS of Parking Layout Element Module} 
+\label{parkingLayoutElem:Module}
+
+\subsection{Template Module}
+ParkingElemT
+
+\subsection{Uses}
+None
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+None
+
+\subsubsection{Exported Types}
+ParkingElemT = ?
+
+\subsubsection{Exported Access Programs}
+
+\begin{tabular}{l l l l}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+new ParkingElemT & String, String & ParkingElemT & ~ \\
+getElemId & ~ & String & ~ \\
+getType & ~ & String & ~ \\
+\hline
+\end{tabular}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+$elemId$: String \\
+$type$: String
+
+\subsubsection{Environment Variables}
+None
+
+\subsubsection{State Invariant}
+$type \in \{"spot", "road", "obstacle"\}$.
+
+\subsubsection{Assumptions}
+None
+
+\subsubsection{Access Routine Semantics}
+
+\noindent new ParkingElem($id, s, x, y$):
+\begin{itemize}
+\item transition: $elemId, type :=  id, s$
+\item output: $out := self$
+\item exception: exc := None
+\end{itemize}
+
+\noindent getElemId():
+\begin{itemize} 
+\item output: $out := elemId$
+\item exception: none
+\end{itemize}
+
+\noindent getType():
+\begin{itemize} 
+\item output: $out := type$
+\item exception: none
+\end{itemize}
+
+\newpage
+
+\section{MIS of Parking Spot Module} 
+\label{parkingSpot:Module}
+
+\subsection{Template Module Inherits Parking Layout Element}
+ParkingSpotT
+
+\subsection{Uses}
+\hyperref[parkingLayoutElem:Module]{ParkingLayoutElemT}
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+None
+
+\subsubsection{Exported Types}
+ParkingSpotT = ?
+
+\subsubsection{Exported Access Programs}
+
+\begin{tabular}{l l l l}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+new ParkingSpotT & String, $\mathbb{R}$, $\mathbb{R}$ & ParkingSpotT & ~ \\
+setEnabled & $\mathbb{B}$ & ~ & ~\\
+setOccupied & $\mathbb{B}$ & ~ & ~\\
+setReserved & $\mathbb{B}$ & ~ & ~\\
+setHandicapped & $\mathbb{B}$ & ~ & ~\\
+setAllProp & Seq of $\mathbb{B}$ & ~ & InvalidParamException\\
+getEnabled & ~ & $\mathbb{B}$ & ~\\
+getOccupied & ~ & $\mathbb{B}$ & ~\\
+getReserved & ~ & $\mathbb{B}$ & ~\\
+getHandicapped & ~ & $\mathbb{B}$ & ~\\
+getAllProp & ~ & Seq of $\mathbb{B}$ & ~\\
+\hline
+\end{tabular}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+$enabled$: $\mathbb{B}$\\
+$occupied$: $\mathbb{B}$\\
+$reserved$: $\mathbb{B}$\\
+$handicapped$: $\mathbb{B}$\\
+
+\subsubsection{Environment Variables}
+None
+
+\subsubsection{State Invariant}
+None
+
+\subsubsection{Assumptions}
+None
+
+\subsubsection{Access Routine Semantics}
+
+\noindent new ParkingSpot($id$):
+\begin{itemize}
+\item transition: $spotId, type, enabled, reserved, handicapped, occupied := id,
+"spot", \\
+true, false, false, false$
+\item output: $out := self$
+\item exception: exc := None
+\end{itemize}
+
+\noindent setEnabled($e$):
+\begin{itemize} 
+\item transition: $enabled := e$
+\item exception: none
+\end{itemize}
+
+\noindent setOccupied($o$):
+\begin{itemize} 
+\item transition: $occupied := o$
+\item exception: none
+\end{itemize}
+
+\noindent setReserved($r$):
+\begin{itemize} 
+\item transition: $reserved := r$
+\item exception: none
+\end{itemize}
+
+\noindent setHandicapped($h$):
+\begin{itemize} 
+\item transition: $handicapped := h$
+\item exception: none
+\end{itemize}
+
+\noindent setAllProp($p$):
+\begin{itemize} 
+\item transition: $enabled, occupied, reserved, handicapped := p[0], p[1], p[2],
+p[3]$
+\item exception: $exc := |p| \neq 4 \Rightarrow InvalidParamException$
+\end{itemize}
+
+\noindent getEnabled():
+\begin{itemize} 
+\item output: $out := enabled$
+\item exception: none
+\end{itemize}
+
+\noindent getOccupied():
+\begin{itemize} 
+\item output: $out := occupied$
+\item exception: none
+\end{itemize}
+
+\noindent getReserved():
+\begin{itemize} 
+\item output: $out := reserved$
+\item exception: none
+\end{itemize}
+
+\noindent getHandicapped():
+\begin{itemize} 
+\item output: $out := handicapped$
+\item exception: none
+\end{itemize}
+
+\noindent getAllProp():
+\begin{itemize} 
+\item output: $out := \langle enabled, occupied, reserved, handicapped \rangle$
+\item exception: none
+\end{itemize}
+
+\newpage
+
+\section{MIS of Parking Stats Module} 
+\label{parkingStats:Module}
+
+\subsection{Module}
+ParkingStatsT
+
+\subsection{Uses}
+\hyperref[parkingLotLayout:Module]{ParkingLotLayoutT},
+\hyperref[parkingSpot:Module]{ParkingSpotT}
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+None
+
+\subsubsection{Exported Types}
+ParkingStatsT = ?
+
+\subsubsection{Exported Access Programs}
+
+\begin{tabular}{l l l l}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+getStat & ParkingLotLayoutT, Seq of $\mathbb{B}$ & $\mathbb{N}$ &
+InvalidParamException\\
+\hline
+\end{tabular}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+None
+
+\subsubsection{Environment Variables}
+None
+
+\subsubsection{State Invariant}
+None
+
+\subsubsection{Assumptions}
+None
+
+\subsubsection{Access Routine Semantics}
+
+\noindent getStat($l, p$):
+\begin{itemize} 
+\item output: $out := +(\forall (e : ParkingSpotT | e \in l.getLayout() :
+e.getType() = "spot" \land e.getAllProp() = p \Rightarrow 1 | true \Rightarrow
+0))$
+\item exception: $exc := |p| \neq 4 \Rightarrow InvalidParamException$
+\end{itemize}
+
+\newpage
+
+\section{MIS of Navigation Module} 
+\label{navigation:Module}
+
+\subsection{Module}
+NavigationT
+
+\subsection{Uses}
+\hyperref[parkingLotLayout:Module]{ParkingLotLayoutT}, 
+\hyperref[parkingLayoutElem:Module]{ParkingLayoutElemT}
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+None
+
+\subsubsection{Exported Types}
+NavigationT = ?
+
+\subsubsection{Exported Access Programs}
+
+\begin{tabular}{l l l l}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+findPath & ParkingLotLayoutT, String, String & Seq of String & NoPathException\\
+\hline
+\end{tabular}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+None
+
+\subsubsection{Environment Variables}
+None
+
+\subsubsection{State Invariant}
+None
+
+\subsubsection{Assumptions}
+None
+
+\subsubsection{Access Routine Semantics}
+
+\noindent findPath($L, startId, stopId$):
+\begin{itemize}
+\item output: $out := \langle s : \text{String} \rangle$ that satisfies the
+following:
+\begin{itemize}
+\item $out[0] = startId$.
+\item $out[|out| - 1] = stopId$.
+\item $out \subseteq \langle \forall (e : ParkingLayoutElemT | e \in
+L.getLayout() : e.getElemId) \rangle$.
+\item $\forall (i : \mathbb{N} | i < |out| - 2 : L.getElem(out[i]).getType() =
+"Road")$.
+\item $L.getElem(out[|out| - 1]).getType() = "Spot"$.
+\item $\forall (i : \mathbb{N} | i < |out| - 1 : l.getElemIndex(out[i]) -
+l.getElemIndex(out[i + 1]) \in \{1, -1, l.getSize(), -l.getSize()\})$.
+\end{itemize}
+\item exception: exc := No $out$ can satisfy the requirements $\Rightarrow
+NoPathException$
+\end{itemize}
+
+\newpage
+
+\section{MIS of Machine Learning Model Module} 
+\label{machineLearningModel:Module}
+
+\subsection{Module}
+ModelT
+
+\subsection{Uses}
+\hyperref[cameraCapture:Module]{CameraCaptureT}
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+None
+
+\subsubsection{Exported Types}
+ModelT = ?
+
+\subsubsection{Exported Access Programs}
+
+\begin{tabular}{l l l l}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+setModel & String & ~ & ~\\
+setInput & String, String & ~ & ~ \\
+getResult & ~ & Seq of $\mathbb{B}$ & ~ \\
+\hline
+\end{tabular}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+None
+
+\subsubsection{Environment Variables}
+model: the pre-trained machine learning model in the machine. The model will be
+deserialized as a python object.
+
+\subsubsection{State Invariant}
+None
+
+\subsubsection{Assumptions}
+None
+
+\subsubsection{Access Routine Semantics}
+
+\noindent setModel($pickleAdd$):
+\begin{itemize}
+\item transition: $modelAddress, model := pickleAdd, load(pickleAdd)$
+\item exception:  $exc := \neg \exists (address : String | \neg address.exist())
+\Rightarrow \\ InvalidAddressException$
+\end{itemize}
+
+\noindent setInput($inputURL, inputTypes$):
+\begin{itemize}
+\item transition: $ InputURL, Inputtype := inputURL,inputTypes$
+\item exception: none
+\end{itemize}
+
+\noindent getResult():
+\begin{itemize}
+    \item output: $out := model.predict()$
+    \item exception: none
+\end{itemize}
+
+\newpage
+
+\section{MIS of Camera Capture Module}
+\label{cameraCapture:Module}
+
+\subsection{Module}
+
+CameraCaptureT
+
+\subsection{Uses}
+None
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+None
+
+\subsubsection{Exported Types}
+CameraCaptureT = ?
+
+\subsubsection{Exported Access Programs}
+
+\begin{tabular}{l l l l}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+getLatestFrame & String & Image File & \\
+getLatestClip & String & Video File & \\
+\hline
+\end{tabular}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+\textit{currentFrame}: Image File \\
+\textit{currentClip}: Video File
+
+\subsubsection{Environment Variables}
+picamera
+
+\subsubsection{Assumptions}
+None
+
+\subsubsection{Access Routine Semantics}
+
+\noindent getLatestFrame(\textit{directory}):
+\begin{itemize}
+\item transition: \textit{currentFrame} := \textit{picamera.capture(directory)}
+\item output: \textit{out} := \textit{currentFrame} 
+\item exception: None
+\end{itemize}
+
+\noindent getLatestClip():
+\begin{itemize}
+\item transition: \textit{currentClip} := \textit{picamera.record(directory)}
+\item output: \textit{out} := \textit{currentClip} 
+\item exception: None
+\end{itemize}
+
+\newpage
+
+\section{MIS of User Action Handler module} 
+\label{userActionHandler:Module}
+
+\subsection{Module}
+UserActionHandlerT
+
+\subsection{Uses}
+
+\hyperref[navigation:Module]{NavigationT}, \hyperref[auth:Module]{AuthT},
+\hyperref[admin:Module]{AdminT}, \hyperref[machineLearningModel:Module]{ModelT},
+\hyperref[parkingStats:Module]{ParkingStatsT},
+\hyperref[view:Module]{ViewT} 
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+none
+
+\subsubsection{Exported Types}
+UserHandlerT = ?
+
+\subsubsection{Exported Access Programs}
+
+\begin{tabular}{l l l l}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+handleChangeLayout & String, ParkingLayoutElemT & ~ & ~ \\
+handleParkingStats& ParkingLotLayoutT, Seq of $\mathbb{B}$ & $\mathbb{N}$ & ~ \\
+handleCheckAvailability & ~ & Seq of $\mathbb{B}$ & ~\\
+handleFindPath & ParkingLotLayoutT, String, String & Seq of String & \\
+handleAuth & Sting, String & ~ $\mathbb{B}$ & ~ \\
+\hline
+\end{tabular}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+None
+
+\subsubsection{Environment Variables}
+None
+
+\subsubsection{State Invariant}
+None
+
+\subsubsection{Assumptions}
+None
+
+\subsubsection{Access Routine Semantics}
+
+\noindent handleCheckAvailability():
+\begin{itemize}
+    \item output: $out := ModelT.getResult()$
+    \item exception: none
+\end{itemize}
+
+\noindent handleChangeLayout($st, parkingele$):
+\begin{itemize}
+    \item output: $out := AdminT.changeLayout(st, parkingele)$
+    \item exception: none
+\end{itemize}
+
+
+\noindent handleParkingStats($layout, boolArray$):
+\begin{itemize}
+    \item output: $out := ParkingStatsT.getStat(st, parkingele)$
+    \item exception: none
+\end{itemize}
+
+
+
+\noindent handleFindPath($l, startID, stopId$):
+\begin{itemize}
+    \item output: $out := navigationT.findPath(layout, String, String)$
+    \item exception: none
+\end{itemize}
+
+\noindent handleAuth($id, pass$):
+\begin{itemize}
+    \item output: $out := AuthT.authenticateUser(id,pass)$
+    \item exception: none
+\end{itemize}
+
+\newpage
+
+\section{MIS of View module}
+\label{view:Module}
+
+\subsection{Module}
+ViewT
+
+\subsection{Uses}
+\hyperref[parkingLotLayout:Module]{ParkingLotLayoutT}, 
+\hyperref[parkingLayoutElem:Module]{ParkingLayoutElemT} 
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+None
+
+\subsubsection{Exported Types}
+viewT = ?
+
+\subsubsection{Exported Access Programs}
+
+\begin{tabular}{l l l l}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+initLogin & ~ & ~ & ~ \\
+initPage & ~ & ~ & ~ \\
+
+\hline
+\end{tabular}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+None
+
+\subsubsection{Environment Variables}
+$win$: two dimensional sequence of coloured pixels
+
+\subsubsection{State Invariant}
+None
+
+\subsubsection{Assumptions}
+None
+
+\subsubsection{Access Routine Semantics}
+
+\noindent initLogin():
+\begin{itemize} 
+\item transition: modify win with the following:
+\begin{itemize} 
+\item a text input field for a user name.
+\item a text input field for a password.
+\item a button to confirm the text inputs.
+\end{itemize}
+\item exception: none
+\end{itemize}
+
+\noindent initPage():
+\begin{itemize} 
+\item transition: modify win with the following:
+\begin{itemize} 
+\item use $showLayout()$ based on the location.
+\item use $showLayout()$ to show a path.
+\item a button to confirm logout.
+\item a panel to show parking stats.
+\end{itemize}
+\item exception: none
+\end{itemize}
 
 \subsubsection{Local Functions}
 
-\wss{As appropriate} \wss{These functions are for the purpose of specification.
-  They are not necessarily something that is going to be implemented
-  explicitly.  Even if they are implemented, they are not exported; they only
-  have local scope.}
+\noindent showLayout($L$):
+\begin{itemize} 
+\item transition: modify win so the elements $e :ParkingLotLayoutT$ of $L$ are
+displayed on a $L.getSize()$ by $L.getSize()$ grid with the following table: 
+
+\begin{tabular}{l l l l l l}
+\hline
+$getType()$ & $getEnabled()$ & $getHandicapped()$ & $getReserved()$ &
+$getOccupied()$ & character \\
+\hline
+road & ~  & ~  & ~  & ~  & Black +\\
+obstacle & ~  & ~  & ~  & ~  & Black O\\
+spot & true  & false  & false  & false  & Green S\\
+spot & true  & false  & false  & true  & Red S\\
+spot & true  & false  & true  & false  & Green R\\
+spot & true  & false  & true  & true  & Red R\\
+spot & true  & true  & false  & false  & Green H\\
+spot & true  & true  & false  & true  & Red H\\
+spot & false  & ~  & ~  & ~  & Grey S\\
+\hline
+\end{tabular}
+\end{itemize}
 
 \newpage
 
+\noindent showPath($L, startId, stopId$):
+\begin{itemize} 
+\item transition: modify win first with $showLayout(L)$. \\
+$\forall (s : String | s \in NavigationT.findPath(L, startId, stopId) : \\
+\text{bolden the character on } win \text{ corresponding to } L.getElem(s))$ 
+\item exception: none
+\end{itemize}
+
+\newpage
+
+% End of the sample
 \bibliographystyle {plainnat}
-\bibliography {../../../refs/References}
+\bibliography{../../../refs/References}
 
 \newpage
 
-\section{Appendix} \label{Appendix}
-
-\wss{Extra information if required}
+\section{Appendix} \label{Appendix} N/A
 
 \end{document}
