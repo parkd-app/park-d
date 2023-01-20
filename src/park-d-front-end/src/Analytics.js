@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './Analytics.css';
+import CustomBar from './components/CustomBar';
 
 import { BarChart, Bar, XAxis, Tooltip, CartesianGrid } from 'recharts';
 
@@ -36,7 +37,7 @@ function Analytics() {
         { name: "12pm", occupancy: 10 },
         { name: "1pm", occupancy: 9 },
         { name: "2pm", occupancy: 8 },
-        { name: "3pm", occupancy: 3 },
+        { name: "3pm", occupancy: 5 },
         { name: "4pm", occupancy: 6 },
         { name: "5pm", occupancy: 7 },
         { name: "6pm", occupancy: 8 },
@@ -99,10 +100,9 @@ function Analytics() {
                     scale="point"
                     padding={{ left: 10, right: 10 }}
                 />
-                <Tooltip />
-                <CartesianGrid strokeDasharray="3 3" />
-                <Bar dataKey="occupancy" fill="#8884d8" background={
-                    { fill: "#eee" }} />
+                    <Tooltip />
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <Bar shape={CustomBar} dataKey="occupancy" />
                 </BarChart>
                 <p style={{ textAlign: "right", color: "gray" }}>
                     Last Updated - {formattedDate} @ {formattedTimeString}
