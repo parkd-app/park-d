@@ -14,6 +14,12 @@ function Get(yourUrl){
 }
 
 function Analytics() {
+    let date = Date().toLocaleString().split(" ");
+    let formattedDate = date[1] + " " + date[2] + ", " + date[3];
+    let formattedTime = date[date.length - 3].split(":")[0];
+    let formattedTimeString = formattedTime % 12;
+    formattedTimeString += (formattedTime > 12) ? "pm" : "am";
+
     const data = [
         { name: "12am", occupancy: 1 },
         { name: "1am", occupancy: 1 },
@@ -98,6 +104,9 @@ function Analytics() {
                 <Bar dataKey="occupancy" fill="#8884d8" background={
                     { fill: "#eee" }} />
                 </BarChart>
+                <p style={{ textAlign: "right", color: "gray" }}>
+                    Last Updated - {formattedDate} @ {formattedTimeString}
+                </p>
             </div>
         </div>
     );
