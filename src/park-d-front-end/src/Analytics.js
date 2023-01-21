@@ -90,20 +90,9 @@ function Analytics() {
             { /* The following code will be used to retrieve historical occupancy data */ }
 
             <h2 style={{ textAlign: "center" }}>Analytics</h2>
-            <div className="App">
-                <BarChart width={500} height={300} data={data}
-                margin={{
-                    top: 5,
-                    right: 30,
-                    left: 80,
-                    bottom: 5,
-                }}
-                barSize={20}>
-                <XAxis
-                    dataKey="name"
-                    scale="point"
-                    padding={{ left: 10, right: 10 }}
-                />
+            <div>
+                <BarChart width={575} height={300} data={data} barSize={20} margin={{ left: 80}}>
+                    <XAxis dataKey="name" scale="point" padding={{ left: 10, right: 10 }} interval={0}tick={{fontSize: 8}}/>
                     <Tooltip />
                     <CartesianGrid strokeDasharray="3 3" />
                     <Bar shape={(data) => CustomBar({...data, total, colours})} dataKey="occupancy" total={total} />
