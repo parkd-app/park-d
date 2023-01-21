@@ -78,15 +78,6 @@ function Analytics() {
 
     return (
         <div>
-            { /*
-                <div>
-                    {"Available spots: " + spotNum[0]}
-                </div>
-                <div>
-                    {"Occupied spots: " + spotNum[1]}
-                </div>
-            */ }
-
             {/*
                 The following code will be used to retrieve historical occupancy data.
 
@@ -106,6 +97,14 @@ function Analytics() {
                 <p style={{ textAlign: "right", color: "gray" }}>
                     Last Updated - {formattedDate} @ {formattedTimeString}
                 </p>
+            </div>
+
+            <h2 style={{ textAlign: "center" }}>Live Data</h2>
+            <div style={{ textAlign: "center" }}>
+                {"Available spots: " + spotNum[0]}
+            </div>
+            <div style={{ textAlign: "center" }}>
+                {"Occupied spots: " + spotNum[1]}
             </div>
         </div>
     );

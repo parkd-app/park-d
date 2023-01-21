@@ -4,7 +4,6 @@ import logoName from './parkd.png';
 import settingsIcon from './settings.png';
 
 import React, { useState } from "react";
-import Dropdown from 'react-dropdown';
 import ParkingLotDropdown from './components/ParkingLotDropdown';
 
 // import logo from './logo.svg';
