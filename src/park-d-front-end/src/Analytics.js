@@ -21,6 +21,8 @@ function Analytics() {
     let formattedTimeString = formattedTime % 12;
     formattedTimeString += (formattedTime > 12) ? "pm" : "am";
 
+    const colours = ['#61FF00', '#CCFF00', '#FFE600', '#FF8A00', '#FF0000'];
+
     const data = [
         { name: "12am", occupancy: 1 },
         { name: "1am", occupancy: 1 },
@@ -47,6 +49,8 @@ function Analytics() {
         { name: "10pm", occupancy: 2 },
         { name: "11pm", occupancy: 1 },
     ];
+
+    let total = 10;
 
     // The following code will be used to retrieve live occupancy data
     //spotNum[0] = # of available spots, spotNum[1] = # of occupied spots
@@ -102,7 +106,7 @@ function Analytics() {
                 />
                     <Tooltip />
                     <CartesianGrid strokeDasharray="3 3" />
-                    <Bar shape={CustomBar} dataKey="occupancy" />
+                    <Bar shape={(data) => CustomBar({...data, total, colours})} dataKey="occupancy" total={total} />
                 </BarChart>
                 <p style={{ textAlign: "right", color: "gray" }}>
                     Last Updated - {formattedDate} @ {formattedTimeString}
