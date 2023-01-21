@@ -87,7 +87,13 @@ function Analytics() {
                 </div>
             */ }
 
-            { /* The following code will be used to retrieve historical occupancy data */ }
+            {/*
+                The following code will be used to retrieve historical occupancy data.
+
+                Currently these values are sourced from the JSON object above. In order to render the graph, the ReCharts
+                library is used. ReCharts does not natively support the ability to customize the colour of individual bar
+                graphs. To circumvent this issue, I have written a CustomBar component.
+            */}
 
             <h2 style={{ textAlign: "center" }}>Analytics</h2>
             <div>

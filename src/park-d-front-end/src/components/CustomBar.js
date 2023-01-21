@@ -1,5 +1,11 @@
 import { Rectangle } from 'recharts';
 
+{/* 
+    This component was written to allow for custom colouring for individual bar graphs.
+    The colouring technique is based on the occupancy percentage. The colours progress
+    from green to red as occupancy increases.
+*/}
+
 const CustomBar = (props) => {
     const {occupancy, total, colours} = props;
     let fill = colours[4];
