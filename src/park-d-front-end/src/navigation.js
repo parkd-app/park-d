@@ -22,12 +22,31 @@ var clickDestination;
 var clickChoice = 0;
 var routeMarkers = [];
 
+var polygon;
+
 function initMap(){
     directionsRenderer = new google.maps.DirectionsRenderer({suppressMarkers: true});
     directionsService = new google.maps.DirectionsService();
 
     map = new google.maps.Map(document.getElementById('map'), defaultOptions);
     mapBounds = new google.maps.LatLngBounds();
+
+    polygon = new google.maps.Polygon({
+        paths: [
+            { lat: 43.890092, lng: -79.312103 },
+            { lat: 43.890068, lng: -79.312093 },
+            { lat: 43.890083, lng: -79.312025 },
+            { lat: 43.890107, lng: -79.312033 },
+        ],
+        strokeColor: "#FF0000",
+        strokeOpacity: 0.8,
+        strokeWeight: 2,
+        fillColor: "#FF0000",
+        fillOpacity: 0.35,
+        editable: true
+    });
+
+    polygon.setMap(map);
 
     google.maps.event.addListener(map, 'click', function(event){
         if (clickChoice == 0)
