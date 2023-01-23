@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Park'd Google Map</title>
+  <style>
+    #map{
+      height:500px;
+      width:100%;
+    }
+  </style>
+  <script src="./navigation.js"></script>
+</head>
+<body>
+  <div id="floating-panel">
+      <div id="PickLabel">Choose Origin</div>
+      <button type="button" id="ResetRouteButton" onclick="resetData()" disabled>Reset Route</button>
+      <button type="button" id="RecenterButton" onclick="recenter()">Recenter</button>
+  </div>
+
+
+  <h1>Park'd</h1>
+  <div id="map"></div>
+  
+  <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDWaVhLQMYdNjRXmcZga657_etUC-9HBmQ&callback=initMap">
+    </script>
+</body>
+</html>
