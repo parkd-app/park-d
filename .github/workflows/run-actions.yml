@@ -15,3 +15,14 @@ jobs:
           python-version: "3.11"
       - name: flake8 Lint
         uses: py-actions/flake8@v2
+  prettier-linting:
+    name: Run Prettier Check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Install packages
+        run: npm install prettier
+        working-directory: ./src/park-d-front-end
+      - name: Prettier
+        run: npm run style:all
+        working-directory: ./src/park-d-front-end
