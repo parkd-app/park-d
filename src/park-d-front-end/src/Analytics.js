@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './Analytics.css';
 import CustomBar from './components/CustomBar';
+import AnalyticsCard from './AnalyticsCard';
 
 import { BarChart, Bar, XAxis, Tooltip, CartesianGrid } from 'recharts';
 
@@ -52,6 +53,9 @@ function Analytics() {
 
     let total = 10;
 
+    let locationName = "Pierre Elliott Trudeau High School";
+    let locationAddress = "90 Bur Oak Ave, Markham, ON L6C 2E6";
+
     // The following code will be used to retrieve live occupancy data
     //spotNum[0] = # of available spots, spotNum[1] = # of occupied spots
     const [spotNum, setSpotNum] = useState([0,0]);
@@ -86,7 +90,13 @@ function Analytics() {
                 graphs. To circumvent this issue, I have written a CustomBar component.
             */}
 
-            <h2 style={{ textAlign: "center" }}>Analytics</h2>
+            <h5 style={{ textAlign: "center" }}>{locationName}</h5>
+            <p style={{ textAlign: "center", color: "gray" }}>{locationAddress}</p>
+
+            <AnalyticsCard total={total} available={spotNum[0]} parkingType={'STANDARD'}/>
+            <AnalyticsCard total={total} available={spotNum[0]} parkingType={'ACCESSIBLE'}/>
+            <AnalyticsCard total={total} available={spotNum[0]} parkingType={'RESERVED'}/>
+
             <div>
                 <BarChart width={575} height={300} data={data} barSize={20} margin={{ left: 80}}>
                     <XAxis dataKey="name" scale="point" padding={{ left: 10, right: 10 }} interval={0}tick={{fontSize: 8}}/>
@@ -99,7 +109,7 @@ function Analytics() {
                 </p>
             </div>
 
-            <h2 style={{ textAlign: "center" }}>Live Data</h2>
+            <h4 style={{ textAlign: "center" }}>Live Data</h4>
             <div style={{ textAlign: "center" }}>
                 {"Available spots: " + spotNum[0]}
             </div>
