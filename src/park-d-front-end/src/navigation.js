@@ -37,6 +37,7 @@ function initMap(){
     map = new google.maps.Map(document.getElementById('map'), defaultOptions);
     mapBounds = new google.maps.LatLngBounds();
 
+    // for development reference
     polygon = new google.maps.Polygon({
         paths: [
             { lat: 43.890092, lng: -79.312103 },
@@ -166,11 +167,14 @@ function addSpot()
     }
 }
 
+// calculates points given origin, length, and angle. math needs adjustment
 function putSpot(clickOrigin)
 {
     eventLat = clickOrigin.lat();
     eventLng = clickOrigin.lng();
     point2 = [eventLat+spotWidth*Math.sin(spotAngle*Math.PI/180), eventLng+spotWidth*Math.cos(spotAngle*Math.PI/180)]
+    
+    // strangely not 90 degree adjustment
     point3 = [point2[0]+spotLength*Math.sin((spotAngle+85)*Math.PI/180), point2[1]+spotLength*Math.cos((spotAngle+85)*Math.PI/180)]
     point4 = [point3[0]+spotWidth*Math.sin((spotAngle+180)*Math.PI/180), point3[1]+spotWidth*Math.cos((spotAngle+180)*Math.PI/180)]
     
