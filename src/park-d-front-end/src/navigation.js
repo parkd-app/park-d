@@ -8,8 +8,8 @@ var noPoi = [
       }
     ];
 var defaultOptions = {
-    zoom:15,
-    center:{lat:43.2609,lng:-79.9192},
+    zoom:19,
+    center:{lat:43.8899806,lng:-79.3120005},
     styles: noPoi
   }
 var mapBounds;
@@ -23,6 +23,10 @@ var clickChoice = 0;
 var routeMarkers = [];
 
 var polygon;
+var setPolygon = false;
+var numSpots = 0;
+const spotWidth = 0.00004;
+const spotLength = 0.00006;
 
 function initMap(){
     directionsRenderer = new google.maps.DirectionsRenderer({suppressMarkers: true});
@@ -43,27 +47,56 @@ function initMap(){
         strokeWeight: 2,
         fillColor: "#FF0000",
         fillOpacity: 0.35,
-        editable: true
+        editable: true,
+        draggable: true,
+        geodesic: true
     });
 
     polygon.setMap(map);
 
     google.maps.event.addListener(map, 'click', function(event){
-        if (clickChoice == 0)
+        if (setPolygon == true)
         {
-            clickOrigin = {coords:event.latLng};
-            routeMarkers.push(placeMarker(clickOrigin.coords, "./CarMarker.png"));
-              pickDestination();
+            clickOrigin = JSON.parse(JSON.stringify({coords:event.latLng}));
+            eventLat = clickOrigin.coords.lat;
+            eventLng = clickOrigin.coords.lng;
+            window['spot'+numSpots] = new google.maps.Polygon({
+                paths: [
+                    { lat: eventLat, lng: eventLng },
+                    { lat: eventLat, lng: eventLng - spotWidth },
+                    { lat: eventLat-spotLength, lng: eventLng - spotWidth },
+                    { lat: eventLat-spotLength, lng: eventLng },
+                ],
+                strokeColor: "#FF0000",
+                strokeOpacity: 0.8,
+                strokeWeight: 2,
+                fillColor: "#FF0000",
+                fillOpacity: 0.35,
+                editable: true,
+                draggable: true,
+                geodesic: true
+            });
+            window['spot'+numSpots].setMap(map);
+            setPolygon = false;
+            numSpots += 1;
         }
-        else if (clickChoice == 1)
+        else
         {
-            clickDestination = {coords:event.latLng};
-            directionsRenderer.setMap(map);
-            getRoute(directionsRenderer, directionsService);
-            pickDone();
+            if (clickChoice == 0)
+            {
+                clickOrigin = {coords:event.latLng};
+                routeMarkers.push(placeMarker(clickOrigin.coords, "./CarMarker.png"));
+                  pickDestination();
+            }
+            else if (clickChoice == 1)
+            {
+                clickDestination = {coords:event.latLng};
+                directionsRenderer.setMap(map);
+                getRoute(directionsRenderer, directionsService);
+                pickDone();
+            }
         }
     });
-
 }
 
 function pickDone()
@@ -130,4 +163,9 @@ function getRoute(directionsRenderer, directionsService)
     })
     .catch((e) => window.alert("Direction request failed."));
 
+}
+
+function addSpot()
+{
+    setPolygon = true;
 }
