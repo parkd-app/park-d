@@ -10,7 +10,7 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "font-awesome": "^4.7.0",
-    "prettier": "^2.8.3",
+    "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-dropdown": "^1.11.0",
@@ -27,6 +27,7 @@
     "eject": "react-scripts eject",
     "style:all": "npm run style:prettier",
     "style:prettier": "prettier --check **/*.{js,jsx,ts,tsx}",
+    "style:lint": "eslint **/*.{js,jsx,ts,tsx}",
     "make-pretty": "prettier --write **/*.{js,jsx,ts,tsx}"
   },
   "eslintConfig": {
@@ -46,5 +47,19 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@babel/core": "^7.20.12",
+    "babel-plugin-module-resolver": "^5.0.0",
+    "eslint": "^8.32.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-config-prettier": "^8.6.0",
+    "eslint-import-resolver-babel-module": "^5.3.2",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-jsx-a11y": "^6.7.1",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-react": "^7.32.1",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "prettier": "^2.8.3"
   }
 }

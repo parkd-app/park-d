@@ -1,15 +1,15 @@
-import Labelling from "./Labelling";
-import logoIcon from "./parkdlogo.png";
-import logoName from "./parkd.png";
-import settingsIcon from "./settings.png";
+import React, { useState } from 'react';
+import Labelling from './Labelling';
+import logoIcon from './parkdlogo.png';
+import logoName from './parkd.png';
+import settingsIcon from './settings.png';
 
-import React, { useState } from "react";
-import ParkingLotDropdown from "./components/ParkingLotDropdown";
+import ParkingLotDropdown from './components/ParkingLotDropdown';
 
 // import logo from './logo.svg';
-import "./App.css";
-import Analytics from "./Analytics";
-import Map from "./Map";
+import './App.css';
+import Analytics from './Analytics';
+import Map from './Map';
 
 function App() {
   const [hidden, setHidden] = useState(true);
@@ -30,14 +30,14 @@ function App() {
           {!hidden ? (
             <form className="ParkingPref-Form" id="parkingPref">
               <input type="checkbox" id="checkReserved" name="checkReserved" />
-              <label for="checkReserved">Reserved</label>
-              <br></br>
+              <label htmlFor="checkReserved">Reserved</label>
+              <br />
               <input
                 type="checkbox"
                 id="checkHandicapped"
                 name="checkHandicapped"
               />
-              <label for="checkHandicapped">Handicapped</label>
+              <label htmlFor="checkHandicapped">Handicapped</label>
             </form>
           ) : null}
           <button onClick={() => setHidden((s) => !s)}>

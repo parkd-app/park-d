@@ -1,68 +1,69 @@
-import React, { useState, useEffect } from "react";
-import "./Analytics.css";
-import CustomBar from "./components/CustomBar";
-
-import { BarChart, Bar, XAxis, Tooltip, CartesianGrid } from "recharts";
+import React, { useState, useEffect } from 'react';
+import './Analytics.css';
+import {
+  BarChart, Bar, XAxis, Tooltip, CartesianGrid,
+} from 'recharts';
+import CustomBar from './components/CustomBar';
 
 // set url to fetch parking data
-const jsonURL = "http://localhost:8000/parking_spaces";
+const jsonURL = 'http://localhost:8000/parking_spaces';
 
 function Get(yourUrl) {
-  var Httpreq = new XMLHttpRequest();
-  Httpreq.open("GET", yourUrl, false);
+  const Httpreq = new XMLHttpRequest();
+  Httpreq.open('GET', yourUrl, false);
   Httpreq.send(null);
   return Httpreq.responseText;
 }
 
 function Analytics() {
-  let date = Date().toLocaleString().split(" ");
-  let formattedDate = date[1] + " " + date[2] + ", " + date[3];
-  let formattedTime = date[date.length - 3].split(":")[0];
+  const date = Date().toLocaleString().split(' ');
+  const formattedDate = `${date[1]} ${date[2]}, ${date[3]}`;
+  const formattedTime = date[date.length - 3].split(':')[0];
   let formattedTimeString = formattedTime % 12;
-  formattedTimeString += formattedTime > 12 ? "pm" : "am";
+  formattedTimeString += formattedTime > 12 ? 'pm' : 'am';
 
-  const colours = ["#61FF00", "#CCFF00", "#FFE600", "#FF8A00", "#FF0000"];
+  const colours = ['#61FF00', '#CCFF00', '#FFE600', '#FF8A00', '#FF0000'];
 
   const data = [
-    { name: "12am", occupancy: 1 },
-    { name: "1am", occupancy: 1 },
-    { name: "2am", occupancy: 1 },
-    { name: "3am", occupancy: 1 },
-    { name: "4am", occupancy: 1 },
-    { name: "5am", occupancy: 1 },
-    { name: "6am", occupancy: 2 },
-    { name: "7am", occupancy: 3 },
-    { name: "8am", occupancy: 4 },
-    { name: "9am", occupancy: 5 },
-    { name: "10am", occupancy: 8 },
-    { name: "11am", occupancy: 9 },
-    { name: "12pm", occupancy: 10 },
-    { name: "1pm", occupancy: 9 },
-    { name: "2pm", occupancy: 8 },
-    { name: "3pm", occupancy: 5 },
-    { name: "4pm", occupancy: 6 },
-    { name: "5pm", occupancy: 7 },
-    { name: "6pm", occupancy: 8 },
-    { name: "7pm", occupancy: 9 },
-    { name: "8pm", occupancy: 6 },
-    { name: "9pm", occupancy: 3 },
-    { name: "10pm", occupancy: 2 },
-    { name: "11pm", occupancy: 1 },
+    { name: '12am', occupancy: 1 },
+    { name: '1am', occupancy: 1 },
+    { name: '2am', occupancy: 1 },
+    { name: '3am', occupancy: 1 },
+    { name: '4am', occupancy: 1 },
+    { name: '5am', occupancy: 1 },
+    { name: '6am', occupancy: 2 },
+    { name: '7am', occupancy: 3 },
+    { name: '8am', occupancy: 4 },
+    { name: '9am', occupancy: 5 },
+    { name: '10am', occupancy: 8 },
+    { name: '11am', occupancy: 9 },
+    { name: '12pm', occupancy: 10 },
+    { name: '1pm', occupancy: 9 },
+    { name: '2pm', occupancy: 8 },
+    { name: '3pm', occupancy: 5 },
+    { name: '4pm', occupancy: 6 },
+    { name: '5pm', occupancy: 7 },
+    { name: '6pm', occupancy: 8 },
+    { name: '7pm', occupancy: 9 },
+    { name: '8pm', occupancy: 6 },
+    { name: '9pm', occupancy: 3 },
+    { name: '10pm', occupancy: 2 },
+    { name: '11pm', occupancy: 1 },
   ];
 
-  let total = 10;
+  const total = 10;
 
   // The following code will be used to retrieve live occupancy data
-  //spotNum[0] = # of available spots, spotNum[1] = # of occupied spots
+  // spotNum[0] = # of available spots, spotNum[1] = # of occupied spots
   const [spotNum, setSpotNum] = useState([0, 0]);
 
   // periodically check parking data
   useEffect(() => {
-    let interval = setInterval(() => {
-      let json_obj = JSON.parse(Get(jsonURL));
+    const interval = setInterval(() => {
+      const json_obj = JSON.parse(Get(jsonURL));
       let availableSpots = 0;
       let occupiedSpots = 0;
-      for (var i = 0; i < json_obj.length; i++) {
+      for (let i = 0; i < json_obj.length; i++) {
         if (json_obj[i].status) {
           availableSpots += 1;
         } else {
@@ -86,7 +87,7 @@ function Analytics() {
                 graphs. To circumvent this issue, I have written a CustomBar component.
             */}
 
-      <h2 style={{ textAlign: "center" }}>Analytics</h2>
+      <h2 style={{ textAlign: 'center' }}>Analytics</h2>
       <div>
         <BarChart
           width={575}
@@ -110,17 +111,23 @@ function Analytics() {
             total={total}
           />
         </BarChart>
-        <p style={{ textAlign: "right", color: "gray" }}>
-          Last Updated - {formattedDate} @ {formattedTimeString}
+        <p style={{ textAlign: 'right', color: 'gray' }}>
+          Last Updated -
+          {' '}
+          {formattedDate}
+          {' '}
+          @
+          {' '}
+          {formattedTimeString}
         </p>
       </div>
 
-      <h2 style={{ textAlign: "center" }}>Live Data</h2>
-      <div style={{ textAlign: "center" }}>
-        {"Available spots: " + spotNum[0]}
+      <h2 style={{ textAlign: 'center' }}>Live Data</h2>
+      <div style={{ textAlign: 'center' }}>
+        {`Available spots: ${spotNum[0]}`}
       </div>
-      <div style={{ textAlign: "center" }}>
-        {"Occupied spots: " + spotNum[1]}
+      <div style={{ textAlign: 'center' }}>
+        {`Occupied spots: ${spotNum[1]}`}
       </div>
     </div>
   );
