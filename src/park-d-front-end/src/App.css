@@ -64,3 +64,14 @@
   right: 5%;
   top: 10%;
 }
+
+.analyticsBtn {
+  border: 2px solid #000;
+  text-align: center;
+  padding: 10px;
+  font-size: medium;
+  font-weight: 600;
+  color:#000;
+  background-color: #fff;
+  border-radius: 12px;
+}
