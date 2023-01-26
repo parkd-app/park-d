@@ -23,10 +23,12 @@ var clickChoice = 0;
 var routeMarkers = [];
 
 var polygon;
-var setPolygon = false;
+var adding = false;
 var numSpots = 0;
-const spotWidth = 0.00004;
-const spotLength = 0.00006;
+
+const spotWidth = 0.000025;
+const spotLength = 0.00007;
+const spotAngle = 109;
 
 function initMap(){
     directionsRenderer = new google.maps.DirectionsRenderer({suppressMarkers: true});
@@ -55,46 +57,22 @@ function initMap(){
     polygon.setMap(map);
 
     google.maps.event.addListener(map, 'click', function(event){
-        if (setPolygon == true)
+        if (clickChoice == 0)
         {
-            clickOrigin = JSON.parse(JSON.stringify({coords:event.latLng}));
-            eventLat = clickOrigin.coords.lat;
-            eventLng = clickOrigin.coords.lng;
-            window['spot'+numSpots] = new google.maps.Polygon({
-                paths: [
-                    { lat: eventLat, lng: eventLng },
-                    { lat: eventLat, lng: eventLng - spotWidth },
-                    { lat: eventLat-spotLength, lng: eventLng - spotWidth },
-                    { lat: eventLat-spotLength, lng: eventLng },
-                ],
-                strokeColor: "#FF0000",
-                strokeOpacity: 0.8,
-                strokeWeight: 2,
-                fillColor: "#FF0000",
-                fillOpacity: 0.35,
-                editable: true,
-                draggable: true,
-                geodesic: true
-            });
-            window['spot'+numSpots].setMap(map);
-            setPolygon = false;
-            numSpots += 1;
+            clickOrigin = {coords:event.latLng};
+            routeMarkers.push(placeMarker(clickOrigin.coords, "./CarMarker.png"));
+                pickDestination();
         }
-        else
+        else if (clickChoice == 1)
         {
-            if (clickChoice == 0)
-            {
-                clickOrigin = {coords:event.latLng};
-                routeMarkers.push(placeMarker(clickOrigin.coords, "./CarMarker.png"));
-                  pickDestination();
-            }
-            else if (clickChoice == 1)
-            {
-                clickDestination = {coords:event.latLng};
-                directionsRenderer.setMap(map);
-                getRoute(directionsRenderer, directionsService);
-                pickDone();
-            }
+            clickDestination = {coords:event.latLng};
+            directionsRenderer.setMap(map);
+            getRoute(directionsRenderer, directionsService);
+            pickDone();
+        }
+        else if (clickChoice == 2)
+        {
+            putSpot(event.latLng);
         }
     });
 }
@@ -165,7 +143,53 @@ function getRoute(directionsRenderer, directionsService)
 
 }
 
+function resetSpot()
+{
+    document.getElementById("AddSpotButton").textContent = "Add Parking Spot";
+    resetData();
+}
+
 function addSpot()
 {
-    setPolygon = true;
+    if (!adding)
+    {
+        adding = true;
+        clickChoice = 2;
+        document.getElementById("PickLabel").textContent = "Click to add a spot";
+        document.getElementById("AddSpotButton").textContent = "Done";
+    }
+    else
+    {
+        adding = false;
+        clickChoice = 0;
+        resetSpot();
+    }
+}
+
+function putSpot(clickOrigin)
+{
+    eventLat = clickOrigin.lat();
+    eventLng = clickOrigin.lng();
+    point2 = [eventLat+spotWidth*Math.sin(spotAngle*Math.PI/180), eventLng+spotWidth*Math.cos(spotAngle*Math.PI/180)]
+    point3 = [point2[0]+spotLength*Math.sin((spotAngle+85)*Math.PI/180), point2[1]+spotLength*Math.cos((spotAngle+85)*Math.PI/180)]
+    point4 = [point3[0]+spotWidth*Math.sin((spotAngle+180)*Math.PI/180), point3[1]+spotWidth*Math.cos((spotAngle+180)*Math.PI/180)]
+    
+    window['spot'+numSpots] = new google.maps.Polygon({
+        paths: [
+            { lat: eventLat, lng: eventLng },
+            { lat: point2[0], lng: point2[1] },
+            { lat: point3[0], lng: point3[1] },
+            { lat: point4[0], lng: point4[1] },
+        ],
+        strokeColor: "#FF0000",
+        strokeOpacity: 0.8,
+        strokeWeight: 2,
+        fillColor: "#FF0000",
+        fillOpacity: 0.35,
+        editable: true,
+        draggable: true,
+        geodesic: true
+    });
+    window['spot'+numSpots].setMap(map);
+    numSpots += 1;
 }
