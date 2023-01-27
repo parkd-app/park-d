@@ -55,14 +55,13 @@
 .Analytics {
   position: absolute;
   right: 1%;
-  bottom: 10%;
 }
 
 .ParkingLotDropdown {
   position: absolute;
   width: 15rem;
   right: 5%;
-  top: 10%;
+  top: 5%;
 }
 
 .analyticsBtn {

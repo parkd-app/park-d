@@ -101,7 +101,7 @@ function Analytics() {
             </div>
 
             <div>
-                <BarChart width={575} height={300} data={data} barSize={20} margin={{ left: 80}}>
+                <BarChart width={575} height={300} data={data} barSize={10} margin={{ left: 0 }}>
                     <XAxis dataKey="name" scale="point" padding={{ left: 10, right: 10 }} interval={0}tick={{fontSize: 8}}/>
                     <Tooltip />
                     <CartesianGrid strokeDasharray="3 3" />
@@ -112,12 +112,13 @@ function Analytics() {
                 </p>
             </div>
 
-            <h4 style={{ textAlign: "center" }}>Live Data</h4>
-            <div style={{ textAlign: "center" }}>
-                {"Available spots: " + spotNum[0]}
-            </div>
-            <div style={{ textAlign: "center" }}>
-                {"Occupied spots: " + spotNum[1]}
+            <div className="liveData">
+                <div style={{ textAlign: "center" }}>
+                    {"Spot Available Now: " + spotNum[0]}
+                </div>
+                <div style={{ textAlign: "center" }}>
+                    {"Spot Occupied Now: " + spotNum[1]}
+                </div>
             </div>
         </div>
     );
