@@ -2,14 +2,14 @@ import Card from 'react-bootstrap/Card';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const AnalyticsCard = (props) => {
-  let { total, available, parkingType } = props;
+  let { total, available, parkingType, colour } = props;
 
   return (
-    <Card style={{ width: '18rem' }}>
+    <Card bg={colour} style={{ width: '10rem' }}>
       <Card.Body>
-        <Card.Title>{parkingType}</Card.Title>
-        <Card.Subtitle className="mb-2">{available}</Card.Subtitle>
-        <Card.Text>out of {total}</Card.Text>
+        <Card.Title className="text-center text-white font-weight-bold">{parkingType}</Card.Title>
+        <Card.Subtitle className="text-center text-white display-1">{available}</Card.Subtitle>
+        <Card.Text className="text-center text-white font-weight-bold">out of {total}</Card.Text>
       </Card.Body>
     </Card>
   );

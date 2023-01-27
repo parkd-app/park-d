@@ -23,3 +23,7 @@ tr {
     display: flex;
     justify-content: space-between;
   }
+  .analyticsCards {
+    display: flex;
+    justify-content: space-evenly;
+  }

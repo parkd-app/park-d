@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './Analytics.css';
 import CustomBar from './components/CustomBar';
 import AnalyticsCard from './AnalyticsCard';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 import { BarChart, Bar, XAxis, Tooltip, CartesianGrid } from 'recharts';
 
@@ -93,9 +94,11 @@ function Analytics() {
             <h5 style={{ textAlign: "center" }}>{locationName}</h5>
             <p style={{ textAlign: "center", color: "gray" }}>{locationAddress}</p>
 
-            <AnalyticsCard total={total} available={spotNum[0]} parkingType={'STANDARD'}/>
-            <AnalyticsCard total={total} available={spotNum[0]} parkingType={'ACCESSIBLE'}/>
-            <AnalyticsCard total={total} available={spotNum[0]} parkingType={'RESERVED'}/>
+            <div className="analyticsCards">
+                <AnalyticsCard total={total} available={spotNum[0]} parkingType='STANDARD' colour="success"/>
+                <AnalyticsCard total={total} available={spotNum[0]} parkingType='ACCESSIBLE' colour="primary"/>
+                <AnalyticsCard total={total} available={spotNum[0]} parkingType='RESERVED' colour="warning"/>
+            </div>
 
             <div>
                 <BarChart width={575} height={300} data={data} barSize={20} margin={{ left: 80}}>
