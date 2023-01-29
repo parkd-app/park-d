@@ -15,7 +15,7 @@
                     </div>
                     <div class="old_logo"></div>
                 </div>
-                <div class="logout_bg1" type="button" onclick="logout()">
+                <div class="logout_bg1" onclick="logout()">
                     <div class="logout_bg2">
                         <div class="logout_border"></div>
                         <span class="logout_text">Logout</span>
@@ -32,17 +32,17 @@
         <div class="tab_highlight">
             <div class="tab_highlight_bg"></div>
         </div>
-        <button class="tab_general" type="button" onclick="changePage(0)">General</button>
-        <button class="tab_navigation" type="button" onclick="changePage(1)">Navigation</button>
-        <button class="tab_account" type="button" onclick="changePage(2)">Account</button>
+        <div class="tab_general" onclick="changePage(0)">General</div>
+        <div class="tab_navigation" onclick="changePage(1)">Navigation</div>
+        <div class="tab_account" onclick="changePage(2)">Account</div>
         <div class="settings_content">
             <span class="tab_title">General</span>
             <div class="distance_units">
                 <span class="distance_unit_text">Distance Units</span>
                 <div class="distance_toggle"></div>
                 <div class="distance_toggle_knob"></div>
-                <buton class="distance_text_1" type="button" onclick="changeDistanceUnits(0)">Mile</buton>
-                <buton class="distance_text_2" type="button" onclick="changeDistanceUnits(1)">km</buton>
+                <div class="distance_text_1" onclick="changeDistanceUnits(0)">Mile</div>
+                <div class="distance_text_2" onclick="changeDistanceUnits(1)">km</div>
             </div>
             <div class="theme">
                 <span class="theme_text">Theme</span>
@@ -59,21 +59,21 @@
                 <span class="tolls_text">Avoid toll roads</span>
                 <div class="tolls_bg">
                     <div class="tolls_toggle" ></div>
-                    <button class="tolls_toggle_knob" type="button" onclick="toggleAvoid(0)"></button>
+                    <div class="tolls_toggle_knob" onclick="toggleAvoid(0)"></div>
                 </div>
             </div>
             <div class="avoid_ferries">
                 <span class="ferries_text">Avoid ferries</span>
                 <div class="ferries_bg">
                     <div class="ferries_toggle"></div>
-                    <button class="ferries_toggle_knob" type="button" onclick="toggleAvoid(1)"></button>
+                    <div class="ferries_toggle_knob" onclick="toggleAvoid(1)"></div>
                 </div>
             </div>
             <div class="avoid_freeways">
                 <span class="freeways_text">Avoid freeways</span>
                 <div class="freeways_bg">
                     <div class="freeways_toggle"></div>
-                    <button class="freeways_toggle_knob" type="button" onclick="toggleAvoid(2)"></button>
+                    <div class="freeways_toggle_knob" onclick="toggleAvoid(2)"></div>
                 </div>
             </div>
             <div class="account">
@@ -96,7 +96,7 @@
                 <span class="email_field">caPstOneGroup@gmail.com</span>
             </div>
         </div>
-        <div class="quit_bg" type="button" onclick="closeSettings()">
+        <div class="quit_bg" onclick="closeSettings()">
             <div class="quit"></div>
         </div>
     </body>

@@ -221,8 +221,6 @@
     font-size: 25px;
     opacity: 1;
     text-align: left;
-    border: transparent;
-    background-color: transparent;
 }
 .tab_navigation {
     width: 150px;
@@ -235,8 +233,6 @@
     font-size: 25px;
     opacity: 1;
     text-align: left;
-    border: transparent;
-    background-color: transparent;
 }
 .tab_account {
     width: 150px;
@@ -249,8 +245,6 @@
     font-size: 25px;
     opacity: 1;
     text-align: left;
-    border: transparent;
-    background-color: transparent;
 }
 .quit_bg {
     width: 30px;
@@ -455,7 +449,6 @@
     left: 0px;
     border-radius: 50%;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    border: transparent;
 }
 .avoid_ferries {
     display: none;
@@ -509,7 +502,6 @@
     left: 30px;
     border-radius: 50%;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    border: transparent;
 }
 .avoid_freeways {
     display: none;
@@ -563,7 +555,6 @@
     left: 0px;
     border-radius: 50%;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    border: transparent;
 }
 .account {
     display: none;
