@@ -265,3 +265,439 @@
     top: 0px;
     left: 0px;
 }
+.distance_units {
+    display: block;
+}
+.distance_unit_text {
+    width: 226px;
+    color: rgba(0,0,0,1);
+    position: absolute;
+    top: 253px;
+    left: 397px;
+    font-family: Montserrat;
+    font-weight: bold;
+    font-size: 30px;
+    opacity: 1;
+    text-align: center;
+}
+.distance_toggle {
+    width: 263px;
+    height: 55px;
+    background: rgba(217,217,217,1);
+    opacity: 1;
+    position: absolute;
+    top: 312px;
+    left: 397px;
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
+    border-bottom-left-radius: 30px;
+    border-bottom-right-radius: 30px;
+    overflow: hidden;
+}
+.distance_toggle_knob {
+    width: 118px;
+    height: 45px;
+    background: rgba(249,255,0,1);
+    opacity: 1;
+    position: absolute;
+    top: 317px;
+    left: 536px;
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
+    border-bottom-left-radius: 30px;
+    border-bottom-right-radius: 30px;
+    overflow: hidden;
+}
+.distance_text_1 {
+    width: 54px;
+    color: rgba(0,0,0,1);
+    position: absolute;
+    top: 325px;
+    left: 439px;
+    font-family: Montserrat;
+    font-weight: bold;
+    font-size: 25px;
+    opacity: 1;
+    text-align: center;
+}
+.distance_text_2 {
+    width: 43px;
+    color: rgba(0,0,0,1);
+    position: absolute;
+    top: 325px;
+    left: 574px;
+    font-family: Montserrat;
+    font-weight: bold;
+    font-size: 25px;
+    opacity: 1;
+    text-align: center;
+}
+.theme {
+    display: block;
+}
+.theme_text {
+    width: 108px;
+    color: rgba(0,0,0,1);
+    position: absolute;
+    top: 437px;
+    left: 397px;
+    font-family: Montserrat;
+    font-weight: bold;
+    font-size: 30px;
+    opacity: 1;
+    text-align: center;
+}
+.darkmode_text {
+    width: 112px;
+    color: rgba(0,0,0,1);
+    position: absolute;
+    top: 664px;
+    left: 636px;
+    font-family: Montserrat;
+    font-weight: bold;
+    font-size: 20px;
+    opacity: 1;
+    text-align: center;
+}
+.lightmode_text {
+    width: 117px;
+    color: rgba(0,0,0,1);
+    position: absolute;
+    top: 664px;
+    left: 415px;
+    font-family: Montserrat;
+    font-weight: bold;
+    font-size: 20px;
+    opacity: 1;
+    text-align: center;
+}
+.darkmode {
+    width: 150px;
+    height: 150px;
+    background: url("Images/darkmode.png");
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    opacity: 1;
+    position: absolute;
+    top: 492px;
+    left: 617px;
+    overflow: hidden;
+}
+.lightmode {
+    width: 150px;
+    height: 150px;
+    background: url("Images/lightmode.png");
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    opacity: 1;
+    position: absolute;
+    top: 492px;
+    left: 399px;
+    overflow: hidden;
+}
+.avoid_tolls {
+    display: none;
+}
+.tolls_text {
+    width: 239px;
+    color: rgba(0,0,0,1);
+    position: absolute;
+    top: 254px;
+    left: 397px;
+    font-family: Montserrat;
+    font-weight: bold;
+    font-size: 30px;
+    opacity: 1;
+    text-align: center;
+}
+.tolls_bg {
+    width: 70px;
+    height: 48px;
+    background: url("../images/v39_107.png");
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    opacity: 1;
+    position: absolute;
+    top: 310px;
+    left: 397px;
+    overflow: hidden;
+}
+.tolls_toggle {
+    width: 70px;
+    height: 26px;
+    background: rgba(138,138,138,1);
+    opacity: 1;
+    position: absolute;
+    top: 7px;
+    left: 0px;
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
+    border-bottom-left-radius: 30px;
+    border-bottom-right-radius: 30px;
+    overflow: hidden;
+}
+.tolls_toggle_knob {
+    width: 40px;
+    height: 40px;
+    background: rgba(217,217,217,1);
+    opacity: 1;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    border-radius: 50%;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+.avoid_ferries {
+    display: none;
+}
+.ferries_text {
+    width: 193px;
+    color: rgba(0,0,0,1);
+    position: absolute;
+    top: 436px;
+    left: 397px;
+    font-family: Montserrat;
+    font-weight: bold;
+    font-size: 30px;
+    opacity: 1;
+    text-align: center;
+}
+.ferries_bg {
+    width: 70px;
+    height: 48px;
+    background: url("../images/v39_110.png");
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    opacity: 1;
+    position: absolute;
+    top: 492px;
+    left: 399px;
+    overflow: hidden;
+}
+.ferries_toggle {
+    width: 70px;
+    height: 26px;
+    background: rgba(215,219,0,1);
+    opacity: 1;
+    position: absolute;
+    top: 7px;
+    left: 0px;
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
+    border-bottom-left-radius: 30px;
+    border-bottom-right-radius: 30px;
+    overflow: hidden;
+}
+.ferries_toggle_knob {
+    width: 40px;
+    height: 40px;
+    background: rgba(249,255,0,1);
+    opacity: 1;
+    position: absolute;
+    top: 0px;
+    left: 30px;
+    border-radius: 50%;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+.avoid_freeways {
+    display: none;
+}
+.freeways_text {
+    width: 234px;
+    color: rgba(0,0,0,1);
+    position: absolute;
+    top: 618px;
+    left: 397px;
+    font-family: Montserrat;
+    font-weight: bold;
+    font-size: 30px;
+    opacity: 1;
+    text-align: left;
+}
+.freeways_bg {
+    width: 70px;
+    height: 48px;
+    background: url("../images/v39_115.png");
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    opacity: 1;
+    position: absolute;
+    top: 674px;
+    left: 397px;
+    overflow: hidden;
+}
+.freeways_toggle {
+    width: 70px;
+    height: 26px;
+    background: rgba(138,138,138,1);
+    opacity: 1;
+    position: absolute;
+    top: 7px;
+    left: 0px;
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
+    border-bottom-left-radius: 30px;
+    border-bottom-right-radius: 30px;
+    overflow: hidden;
+}
+.freeways_toggle_knob {
+    width: 40px;
+    height: 40px;
+    background: rgba(217,217,217,1);
+    opacity: 1;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    border-radius: 50%;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+.account {
+    display: none;
+}
+.profile {
+    width: 150px;
+    height: 150px;
+    background: url("Images/profile.png");
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    opacity: 1;
+    position: absolute;
+    top: 245px;
+    left: 399px;
+    overflow: hidden;
+}
+.first_name_text {
+    width: 170px;
+    color: rgba(0,0,0,1);
+    position: absolute;
+    top: 257px;
+    left: 605px;
+    font-family: Montserrat;
+    font-weight: bold;
+    font-size: 30px;
+    opacity: 1;
+    text-align: left;
+}
+.first_name_field {
+    width: 147px;
+    color: rgba(0,0,0,1);
+    position: absolute;
+    top: 317px;
+    left: 605px;
+    font-family: Montserrat;
+    font-weight: Regular;
+    font-size: 30px;
+    opacity: 1;
+    text-align: left;
+}
+.last_name_text {
+    width: 166px;
+    color: rgba(0,0,0,1);
+    position: absolute;
+    top: 257px;
+    left: 911px;
+    font-family: Montserrat;
+    font-weight: bold;
+    font-size: 30px;
+    opacity: 1;
+    text-align: left;
+}
+.last_name_field {
+    width: 95px;
+    color: rgba(0,0,0,1);
+    position: absolute;
+    top: 317px;
+    left: 911px;
+    font-family: Montserrat;
+    font-weight: Regular;
+    font-size: 30px;
+    opacity: 1;
+    text-align: left;
+}
+.username {
+    display: none;
+}
+.username_text {
+    width: 160px;
+    color: rgba(0,0,0,1);
+    position: absolute;
+    top: 464px;
+    left: 399px;
+    font-family: Montserrat;
+    font-weight: bold;
+    font-size: 30px;
+    opacity: 1;
+    text-align: left;
+}
+.username_field {
+    width: 125px;
+    color: rgba(0,0,0,1);
+    position: absolute;
+    top: 524px;
+    left: 399px;
+    font-family: Montserrat;
+    font-weight: Regular;
+    font-size: 30px;
+    opacity: 1;
+    text-align: left;
+}
+.password {
+    display: none;
+}
+.password_text {
+    width: 150px;
+    color: rgba(0,0,0,1);
+    position: absolute;
+    top: 603px;
+    left: 399px;
+    font-family: Montserrat;
+    font-weight: bold;
+    font-size: 30px;
+    opacity: 1;
+    text-align: left;
+}
+.password_field {
+    width: 365px;
+    color: rgba(0,0,0,1);
+    position: absolute;
+    top: 663px;
+    left: 399px;
+    font-family: Montserrat;
+    font-weight: Regular;
+    font-size: 30px;
+    opacity: 1;
+    text-align: left;
+}
+.email {
+    display: none;
+}
+.email_text {
+    width: 88px;
+    color: rgba(0,0,0,1);
+    position: absolute;
+    top: 742px;
+    left: 399px;
+    font-family: Montserrat;
+    font-weight: bold;
+    font-size: 30px;
+    opacity: 1;
+    text-align: left;
+}
+.email_field {
+    width: 432px;
+    color: rgba(0,0,0,1);
+    position: absolute;
+    top: 802px;
+    left: 399px;
+    font-family: Montserrat;
+    font-weight: Regular;
+    font-size: 30px;
+    opacity: 1;
+    text-align: left;
+}
