@@ -415,7 +415,7 @@
 .tolls_bg {
     width: 80px;
     height: 48px;
-    background: url("../images/v39_107.png");
+    background: rgba(0, 0, 0, 0);
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;
@@ -468,7 +468,7 @@
 .ferries_bg {
     width: 80px;
     height: 48px;
-    background: url("../images/v39_110.png");
+    background: rgba(0, 0, 0, 0);
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;
@@ -521,7 +521,7 @@
 .freeways_bg {
     width: 80px;
     height: 48px;
-    background: url("../images/v39_115.png");
+    background: rgba(0, 0, 0, 0);
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;
