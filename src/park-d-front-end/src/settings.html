@@ -3,6 +3,7 @@
     <head>
         <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet" />
         <link rel="stylesheet" href="settings.css">
+        <script src="settings.js"></script>
     </head>
     <body>
         <div class="background">
@@ -31,17 +32,17 @@
         <div class="tab_highlight">
             <div class="tab_highlight_bg"></div>
         </div>
-        <span class="tab_general">General</span>
-        <span class="tab_navigation">Navigation</span>
-        <span class="tab_account">Account</span>
+        <button class="tab_general" type="button" onclick="changePage(0)">General</button>
+        <button class="tab_navigation" type="button" onclick="changePage(1)">Navigation</button>
+        <button class="tab_account" type="button" onclick="changePage(2)">Account</button>
         <div class="settings_content">
             <span class="tab_title">General</span>
             <div class="distance_units">
                 <span class="distance_unit_text">Distance Units</span>
                 <div class="distance_toggle"></div>
                 <div class="distance_toggle_knob"></div>
-                <span class="distance_text_1">Mile</span>
-                <span class="distance_text_2">km</span>
+                <buton class="distance_text_1" type="button" onclick="changeDistanceUnits(0)">Mile</buton>
+                <buton class="distance_text_2" type="button" onclick="changeDistanceUnits(1)">km</buton>
             </div>
             <div class="theme">
                 <span class="theme_text">Theme</span>
@@ -54,46 +55,46 @@
                     <div class="darkmode"></div>
                 </div>
             </div>
-        </div>
-        <div class="avoid_tolls">
-            <span class="tolls_text">Avoid toll roads</span>
-            <div class="tolls_bg">
-                <div class="tolls_toggle"></div>
-                <div class="tolls_toggle_knob"></div>
+            <div class="avoid_tolls">
+                <span class="tolls_text">Avoid toll roads</span>
+                <div class="tolls_bg">
+                    <div class="tolls_toggle" ></div>
+                    <button class="tolls_toggle_knob" type="button" onclick="toggleAvoid(0)"></button>
+                </div>
             </div>
-        </div>
-        <div class="avoid_ferries">
-            <span class="ferries_text">Avoid ferries</span>
-            <div class="ferries_bg">
-                <div class="ferries_toggle"></div>
-                <div class="ferries_toggle_knob"></div>
+            <div class="avoid_ferries">
+                <span class="ferries_text">Avoid ferries</span>
+                <div class="ferries_bg">
+                    <div class="ferries_toggle"></div>
+                    <button class="ferries_toggle_knob" type="button" onclick="toggleAvoid(1)"></button>
+                </div>
             </div>
-        </div>
-        <div class="avoid_freeways">
-            <span class="freeways_text">Avoid freeways</span>
-            <div class="freeways_bg">
-                <div class="freeways_toggle"></div>
-                <div class="freeways_toggle_knob"></div>
+            <div class="avoid_freeways">
+                <span class="freeways_text">Avoid freeways</span>
+                <div class="freeways_bg">
+                    <div class="freeways_toggle"></div>
+                    <button class="freeways_toggle_knob" type="button" onclick="toggleAvoid(2)"></button>
+                </div>
             </div>
-        </div>
-        <div class="account">
-            <div class="profile"></div>
-            <span class="first_name_text">First Name</span>
-            <span class="first_name_field">caPstOne</span>
-            <span class="last_name_text">Last Name</span>
-            <span class="last_name_field">Group</span>
-        </div>
-        <div class="username">
-            <span class="username_text">Username</span>
-            <span class="username_field">poggers</span>
-        </div>
-        <div class="password">
-            <span class="password_text">Password</span>
-            <span class="password_field">******************************</span>
-        </div>
-        <div class="email">
-            <span class="email_text">Email</span>
-            <span class="email_field">caPstOneGroup@gmail.com</span>
+            <div class="account">
+                <div class="profile"></div>
+                <span class="first_name_text">First Name</span>
+                <span class="first_name_field">caPstOne</span>
+                <span class="last_name_text">Last Name</span>
+                <span class="last_name_field">Group</span>
+            </div>
+            <div class="username">
+                <span class="username_text">Username</span>
+                <span class="username_field">poggers</span>
+            </div>
+            <div class="password">
+                <span class="password_text">Password</span>
+                <span class="password_field">******************************</span>
+            </div>
+            <div class="email">
+                <span class="email_text">Email</span>
+                <span class="email_field">caPstOneGroup@gmail.com</span>
+            </div>
         </div>
         <div class="quit_bg">
             <div class="quit"></div>
