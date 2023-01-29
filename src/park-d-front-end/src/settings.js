@@ -62,7 +62,7 @@ function toggleAvoid(num){
     }
     toggle.style.background = avoidToggles[num] ? "rgba(215,219,0,1)" : "rgba(138,138,138,1)";
     knob.style.background = avoidToggles[num] ? "rgba(249,255,0,1)" : "rgba(217,217,217,1)";
-    knob.style.left = avoidToggles[num] ? "30px" : "0px";
+    knob.style.left = avoidToggles[num] ? "35px" : "5px";
 }
 
 function logout(){
