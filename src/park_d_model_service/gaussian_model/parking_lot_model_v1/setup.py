@@ -6,9 +6,6 @@ except ImportError:
 #pyyaml==5.4.1
 config = {
     "description": "Parking Lot Space Detector",
-    "author": "Olga Rocheeva",
-    "url": "https://github.com/olgarose/ParkingLot",
-    "download_url": "https://github.com/olgarose/ParkingLot/archive/master.zip",
     "version": "0.1",
     "install_requires": ["cv2", "numpy", "yml"],
     "packages": ["parking_lot"],

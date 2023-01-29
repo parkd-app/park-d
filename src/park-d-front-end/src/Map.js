@@ -4,7 +4,7 @@ import { faCheckCircle, faXmarkCircle } from '@fortawesome/free-solid-svg-icons'
 
 import './Map.css';
 
-const jsonURL = 'http://localhost:8000/parking_spaces'
+const jsonURL = 'http://127.0.0.1:5000/rt_parking_info'
 
 function Map() {
     const [states, setState] = useState([true,true,true,true]);
@@ -12,7 +12,8 @@ function Map() {
     useEffect(() => {
         let interval = setInterval(() => {
             let json_obj = JSON.parse(Get(jsonURL));
-            let statuses = json_obj.map(space => space.status)
+            console.log(json_obj)
+            let statuses = json_obj['parking_space'].map(space => space.status)
             setState(statuses);
         }, 2000);
         return () => {

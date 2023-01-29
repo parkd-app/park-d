@@ -109,6 +109,8 @@ class MotionDetector:
             if k == ord("q"):
                 break
         capture.release()
+
+
         open_cv.destroyAllWindows()
 
     def __apply(self, grayed, index, p):
@@ -120,7 +122,6 @@ class MotionDetector:
 
         roi_gray = grayed[rect[1]:(rect[1] + rect[3]), rect[0]:(rect[0] + rect[2])]
         laplacian = open_cv.Laplacian(roi_gray, open_cv.CV_64F)
-        logging.debug("laplacian: %s", laplacian)
 
         coordinates[:, 0] = coordinates[:, 0] - rect[0]
         coordinates[:, 1] = coordinates[:, 1] - rect[1]

@@ -7,7 +7,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { BarChart, Bar, XAxis, Tooltip, CartesianGrid } from 'recharts';
 
 // set url to fetch parking data
-const jsonURL = 'http://localhost:8000/parking_spaces'
+const jsonURL = 'http://127.0.0.1:5000/rt_parking_info'
 
 function Get(yourUrl){
     var Httpreq = new XMLHttpRequest();
@@ -64,7 +64,7 @@ function Analytics() {
     // periodically check parking data
     useEffect(() => {
         let interval = setInterval(() => {
-            let json_obj = JSON.parse(Get(jsonURL));
+            let json_obj = JSON.parse(Get(jsonURL))['parking_space'];
             let availableSpots = 0;
             let occupiedSpots = 0;
             for (var i = 0; i < json_obj.length; i++) {
