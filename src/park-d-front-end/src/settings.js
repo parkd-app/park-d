@@ -5,22 +5,15 @@ function changePage(pageNum) {
   if (pageNum == 0) {
     getDocEle("tab_highlight").style.top = "179px";
     getDocEle("tab_title").textContent = "General";
-    getDocEle("theme").style.display = "block";
-    getDocEle("distance_units").style.display = "block";
-    getDocEle("theme").style.display = "block";
+    getDocEle("general_content").style.display = "block";
   } else if (pageNum == 1) {
     getDocEle("tab_highlight").style.top = "233px";
     getDocEle("tab_title").textContent = "Navigation";
-    getDocEle("avoid_tolls").style.display = "block";
-    getDocEle("avoid_ferries").style.display = "block";
-    getDocEle("avoid_freeways").style.display = "block";
+    getDocEle("navigation_content").style.display = "block";
   } else if (pageNum == 2) {
     getDocEle("tab_highlight").style.top = "285px";
     getDocEle("tab_title").textContent = "Account";
-    getDocEle("account").style.display = "block";
-    getDocEle("username").style.display = "block";
-    getDocEle("password").style.display = "block";
-    getDocEle("email").style.display = "block";
+    getDocEle("account_content").style.display = "block";
   }
 }
 
@@ -62,15 +55,9 @@ function closeSettings() {}
 
 function hideAll() {
   getDocEle("tab_title").textContent = "";
-  getDocEle("distance_units").style.display = "none";
-  getDocEle("theme").style.display = "none";
-  getDocEle("avoid_tolls").style.display = "none";
-  getDocEle("avoid_ferries").style.display = "none";
-  getDocEle("avoid_freeways").style.display = "none";
-  getDocEle("account").style.display = "none";
-  getDocEle("username").style.display = "none";
-  getDocEle("password").style.display = "none";
-  getDocEle("email").style.display = "none";
+  getDocEle("general_content").style.display = "none";
+  getDocEle("navigation_content").style.display = "none";
+  getDocEle("account_content").style.display = "none";
 }
 
 function getDocEle(className) {

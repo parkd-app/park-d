@@ -265,7 +265,15 @@
   top: 0px;
   left: 0px;
 }
-.distance_units {
+.h_bar {
+  width: 953px;
+  height: 3px;
+  background: url("Images/hbar.png");
+  position: absolute;
+  top: 410px;
+  left: 397px;
+}
+.general_content {
   display: block;
 }
 .distance_unit_text {
@@ -332,9 +340,6 @@
   opacity: 1;
   text-align: center;
 }
-.theme {
-  display: block;
-}
 .theme_text {
   width: 108px;
   color: rgba(0, 0, 0, 1);
@@ -397,7 +402,7 @@
   left: 399px;
   overflow: hidden;
 }
-.avoid_tolls {
+.navigation_content {
   display: none;
 }
 .tolls_text {
@@ -450,9 +455,6 @@
   border-radius: 50%;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
-.avoid_ferries {
-  display: none;
-}
 .ferries_text {
   width: 193px;
   color: rgba(0, 0, 0, 1);
@@ -502,9 +504,6 @@
   left: 35px;
   border-radius: 50%;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-}
-.avoid_freeways {
-  display: none;
 }
 .freeways_text {
   width: 234px;
@@ -556,7 +555,7 @@
   border-radius: 50%;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
-.account {
+.account_content {
   display: none;
 }
 .profile {
@@ -620,9 +619,6 @@
   opacity: 1;
   text-align: left;
 }
-.username {
-  display: none;
-}
 .username_text {
   width: 160px;
   color: rgba(0, 0, 0, 1);
@@ -647,9 +643,6 @@
   opacity: 1;
   text-align: left;
 }
-.password {
-  display: none;
-}
 .password_text {
   width: 150px;
   color: rgba(0, 0, 0, 1);
@@ -673,9 +666,6 @@
   font-size: 30px;
   opacity: 1;
   text-align: left;
-}
-.email {
-  display: none;
 }
 .email_text {
   width: 88px;
