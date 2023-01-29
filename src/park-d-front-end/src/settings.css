@@ -1,0 +1,267 @@
+.background {
+    width: 100%;
+    height: 100%;
+    background: rgba(255,255,255,1);
+    opacity: 1;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    overflow: hidden;
+}
+.header {
+    width: 100%;
+    height: 87px;
+    background: rgba(24,24,24,1);
+    opacity: 1;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+.logo_bg1 {
+    width: 202px;
+    height: 56px;
+    background: rgba(0, 0, 0, 0);
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    opacity: 1;
+    position: absolute;
+    top: 16px;
+    left: 655px;
+    overflow: hidden;
+}  
+.logo_bg2 {
+    width: 202px;
+    height: 56px;
+    background: rgba(0, 0, 0, 0);
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    opacity: 1;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    overflow: hidden;
+}
+.logo_text {
+    width: 202px;
+    color: rgba(0,0,0,0);
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    font-family: Montserrat;
+    font-weight: Medium;
+    font-size: 50px;
+    opacity: 1;
+    text-align: left;
+}
+.logo {
+    width: 194px;
+    height: 38px;
+    background: url("Images/park'd_logo.png");
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    opacity: 1;
+    position: absolute;
+    top: 11px;
+    left: 0px;
+    overflow: hidden;
+}
+.old_logo {
+    width: 264px;
+    height: 93px;
+    background: rgba(255,255,255,0);
+    opacity: 1;
+    position: absolute;
+    top: 22px;
+    left: 40px;
+    overflow: hidden;
+}
+.logout_bg1 {
+    width: 105px;
+    height: 60px;
+    background: rgba(0, 0, 0, 0);
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    opacity: 1;
+    position: absolute;
+    top: 12px;
+    left: 1389px;
+    overflow: hidden;
+}
+.logout_bg2 {
+    width: 105px;
+    height: 60px;
+    background: rgba(0, 0, 0, 0);
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    opacity: 1;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    overflow: hidden;
+}
+.logout_border {
+    width: 105px;
+    height: 60px;
+    background: rgba(249,255,0,1);
+    opacity: 1;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    border: 3px solid rgba(249,255,0,0.800000011920929);
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    overflow: hidden;
+    box-sizing: border-box
+}
+.logout_text {
+    width: 73px;
+    color: rgba(31,31,31,1);
+    position: absolute;
+    top: 18px;
+    left: 16px;
+    font-family: Montserrat;
+    font-weight: Medium;
+    font-size: 20px;
+    opacity: 1;
+    text-align: left;
+}
+.cogwheel_bg1 {
+    width: 50px;
+    height: 50px;
+    background: rgba(0, 0, 0, 0);
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    opacity: 1;
+    position: absolute;
+    top: 19px;
+    left: 24px;
+    overflow: hidden;
+}
+.cogwheel_bg2 {
+    width: 50px;
+    height: 50px;
+    background: rgba(255,255,255,0);
+    opacity: 1;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    overflow: hidden;
+}
+.cogwheel {
+    width: 47px;
+    height: 49px;
+    background: url("Images/cogwheel.png");
+    opacity: 1;
+    position: absolute;
+    top: 0px;
+    left: 2px;
+}
+.cogwheel_fg {
+    width: 194px;
+    height: 149px;
+    background: rgba(249,255,0,1);
+    opacity: 1;
+    position: absolute;
+    top: 49px;
+    left: 73px;
+    overflow: hidden;
+}
+.tab_title {
+    width: 162px;
+    color: rgba(0,0,0,1);
+    position: absolute;
+    top: 179px;
+    left: 399px;
+    font-family: Montserrat;
+    font-weight: Bold;
+    font-size: 40px;
+    opacity: 1;
+    text-align: center;
+  }
+.tab_highlight {
+    width: 201px;
+    height: 49px;
+    background: url("Images/settings_highlight.png");
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    opacity: 1;
+    position: absolute;
+    top: 179px; /*179-0, 233-1 285-2*/
+    left: 93px;
+    overflow: hidden;
+}
+.tab_highlight_bg {
+    width: 201px;
+    height: 49px;
+    background: rgba(217,217,217,0.5);
+    opacity: 1;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    overflow: hidden;
+}
+.tab_general {
+    width: 98px;
+    color: rgba(0,0,0,1);
+    position: absolute;
+    top: 189px;
+    left: 124px;
+    font-family: Montserrat;
+    font-weight: bold;
+    font-size: 25px;
+    opacity: 1;
+    text-align: center;
+}
+.tab_navigation {
+    width: 139px;
+    color: rgba(0,0,0,1);
+    position: absolute;
+    top: 242px;
+    left: 124px;
+    font-family: Montserrat;
+    font-weight: bold;
+    font-size: 25px;
+    opacity: 1;
+    text-align: center;
+}
+.tab_account {
+    width: 107px;
+    color: rgba(0,0,0,1);
+    position: absolute;
+    top: 295px;
+    left: 124px;
+    font-family: Montserrat;
+    font-weight: bold;
+    font-size: 25px;
+    opacity: 1;
+    text-align: center;
+}
+.quit_bg {
+    width: 30px;
+    height: 48px;
+    background: rgba(255,255,255,1);
+    opacity: 1;
+    position: absolute;
+    top: 106px;
+    left: 1454px;
+    overflow: hidden;
+}
+.quit {
+    width: 30px;
+    height: 48px;
+    background: url("Images/x_icon.png");
+    opacity: 1;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
