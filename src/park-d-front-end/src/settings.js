@@ -65,6 +65,13 @@ function toggleAvoid(num){
     knob.style.left = avoidToggles[num] ? "30px" : "0px";
 }
 
+function logout(){
+}
+
+function closeSettings(){
+}
+
+
 function hideAll(){
     getDocEle("tab_title").textContent = "";
     getDocEle("distance_units").style.display = "none";
