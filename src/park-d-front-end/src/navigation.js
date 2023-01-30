@@ -1,3 +1,12 @@
+// json parsing
+const jsonURL = 'http://localhost:8000/parking_spaces'
+function Get(jsonURL){
+    var Httpreq = new XMLHttpRequest(); // a new request
+    Httpreq.open("GET",jsonURL,false);
+    Httpreq.send(null);
+    return Httpreq.responseText;          
+}
+
 var map;
 var noPoi = [
     {
@@ -57,6 +66,10 @@ function initMap(){
 
     polygon.setMap(map);
 
+    let json_obj = JSON.parse(Get(jsonURL));
+    let statuses = json_obj.map(space => [space.lat, space.lng])
+    putSpot(statuses[0][0], statuses[0][1])
+
     google.maps.event.addListener(map, 'click', function(event){
         if (clickChoice == 0)
         {
@@ -73,7 +86,7 @@ function initMap(){
         }
         else if (clickChoice == 2)
         {
-            putSpot(event.latLng);
+            putSpot(event.latLng.lat(), event.latLng.lng());
         }
     });
 }
@@ -168,10 +181,10 @@ function addSpot()
 }
 
 // calculates points given origin, length, and angle. math needs adjustment
-function putSpot(clickOrigin)
+function putSpot(lat, lng)
 {
-    eventLat = clickOrigin.lat();
-    eventLng = clickOrigin.lng();
+    eventLat = lat;
+    eventLng = lng;
     point2 = [eventLat+spotWidth*Math.sin(spotAngle*Math.PI/180), eventLng+spotWidth*Math.cos(spotAngle*Math.PI/180)]
     
     // strangely not 90 degree adjustment
