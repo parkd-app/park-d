@@ -55,12 +55,22 @@
 .Analytics {
   position: absolute;
   right: 1%;
-  bottom: 10%;
 }
 
 .ParkingLotDropdown {
   position: absolute;
   width: 15rem;
   right: 5%;
-  top: 10%;
+  top: 5%;
+}
+
+.analyticsBtn {
+  border: 2px solid #000;
+  text-align: center;
+  padding: 10px;
+  font-size: medium;
+  font-weight: 600;
+  color:#000;
+  background-color: #fff;
+  border-radius: 12px;
 }
