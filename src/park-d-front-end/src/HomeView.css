@@ -351,7 +351,7 @@
     top: 6px;
     left: 23px;
     font-family: Montserrat;
-    font-weight: Medium;
+    font-weight: bold;
     font-size: 20px;
     opacity: 1;
     text-align: center;
@@ -418,7 +418,7 @@
     top: 8px;
     left: 55px;
     font-family: Montserrat;
-    font-weight: Medium;
+    font-weight: bold;
     font-size: 20px;
     opacity: 1;
     text-align: center;
@@ -485,7 +485,7 @@
     top: 8px;
     left: 55px;
     font-family: Montserrat;
-    font-weight: Medium;
+    font-weight: bold;
     font-size: 20px;
     opacity: 1;
     text-align: center;
@@ -552,8 +552,311 @@
     top: 9px;
     left: 37px;
     font-family: Montserrat;
-    font-weight: Medium;
+    font-weight: bold;
     font-size: 20px;
     opacity: 1;
     text-align: center;
+}
+.path {
+    width: 242px;
+    height: 359px;
+    background: url("Images/path.png");
+    opacity: 1;
+    position: absolute;
+    top: 507px;
+    left: 724px;
+}
+.spot_selection {
+    width: 544px;
+    height: 895px;
+    background: rgba(255,255,255,1);
+    opacity: 1;
+    position: absolute;
+    top: 87px;
+    left: 0px;
+    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+    overflow: hidden;
+}
+.spot_selection_prompt {
+    width: 338px;
+    color: rgba(0,0,0,1);
+    position: absolute;
+    top: 30px;
+    left: 32px;
+    font-family: Montserrat;
+    font-weight: Bold;
+    font-size: 30px;
+    opacity: 1;
+    text-align: left;
+}
+.spot_selection_stats {
+    width: 312px;
+    color: rgba(0,0,0,1);
+    position: absolute;
+    top: 84px;
+    left: 32px;
+    font-family: Montserrat;
+    font-weight: bold;
+    font-size: 20px;
+    opacity: 1;
+    text-align: left;
+}
+.parking_layout {
+    width: 434px;
+    height: 609px;
+    background: url("Images/parking_layout.png");
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    opacity: 1;
+    position: absolute;
+    top: 175px;
+    left: 45px;
+    overflow: hidden;
+}
+.select_parking_bg1 {
+    width: 476px;
+    height: 60px;
+    background: transparent;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    opacity: 1;
+    position: absolute;
+    top: 789px;
+    left: 32px;
+    overflow: hidden;
+}
+.select_parking_bg2 {
+    width: 476px;
+    height: 60px;
+    background: transparent;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    opacity: 1;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    overflow: hidden;
+}
+.select_parking_text_bg {
+    width: 476px;
+    height: 60px;
+    background: rgba(249,255,0,1);
+    opacity: 1;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    border: 3px solid rgba(249,255,0,0.800000011920929);
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    overflow: hidden;
+}
+.select_parking_text {
+    width: 330px;
+    color: rgba(31,31,31,1);
+    position: absolute;
+    top: 18px;
+    left: 72px;
+    font-family: Montserrat;
+    font-weight: bold;
+    font-size: 20px;
+    opacity: 1;
+    text-align: center;
+}
+.parking_cars {
+    width: 402px;
+    height: 441px;
+    background: url("Images/parking_cars.png");
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    opacity: 1;
+    position: absolute;
+    top: 175px;
+    left: 61px;
+    overflow: hidden;
+}
+.parking_cars1 {
+    width: 125px;
+    height: 66px;
+    background: transparent;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    opacity: 1;
+    position: absolute;
+    top: 66px;
+    left: 129px;
+    transform: rotate(-180deg);
+    overflow: hidden;
+}
+.parking_cars2 {
+    width: 125px;
+    height: 66px;
+    background: transparent;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    opacity: 1;
+    position: absolute;
+    top: 146px;
+    left: 129px;
+    transform: rotate(-180deg);
+    overflow: hidden;
+}
+.parking_cars3 {
+    width: 125px;
+    height: 66px;
+    background: transparent;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    opacity: 1;
+    position: absolute;
+    top: 294px;
+    left: 129px;
+    transform: rotate(-180deg);
+    overflow: hidden;
+}
+.parking_cars4 {
+    width: 125px;
+    height: 66px;
+    background: transparent;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    opacity: 1;
+    position: absolute;
+    top: 441px;
+    left: 125px;
+    transform: rotate(-180deg);
+    overflow: hidden;
+}
+.parking_cars5 {
+    width: 125px;
+    height: 66px;
+    background: transparent;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    opacity: 1;
+    position: absolute;
+    top: 0px;
+    left: 277px;
+    overflow: hidden;
+}
+.parking_cars6 {
+    width: 125px;
+    height: 66px;
+    background: transparent;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    opacity: 1;
+    position: absolute;
+    top: 150px;
+    left: 277px;
+    overflow: hidden;
+}
+.parking_cars7 {
+    width: 125px;
+    height: 66px;
+    background: transparent;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    opacity: 1;
+    position: absolute;
+    top: 228px;
+    left: 277px;
+    overflow: hidden;
+}
+.parking_cars8 {
+    width: 125px;
+    height: 66px;
+    background: transparent;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    opacity: 1;
+    position: absolute;
+    top: 305px;
+    left: 277px;
+    overflow: hidden;
+}
+.spot_availability_bg {
+    width: 80px;
+    height: 609px;
+    background: transparent;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    opacity: 1;
+    position: absolute;
+    top: 169px;
+    left: 222px;
+    overflow: hidden;
+}
+.spot_availability_text_bg {
+    width: 80px;
+    height: 609px;
+    background: rgba(249,255,0,0.4000000059604645);
+    opacity: 1;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    overflow: hidden;
+}
+.spot_availability_text {
+    height: 454px;
+    color: rgba(0,0,0,1);
+    position: absolute;
+    top: 81px;
+    left: 25px;
+    font-family: Montserrat;
+    font-weight: bold;
+    font-size: 30px;
+    opacity: 1;
+    text-align: center;
+    writing-mode: vertical-lr;
+}
+.chevron_bg1 {
+    width: 45px;
+    height: 146px;
+    background: rgba(255,255,255,1);
+    opacity: 1;
+    position: absolute;
+    top: 215px;
+    left: 543px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+    overflow: hidden;
+}
+.chevron_bg2 {
+    width: 20px;
+    height: 20px;
+    background: rgba(255,255,255,1);
+    opacity: 1;
+    position: absolute;
+    top: 63px;
+    left: 13px;
+    overflow: hidden;
+}
+.chevron {
+    width: 13px;
+    height: 17px;
+    background: url("Images/chevron.png");
+    opacity: 1;
+    position: absolute;
+    top: 1px;
+    left: 1px;
 }
