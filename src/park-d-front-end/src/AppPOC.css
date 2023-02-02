@@ -1,0 +1,76 @@
+.App-header {
+  width: 100%;
+}
+
+.App-icon {
+  height: 5vmin;
+  padding-bottom: 5vmin;
+  text-align: center;
+}
+
+.App-name {
+  height: 10vmin;
+  padding-left: 40%;
+}
+
+.Settings-icon {
+  float: right;
+  height: 2.5vmin;
+}
+
+.ParkingPref {
+  position: absolute;
+  left: 10%;
+  bottom: 5%;
+}
+
+.ParkingPref button{
+  border: 2px solid #000;
+  text-align: center;
+  padding: 10px;
+  font-size: medium;
+  font-weight: 600;
+  color:#000;
+  background-color: #fff;
+  border-radius: 12px;
+}
+
+.ParkingPref-Form {
+  display: block;
+  border: 1px solid #000;
+}
+
+.Labelling {
+  position: absolute;
+  left: 10%;
+  bottom: 20%;
+}
+
+.Map {
+  position: absolute;
+  left: 36%;
+  bottom: 15%;
+}
+
+.Analytics {
+  position: absolute;
+  right: 1%;
+}
+
+.ParkingLotDropdown {
+  position: absolute;
+  width: 15rem;
+  right: 5%;
+  top: 5%;
+}
+
+.analyticsBtn {
+  border: 2px solid #000;
+  text-align: center;
+  padding: 10px;
+  font-size: medium;
+  font-weight: 600;
+  color:#000;
+  background-color: #fff;
+  border-radius: 12px;
+}
