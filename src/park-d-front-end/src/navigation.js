@@ -69,6 +69,9 @@ function initMap(){
     let json_obj = JSON.parse(Get(jsonURL));
     let statuses = json_obj.map(space => [space.lat, space.lng])
     putSpot(statuses[0][0], statuses[0][1])
+    putSpot(statuses[1][0], statuses[1][1])
+    putSpot(statuses[2][0], statuses[2][1])
+    putSpot(statuses[3][0], statuses[3][1])
 
     google.maps.event.addListener(map, 'click', function(event){
         if (clickChoice == 0)

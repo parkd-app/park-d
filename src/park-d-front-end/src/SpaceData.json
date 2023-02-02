@@ -2,18 +2,26 @@
     "parking_spaces": [
         {
             "id": 1,
+            "lat": 43.890092,
+            "lng": -79.312103,
             "status": true
         },
         {
             "id": 2,
+            "lat": 43.890082,
+            "lng": -79.312103,
             "status": false
         },
         {
             "id": 3,
+            "lat": 43.890072,
+            "lng": -79.312103,
             "status": true
         },
         {
             "id": 4,
+            "lat": 43.890062,
+            "lng": -79.312103,
             "status": false
         }
     ]
