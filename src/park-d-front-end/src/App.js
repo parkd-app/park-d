@@ -8,13 +8,8 @@ import ParkingLotDropdown from './components/ParkingLotDropdown';
 
 // import logo from './logo.svg';
 import './App.css';
-import './HomeView.css'
 import Analytics from './Analytics';
 import Map from './Map';
-import HomeViewHeader from './HomeViewHeader'
-import HomeViewMap from './HomeViewMap'
-import HomeViewSelection from './HomeViewSelection'
-import HomeViewAnalytics from './HomeViewAnalytics'
 
 function App() {
   const [hidden, setHidden] = useState(true)
@@ -22,13 +17,46 @@ function App() {
 
   return (
     <div className="App">
-      {/* <div className='HomeViewMap'><HomeViewMap/></div> */}
-      <div className='HomeViewHeader'><HomeViewHeader/></div>
-      {/* <div className='HomeViewSelection'><HomeViewSelection/></div> */}
-      {/* <div className='HomeViewAnalytics'><HomeViewAnalytics/></div>
-      <div className='Analytics'><Analytics/></div> */}
-      {/* move left */}
+      <header className="App-header">
+        <img src={logoIcon} className="App-icon" alt="logoIcon" />
+        <img src={logoName} className="App-name" alt="logoName" />
+        <img src={settingsIcon} className="Settings-icon" alt="settingsIconName" />
+      </header>
+      <body>
+        <div className="ParkingPref">
+            {!hidden ?
+            <form className="ParkingPref-Form" id="parkingPref">
+            <input type="checkbox" id="checkReserved" name="checkReserved"/>
+            <label for="checkReserved">Reserved</label><br></br>
+            <input type="checkbox" id="checkHandicapped" name="checkHandicapped"/>
+            <label for="checkHandicapped">Handicapped</label>
+            </form> : null}
+            <button onClick={() => setHidden(s => !s)}>Parking Preferences</button>
+          </div>
+      </body>
+    <div>
+        { /* Map Component */ }
+        <div className='Map'>
+          <Map/>
+        </div>
+        { /* Labelling Component */ }
+        <div className='Labelling'>
+          <Labelling/>
+        </div>
+    </div>
 
+    {aHidden ? 
+    <>
+      <button onClick={() => setAHidden(false)} className='analyticsBtn'>Show Analytics</button>
+    </>
+    :  
+    <>
+      <button onClick={() => setAHidden(true)} className='analyticsBtn'>Hide Analytics</button> 
+      <div className='Analytics'><Analytics/></div>
+    </>
+    }
+    
+    <div className='ParkingLotDropdown'><ParkingLotDropdown/></div>
     </div>
   );
 }
