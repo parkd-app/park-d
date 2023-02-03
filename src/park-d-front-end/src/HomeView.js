@@ -22,6 +22,8 @@ var clickDestination;
 var clickChoice = 0;
 var routeMarkers = [];
 
+var selectionToggle = false;
+
 function initMap(){
     directionsRenderer = new google.maps.DirectionsRenderer({suppressMarkers: true});
     directionsService = new google.maps.DirectionsService();
@@ -45,4 +47,16 @@ function initMap(){
         }
     });
 
+}
+
+function toggleSelection()
+{
+  selectionToggle = !selectionToggle;
+  getDocEle("spot_selection").style.display = selectionToggle ? "block" : "none";
+  getDocEle("chevron_bg1").style.left = selectionToggle ? "543px" : "0px";
+  getDocEle("chevron").style.transform = selectionToggle ? "scaleX(1)" : "scaleX(-1)";
+}
+
+function getDocEle(className) {
+  return document.getElementsByClassName(className)[0];
 }
