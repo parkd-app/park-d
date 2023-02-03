@@ -53,7 +53,7 @@ function toggleSelection()
 {
   selectionToggle = !selectionToggle;
   getDocEle("spot_selection").style.display = selectionToggle ? "block" : "none";
-  getDocEle("chevron_bg1").style.left = selectionToggle ? "543px" : "0px";
+  getDocEle("chevron_bg1").style.left = selectionToggle ? "405px" : "0px";
   getDocEle("chevron").style.transform = selectionToggle ? "scaleX(1)" : "scaleX(-1)";
 }
 
