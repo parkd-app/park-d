@@ -8,11 +8,13 @@ var noPoi = [
       }
     ];
 var defaultOptions = {
-    zoom:15,
-    center:{lat:43.2609,lng:-79.9192},
+    zoom:17,
+    center:{lat:43.89043899872149, lng:-79.3134901958874},
     disableDefaultUI: true,
     styles: noPoi,
   }
+
+var userMode = true;
 
 var directionsRenderer;
 var directionsService;
@@ -22,13 +24,40 @@ var clickChoice = 0;
 var routeMarkers = [];
 
 var selectionToggle = false;
+class ParkingSpot
+{
+    constructor(id, open, coords)
+    {
+        this.id = id;
+        this.open = open;
+        this.coords = coords;
+    }
+}
+
+var parkingLayout = [
+    new ParkingSpot(0, false, {lat:43.89043899872149, lng:-79.3134901958874}),
+    new ParkingSpot(1, false, {lat:43.89043899872149, lng:-79.3134901958874}),
+    new ParkingSpot(2, true, {lat:43.89043899872149, lng:-79.3134901958874}),
+    new ParkingSpot(3, false, {lat:43.89043899872149, lng:-79.3134901958874}),
+    new ParkingSpot(4, true, {lat:43.89043899872149, lng:-79.3134901958874}),
+    new ParkingSpot(5, false, {lat:43.89043899872149, lng:-79.3134901958874}),
+    new ParkingSpot(6, true, {lat:43.89043899872149, lng:-79.3134901958874}),
+    new ParkingSpot(7, true, {lat:43.89043899872149, lng:-79.3134901958874}),
+    new ParkingSpot(8, false, {lat:43.89043899872149, lng:-79.3134901958874}),
+    new ParkingSpot(9, true, {lat:43.89043899872149, lng:-79.3134901958874}),
+    new ParkingSpot(10, false, {lat:43.89043899872149, lng:-79.3134901958874}),
+    new ParkingSpot(11, false, {lat:43.89043899872149, lng:-79.3134901958874}),
+    new ParkingSpot(12, false, {lat:43.89043899872149, lng:-79.3134901958874}),
+    new ParkingSpot(13, true, {lat:43.89043899872149, lng:-79.3134901958874}),
+    new ParkingSpot(14, true, {lat:43.89043899872149, lng:-79.3134901958874}),
+    new ParkingSpot(15, true, {lat:43.89043899872149, lng:-79.3134901958874})
+];
 
 function initMap(){
     directionsRenderer = new google.maps.DirectionsRenderer({suppressMarkers: true});
     directionsService = new google.maps.DirectionsService();
 
     map = new google.maps.Map(document.getElementById('map'), defaultOptions);
-
     google.maps.event.addListener(map, 'click', function(event){
         if (clickChoice == 0)
         {
@@ -39,12 +68,39 @@ function initMap(){
         else if (clickChoice == 1)
         {
             clickDestination = {coords:event.latLng};
-            directionsRenderer.setMap(map);
-            getRoute();
-            pickDone();
+            // directionsRenderer.setMap(map);
+            // getRoute();
+            // pickDone();
+            // check clickDestination to be within bounds of parking lot
+            toggleSelection();
+            clickChoice = 2;
         }
     });
 
+    initPage();
+}
+
+function initPage()
+{
+    // toggleSelection();
+
+    if (userMode)
+    {
+        getDocEle("chevron_bg1").style.display = "none";
+    }
+    updateSelection();
+}
+
+function updateSelection()
+{
+    var available = 0;
+    for (let index = 0; index < parkingLayout.length; index++)
+    {
+        document.getElementById("parked_car" + index).style.background = parkingLayout[index].open ? "none" : "url(Images/parked_car.png)";
+        if (parkingLayout[index].open) {available += 1;}
+    }
+    getDocEle("spot_selection_stats").textContent = available + " Spots Available";
+    getDocEle("spot_availability_text").textContent = available + " Spots Available";
 }
 
 function pickDone()
@@ -76,6 +132,13 @@ function resetData()
     clearMarkers(routeMarkers);
     routeMarkers = [];
     directionsRenderer.setMap(null);
+    recenter();
+}
+
+function recenter()
+{
+    map.setCenter(defaultOptions.center);
+    map.setZoom(defaultOptions.zoom);
 }
 
 function clearMarkers(markers)
@@ -110,6 +173,19 @@ function toggleSelection()
   getDocEle("spot_selection").style.display = selectionToggle ? "block" : "none";
   getDocEle("chevron_bg1").style.left = selectionToggle ? "405px" : "0px";
   getDocEle("chevron").style.transform = selectionToggle ? "scaleX(1)" : "scaleX(-1)";
+}
+
+function selectionSelect(id)
+{
+    if (clickChoice != 2 || id > parkingLayout.length || !parkingLayout[id].open) {return;}
+
+    clickDestination = {coords:parkingLayout[id].coords};
+    directionsRenderer.setMap(map);
+    getRoute();
+    pickDone();
+    toggleSelection();
+    parkingLayout[id].open = false;
+    updateSelection();
 }
 
 function getDocEle(className) {

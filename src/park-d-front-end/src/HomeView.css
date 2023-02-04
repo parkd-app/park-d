@@ -671,8 +671,8 @@
 }
 .parking_cars {
     width: 402px;
-    height: 441px;
-    background: url("Images/parking_cars.png");
+    height: 600px;
+    /* background: url("Images/parking_cars.png"); */
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;
@@ -682,112 +682,15 @@
     left: 61px;
     overflow: hidden;
 }
-.parking_cars1 {
+.parked_car {
     width: 125px;
-    height: 66px;
-    background: transparent;
+    height: 67px;
+    background: none;
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;
     opacity: 1;
     position: absolute;
-    top: 66px;
-    left: 129px;
-    transform: rotate(-180deg);
-    overflow: hidden;
-}
-.parking_cars2 {
-    width: 125px;
-    height: 66px;
-    background: transparent;
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: cover;
-    opacity: 1;
-    position: absolute;
-    top: 146px;
-    left: 129px;
-    transform: rotate(-180deg);
-    overflow: hidden;
-}
-.parking_cars3 {
-    width: 125px;
-    height: 66px;
-    background: transparent;
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: cover;
-    opacity: 1;
-    position: absolute;
-    top: 294px;
-    left: 129px;
-    transform: rotate(-180deg);
-    overflow: hidden;
-}
-.parking_cars4 {
-    width: 125px;
-    height: 66px;
-    background: transparent;
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: cover;
-    opacity: 1;
-    position: absolute;
-    top: 441px;
-    left: 125px;
-    transform: rotate(-180deg);
-    overflow: hidden;
-}
-.parking_cars5 {
-    width: 125px;
-    height: 66px;
-    background: transparent;
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: cover;
-    opacity: 1;
-    position: absolute;
-    top: 0px;
-    left: 277px;
-    overflow: hidden;
-}
-.parking_cars6 {
-    width: 125px;
-    height: 66px;
-    background: transparent;
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: cover;
-    opacity: 1;
-    position: absolute;
-    top: 150px;
-    left: 277px;
-    overflow: hidden;
-}
-.parking_cars7 {
-    width: 125px;
-    height: 66px;
-    background: transparent;
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: cover;
-    opacity: 1;
-    position: absolute;
-    top: 228px;
-    left: 277px;
-    overflow: hidden;
-}
-.parking_cars8 {
-    width: 125px;
-    height: 66px;
-    background: transparent;
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: cover;
-    opacity: 1;
-    position: absolute;
-    top: 305px;
-    left: 277px;
     overflow: hidden;
 }
 .spot_availability_bg {
