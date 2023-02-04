@@ -14,7 +14,7 @@ var defaultOptions = {
     styles: noPoi,
   }
 
-var userMode = true;
+var userMode = false;
 
 var directionsRenderer;
 var directionsService;
@@ -53,6 +53,33 @@ var parkingLayout = [
     new ParkingSpot(15, true, {lat:43.89043899872149, lng:-79.3134901958874})
 ];
 
+var analyticsData = [
+    { name: "12am", occupancy: 1 },
+    { name: "1am", occupancy: 1 },
+    { name: "2am", occupancy: 1 },
+    { name: "3am", occupancy: 1 },
+    { name: "4am", occupancy: 1 },
+    { name: "5am", occupancy: 1 },
+    { name: "6am", occupancy: 2 },
+    { name: "7am", occupancy: 3 },
+    { name: "8am", occupancy: 4 },
+    { name: "9am", occupancy: 5 },
+    { name: "10am", occupancy: 8 },
+    { name: "11am", occupancy: 9 },
+    { name: "12pm", occupancy: 10 },
+    { name: "1pm", occupancy: 9 },
+    { name: "2pm", occupancy: 8 },
+    { name: "3pm", occupancy: 5 },
+    { name: "4pm", occupancy: 6 },
+    { name: "5pm", occupancy: 7 },
+    { name: "6pm", occupancy: 8 },
+    { name: "7pm", occupancy: 9 },
+    { name: "8pm", occupancy: 6 },
+    { name: "9pm", occupancy: 3 },
+    { name: "10pm", occupancy: 2 },
+    { name: "11pm", occupancy: 1 }
+];
+
 function initMap(){
     directionsRenderer = new google.maps.DirectionsRenderer({suppressMarkers: true});
     directionsService = new google.maps.DirectionsService();
@@ -82,12 +109,14 @@ function initMap(){
 
 function initPage()
 {
+    getDocEle("chevron_bg1").style.display = userMode ? "none" : "block";
+    getDocEle("analytics_bg1").style.display = "none";
+    getDocEle("spot_selection").style.display = "none";
+    getDocEle("search_bar_bg1").style.display = userMode ? "block" : "none";
+
     // toggleSelection();
 
-    if (userMode)
-    {
-        getDocEle("chevron_bg1").style.display = "none";
-    }
+    
     updateSelection();
 }
 
@@ -170,9 +199,17 @@ function getRoute()
 function toggleSelection()
 {
   selectionToggle = !selectionToggle;
-  getDocEle("spot_selection").style.display = selectionToggle ? "block" : "none";
-  getDocEle("chevron_bg1").style.left = selectionToggle ? "405px" : "0px";
-  getDocEle("chevron").style.transform = selectionToggle ? "scaleX(1)" : "scaleX(-1)";
+  if (userMode)
+  {
+    getDocEle("spot_selection").style.display = selectionToggle ? "block" : "none";
+    getDocEle("chevron_bg1").style.left = selectionToggle ? "405px" : "0px";    
+  }
+  else
+  {
+    getDocEle("analytics_bg1").style.display = selectionToggle ? "block" : "none";
+    getDocEle("chevron_bg1").style.left = selectionToggle ? "565px" : "0px";
+  }
+    getDocEle("chevron").style.transform = selectionToggle ? "scaleX(1)" : "scaleX(-1)";
 }
 
 function selectionSelect(id)
