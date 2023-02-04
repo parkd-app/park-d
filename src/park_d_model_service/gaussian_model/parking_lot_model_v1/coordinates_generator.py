@@ -81,3 +81,4 @@ class CoordinatesGenerator:
             self.coordinates.pop()
 
         self.ids += 1
+
