@@ -14,7 +14,7 @@ var defaultOptions = {
     styles: noPoi,
   }
 
-var userMode = false;
+var userMode = true;
 
 var directionsRenderer;
 var directionsService;
@@ -31,6 +31,8 @@ class ParkingSpot
         this.id = id;
         this.open = open;
         this.coords = coords;
+        this.handicapped = false;
+        this.reserved = false;
     }
 }
 
@@ -54,30 +56,30 @@ var parkingLayout = [
 ];
 
 var analyticsData = [
-    { name: "12am", occupancy: 1 },
-    { name: "1am", occupancy: 1 },
-    { name: "2am", occupancy: 1 },
-    { name: "3am", occupancy: 1 },
-    { name: "4am", occupancy: 1 },
-    { name: "5am", occupancy: 1 },
-    { name: "6am", occupancy: 2 },
-    { name: "7am", occupancy: 3 },
-    { name: "8am", occupancy: 4 },
-    { name: "9am", occupancy: 5 },
-    { name: "10am", occupancy: 8 },
-    { name: "11am", occupancy: 9 },
-    { name: "12pm", occupancy: 10 },
-    { name: "1pm", occupancy: 9 },
-    { name: "2pm", occupancy: 8 },
-    { name: "3pm", occupancy: 5 },
-    { name: "4pm", occupancy: 6 },
-    { name: "5pm", occupancy: 7 },
-    { name: "6pm", occupancy: 8 },
-    { name: "7pm", occupancy: 9 },
-    { name: "8pm", occupancy: 6 },
-    { name: "9pm", occupancy: 3 },
-    { name: "10pm", occupancy: 2 },
-    { name: "11pm", occupancy: 1 }
+    { name: "12am", occupancy: 10 },
+    { name: "1am", occupancy: 10 },
+    { name: "2am", occupancy: 10 },
+    { name: "3am", occupancy: 10 },
+    { name: "4am", occupancy: 10 },
+    { name: "5am", occupancy: 10 },
+    { name: "6am", occupancy: 20 },
+    { name: "7am", occupancy: 30 },
+    { name: "8am", occupancy: 40 },
+    { name: "9am", occupancy: 50 },
+    { name: "10am", occupancy: 80 },
+    { name: "11am", occupancy: 90 },
+    { name: "12pm", occupancy: 100 },
+    { name: "1pm", occupancy: 90 },
+    { name: "2pm", occupancy: 80 },
+    { name: "3pm", occupancy: 50 },
+    { name: "4pm", occupancy: 60 },
+    { name: "5pm", occupancy: 70 },
+    { name: "6pm", occupancy: 80 },
+    { name: "7pm", occupancy: 90 },
+    { name: "8pm", occupancy: 60 },
+    { name: "9pm", occupancy: 30 },
+    { name: "10pm", occupancy: 20 },
+    { name: "11pm", occupancy: 10 }
 ];
 
 function initMap(){
@@ -116,20 +118,8 @@ function initPage()
 
     // toggleSelection();
 
-    
     updateSelection();
-}
-
-function updateSelection()
-{
-    var available = 0;
-    for (let index = 0; index < parkingLayout.length; index++)
-    {
-        document.getElementById("parked_car" + index).style.background = parkingLayout[index].open ? "none" : "url(Images/parked_car.png)";
-        if (parkingLayout[index].open) {available += 1;}
-    }
-    getDocEle("spot_selection_stats").textContent = available + " Spots Available";
-    getDocEle("spot_availability_text").textContent = available + " Spots Available";
+    updateAnalytics();
 }
 
 function pickDone()
@@ -162,6 +152,7 @@ function resetData()
     routeMarkers = [];
     directionsRenderer.setMap(null);
     recenter();
+    if (selectionToggle) {toggleSelection();}
 }
 
 function recenter()
@@ -223,6 +214,73 @@ function selectionSelect(id)
     toggleSelection();
     parkingLayout[id].open = false;
     updateSelection();
+}
+
+function updateSelection()
+{
+    var available = 0;
+    for (let index = 0; index < parkingLayout.length; index++)
+    {
+        document.getElementById("parked_car" + index).style.background = parkingLayout[index].open ? "none" : "url(Images/parked_car.png)";
+        if (parkingLayout[index].open) {available += 1;}
+    }
+    getDocEle("spot_selection_stats").textContent = available + " Spots Available";
+    getDocEle("spot_availability_text").textContent = available + " Spots Available";
+}
+
+function updateAnalytics()
+{
+    h = 0;
+    maxH = 300;
+    red = 0;
+    green = 0;
+    occupancyRate = 0;
+    for (let index = 0; index < analyticsData.length; index++) {
+        occupancyRate = analyticsData[index].occupancy / 100;
+        h = occupancyRate * maxH;
+        if (occupancyRate <= 0.5)
+        {
+            red = (2 * occupancyRate) * 255;
+            green = 255;
+        }
+        else
+        {
+            red = 255;
+            green = (1 - 2*occupancyRate) * 255;
+        }
+        document.getElementById("graph_bar" + index).style.height = h + "px";
+        document.getElementById("graph_bar" + index).style.top = maxH - h + "px";
+        document.getElementById("graph_bar" + index).style.background = "rgba(" + red + "," + green + "0,1)";
+    }
+
+    availability = [{number: 0, total: 0}, {number: 0, total: 0}, {number: 0, total: 0}];
+    type = 0;
+    for (let index = 0; index < parkingLayout.length; index++)
+    {
+        if (parkingLayout[index].handicapped)
+        {
+            type = 1;
+        }
+        else if (parkingLayout[index].reserved)
+        {
+            type = 2;
+        }
+        else
+        {
+            type = 0;
+        }
+        availability[type].total += 1;
+        availability[type].number += parkingLayout[index].open ? 1 : 0;
+    }
+    totalSpots = 0;
+    totalAvailable = 0;
+    for (let index = 0; index < availability.length; index++) {
+        getDocEle("analytics_card" + index + "_total").textContent = "out of " + availability[index].total;
+        getDocEle("analytics_card" + index + "_number").textContent = availability[index].number;
+        totalSpots += availability[index].total;
+        totalAvailable += availability[index].number;
+    }
+    getDocEle("total_text").textContent = "TOTAL AVAILABLE - " + totalAvailable + "/" + totalSpots;
 }
 
 function getDocEle(className) {

@@ -229,7 +229,7 @@
 .magnifying_glass {
     width: 20px;
     height: 20px;
-    background: url("Images/magnifying_glass.png");
+    background: url("Images/refresh.png");
     opacity: 1;
     position: absolute;
     top: 0px;
@@ -804,7 +804,7 @@
     left: 5px;
     overflow: hidden;
   }
-  .analytics_card3_bg1 {
+  .analytics_card2_bg1 {
     width: 198px;
     height: 239px;
     background: transparent;
@@ -817,7 +817,7 @@
     left: 487px;
     overflow: hidden;
   }
-  .analytics_card3_bg {
+  .analytics_card2_bg {
     width: 198px;
     height: 239px;
     background: rgba(255,164,0,1);
@@ -831,7 +831,7 @@
     border-bottom-right-radius: 10px;
     overflow: hidden;
   }
-  .analytics_card3_total {
+  .analytics_card2_total {
     width: 106px;
     color: rgba(255,255,255,1);
     position: absolute;
@@ -843,7 +843,7 @@
     opacity: 1;
     text-align: center;
   }
-  .analytics_card3_number {
+  .analytics_card2_number {
     width: 61px;
     color: rgba(255,255,255,1);
     position: absolute;
@@ -855,7 +855,7 @@
     opacity: 1;
     text-align: center;
   }
-  .analytics_card3_name {
+  .analytics_card2_name {
     width: 152px;
     color: rgba(255,255,255,1);
     position: absolute;
@@ -867,7 +867,7 @@
     opacity: 1;
     text-align: center;
   }
-  .analytics_card2_bg1 {
+  .analytics_card1_bg1 {
     width: 198px;
     height: 239px;
     background: transparent;
@@ -880,7 +880,7 @@
     left: 244px;
     overflow: hidden;
   }
-  .analytics_card2_bg {
+  .analytics_card1_bg {
     width: 198px;
     height: 239px;
     background: rgba(0,86,150,1);
@@ -894,7 +894,7 @@
     border-bottom-right-radius: 10px;
     overflow: hidden;
   }
-  .analytics_card2_total {
+  .analytics_card1_total {
     width: 105px;
     color: rgba(255,255,255,1);
     position: absolute;
@@ -906,19 +906,19 @@
     opacity: 1;
     text-align: center;
   }
-  .analytics_card2_number {
-    width: 34px;
+  .analytics_card1_number {
+    width: 61px;
     color: rgba(255,255,255,1);
     position: absolute;
     top: 66px;
-    left: 83px;
+    left: 70px;
     font-family: Montserrat;
     font-weight: Medium;
     font-size: 90px;
     opacity: 1;
     text-align: center;
   }
-  .analytics_card2_name {
+  .analytics_card1_name {
     width: 173px;
     color: rgba(255,255,255,1);
     position: absolute;
@@ -930,7 +930,7 @@
     opacity: 1;
     text-align: left;
   }
-  .analytics_card1_bg1 {
+  .analytics_card0_bg1 {
     width: 198px;
     height: 239px;
     background: transparent;
@@ -943,7 +943,7 @@
     left: 0px;
     overflow: hidden;
   }
-  .analytics_card1_bg {
+  .analytics_card0_bg {
     width: 198px;
     height: 239px;
     background: rgba(8,160,69,1);
@@ -957,7 +957,7 @@
     border-bottom-right-radius: 10px;
     overflow: hidden;
   }
-  .analytics_card1_total {
+  .analytics_card0_total {
     width: 150px;
     color: rgba(255,255,255,1);
     position: absolute;
@@ -969,19 +969,19 @@
     opacity: 1;
     text-align: center;
   }
-  .analytics_card1_number {
+  .analytics_card0_number {
     width: 61px;
     color: rgba(255,255,255,1);
     position: absolute;
     top: 66px;
-    left: 40px;
+    left: 70px;
     font-family: Montserrat;
     font-weight: Medium;
     font-size: 90px;
     opacity: 1;
     text-align: center;
   }
-  .analytics_card1_name {
+  .analytics_card0_name {
     width: 124px;
     color: rgba(255,255,255,1);
     position: absolute;
@@ -1001,12 +1001,12 @@
     left: 0px;
     font-family: Montserrat;
     font-weight: Medium;
-    font-size: 45px;
+    font-size: 40px;
     opacity: 1;
     text-align: left;
   }
   .location_address {
-    width: 359px;
+    width: 600px;
     color: rgba(0,0,0,1);
     position: absolute;
     top: 72px;
@@ -1091,6 +1091,15 @@
     position: absolute;
     top: 506px;
     left: 8px;
+    overflow: hidden;
+  }
+  .graph_bar {
+    height: 50px;
+    top: 230px;
+    width: 15px;
+    background: rgba(173,255,0,1);
+    opacity: 1;
+    position: absolute;
     overflow: hidden;
   }
   .bar0 {
