@@ -4,7 +4,6 @@ import os
 import logging
 
 
-
 def save_frame_sec(video_path, sec, result_path):
     logger = logging.getLogger('werkzeug')
     handler = logging.FileHandler('access.log')

@@ -1,11 +1,9 @@
 import sys
 import os
 from flask import Flask
-from flask import request
 import logging
-import json
-from Service import parsing_service, snap_shot_service, slow_initiate_service
-from Constants import Constants
+from Service import parsing_service, slow_initiate_service
+from Constants import constants
 from flask_cors import CORS, cross_origin
 import cv2
 
@@ -38,7 +36,7 @@ def setup_logging():
 @app.route('/rt_parking_info', methods=['GET'])
 @cross_origin()
 def requires_parking_spot():  # put application's code here
-    ret = parsing_service.parsing((Constants.parking_info_path))
+    ret = parsing_service.parsing((constants.parking_info_path))
     app.logger.info("ret: %s", ret)
     # response = Flask.jsonify({'parking_spaces': ret})
     # response.headers.add('Access-Control-Allow-Origin', '*')
@@ -68,11 +66,11 @@ def get_snapshot():
     # return {
     #     'result': snap_shot_service.save_frame_sec(Constants.video_path_bird, 0, Constants.image_path)
     # }
-    vidcap = cv2.VideoCapture(Constants.video_path_bird)
+    vidcap = cv2.VideoCapture(constants.video_path_bird)
     success, image = vidcap.read()
     count = 0
-    full_path = Constants.image_path + "frame_bird.jpg"
-    if(not os.path.exists(Constants.image_path)):
+    full_path = constants.image_path + "frame_bird.jpg"
+    if(not os.path.exists(constants.image_path)):
         assert Exception
     if not cv2.imwrite(full_path, image):
         cv2.imwrite(".\\static_resources\\frame.png", image)
