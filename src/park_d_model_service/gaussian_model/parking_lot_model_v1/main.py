@@ -1,9 +1,10 @@
 import argparse
-import yaml
 from coordinates_generator import CoordinatesGenerator
 from motion_detector import MotionDetector
 from colors import *
 import logging
+import yaml
+import socket
 
 
 def main():
@@ -19,12 +20,23 @@ def main():
         with open(data_file, "w+") as points:
             generator = CoordinatesGenerator(image_file, points, COLOR_RED)
             generator.generate()
+    serversocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    serversocket.bind(('localhost', 12000))
+    print("model start listening for request")
 
-    with open(data_file, "r") as data:
-        points = yaml.load(data)
-        print(points)
-        detector = MotionDetector(args.video_file, points, int(start_frame))
-        detector.detect_motion()
+    while serversocket.listen() != -1:
+        connection, address = serversocket.accept()
+        data = connection.recv(1024)
+        if data == 'close':
+            serversocket.close()
+            break
+
+        with open(data_file, "r") as data:
+            points = yaml.load(data)
+            print(points)
+            detector = MotionDetector(args.video_file, points, int(start_frame))
+            detector.detect_motion()
+
 
 
 def parse_args():

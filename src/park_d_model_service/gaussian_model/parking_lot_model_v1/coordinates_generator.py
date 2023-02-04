@@ -4,7 +4,6 @@ import numpy as np
 from colors import COLOR_WHITE
 from drawing_utils import draw_contours
 
-
 class CoordinatesGenerator:
     KEY_RESET = ord("r")
     KEY_QUIT = ord("q")
@@ -67,10 +66,14 @@ class CoordinatesGenerator:
         coordinates = np.array(self.coordinates)
 
         self.output.write("-\n          id: " + str(self.ids) + "\n          coordinates: [" +
-                          "[" + str(self.coordinates[0][0]) + "," + str(self.coordinates[0][1]) + "]," +
-                          "[" + str(self.coordinates[1][0]) + "," + str(self.coordinates[1][1]) + "]," +
-                          "[" + str(self.coordinates[2][0]) + "," + str(self.coordinates[2][1]) + "]," +
-                          "[" + str(self.coordinates[3][0]) + "," + str(self.coordinates[3][1]) + "]]\n")
+                          "[" + str(self.coordinates[0][0]) + "," +
+                          str(self.coordinates[0][1]) + "]," +
+                          "[" + str(self.coordinates[1][0]) + "," +
+                          str(self.coordinates[1][1]) + "]," +
+                          "[" + str(self.coordinates[2][0]) + "," +
+                          str(self.coordinates[2][1]) + "]," +
+                          "[" + str(self.coordinates[3][0]) + "," +
+                          str(self.coordinates[3][1]) + "]]\n")
 
         draw_contours(self.image, coordinates, str(self.ids + 1), COLOR_WHITE)
 

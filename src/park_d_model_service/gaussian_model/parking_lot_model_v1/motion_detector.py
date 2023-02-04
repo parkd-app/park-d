@@ -1,11 +1,8 @@
-import math
-
 import cv2 as open_cv
 import numpy as np
 import logging
 from drawing_utils import draw_contours
 from colors import COLOR_GREEN, COLOR_WHITE, COLOR_BLUE
-import time
 
 class MotionDetector:
     LAPLACIAN = 1.4
@@ -22,12 +19,11 @@ class MotionDetector:
     def detect_motion(self):
         capture = open_cv.VideoCapture(self.video)
         capture.set(open_cv.CAP_PROP_POS_FRAMES, self.start_frame)
-
         coordinates_data = self.coordinates_data
         logging.debug("coordinates data: %s", coordinates_data)
 
-        for p in coordinates_data:
-            coordinates = self._coordinates(p)
+        for p_array in coordinates_data:
+            coordinates = self._coordinates(p_array)
             logging.debug("coordinates: %s", coordinates)
 
             rect = open_cv.boundingRect(coordinates)
@@ -59,8 +55,6 @@ class MotionDetector:
 
         statuses = [False] * len(coordinates_data)
         times = [None] * len(coordinates_data)
-        start = time.time()
-        changed = False
         while capture.isOpened():
 
             result, frame = capture.read()
@@ -77,8 +71,8 @@ class MotionDetector:
 
             position_in_seconds = capture.get(open_cv.CAP_PROP_POS_MSEC) / 1000.0
 
-            for index, c in enumerate(coordinates_data):
-                status = self.__apply(grayed, index, c)
+            for index, contour in enumerate(coordinates_data):
+                status = self.__apply(grayed, index, contour)
 
                 if times[index] is not None and self.same_status(statuses, index, status):
                     times[index] = None
@@ -90,18 +84,18 @@ class MotionDetector:
                         times[index] = None
                         print("Status changed!!!")
                         print("statues ", statuses)
-                        with open('parking_info.txt', 'w') as f:
-                            f.write(str(statuses))
+                        with open('parking_info.txt', 'w') as file:
+                            file.write(str(statuses))
                     continue
 
                 if times[index] is None and self.status_changed(statuses, index, status):
                     times[index] = position_in_seconds
 
 
-            for index, p in enumerate(coordinates_data):
-                coordinates = self._coordinates(p)
+            for index, p_array in enumerate(coordinates_data):
+                coordinates = self._coordinates(p_array)
                 color = COLOR_GREEN if statuses[index] else COLOR_BLUE
-                draw_contours(new_frame, coordinates, str(p["id"] + 1), COLOR_WHITE, color)
+                draw_contours(new_frame, coordinates, str(p_array["id"] + 1), COLOR_WHITE, color)
 
 
             open_cv.imshow(str(self.video), new_frame)
@@ -132,8 +126,8 @@ class MotionDetector:
         return status
 
     @staticmethod
-    def _coordinates(p):
-        return np.array(p["coordinates"])
+    def _coordinates(p_array):
+        return np.array(p_array["coordinates"])
 
     @staticmethod
     def same_status(coordinates_status, index, status):
