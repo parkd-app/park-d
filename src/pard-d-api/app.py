@@ -4,7 +4,7 @@ from flask import Flask
 from flask import request
 import logging
 import json
-from Service import parsing_service, snap_shot_service
+from Service import parsing_service, snap_shot_service, slow_initiate_service
 from Constants import Constants
 from flask_cors import CORS, cross_origin
 import cv2
@@ -52,7 +52,14 @@ def requires_coordinate():
 
 @app.route('/set_up', methods=['POST'])
 def slow_initiate():
-    pass
+    ret = slow_initiate_service.start('side')
+    return {'result': ret}
+
+@app.route('/close_model', methods=['POST'])
+def close_model():
+    ret = slow_initiate_service.closemodel('side')
+    return {'result': ret}
+
 
 
 
