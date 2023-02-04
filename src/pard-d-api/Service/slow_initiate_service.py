@@ -12,6 +12,3 @@ def start(model):
     return val != -1
 
 
-
-
-

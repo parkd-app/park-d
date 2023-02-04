@@ -77,5 +77,6 @@ def get_snapshot():
     count += 1
     return {'result': True}
 
+
 if __name__ == '__main__':
     app.run()
