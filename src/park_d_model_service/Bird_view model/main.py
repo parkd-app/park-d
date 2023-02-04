@@ -13,6 +13,7 @@ with open('carParkPos','rb') as f:
     posList=pickle.load(f)
 frame_counter = 0
 def check(imgPro):
+    result_map = []
     spaceCount=0
     for pos in posList:
         x,y=pos
@@ -22,11 +23,15 @@ def check(imgPro):
             spaceCount+=1
             color=(0,255,0)
             thick=5
+            result_map.append(True)
         else:
             color=(0,0,255)
             thick=2
+            result_map.append(False)
 
         cv2.rectangle(img,pos,(x+rectW,y+rectH),color,thick)
+    with open('parking_info.txt', 'w') as file:
+        file.write(str(result_map))
     cv2.rectangle(img,(45,30),(250,75),(180,0,180),-1)
     cv2.putText(img,f'Free: {spaceCount}/{len(posList)}',(50,60),cv2.FONT_HERSHEY_SIMPLEX,0.9,(255,255,255),2)
 

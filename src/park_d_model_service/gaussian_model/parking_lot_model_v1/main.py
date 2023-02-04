@@ -20,6 +20,13 @@ def main():
         with open(data_file, "w+") as points:
             generator = CoordinatesGenerator(image_file, points, COLOR_RED)
             generator.generate()
+
+    with open(data_file, "r") as data:
+        points = yaml.load(data)
+        print(points)
+        detector = MotionDetector(args.video_file, points, int(start_frame))
+        detector.detect_motion()
+    return
     serversocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     serversocket.bind(('localhost', 12000))
     print("model start listening for request")

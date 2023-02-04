@@ -100,6 +100,10 @@ class MotionDetector:
                 color = COLOR_GREEN if statuses[index] else COLOR_BLUE
                 draw_contours(new_frame, coordinates, str(p_array["id"] + 1), COLOR_WHITE, color)
 
+            open_cv.rectangle(new_frame, (45, 30), (250, 75), (180, 0, 180), -1)
+            spaceCount = sum([1 for i in statuses if i == True])
+            open_cv.putText(new_frame, f'Free: {spaceCount}/{len(statuses)}', (50, 60), open_cv.FONT_HERSHEY_SIMPLEX, 0.9,
+                            (255, 255, 255), 2)
             open_cv.imshow(str(self.video), new_frame)
             k = open_cv.waitKey(1)
             if k == ord("q"):
