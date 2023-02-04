@@ -1,1356 +1,1356 @@
 .background {
-    width: 100%;
-    height: 100%;
-    background: rgba(255,255,255,1);
-    opacity: 1;
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    overflow: hidden;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 1);
+  opacity: 1;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  overflow: hidden;
 }
 .map {
-    width: 100%;
-    height: 88.5%;
-    background: transparent;
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: cover;
-    opacity: 1;
-    position: absolute;
-    top: 87px;
-    left: 0px;
-    overflow: hidden;
+  width: 100%;
+  height: 88.5%;
+  background: transparent;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  opacity: 1;
+  position: absolute;
+  top: 87px;
+  left: 0px;
+  overflow: hidden;
 }
 .header {
-    width: 100%;
-    height: 87px;
-    background: rgba(24, 24, 24, 1);
-    opacity: 1;
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  }
-  .logo_bg1 {
-    width: 202px;
-    height: 56px;
-    background: rgba(0, 0, 0, 0);
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: cover;
-    opacity: 1;
-    position: absolute;
-    top: 16px;
-    left: 655px;
-    overflow: hidden;
-  }
-  .logo_bg2 {
-    width: 202px;
-    height: 56px;
-    background: rgba(0, 0, 0, 0);
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: cover;
-    opacity: 1;
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    overflow: hidden;
-  }
-  .logo_text {
-    width: 202px;
-    color: rgba(0, 0, 0, 0);
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    font-family: Montserrat;
-    font-weight: Medium;
-    font-size: 50px;
-    opacity: 1;
-    text-align: left;
-  }
-  .logo {
-    width: 194px;
-    height: 38px;
-    background: url("Images/park'd_logo.png");
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: cover;
-    opacity: 1;
-    position: absolute;
-    top: 11px;
-    left: 0px;
-    overflow: hidden;
-  }
-  .old_logo {
-    width: 264px;
-    height: 93px;
-    background: rgba(255, 255, 255, 0);
-    opacity: 1;
-    position: absolute;
-    top: 22px;
-    left: 40px;
-    overflow: hidden;
-  }
-  .logout_bg1 {
-    width: 105px;
-    height: 60px;
-    background: rgba(0, 0, 0, 0);
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: cover;
-    opacity: 1;
-    position: absolute;
-    top: 12px;
-    left: 1389px;
-    overflow: hidden;
-  }
-  .logout_bg2 {
-    width: 105px;
-    height: 60px;
-    background: rgba(0, 0, 0, 0);
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: cover;
-    opacity: 1;
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    overflow: hidden;
-  }
-  .logout_border {
-    width: 105px;
-    height: 60px;
-    background: rgba(249, 255, 0, 1);
-    opacity: 1;
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    border: 3px solid rgba(249, 255, 0, 0.800000011920929);
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
-    overflow: hidden;
-    box-sizing: border-box;
-  }
-  .logout_text {
-    width: 73px;
-    color: rgba(31, 31, 31, 1);
-    position: absolute;
-    top: 18px;
-    left: 16px;
-    font-family: Montserrat;
-    font-weight: Medium;
-    font-size: 20px;
-    opacity: 1;
-    text-align: left;
-  }
-  .cogwheel_bg1 {
-    width: 50px;
-    height: 50px;
-    background: rgba(0, 0, 0, 0);
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: cover;
-    opacity: 1;
-    position: absolute;
-    top: 19px;
-    left: 24px;
-    overflow: hidden;
-  }
-  .cogwheel_bg2 {
-    width: 50px;
-    height: 50px;
-    background: rgba(255, 255, 255, 0);
-    opacity: 1;
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    overflow: hidden;
-  }
-  .cogwheel {
-    width: 47px;
-    height: 49px;
-    background: url("Images/cogwheel.png");
-    opacity: 1;
-    position: absolute;
-    top: 0px;
-    left: 2px;
-  }
-  .cogwheel_fg {
-    width: 194px;
-    height: 149px;
-    background: rgba(249, 255, 0, 1);
-    opacity: 1;
-    position: absolute;
-    top: 49px;
-    left: 73px;
-    overflow: hidden;
-  }
+  width: 100%;
+  height: 87px;
+  background: rgba(24, 24, 24, 1);
+  opacity: 1;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+.logo_bg1 {
+  width: 202px;
+  height: 56px;
+  background: rgba(0, 0, 0, 0);
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  opacity: 1;
+  position: absolute;
+  top: 16px;
+  left: 655px;
+  overflow: hidden;
+}
+.logo_bg2 {
+  width: 202px;
+  height: 56px;
+  background: rgba(0, 0, 0, 0);
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  opacity: 1;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  overflow: hidden;
+}
+.logo_text {
+  width: 202px;
+  color: rgba(0, 0, 0, 0);
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  font-family: Montserrat;
+  font-weight: Medium;
+  font-size: 50px;
+  opacity: 1;
+  text-align: left;
+}
+.logo {
+  width: 194px;
+  height: 38px;
+  background: url("Images/park'd_logo.png");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  opacity: 1;
+  position: absolute;
+  top: 11px;
+  left: 0px;
+  overflow: hidden;
+}
+.old_logo {
+  width: 264px;
+  height: 93px;
+  background: rgba(255, 255, 255, 0);
+  opacity: 1;
+  position: absolute;
+  top: 22px;
+  left: 40px;
+  overflow: hidden;
+}
+.logout_bg1 {
+  width: 105px;
+  height: 60px;
+  background: rgba(0, 0, 0, 0);
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  opacity: 1;
+  position: absolute;
+  top: 12px;
+  left: 1389px;
+  overflow: hidden;
+}
+.logout_bg2 {
+  width: 105px;
+  height: 60px;
+  background: rgba(0, 0, 0, 0);
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  opacity: 1;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  overflow: hidden;
+}
+.logout_border {
+  width: 105px;
+  height: 60px;
+  background: rgba(249, 255, 0, 1);
+  opacity: 1;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  border: 3px solid rgba(249, 255, 0, 0.800000011920929);
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+.logout_text {
+  width: 73px;
+  color: rgba(31, 31, 31, 1);
+  position: absolute;
+  top: 18px;
+  left: 16px;
+  font-family: Montserrat;
+  font-weight: Medium;
+  font-size: 20px;
+  opacity: 1;
+  text-align: left;
+}
+.cogwheel_bg1 {
+  width: 50px;
+  height: 50px;
+  background: rgba(0, 0, 0, 0);
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  opacity: 1;
+  position: absolute;
+  top: 19px;
+  left: 24px;
+  overflow: hidden;
+}
+.cogwheel_bg2 {
+  width: 50px;
+  height: 50px;
+  background: rgba(255, 255, 255, 0);
+  opacity: 1;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  overflow: hidden;
+}
+.cogwheel {
+  width: 47px;
+  height: 49px;
+  background: url("Images/cogwheel.png");
+  opacity: 1;
+  position: absolute;
+  top: 0px;
+  left: 2px;
+}
+.cogwheel_fg {
+  width: 194px;
+  height: 149px;
+  background: rgba(249, 255, 0, 1);
+  opacity: 1;
+  position: absolute;
+  top: 49px;
+  left: 73px;
+  overflow: hidden;
+}
 .search_bar_bg1 {
-    width: 426px;
-    height: 60px;
-    background: transparent;
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: cover;
-    opacity: 1;
-    position: absolute;
-    top: 128px;
-    left: 29px;
-    overflow: hidden;
+  width: 426px;
+  height: 60px;
+  background: transparent;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  opacity: 1;
+  position: absolute;
+  top: 128px;
+  left: 29px;
+  overflow: hidden;
 }
 .search_bar_bg2 {
-    width: 426px;
-    height: 60px;
-    background: rgba(255,255,255,1);
-    opacity: 1;
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
-    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25);
-    overflow: hidden;
+  width: 426px;
+  height: 60px;
+  background: rgba(255, 255, 255, 1);
+  opacity: 1;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
 }
 .magnifying_glass_bg {
-    width: 20px;
-    height: 20px;
-    background: rgba(255,255,255,1);
-    opacity: 1;
-    position: absolute;
-    top: 19px;
-    left: 387px;
-    overflow: hidden;
+  width: 20px;
+  height: 20px;
+  background: rgba(255, 255, 255, 1);
+  opacity: 1;
+  position: absolute;
+  top: 19px;
+  left: 387px;
+  overflow: hidden;
 }
 .magnifying_glass {
-    width: 20px;
-    height: 20px;
-    background: url("Images/refresh.png");
-    opacity: 1;
-    position: absolute;
-    top: 0px;
-    left: 0px;
+  width: 20px;
+  height: 20px;
+  background: url("Images/refresh.png");
+  opacity: 1;
+  position: absolute;
+  top: 0px;
+  left: 0px;
 }
 .direction_guide {
-    width: 346px;
-    color: rgba(157,163,174,1);
-    position: absolute;
-    top: 18px;
-    left: 19px;
-    font-family: Montserrat;
-    font-weight: Medium;
-    font-size: 20px;
-    opacity: 1;
-    text-align: left;
+  width: 346px;
+  color: rgba(157, 163, 174, 1);
+  position: absolute;
+  top: 18px;
+  left: 19px;
+  font-family: Montserrat;
+  font-weight: Medium;
+  font-size: 20px;
+  opacity: 1;
+  text-align: left;
 }
 .location_bg1 {
-    width: 174px;
-    height: 101px;
-    background: transparent;
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: cover;
-    opacity: 1;
-    position: absolute;
-    top: 833px;
-    left: 879px;
-    overflow: hidden;
+  width: 174px;
+  height: 101px;
+  background: transparent;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  opacity: 1;
+  position: absolute;
+  top: 833px;
+  left: 879px;
+  overflow: hidden;
 }
 .location_bg2 {
-    width: 65px;
-    height: 65px;
-    background: transparent;
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: cover;
-    opacity: 1;
-    position: absolute;
-    top: 0px;
-    left: 55px;
-    overflow: hidden;
+  width: 65px;
+  height: 65px;
+  background: transparent;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  opacity: 1;
+  position: absolute;
+  top: 0px;
+  left: 55px;
+  overflow: hidden;
 }
 .location_ring1 {
-    width: 65px;
-    height: 65px;
-    background: rgba(198,211,255,0.800000011920929);
-    opacity: 1;
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    border-radius: 50%;
+  width: 65px;
+  height: 65px;
+  background: rgba(198, 211, 255, 0.800000011920929);
+  opacity: 1;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  border-radius: 50%;
 }
 .location_ring2 {
-    width: 40px;
-    height: 40px;
-    background: rgba(99,134,255,0.800000011920929);
-    opacity: 1;
-    position: absolute;
-    top: 13px;
-    left: 12px;
-    border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  background: rgba(99, 134, 255, 0.800000011920929);
+  opacity: 1;
+  position: absolute;
+  top: 13px;
+  left: 12px;
+  border-radius: 50%;
 }
 .location_ring3 {
-    width: 25px;
-    height: 25px;
-    background: rgba(0,56,255,0.800000011920929);
-    opacity: 1;
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    border-radius: 50%;
+  width: 25px;
+  height: 25px;
+  background: rgba(0, 56, 255, 0.800000011920929);
+  opacity: 1;
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  border-radius: 50%;
 }
 .location_text_bg1 {
-    width: 174px;
-    height: 35px;
-    background: transparent;
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: cover;
-    opacity: 1;
-    position: absolute;
-    top: 66px;
-    left: 0px;
-    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25);
-    overflow: hidden;
+  width: 174px;
+  height: 35px;
+  background: transparent;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  opacity: 1;
+  position: absolute;
+  top: 66px;
+  left: 0px;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
 }
 .location_text_bg2 {
-    width: 174px;
-    height: 35px;
-    background: transparent;
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: cover;
-    opacity: 1;
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    overflow: hidden;
+  width: 174px;
+  height: 35px;
+  background: transparent;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  opacity: 1;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  overflow: hidden;
 }
 .location_text_fg {
-    width: 174px;
-    height: 35px;
-    background: rgba(255,255,255,1);
-    opacity: 1;
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    border-top-left-radius: 40px;
-    border-top-right-radius: 40px;
-    border-bottom-left-radius: 40px;
-    border-bottom-right-radius: 40px;
-    overflow: hidden;
+  width: 174px;
+  height: 35px;
+  background: rgba(255, 255, 255, 1);
+  opacity: 1;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  border-top-left-radius: 40px;
+  border-top-right-radius: 40px;
+  border-bottom-left-radius: 40px;
+  border-bottom-right-radius: 40px;
+  overflow: hidden;
 }
 .location_text {
-    width: 127px;
-    color: rgba(0,0,0,1);
-    position: absolute;
-    top: 6px;
-    left: 23px;
-    font-family: Montserrat;
-    font-weight: bold;
-    font-size: 20px;
-    opacity: 1;
-    text-align: center;
+  width: 127px;
+  color: rgba(0, 0, 0, 1);
+  position: absolute;
+  top: 6px;
+  left: 23px;
+  font-family: Montserrat;
+  font-weight: bold;
+  font-size: 20px;
+  opacity: 1;
+  text-align: center;
 }
 .marker1_bg1 {
-    width: 180px;
-    height: 80px;
-    background: transparent;
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: cover;
-    opacity: 1;
-    position: absolute;
-    top: 428px;
-    left: 660px;
-    overflow: hidden;
+  width: 180px;
+  height: 80px;
+  background: transparent;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  opacity: 1;
+  position: absolute;
+  top: 428px;
+  left: 660px;
+  overflow: hidden;
 }
 .marker1_bg2 {
-    width: 180px;
-    height: 50px;
-    background: transparent;
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: cover;
-    opacity: 1;
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    border-radius: 40px;
-    overflow: hidden;
+  width: 180px;
+  height: 50px;
+  background: transparent;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  opacity: 1;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 40px;
+  overflow: hidden;
 }
 .marker1_bg3 {
-    width: 180px;
-    height: 50px;
-    background: transparent;
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: cover;
-    opacity: 1;
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    overflow: hidden;
+  width: 180px;
+  height: 50px;
+  background: transparent;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  opacity: 1;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  overflow: hidden;
 }
 .marker1_text_bg {
-    width: 180px;
-    height: 50px;
-    background: rgba(0,255,10,1);
-    opacity: 1;
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    border-top-left-radius: 40px;
-    border-top-right-radius: 40px;
-    border-bottom-left-radius: 40px;
-    border-bottom-right-radius: 40px;
-    overflow: hidden;
+  width: 180px;
+  height: 50px;
+  background: rgba(0, 255, 10, 1);
+  opacity: 1;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  border-top-left-radius: 40px;
+  border-top-right-radius: 40px;
+  border-bottom-left-radius: 40px;
+  border-bottom-right-radius: 40px;
+  overflow: hidden;
 }
 .marker1_text {
-    width: 69px;
-    color: rgba(0,0,0,1);
-    position: absolute;
-    top: 8px;
-    left: 55px;
-    font-family: Montserrat;
-    font-weight: bold;
-    font-size: 20px;
-    opacity: 1;
-    text-align: center;
+  width: 69px;
+  color: rgba(0, 0, 0, 1);
+  position: absolute;
+  top: 8px;
+  left: 55px;
+  font-family: Montserrat;
+  font-weight: bold;
+  font-size: 20px;
+  opacity: 1;
+  text-align: center;
 }
 .marker2_bg1 {
-    width: 180px;
-    height: 80px;
-    background: transparent;
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: cover;
-    opacity: 1;
-    position: absolute;
-    top: 645px;
-    left: 1147px;
-    overflow: hidden;
+  width: 180px;
+  height: 80px;
+  background: transparent;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  opacity: 1;
+  position: absolute;
+  top: 645px;
+  left: 1147px;
+  overflow: hidden;
 }
 .marker2_bg2 {
-    width: 180px;
-    height: 50px;
-    background: transparent;
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: cover;
-    opacity: 1;
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    border-radius: 40px;
-    overflow: hidden;
+  width: 180px;
+  height: 50px;
+  background: transparent;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  opacity: 1;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 40px;
+  overflow: hidden;
 }
 .marker2_bg3 {
-    width: 180px;
-    height: 50px;
-    background: transparent;
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: cover;
-    opacity: 1;
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    overflow: hidden;
+  width: 180px;
+  height: 50px;
+  background: transparent;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  opacity: 1;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  overflow: hidden;
 }
 .marker2_text_bg {
-    width: 180px;
-    height: 50px;
-    background: rgba(249,255,0,1);
-    opacity: 1;
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    border-top-left-radius: 40px;
-    border-top-right-radius: 40px;
-    border-bottom-left-radius: 40px;
-    border-bottom-right-radius: 40px;
-    overflow: hidden;
+  width: 180px;
+  height: 50px;
+  background: rgba(249, 255, 0, 1);
+  opacity: 1;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  border-top-left-radius: 40px;
+  border-top-right-radius: 40px;
+  border-bottom-left-radius: 40px;
+  border-bottom-right-radius: 40px;
+  overflow: hidden;
 }
 .marker2_text {
-    width: 69px;
-    color: rgba(0,0,0,1);
-    position: absolute;
-    top: 8px;
-    left: 55px;
-    font-family: Montserrat;
-    font-weight: bold;
-    font-size: 20px;
-    opacity: 1;
-    text-align: center;
+  width: 69px;
+  color: rgba(0, 0, 0, 1);
+  position: absolute;
+  top: 8px;
+  left: 55px;
+  font-family: Montserrat;
+  font-weight: bold;
+  font-size: 20px;
+  opacity: 1;
+  text-align: center;
 }
 .marker3_bg1 {
-    width: 180px;
-    height: 80px;
-    background: transparent;
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: cover;
-    opacity: 1;
-    position: absolute;
-    top: 819px;
-    left: 239px;
-    overflow: hidden;
+  width: 180px;
+  height: 80px;
+  background: transparent;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  opacity: 1;
+  position: absolute;
+  top: 819px;
+  left: 239px;
+  overflow: hidden;
 }
 .marker3_bg2 {
-    width: 180px;
-    height: 50px;
-    background: transparent;
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: cover;
-    opacity: 1;
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    border-radius: 40px;
-    overflow: hidden;
+  width: 180px;
+  height: 50px;
+  background: transparent;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  opacity: 1;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 40px;
+  overflow: hidden;
 }
 .marker3_bg3 {
-    width: 180px;
-    height: 50px;
-    background: transparent;
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: cover;
-    opacity: 1;
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    overflow: hidden;
+  width: 180px;
+  height: 50px;
+  background: transparent;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  opacity: 1;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  overflow: hidden;
 }
 .marker3_text_bg {
-    width: 180px;
-    height: 50px;
-    background: rgba(255,0,0,1);
-    opacity: 1;
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    border-top-left-radius: 40px;
-    border-top-right-radius: 40px;
-    border-bottom-left-radius: 40px;
-    border-bottom-right-radius: 40px;
-    overflow: hidden;
+  width: 180px;
+  height: 50px;
+  background: rgba(255, 0, 0, 1);
+  opacity: 1;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  border-top-left-radius: 40px;
+  border-top-right-radius: 40px;
+  border-bottom-left-radius: 40px;
+  border-bottom-right-radius: 40px;
+  overflow: hidden;
 }
 .marker3_text {
-    width: 106px;
-    color: rgba(0,0,0,1);
-    position: absolute;
-    top: 9px;
-    left: 37px;
-    font-family: Montserrat;
-    font-weight: bold;
-    font-size: 20px;
-    opacity: 1;
-    text-align: center;
+  width: 106px;
+  color: rgba(0, 0, 0, 1);
+  position: absolute;
+  top: 9px;
+  left: 37px;
+  font-family: Montserrat;
+  font-weight: bold;
+  font-size: 20px;
+  opacity: 1;
+  text-align: center;
 }
 .path {
-    width: 242px;
-    height: 359px;
-    background: url("Images/path.png");
-    opacity: 1;
-    position: absolute;
-    top: 507px;
-    left: 724px;
+  width: 242px;
+  height: 359px;
+  background: url("Images/path.png");
+  opacity: 1;
+  position: absolute;
+  top: 507px;
+  left: 724px;
 }
 .spot_selection {
-    display: none;
-    width: 544px;
-    height: 895px;
-    background: rgba(255,255,255,1);
-    opacity: 1;
-    position: absolute;
-    top: -25px;
-    left: -70px;
-    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
-    overflow: hidden;
-    transform: scale(0.75);
+  display: none;
+  width: 544px;
+  height: 895px;
+  background: rgba(255, 255, 255, 1);
+  opacity: 1;
+  position: absolute;
+  top: -25px;
+  left: -70px;
+  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+  transform: scale(0.75);
 }
 .spot_selection_prompt {
-    width: 338px;
-    color: rgba(0,0,0,1);
-    position: absolute;
-    top: 30px;
-    left: 32px;
-    font-family: Montserrat;
-    font-weight: Bold;
-    font-size: 30px;
-    opacity: 1;
-    text-align: left;
+  width: 338px;
+  color: rgba(0, 0, 0, 1);
+  position: absolute;
+  top: 30px;
+  left: 32px;
+  font-family: Montserrat;
+  font-weight: Bold;
+  font-size: 30px;
+  opacity: 1;
+  text-align: left;
 }
 .spot_selection_stats {
-    width: 312px;
-    color: rgba(0,0,0,1);
-    position: absolute;
-    top: 84px;
-    left: 32px;
-    font-family: Montserrat;
-    font-weight: bold;
-    font-size: 20px;
-    opacity: 1;
-    text-align: left;
+  width: 312px;
+  color: rgba(0, 0, 0, 1);
+  position: absolute;
+  top: 84px;
+  left: 32px;
+  font-family: Montserrat;
+  font-weight: bold;
+  font-size: 20px;
+  opacity: 1;
+  text-align: left;
 }
 .parking_layout {
-    width: 434px;
-    height: 609px;
-    background: url("Images/parking_layout.png");
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: cover;
-    opacity: 1;
-    position: absolute;
-    top: 175px;
-    left: 45px;
-    overflow: hidden;
+  width: 434px;
+  height: 609px;
+  background: url("Images/parking_layout.png");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  opacity: 1;
+  position: absolute;
+  top: 175px;
+  left: 45px;
+  overflow: hidden;
 }
 .select_parking_bg1 {
-    width: 476px;
-    height: 60px;
-    background: transparent;
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: cover;
-    opacity: 1;
-    position: absolute;
-    top: 789px;
-    left: 32px;
-    overflow: hidden;
+  width: 476px;
+  height: 60px;
+  background: transparent;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  opacity: 1;
+  position: absolute;
+  top: 789px;
+  left: 32px;
+  overflow: hidden;
 }
 .select_parking_bg2 {
-    width: 476px;
-    height: 60px;
-    background: transparent;
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: cover;
-    opacity: 1;
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    overflow: hidden;
+  width: 476px;
+  height: 60px;
+  background: transparent;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  opacity: 1;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  overflow: hidden;
 }
 .select_parking_text_bg {
-    width: 476px;
-    height: 60px;
-    background: rgba(249,255,0,1);
-    opacity: 1;
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    border: 3px solid rgba(249,255,0,0.800000011920929);
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
-    overflow: hidden;
+  width: 476px;
+  height: 60px;
+  background: rgba(249, 255, 0, 1);
+  opacity: 1;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  border: 3px solid rgba(249, 255, 0, 0.800000011920929);
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  overflow: hidden;
 }
 .select_parking_text {
-    width: 330px;
-    color: rgba(31,31,31,1);
-    position: absolute;
-    top: 18px;
-    left: 72px;
-    font-family: Montserrat;
-    font-weight: bold;
-    font-size: 20px;
-    opacity: 1;
-    text-align: center;
+  width: 330px;
+  color: rgba(31, 31, 31, 1);
+  position: absolute;
+  top: 18px;
+  left: 72px;
+  font-family: Montserrat;
+  font-weight: bold;
+  font-size: 20px;
+  opacity: 1;
+  text-align: center;
 }
 .parking_cars {
-    width: 402px;
-    height: 600px;
-    /* background: url("Images/parking_cars.png"); */
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: cover;
-    opacity: 1;
-    position: absolute;
-    top: 175px;
-    left: 61px;
-    overflow: hidden;
+  width: 402px;
+  height: 600px;
+  /* background: url("Images/parking_cars.png"); */
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  opacity: 1;
+  position: absolute;
+  top: 175px;
+  left: 61px;
+  overflow: hidden;
 }
 .parked_car {
-    width: 125px;
-    height: 67px;
-    background: none;
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: cover;
-    opacity: 1;
-    position: absolute;
-    overflow: hidden;
+  width: 125px;
+  height: 67px;
+  background: none;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  opacity: 1;
+  position: absolute;
+  overflow: hidden;
 }
 .spot_availability_bg {
-    width: 80px;
-    height: 609px;
-    background: transparent;
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: cover;
-    opacity: 1;
-    position: absolute;
-    top: 169px;
-    left: 222px;
-    overflow: hidden;
+  width: 80px;
+  height: 609px;
+  background: transparent;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  opacity: 1;
+  position: absolute;
+  top: 169px;
+  left: 222px;
+  overflow: hidden;
 }
 .spot_availability_text_bg {
-    width: 80px;
-    height: 609px;
-    background: rgba(249,255,0,0.4000000059604645);
-    opacity: 1;
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
-    overflow: hidden;
+  width: 80px;
+  height: 609px;
+  background: rgba(249, 255, 0, 0.4000000059604645);
+  opacity: 1;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  overflow: hidden;
 }
 .spot_availability_text {
-    height: 454px;
-    color: rgba(0,0,0,1);
-    position: absolute;
-    top: 81px;
-    left: 25px;
-    font-family: Montserrat;
-    font-weight: bold;
-    font-size: 30px;
-    opacity: 1;
-    text-align: center;
-    writing-mode: vertical-lr;
+  height: 454px;
+  color: rgba(0, 0, 0, 1);
+  position: absolute;
+  top: 81px;
+  left: 25px;
+  font-family: Montserrat;
+  font-weight: bold;
+  font-size: 30px;
+  opacity: 1;
+  text-align: center;
+  writing-mode: vertical-lr;
 }
 .chevron_bg1 {
-    width: 45px;
-    height: 146px;
-    background: rgba(255,255,255,1);
-    opacity: 1;
-    position: absolute;
-    top: 215px;
-    left: 0px;
-    border-top-right-radius: 10px;
-    border-bottom-right-radius: 10px;
-    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
-    overflow: hidden;
+  width: 45px;
+  height: 146px;
+  background: rgba(255, 255, 255, 1);
+  opacity: 1;
+  position: absolute;
+  top: 215px;
+  left: 0px;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
 }
 .chevron_bg2 {
-    width: 20px;
-    height: 20px;
-    background: rgba(255,255,255,1);
-    opacity: 1;
-    position: absolute;
-    top: 63px;
-    left: 13px;
-    overflow: hidden;
+  width: 20px;
+  height: 20px;
+  background: rgba(255, 255, 255, 1);
+  opacity: 1;
+  position: absolute;
+  top: 63px;
+  left: 13px;
+  overflow: hidden;
 }
 .chevron {
-    width: 13px;
-    height: 17px;
-    background: url("Images/chevron.png");
-    opacity: 1;
-    position: absolute;
-    top: 1px;
-    left: 1px;
-    transform: scaleX(-1);
+  width: 13px;
+  height: 17px;
+  background: url("Images/chevron.png");
+  opacity: 1;
+  position: absolute;
+  top: 1px;
+  left: 1px;
+  transform: scaleX(-1);
 }
 .analytics_bg1 {
-    display: none;
-    width: 757px;
-    height: 895px;
-    background: rgba(255,255,255,1);
-    opacity: 1;
-    position: absolute;
-    top: -25px;
-    left: -95px;
-    overflow: hidden;
-    transform: scale(0.75);
-  }
-  .analytics_bg2 {
-    width: 694px;
-    height: 848px;
-    background: transparent;
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: cover;
-    opacity: 1;
-    position: absolute;
-    top: 24px;
-    left: 31px;
-    overflow: hidden;
-  }
-  .analytics_cards_bg {
-    width: 684px;
-    height: 239px;
-    background: transparent;
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: cover;
-    opacity: 1;
-    position: absolute;
-    top: 115px;
-    left: 5px;
-    overflow: hidden;
-  }
-  .analytics_card2_bg1 {
-    width: 198px;
-    height: 239px;
-    background: transparent;
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: cover;
-    opacity: 1;
-    position: absolute;
-    top: 0px;
-    left: 487px;
-    overflow: hidden;
-  }
-  .analytics_card2_bg {
-    width: 198px;
-    height: 239px;
-    background: rgba(255,164,0,1);
-    opacity: 1;
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
-    overflow: hidden;
-  }
-  .analytics_card2_total {
-    width: 106px;
-    color: rgba(255,255,255,1);
-    position: absolute;
-    top: 188px;
-    left: 46px;
-    font-family: Montserrat;
-    font-weight: Medium;
-    font-size: 27px;
-    opacity: 1;
-    text-align: center;
-  }
-  .analytics_card2_number {
-    width: 61px;
-    color: rgba(255,255,255,1);
-    position: absolute;
-    top: 66px;
-    left: 70px;
-    font-family: Montserrat;
-    font-weight: Medium;
-    font-size: 90px;
-    opacity: 1;
-    text-align: center;
-  }
-  .analytics_card2_name {
-    width: 152px;
-    color: rgba(255,255,255,1);
-    position: absolute;
-    top: 19px;
-    left: 23px;
-    font-family: Montserrat;
-    font-weight: Medium;
-    font-size: 27px;
-    opacity: 1;
-    text-align: center;
-  }
-  .analytics_card1_bg1 {
-    width: 198px;
-    height: 239px;
-    background: transparent;
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: cover;
-    opacity: 1;
-    position: absolute;
-    top: 0px;
-    left: 244px;
-    overflow: hidden;
-  }
-  .analytics_card1_bg {
-    width: 198px;
-    height: 239px;
-    background: rgba(0,86,150,1);
-    opacity: 1;
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
-    overflow: hidden;
-  }
-  .analytics_card1_total {
-    width: 105px;
-    color: rgba(255,255,255,1);
-    position: absolute;
-    top: 188px;
-    left: 48px;
-    font-family: Montserrat;
-    font-weight: Medium;
-    font-size: 27px;
-    opacity: 1;
-    text-align: center;
-  }
-  .analytics_card1_number {
-    width: 61px;
-    color: rgba(255,255,255,1);
-    position: absolute;
-    top: 66px;
-    left: 70px;
-    font-family: Montserrat;
-    font-weight: Medium;
-    font-size: 90px;
-    opacity: 1;
-    text-align: center;
-  }
-  .analytics_card1_name {
-    width: 173px;
-    color: rgba(255,255,255,1);
-    position: absolute;
-    top: 19px;
-    left: 13px;
-    font-family: Montserrat;
-    font-weight: Medium;
-    font-size: 27px;
-    opacity: 1;
-    text-align: left;
-  }
-  .analytics_card0_bg1 {
-    width: 198px;
-    height: 239px;
-    background: transparent;
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: cover;
-    opacity: 1;
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    overflow: hidden;
-  }
-  .analytics_card0_bg {
-    width: 198px;
-    height: 239px;
-    background: rgba(8,160,69,1);
-    opacity: 1;
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
-    overflow: hidden;
-  }
-  .analytics_card0_total {
-    width: 150px;
-    color: rgba(255,255,255,1);
-    position: absolute;
-    top: 188px;
-    left: 24px;
-    font-family: Montserrat;
-    font-weight: Medium;
-    font-size: 27px;
-    opacity: 1;
-    text-align: center;
-  }
-  .analytics_card0_number {
-    width: 61px;
-    color: rgba(255,255,255,1);
-    position: absolute;
-    top: 66px;
-    left: 70px;
-    font-family: Montserrat;
-    font-weight: Medium;
-    font-size: 90px;
-    opacity: 1;
-    text-align: center;
-  }
-  .analytics_card0_name {
-    width: 124px;
-    color: rgba(255,255,255,1);
-    position: absolute;
-    top: 19px;
-    left: 18px;
-    font-family: Montserrat;
-    font-weight: Medium;
-    font-size: 27px;
-    opacity: 1;
-    text-align: center;
-  }
-  .location_name {
-    width: 678px;
-    color: rgba(0,0,0,1);
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    font-family: Montserrat;
-    font-weight: Medium;
-    font-size: 40px;
-    opacity: 1;
-    text-align: left;
-  }
-  .location_address {
-    width: 600px;
-    color: rgba(0,0,0,1);
-    position: absolute;
-    top: 72px;
-    left: 0px;
-    font-family: Montserrat;
-    font-weight: Regular;
-    font-size: 20px;
-    opacity: 1;
-    text-align: left;
-  }
-  .timeline_text {
-    width: 519px;
-    color: rgba(0,0,0,1);
-    position: absolute;
-    top: 458px;
-    left: 4px;
-    font-family: Montserrat;
-    font-weight: Medium;
-    font-size: 30px;
-    opacity: 1;
-    text-align: left;
-  }
-  .total_bg1 {
-    width: 684px;
-    height: 65px;
-    background: transparent;
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: cover;
-    opacity: 1;
-    position: absolute;
-    top: 376px;
-    left: 5px;
-    overflow: hidden;
-  }
-  .total_bg2 {
-    width: 684px;
-    height: 65px;
-    background: rgba(235,242,250,1);
-    opacity: 1;
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
-    overflow: hidden;
-  }
-  .total_text {
-    width: 648px;
-    color: rgba(0,0,0,1);
-    position: absolute;
-    top: 11px;
-    left: 19px;
-    font-family: Montserrat;
-    font-weight: Medium;
-    font-size: 35px;
-    opacity: 1;
-    text-align: center;
-  }
-  .graph_axis {
-    width: 693px;
-    color: rgba(0,0,0,1);
-    position: absolute;
-    top: 801px;
-    left: 0px;
-    font-family: Cabin;
-    font-weight: Regular;
-    font-size: 13px;
-    opacity: 1;
-    text-align: left;
-  }
-  .graph_bars {
-    width: 679px;
-    height: 285px;
-    background: transparent;
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: cover;
-    opacity: 1;
-    position: absolute;
-    top: 506px;
-    left: 8px;
-    overflow: hidden;
-  }
-  .graph_bar {
-    height: 50px;
-    top: 230px;
-    width: 15px;
-    background: rgba(173,255,0,1);
-    opacity: 1;
-    position: absolute;
-    overflow: hidden;
-  }
-  .bar0 {
-    width: 14px;
-    height: 115px;
-    background: rgba(173,255,0,1);
-    opacity: 1;
-    position: absolute;
-    top: 170px;
-    left: 0px;
-    overflow: hidden;
-  }
-  .bar1 {
-    width: 14px;
-    height: 11px;
-    background: rgba(0,255,40,1);
-    opacity: 1;
-    position: absolute;
-    top: 274px;
-    left: 116px;
-    overflow: hidden;
-  }
-  .bar2 {
-    width: 15px;
-    height: 88px;
-    background: rgba(112,255,0,1);
-    opacity: 1;
-    position: absolute;
-    top: 197px;
-    left: 231px;
-    overflow: hidden;
-  }
-  .bar3 {
-    width: 14px;
-    height: 267px;
-    background: rgba(255,45,0,1);
-    opacity: 1;
-    position: absolute;
-    top: 18px;
-    left: 347px;
-    overflow: hidden;
-  }
-  .bar4 {
-    width: 14px;
-    height: 108px;
-    background: rgba(188,255,0,1);
-    opacity: 1;
-    position: absolute;
-    top: 177px;
-    left: 463px;
-    overflow: hidden;
-  }
-  .bar5 {
-    width: 14px;
-    height: 285px;
-    background: rgba(255,0,0,1);
-    opacity: 1;
-    position: absolute;
-    top: 0px;
-    left: 578px;
-    overflow: hidden;
-  }
-  .bar6 {
-    width: 14px;
-    height: 49px;
-    background: rgba(0,255,40,1);
-    opacity: 1;
-    position: absolute;
-    top: 236px;
-    left: 29px;
-    overflow: hidden;
-  }
-  .bar7 {
-    width: 14px;
-    height: 17px;
-    background: rgba(0,255,40,1);
-    opacity: 1;
-    position: absolute;
-    top: 268px;
-    left: 145px;
-    overflow: hidden;
-  }
-  .bar8 {
-    width: 14px;
-    height: 95px;
-    background: rgba(142,255,0,1);
-    opacity: 1;
-    position: absolute;
-    top: 190px;
-    left: 261px;
-    overflow: hidden;
-  }
-  .bar9 {
-    width: 14px;
-    height: 257px;
-    background: rgba(255,76,0,1);
-    opacity: 1;
-    position: absolute;
-    top: 28px;
-    left: 376px;
-    overflow: hidden;
-  }
-  .bar10 {
-    width: 14px;
-    height: 135px;
-    background: rgba(219,255,0,1);
-    opacity: 1;
-    position: absolute;
-    top: 150px;
-    left: 491px;
-    overflow: hidden;
-  }
-  .bar11 {
-    width: 15px;
-    height: 275px;
-    background: rgba(255,61,0,1);
-    opacity: 1;
-    position: absolute;
-    top: 9px;
-    left: 607px;
-    overflow: hidden;
-  }
-  .bar12 {
-    width: 15px;
-    height: 11px;
-    background: rgba(0,255,40,1);
-    opacity: 1;
-    position: absolute;
-    top: 274px;
-    left: 58px;
-    overflow: hidden;
-  }
-  .bar13 {
-    width: 14px;
-    height: 24px;
-    background: rgba(0,255,40,1);
-    opacity: 1;
-    position: absolute;
-    top: 261px;
-    left: 174px;
-    overflow: hidden;
-  }
-  .bar14 {
-    width: 14px;
-    height: 147px;
-    background: rgba(255,229,0,1);
-    opacity: 1;
-    position: absolute;
-    top: 137px;
-    left: 289px;
-    overflow: hidden;
-  }
-  .bar15 {
-    width: 15px;
-    height: 231px;
-    background: rgba(255,91,0,1);
-    opacity: 1;
-    position: absolute;
-    top: 54px;
-    left: 405px;
-    overflow: hidden;
-  }
-  .bar16 {
-    width: 14px;
-    height: 129px;
-    background: rgba(203,255,0,1);
-    opacity: 1;
-    position: absolute;
-    top: 156px;
-    left: 520px;
-    overflow: hidden;
-  }
-  .bar17 {
-    width: 14px;
-    height: 135px;
-    background: rgba(203,255,0,1);
-    opacity: 1;
-    position: absolute;
-    top: 150px;
-    left: 636px;
-    overflow: hidden;
-  }
-  .bar18 {
-    width: 14px;
-    height: 11px;
-    background: rgba(0,255,40,1);
-    opacity: 1;
-    position: absolute;
-    top: 274px;
-    left: 87px;
-    overflow: hidden;
-  }
-  .bar19 {
-    width: 14px;
-    height: 36px;
-    background: rgba(0,255,40,1);
-    opacity: 1;
-    position: absolute;
-    top: 248px;
-    left: 203px;
-    overflow: hidden;
-  }
-  .bar20 {
-    width: 14px;
-    height: 209px;
-    background: rgba(255,137,0,1);
-    opacity: 1;
-    position: absolute;
-    top: 76px;
-    left: 318px;
-    overflow: hidden;
-  }
-  .bar21 {
-    width: 14px;
-    height: 122px;
-    background: rgba(219,255,0,1);
-    opacity: 1;
-    position: absolute;
-    top: 163px;
-    left: 434px;
-    overflow: hidden;
-  }
-  .bar22 {
-    width: 14px;
-    height: 248px;
-    background: rgba(255,91,0,1);
-    opacity: 1;
-    position: absolute;
-    top: 36px;
-    left: 549px;
-    overflow: hidden;
-  }
-  .bar23 {
-    width: 14px;
-    height: 88px;
-    background: rgba(96,255,0,1);
-    opacity: 1;
-    position: absolute;
-    top: 197px;
-    left: 665px;
-    overflow: hidden;
-  }
-  .last_updated_text {
-    width: 227px;
-    color: rgba(80,80,80,1);
-    position: absolute;
-    top: 824px;
-    left: 467px;
-    font-family: Montserrat;
-    font-weight: Medium;
-    font-size: 12px;
-    opacity: 1;
-    text-align: right;
-  }
+  display: none;
+  width: 757px;
+  height: 895px;
+  background: rgba(255, 255, 255, 1);
+  opacity: 1;
+  position: absolute;
+  top: -25px;
+  left: -95px;
+  overflow: hidden;
+  transform: scale(0.75);
+}
+.analytics_bg2 {
+  width: 694px;
+  height: 848px;
+  background: transparent;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  opacity: 1;
+  position: absolute;
+  top: 24px;
+  left: 31px;
+  overflow: hidden;
+}
+.analytics_cards_bg {
+  width: 684px;
+  height: 239px;
+  background: transparent;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  opacity: 1;
+  position: absolute;
+  top: 115px;
+  left: 5px;
+  overflow: hidden;
+}
+.analytics_card2_bg1 {
+  width: 198px;
+  height: 239px;
+  background: transparent;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  opacity: 1;
+  position: absolute;
+  top: 0px;
+  left: 487px;
+  overflow: hidden;
+}
+.analytics_card2_bg {
+  width: 198px;
+  height: 239px;
+  background: rgba(255, 164, 0, 1);
+  opacity: 1;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  overflow: hidden;
+}
+.analytics_card2_total {
+  width: 106px;
+  color: rgba(255, 255, 255, 1);
+  position: absolute;
+  top: 188px;
+  left: 46px;
+  font-family: Montserrat;
+  font-weight: Medium;
+  font-size: 27px;
+  opacity: 1;
+  text-align: center;
+}
+.analytics_card2_number {
+  width: 61px;
+  color: rgba(255, 255, 255, 1);
+  position: absolute;
+  top: 66px;
+  left: 70px;
+  font-family: Montserrat;
+  font-weight: Medium;
+  font-size: 90px;
+  opacity: 1;
+  text-align: center;
+}
+.analytics_card2_name {
+  width: 152px;
+  color: rgba(255, 255, 255, 1);
+  position: absolute;
+  top: 19px;
+  left: 23px;
+  font-family: Montserrat;
+  font-weight: Medium;
+  font-size: 27px;
+  opacity: 1;
+  text-align: center;
+}
+.analytics_card1_bg1 {
+  width: 198px;
+  height: 239px;
+  background: transparent;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  opacity: 1;
+  position: absolute;
+  top: 0px;
+  left: 244px;
+  overflow: hidden;
+}
+.analytics_card1_bg {
+  width: 198px;
+  height: 239px;
+  background: rgba(0, 86, 150, 1);
+  opacity: 1;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  overflow: hidden;
+}
+.analytics_card1_total {
+  width: 105px;
+  color: rgba(255, 255, 255, 1);
+  position: absolute;
+  top: 188px;
+  left: 48px;
+  font-family: Montserrat;
+  font-weight: Medium;
+  font-size: 27px;
+  opacity: 1;
+  text-align: center;
+}
+.analytics_card1_number {
+  width: 61px;
+  color: rgba(255, 255, 255, 1);
+  position: absolute;
+  top: 66px;
+  left: 70px;
+  font-family: Montserrat;
+  font-weight: Medium;
+  font-size: 90px;
+  opacity: 1;
+  text-align: center;
+}
+.analytics_card1_name {
+  width: 173px;
+  color: rgba(255, 255, 255, 1);
+  position: absolute;
+  top: 19px;
+  left: 13px;
+  font-family: Montserrat;
+  font-weight: Medium;
+  font-size: 27px;
+  opacity: 1;
+  text-align: left;
+}
+.analytics_card0_bg1 {
+  width: 198px;
+  height: 239px;
+  background: transparent;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  opacity: 1;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  overflow: hidden;
+}
+.analytics_card0_bg {
+  width: 198px;
+  height: 239px;
+  background: rgba(8, 160, 69, 1);
+  opacity: 1;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  overflow: hidden;
+}
+.analytics_card0_total {
+  width: 150px;
+  color: rgba(255, 255, 255, 1);
+  position: absolute;
+  top: 188px;
+  left: 24px;
+  font-family: Montserrat;
+  font-weight: Medium;
+  font-size: 27px;
+  opacity: 1;
+  text-align: center;
+}
+.analytics_card0_number {
+  width: 61px;
+  color: rgba(255, 255, 255, 1);
+  position: absolute;
+  top: 66px;
+  left: 70px;
+  font-family: Montserrat;
+  font-weight: Medium;
+  font-size: 90px;
+  opacity: 1;
+  text-align: center;
+}
+.analytics_card0_name {
+  width: 124px;
+  color: rgba(255, 255, 255, 1);
+  position: absolute;
+  top: 19px;
+  left: 18px;
+  font-family: Montserrat;
+  font-weight: Medium;
+  font-size: 27px;
+  opacity: 1;
+  text-align: center;
+}
+.location_name {
+  width: 678px;
+  color: rgba(0, 0, 0, 1);
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  font-family: Montserrat;
+  font-weight: Medium;
+  font-size: 40px;
+  opacity: 1;
+  text-align: left;
+}
+.location_address {
+  width: 600px;
+  color: rgba(0, 0, 0, 1);
+  position: absolute;
+  top: 72px;
+  left: 0px;
+  font-family: Montserrat;
+  font-weight: Regular;
+  font-size: 20px;
+  opacity: 1;
+  text-align: left;
+}
+.timeline_text {
+  width: 519px;
+  color: rgba(0, 0, 0, 1);
+  position: absolute;
+  top: 458px;
+  left: 4px;
+  font-family: Montserrat;
+  font-weight: Medium;
+  font-size: 30px;
+  opacity: 1;
+  text-align: left;
+}
+.total_bg1 {
+  width: 684px;
+  height: 65px;
+  background: transparent;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  opacity: 1;
+  position: absolute;
+  top: 376px;
+  left: 5px;
+  overflow: hidden;
+}
+.total_bg2 {
+  width: 684px;
+  height: 65px;
+  background: rgba(235, 242, 250, 1);
+  opacity: 1;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  overflow: hidden;
+}
+.total_text {
+  width: 648px;
+  color: rgba(0, 0, 0, 1);
+  position: absolute;
+  top: 11px;
+  left: 19px;
+  font-family: Montserrat;
+  font-weight: Medium;
+  font-size: 35px;
+  opacity: 1;
+  text-align: center;
+}
+.graph_axis {
+  width: 693px;
+  color: rgba(0, 0, 0, 1);
+  position: absolute;
+  top: 801px;
+  left: 0px;
+  font-family: Cabin;
+  font-weight: Regular;
+  font-size: 13px;
+  opacity: 1;
+  text-align: left;
+}
+.graph_bars {
+  width: 679px;
+  height: 285px;
+  background: transparent;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  opacity: 1;
+  position: absolute;
+  top: 506px;
+  left: 8px;
+  overflow: hidden;
+}
+.graph_bar {
+  height: 50px;
+  top: 230px;
+  width: 15px;
+  background: rgba(173, 255, 0, 1);
+  opacity: 1;
+  position: absolute;
+  overflow: hidden;
+}
+.bar0 {
+  width: 14px;
+  height: 115px;
+  background: rgba(173, 255, 0, 1);
+  opacity: 1;
+  position: absolute;
+  top: 170px;
+  left: 0px;
+  overflow: hidden;
+}
+.bar1 {
+  width: 14px;
+  height: 11px;
+  background: rgba(0, 255, 40, 1);
+  opacity: 1;
+  position: absolute;
+  top: 274px;
+  left: 116px;
+  overflow: hidden;
+}
+.bar2 {
+  width: 15px;
+  height: 88px;
+  background: rgba(112, 255, 0, 1);
+  opacity: 1;
+  position: absolute;
+  top: 197px;
+  left: 231px;
+  overflow: hidden;
+}
+.bar3 {
+  width: 14px;
+  height: 267px;
+  background: rgba(255, 45, 0, 1);
+  opacity: 1;
+  position: absolute;
+  top: 18px;
+  left: 347px;
+  overflow: hidden;
+}
+.bar4 {
+  width: 14px;
+  height: 108px;
+  background: rgba(188, 255, 0, 1);
+  opacity: 1;
+  position: absolute;
+  top: 177px;
+  left: 463px;
+  overflow: hidden;
+}
+.bar5 {
+  width: 14px;
+  height: 285px;
+  background: rgba(255, 0, 0, 1);
+  opacity: 1;
+  position: absolute;
+  top: 0px;
+  left: 578px;
+  overflow: hidden;
+}
+.bar6 {
+  width: 14px;
+  height: 49px;
+  background: rgba(0, 255, 40, 1);
+  opacity: 1;
+  position: absolute;
+  top: 236px;
+  left: 29px;
+  overflow: hidden;
+}
+.bar7 {
+  width: 14px;
+  height: 17px;
+  background: rgba(0, 255, 40, 1);
+  opacity: 1;
+  position: absolute;
+  top: 268px;
+  left: 145px;
+  overflow: hidden;
+}
+.bar8 {
+  width: 14px;
+  height: 95px;
+  background: rgba(142, 255, 0, 1);
+  opacity: 1;
+  position: absolute;
+  top: 190px;
+  left: 261px;
+  overflow: hidden;
+}
+.bar9 {
+  width: 14px;
+  height: 257px;
+  background: rgba(255, 76, 0, 1);
+  opacity: 1;
+  position: absolute;
+  top: 28px;
+  left: 376px;
+  overflow: hidden;
+}
+.bar10 {
+  width: 14px;
+  height: 135px;
+  background: rgba(219, 255, 0, 1);
+  opacity: 1;
+  position: absolute;
+  top: 150px;
+  left: 491px;
+  overflow: hidden;
+}
+.bar11 {
+  width: 15px;
+  height: 275px;
+  background: rgba(255, 61, 0, 1);
+  opacity: 1;
+  position: absolute;
+  top: 9px;
+  left: 607px;
+  overflow: hidden;
+}
+.bar12 {
+  width: 15px;
+  height: 11px;
+  background: rgba(0, 255, 40, 1);
+  opacity: 1;
+  position: absolute;
+  top: 274px;
+  left: 58px;
+  overflow: hidden;
+}
+.bar13 {
+  width: 14px;
+  height: 24px;
+  background: rgba(0, 255, 40, 1);
+  opacity: 1;
+  position: absolute;
+  top: 261px;
+  left: 174px;
+  overflow: hidden;
+}
+.bar14 {
+  width: 14px;
+  height: 147px;
+  background: rgba(255, 229, 0, 1);
+  opacity: 1;
+  position: absolute;
+  top: 137px;
+  left: 289px;
+  overflow: hidden;
+}
+.bar15 {
+  width: 15px;
+  height: 231px;
+  background: rgba(255, 91, 0, 1);
+  opacity: 1;
+  position: absolute;
+  top: 54px;
+  left: 405px;
+  overflow: hidden;
+}
+.bar16 {
+  width: 14px;
+  height: 129px;
+  background: rgba(203, 255, 0, 1);
+  opacity: 1;
+  position: absolute;
+  top: 156px;
+  left: 520px;
+  overflow: hidden;
+}
+.bar17 {
+  width: 14px;
+  height: 135px;
+  background: rgba(203, 255, 0, 1);
+  opacity: 1;
+  position: absolute;
+  top: 150px;
+  left: 636px;
+  overflow: hidden;
+}
+.bar18 {
+  width: 14px;
+  height: 11px;
+  background: rgba(0, 255, 40, 1);
+  opacity: 1;
+  position: absolute;
+  top: 274px;
+  left: 87px;
+  overflow: hidden;
+}
+.bar19 {
+  width: 14px;
+  height: 36px;
+  background: rgba(0, 255, 40, 1);
+  opacity: 1;
+  position: absolute;
+  top: 248px;
+  left: 203px;
+  overflow: hidden;
+}
+.bar20 {
+  width: 14px;
+  height: 209px;
+  background: rgba(255, 137, 0, 1);
+  opacity: 1;
+  position: absolute;
+  top: 76px;
+  left: 318px;
+  overflow: hidden;
+}
+.bar21 {
+  width: 14px;
+  height: 122px;
+  background: rgba(219, 255, 0, 1);
+  opacity: 1;
+  position: absolute;
+  top: 163px;
+  left: 434px;
+  overflow: hidden;
+}
+.bar22 {
+  width: 14px;
+  height: 248px;
+  background: rgba(255, 91, 0, 1);
+  opacity: 1;
+  position: absolute;
+  top: 36px;
+  left: 549px;
+  overflow: hidden;
+}
+.bar23 {
+  width: 14px;
+  height: 88px;
+  background: rgba(96, 255, 0, 1);
+  opacity: 1;
+  position: absolute;
+  top: 197px;
+  left: 665px;
+  overflow: hidden;
+}
+.last_updated_text {
+  width: 227px;
+  color: rgba(80, 80, 80, 1);
+  position: absolute;
+  top: 824px;
+  left: 467px;
+  font-family: Montserrat;
+  font-weight: Medium;
+  font-size: 12px;
+  opacity: 1;
+  text-align: right;
+}
