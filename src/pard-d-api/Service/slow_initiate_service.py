@@ -10,5 +10,3 @@ def start(model):
     val = client_socket.send(b"incoming request")
     client_socket.close()
     return val != -1
-
-

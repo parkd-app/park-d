@@ -21,7 +21,6 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 @app.before_first_request
 def setup_logging():
     if not app.debug:
-        # In production mode, add log handler to sys.stdout.
         app.logger.handlers.pop()
         if not app.logger.hasHandlers():
             handler = logging.StreamHandler(sys.stdout)
@@ -69,7 +68,7 @@ def get_snapshot():
     success, image = vidcap.read()
     count = 0
     full_path = constants.image_path + "frame_bird.jpg"
-    if(not os.path.exists(constants.image_path)):
+    if (not os.path.exists(constants.image_path)):
         assert Exception
     if not cv2.imwrite(full_path, image):
         cv2.imwrite(".\\static_resources\\frame.png", image)
