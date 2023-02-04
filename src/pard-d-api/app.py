@@ -26,13 +26,16 @@ def setup_logging():
         if not app.logger.hasHandlers():
             handler = logging.StreamHandler(sys.stdout)
             handler.setFormatter(logging.Formatter(
-                '%(asctime)s - [%(levelname)s] - [%(thread)d] - [%(threadName)s] - %(name)s  - %(message)s'))
+                '%(asctime)s - [%(levelname)s] - [%(thread)d]'
+                ' - [%(threadName)s] - %(name)s  - %(message)s'))
             app.logger.addHandler(handler)
             app.logger.setLevel(logging.DEBUG)
             app.logger.propagate = False
             app.logger.propagate = False
             app.logger.handler_set = True
         return app.logger
+
+
 @app.route('/rt_parking_info', methods=['GET'])
 @cross_origin()
 def requires_parking_spot():  # put application's code here
@@ -53,19 +56,15 @@ def slow_initiate():
     ret = slow_initiate_service.start('side')
     return {'result': ret}
 
+
 @app.route('/close_model', methods=['POST'])
 def close_model():
     ret = slow_initiate_service.closemodel('side')
     return {'result': ret}
 
 
-
-
 @app.route('/get_parking_snapshot', methods=['GET'])
 def get_snapshot():
-    # return {
-    #     'result': snap_shot_service.save_frame_sec(Constants.video_path_bird, 0, Constants.image_path)
-    # }
     vidcap = cv2.VideoCapture(constants.video_path_bird)
     success, image = vidcap.read()
     count = 0

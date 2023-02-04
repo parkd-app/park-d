@@ -14,7 +14,7 @@ def parsing(path):
     for i, ele in enumerate(val):
         ret.append({
             'id': i + 1,
-            'status' : ele
+            'status': ele
         })
 
     return ret
