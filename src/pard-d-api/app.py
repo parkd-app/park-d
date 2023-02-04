@@ -6,6 +6,7 @@ from Service import parsing_service, slow_initiate_service
 from Constants import constants
 from flask_cors import CORS, cross_origin
 import cv2
+from flask import request
 
 app = Flask(__name__)
 CORS(app)
@@ -38,7 +39,7 @@ def setup_logging():
 @app.route('/rt_parking_info', methods=['GET'])
 @cross_origin()
 def requires_parking_spot():  # put application's code here
-    ret = parsing_service.parsing((constants.parking_info_path))
+    ret = parsing_service.parsing((constants.PARKING_INFO_PATH))
     app.logger.info("ret: %s", ret)
     # response = Flask.jsonify({'parking_spaces': ret})
     # response.headers.add('Access-Control-Allow-Origin', '*')
@@ -52,13 +53,15 @@ def requires_coordinate():
 
 @app.route('/set_up', methods=['POST'])
 def slow_initiate():
-    ret = slow_initiate_service.start('side')
+    model = request.args.get('angle')
+    app.logger.info("model", model)
+    ret = slow_initiate_service.start(model)
     return {'result': ret}
 
 
 @app.route('/close_model', methods=['POST'])
 def close_model():
-    ret = slow_initiate_service.closemodel('side')
+    ret = slow_initiate_service.closemodel('bird')
     return {'result': ret}
 
 

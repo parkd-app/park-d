@@ -3,6 +3,11 @@ PARKING_INFO_PATH = 'C:\\Users\\g7543\\OneDrive\\桌面\\' \
        'src\\park_d_model_service\\gaussian_model\\' \
                     'parking_lot_model_v1\\parking_info.txt'
 
+PARKING_INFO_PATH_BIRD = 'C:\\Users\\g7543\\OneDrive\\桌面\\' \
+                    'Capstone_project\\park-d\\' \
+       'src\\park_d_model_service\\Bird_view_model\\' \
+                    'parking_info.txt'
+
 VIDEO_PATH_BIRD = 'C:\\Users\\g7543\\OneDrive\\桌面\\' \
                   'new training footage\\train2_bird.mp4'
 
