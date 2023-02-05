@@ -39,7 +39,9 @@ var adding = false;
 var pointsClicked = 0;
 var corners = [];
 
+var spotData;
 var numSpots = 0;
+var initialSpots = 0;
 
 function initMap(){
     directionsRenderer = new google.maps.DirectionsRenderer({suppressMarkers: true});
@@ -175,28 +177,28 @@ function addingSpot()
 // admin placing spot
 function putSpot(corners)
 {
-    // add POST to json later
-
-    window['spot'+(numSpots + 1)] = new google.maps.Polygon({
+    window['spot'+numSpots] = new google.maps.Polygon({
         paths: corners,
-        strokeColor: "#00FF00",
+        strokeColor: "#FF0000",
         strokeOpacity: 0.8,
         strokeWeight: 2,
-        fillColor: "#00FF00",
+        fillColor: "#FF0000",
         fillOpacity: 0.35,
         editable: true,
         draggable: true,
         geodesic: true
     });
-    window['spot'+(numSpots + 1)].setMap(map);
+    window['spot'+numSpots].setMap(map);
+    console.log(window['spot'+numSpots].getPath().getAt(0).lat());
     numSpots++;
 }
 
 // loading all spots from remote
 function loadAllSpots()
 {
-    let spotData = JSON.parse(Get(jsonURL));
+    spotData = JSON.parse(Get(jsonURL));
     numSpots = spotData.length;
+    initialSpots = numSpots;
 
     for (let i = 0; i < numSpots; i++) {
         let coords = spotData[i].corners;
@@ -223,7 +225,35 @@ function loadAllSpots()
     }
 }
 
-// check json for updates and apply them
+function uploadSpots()
+{
+    for (let i = 0; i < initialSpots; i++) {
+        let coords = [];
+        let path = window['spot'+spotData[i].id].getPath();
+        for (let j = 0; j < 4; j++) {
+            let coord = path.getAt(j);
+            coords.push([coord.lat().toFixed(6), coord.lng().toFixed(6)]);
+        }
+        spotData[i].corners = coords;
+    }
+    for (let i = initialSpots; i < numSpots; i++) {
+        let coords = [];
+        let path = window['spot'+i].getPath();
+        for (let j = 0; j < 4; j++) {
+            let coord = path.getAt(j);
+            coords.push([coord.lat().toFixed(6), coord.lng().toFixed(6)]);
+        }
+        spotData[i] = {};
+        spotData[i].id = i;
+        spotData[i].coordinates = [];
+        spotData[i].corners = coords;
+        spotData[i].open = false;
+    }
+    console.log(spotData);
+}
+
+// check json for changes in occupancy
+// a refresh is needed for new spots or changed coordinates
 function updateSpots()
 {
     let json_obj = JSON.parse(Get(jsonURL));
