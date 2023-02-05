@@ -156,4 +156,8 @@ span a:hover {
   .logo-slogan img {
     width: 50vw;
   }
+
+  .landscape img {
+	opacity: 0;
+  }
 }
