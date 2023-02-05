@@ -274,6 +274,10 @@ function uploadSpots()
         spotData[i].open = false;
         Post(jsonURL, spotData[i])
     }
+    document.getElementById("SaveButton").textContent = "Save Successful";
+    setTimeout(() => {
+        document.getElementById("SaveButton").textContent = "Save Changes";
+      }, 1000)
 }
 
 // check json for changes in occupancy
