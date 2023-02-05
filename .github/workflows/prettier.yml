@@ -1,12 +1,12 @@
-name: CI
+name: Prettier Check
 
 on:
   push:
     paths:
-      - src/park-d-front-end
+      - "src/park-d-front-end/**"
   pull_request:
     paths:
-      - src/park-d-front-end
+      - src/park-d-front-end/**
 
 jobs:
   prettier-linting:
