@@ -12,7 +12,8 @@ import Analytics from "./Analytics";
 import Map from "./Map";
 
 function App() {
-  const [hidden, setHidden] = useState(true);
+  const [hidden, setHidden] = useState(true)
+  const [aHidden, setAHidden] = useState(true)
 
   return (
     <div className="App">
@@ -54,13 +55,20 @@ function App() {
         <div className="Labelling">
           <Labelling />
         </div>
-      </div>
-      <div className="Analytics">
-        <Analytics />
-      </div>
-      <div className="ParkingLotDropdown">
-        <ParkingLotDropdown />
-      </div>
+    </div>
+
+    {aHidden ? 
+    <>
+      <button onClick={() => setAHidden(false)} className='analyticsBtn'>Show Analytics</button>
+    </>
+    :  
+    <>
+      <button onClick={() => setAHidden(true)} className='analyticsBtn'>Hide Analytics</button> 
+      <div className='Analytics'><Analytics/></div>
+    </>
+    }
+    
+    <div className='ParkingLotDropdown'><ParkingLotDropdown/></div>
     </div>
   );
 }
