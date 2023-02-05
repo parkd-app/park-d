@@ -28,8 +28,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "style:all": "npm run style:prettier",
-    "style:prettier": "prettier --check **/*.{js,jsx,ts,tsx}",
-    "make-pretty": "prettier --write **/*.{js,jsx,ts,tsx}"
+    "style:prettier": "prettier --check **/*.{js,jsx,ts,tsx,html,css}",
+    "make-pretty": "prettier --write **/*.{js,jsx,ts,tsx,html,css}"
   },
   "eslintConfig": {
     "extends": [
