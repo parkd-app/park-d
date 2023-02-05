@@ -1,11 +1,33 @@
 // json parsing
 const jsonURL = 'http://localhost:8000/parking_spaces'
 
-function Get(jsonURL){
+function Get(URL){
     var Httpreq = new XMLHttpRequest(); // a new request
-    Httpreq.open("GET",jsonURL,false);
+    Httpreq.open("GET",URL,false);
     Httpreq.send(null);
     return Httpreq.responseText;          
+}
+
+function Put(URL, content){
+    fetch(URL, {
+    method: "PUT",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(content),
+  })
+}
+
+function Post(URL, content){
+    fetch(URL, {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(content),
+  })
 }
 
 // update status every 2 seconds
@@ -23,6 +45,8 @@ var noPoi = [
 var defaultOptions = {
     zoom:19,
     center:{lat:43.8899806,lng:-79.3120005},
+    mapTypeId: 'satellite',
+    tilt:0,
     styles: noPoi
   }
 var mapBounds;
@@ -189,7 +213,6 @@ function putSpot(corners)
         geodesic: true
     });
     window['spot'+numSpots].setMap(map);
-    console.log(window['spot'+numSpots].getPath().getAt(0).lat());
     numSpots++;
 }
 
@@ -232,24 +255,25 @@ function uploadSpots()
         let path = window['spot'+spotData[i].id].getPath();
         for (let j = 0; j < 4; j++) {
             let coord = path.getAt(j);
-            coords.push([coord.lat().toFixed(6), coord.lng().toFixed(6)]);
+            coords.push([coord.lat(), coord.lng()]);
         }
         spotData[i].corners = coords;
+        Put(jsonURL + '/' + i, spotData[i])
     }
     for (let i = initialSpots; i < numSpots; i++) {
         let coords = [];
         let path = window['spot'+i].getPath();
         for (let j = 0; j < 4; j++) {
             let coord = path.getAt(j);
-            coords.push([coord.lat().toFixed(6), coord.lng().toFixed(6)]);
+            coords.push([coord.lat(), coord.lng()]);
         }
         spotData[i] = {};
         spotData[i].id = i;
         spotData[i].coordinates = [];
         spotData[i].corners = coords;
         spotData[i].open = false;
+        Post(jsonURL, spotData[i])
     }
-    console.log(spotData);
 }
 
 // check json for changes in occupancy
