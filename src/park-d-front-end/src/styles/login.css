@@ -18,7 +18,7 @@
 }
 
 .row {
-  width: 900vw;
+  width: 100vw;
   height: 100vh;
   background: #fff;
 }
@@ -59,6 +59,7 @@
   left: 0%;
   width: 50vw;
 }
+
 .text {
   position: relative;
   text-align: center;
@@ -158,6 +159,10 @@ span a:hover {
   }
 
   .landscape img {
-	opacity: 0;
+    opacity: 0;
+  }
+
+  .input-box {
+    position: inherit;
   }
 }
