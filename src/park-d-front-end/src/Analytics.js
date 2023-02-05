@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import './Analytics.css';
-import CustomBar from './components/CustomBar';
-import AnalyticsCard from './AnalyticsCard';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import React, { useState, useEffect } from "react";
+import "./Analytics.css";
+import CustomBar from "./components/CustomBar";
+import AnalyticsCard from "./AnalyticsCard";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 import { BarChart, Bar, XAxis, Tooltip, CartesianGrid } from "recharts";
 
@@ -54,12 +54,12 @@ function Analytics() {
 
   let total = 10;
 
-    let locationName = "Pierre Elliott Trudeau High School";
-    let locationAddress = "90 Bur Oak Ave, Markham, ON L6C 2E6";
+  let locationName = "Pierre Elliott Trudeau High School";
+  let locationAddress = "90 Bur Oak Ave, Markham, ON L6C 2E6";
 
-    // The following code will be used to retrieve live occupancy data
-    //spotNum[0] = # of available spots, spotNum[1] = # of occupied spots
-    const [spotNum, setSpotNum] = useState([0,0]);
+  // The following code will be used to retrieve live occupancy data
+  //spotNum[0] = # of available spots, spotNum[1] = # of occupied spots
+  const [spotNum, setSpotNum] = useState([0, 0]);
 
   // periodically check parking data
   useEffect(() => {
@@ -91,37 +91,68 @@ function Analytics() {
                 graphs. To circumvent this issue, I have written a CustomBar component.
             */}
 
-            <h5 style={{ textAlign: "center" }}>{locationName}</h5>
-            <p style={{ textAlign: "center", color: "gray" }}>{locationAddress}</p>
+      <h5 style={{ textAlign: "center" }}>{locationName}</h5>
+      <p style={{ textAlign: "center", color: "gray" }}>{locationAddress}</p>
 
-            <div className="analyticsCards">
-                <AnalyticsCard total={total} available={spotNum[0]} parkingType='STANDARD' colour="success"/>
-                <AnalyticsCard total={total} available={spotNum[0]} parkingType='ACCESSIBLE' colour="primary"/>
-                <AnalyticsCard total={total} available={spotNum[0]} parkingType='RESERVED' colour="warning"/>
-            </div>
+      <div className="analyticsCards">
+        <AnalyticsCard
+          total={total}
+          available={spotNum[0]}
+          parkingType="STANDARD"
+          colour="success"
+        />
+        <AnalyticsCard
+          total={total}
+          available={spotNum[0]}
+          parkingType="ACCESSIBLE"
+          colour="primary"
+        />
+        <AnalyticsCard
+          total={total}
+          available={spotNum[0]}
+          parkingType="RESERVED"
+          colour="warning"
+        />
+      </div>
 
-            <div>
-                <BarChart width={575} height={300} data={data} barSize={10} margin={{ left: 0 }}>
-                    <XAxis dataKey="name" scale="point" padding={{ left: 10, right: 10 }} interval={0}tick={{fontSize: 8}}/>
-                    <Tooltip />
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <Bar shape={(data) => CustomBar({...data, total, colours})} dataKey="occupancy" total={total} />
-                </BarChart>
-                <p style={{ textAlign: "right", color: "gray" }}>
-                    Last Updated - {formattedDate} @ {formattedTimeString}
-                </p>
-            </div>
+      <div>
+        <BarChart
+          width={575}
+          height={300}
+          data={data}
+          barSize={10}
+          margin={{ left: 0 }}
+        >
+          <XAxis
+            dataKey="name"
+            scale="point"
+            padding={{ left: 10, right: 10 }}
+            interval={0}
+            tick={{ fontSize: 8 }}
+          />
+          <Tooltip />
+          <CartesianGrid strokeDasharray="3 3" />
+          <Bar
+            shape={(data) => CustomBar({ ...data, total, colours })}
+            dataKey="occupancy"
+            total={total}
+          />
+        </BarChart>
+        <p style={{ textAlign: "right", color: "gray" }}>
+          Last Updated - {formattedDate} @ {formattedTimeString}
+        </p>
+      </div>
 
-            <div className="liveData">
-                <div style={{ textAlign: "center" }}>
-                    {"Spot Available Now: " + spotNum[0]}
-                </div>
-                <div style={{ textAlign: "center" }}>
-                    {"Spot Occupied Now: " + spotNum[1]}
-                </div>
-            </div>
+      <div className="liveData">
+        <div style={{ textAlign: "center" }}>
+          {"Spot Available Now: " + spotNum[0]}
         </div>
-    );
+        <div style={{ textAlign: "center" }}>
+          {"Spot Occupied Now: " + spotNum[1]}
+        </div>
+      </div>
+    </div>
+  );
 }
 
 export default Analytics;
