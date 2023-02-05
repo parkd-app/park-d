@@ -1,20 +1,20 @@
-import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js';
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
 import {
-    getAuth,
-    connectAuthEmulator,
-    signInWithEmailAndPassword,
-    createUserWithEmailAndPassword,
-    onAuthStateChanged,
-    signOut
-} from 'https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js';
+  getAuth,
+  connectAuthEmulator,
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+  onAuthStateChanged,
+  signOut,
+} from "https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js";
 
 import {
-    showLoginError,
-    password,
-    email,
-    lblAuthState
-} from './LoginConstant.js'
-import { auth } from './FirebaseConfig.js'
+  showLoginError,
+  password,
+  email,
+  lblAuthState,
+} from "./LoginConstant.js";
+import { auth } from "./FirebaseConfig.js";
 
 // const firebaseApp = initializeApp(
 //     {
@@ -33,52 +33,58 @@ import { auth } from './FirebaseConfig.js'
 // connectAuthEmulator(auth, "http://localhost:9099");
 
 const loginEmailPassword = async () => {
-    const loginEmail = email.value;
-    const loginPassword = password.value
+  const loginEmail = email.value;
+  const loginPassword = password.value;
 
-    try {
-        const userCredential = await signInWithEmailAndPassword(auth, loginEmail, loginPassword);
-        console.log(userCredential.user);
-    }
-    catch (error) {
-        console.log(error);
-        showLoginError(error);
-    }
-}
+  try {
+    const userCredential = await signInWithEmailAndPassword(
+      auth,
+      loginEmail,
+      loginPassword
+    );
+    console.log(userCredential.user);
+  } catch (error) {
+    console.log(error);
+    showLoginError(error);
+  }
+};
 
 const createAccount = async () => {
-    const loginEmail = email.value;
-    const loginPassword = password.value
+  const loginEmail = email.value;
+  const loginPassword = password.value;
 
-    try {
-        const userCredential = await createUserWithEmailAndPassword(auth, loginEmail, loginPassword);
-        console.log(userCredential.user);
-    }
-    catch (error) {
-        console.log(error);
-        showLoginError(error);
-    }
-}
+  try {
+    const userCredential = await createUserWithEmailAndPassword(
+      auth,
+      loginEmail,
+      loginPassword
+    );
+    console.log(userCredential.user);
+  } catch (error) {
+    console.log(error);
+    showLoginError(error);
+  }
+};
 
-submit.addEventListener("click", loginEmailPassword)
+submit.addEventListener("click", loginEmailPassword);
 
 const monitorAuthState = async () => {
-    onAuthStateChanged(auth, user => {
-        if (user) {
-            console.log(user);
-            location.replace('../HomeView.html');
-        }
-        // else {
-        //     location.replace('login.html');
-        //     lblAuthState.innerHTML = "You're not logged in."
-        // }
-    });
-}
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      console.log(user);
+      location.replace("../HomeView.html");
+    }
+    // else {
+    //     location.replace('login.html');
+    //     lblAuthState.innerHTML = "You're not logged in."
+    // }
+  });
+};
 
 monitorAuthState();
 
 const logout = async () => {
-    await signOut(auth);
-}
+  await signOut(auth);
+};
 
 // btnLogout.addEventListener("click", logout);
