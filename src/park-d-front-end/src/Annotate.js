@@ -34,7 +34,7 @@ function writeToJSON(annotation, currAnnotations) {
     .then((response) => console.log(JSON.stringify(response)));
 }
 
-async function deleteAnnotation(annotation) {
+function deleteAnnotation(annotation) {
   fetch("http://localhost:8000/annotations/" + annotation.id, {
     method: "DELETE",
     headers: {
@@ -45,4 +45,18 @@ async function deleteAnnotation(annotation) {
   })
     .then((response) => response.json())
     .then((response) => console.log(JSON.stringify(response)));
+}
+
+function getImage(view) {
+  const imageUrl = "http://localhost:8000/public/assets/images/lot_" + view;
+
+  fetch(imageUrl)
+    //                         vvvv
+    .then((response) => response.blob())
+    .then((imageBlob) => {
+      // Then create a local URL for that image and print it
+      const imageObjectURL = URL.createObjectURL(imageBlob);
+      console.log(imageObjectURL);
+      return imageObjectURL;
+    });
 }

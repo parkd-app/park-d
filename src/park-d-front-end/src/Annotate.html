@@ -26,9 +26,33 @@
     <div class="annotate-window">
         <p>
             <button id="current-tool">Rectangle</button>
+            <!-- <button id="load-side" onclick="loadSide()">Load Side View </button>
+            <button id="load-side" onclick="loadBird()">Load Bird View</button> -->
         </p>
         <div style="max-width: 1200px">
-            <img id="test_lot" src="test_lot.png" style="max-width:100%;">
+            <img id="test_lot" src="http://localhost:8000/assets/images/lot_bird.png" style="max-width:100%;">
+            <!-- <script>
+                // var up = document.getElementById('GFG_UP');
+                // up.innerHTML = "Click on the button to add image element";
+                // var down = document.getElementById('GFG_DOWN');
+
+                function loadSide() {
+                    var img = new Image();
+                    img.src =
+                        'http://localhost:8000/public/assets/images/lot_side';
+                    img.id = "test_lot";
+                    document.getElementById('body').appendChild(img);
+                    down.innerHTML = "Image Element Added.";
+                }
+                function loadBird() {
+                    var img = new Image();
+                    img.src =
+                        'http://localhost:8000/public/assets/images/lot_bird';
+                    img.id = "test_lot";
+                    document.getElementById('body').appendChild(img);
+                    down.innerHTML = "Image Element Added.";
+                }
+            </script> -->
         </div>
     </div>
     </div>
@@ -63,7 +87,7 @@
 
             anno.on('createAnnotation', function (annotation) {
                 //   console.log('created', annotation);
-                writeToJSON(annotation,anno.getAnnotations());
+                writeToJSON(annotation, anno.getAnnotations());
             });
 
             anno.on('updateAnnotation', function (annotation, previous) {
