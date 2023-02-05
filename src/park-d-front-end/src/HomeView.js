@@ -12,7 +12,7 @@ var defaultOptions = {
   styles: noPoi,
 };
 
-var userMode = true;
+var userMode = false;
 
 var directionsRenderer;
 var directionsService;
@@ -33,61 +33,54 @@ class ParkingSpot {
 }
 
 var parkingLayout = [
-  new ParkingSpot(0, false, { lat: 43.89043899872149, lng: -79.3134901958874 }),
-  new ParkingSpot(1, false, { lat: 43.89043899872149, lng: -79.3134901958874 }),
-  new ParkingSpot(2, true, { lat: 43.89043899872149, lng: -79.3134901958874 }),
-  new ParkingSpot(3, false, { lat: 43.89043899872149, lng: -79.3134901958874 }),
-  new ParkingSpot(4, true, { lat: 43.89043899872149, lng: -79.3134901958874 }),
-  new ParkingSpot(5, false, { lat: 43.89043899872149, lng: -79.3134901958874 }),
-  new ParkingSpot(6, true, { lat: 43.89043899872149, lng: -79.3134901958874 }),
-  new ParkingSpot(7, true, { lat: 43.89043899872149, lng: -79.3134901958874 }),
-  new ParkingSpot(8, false, { lat: 43.89043899872149, lng: -79.3134901958874 }),
-  new ParkingSpot(9, true, { lat: 43.89043899872149, lng: -79.3134901958874 }),
-  new ParkingSpot(10, false, {
-    lat: 43.89043899872149,
-    lng: -79.3134901958874,
-  }),
-  new ParkingSpot(11, false, {
-    lat: 43.89043899872149,
-    lng: -79.3134901958874,
-  }),
-  new ParkingSpot(12, false, {
-    lat: 43.89043899872149,
-    lng: -79.3134901958874,
-  }),
-  new ParkingSpot(13, true, { lat: 43.89043899872149, lng: -79.3134901958874 }),
-  new ParkingSpot(14, true, { lat: 43.89043899872149, lng: -79.3134901958874 }),
-  new ParkingSpot(15, true, { lat: 43.89043899872149, lng: -79.3134901958874 }),
+  new ParkingSpot(0, false, { lat: 43.890253243996334, lng: -79.31222457771726 }),
+  new ParkingSpot(1, false, { lat: 43.890185447737366, lng: -79.312190535493940 }),
+  new ParkingSpot(2, true, { lat: 43.890117651478391, lng: -79.312156493270621 }),
+  new ParkingSpot(3, false, { lat: 43.890049855219424, lng: -79.312122451047301 }),
+  new ParkingSpot(4, true, { lat: 43.889982058960449, lng: -79.312088408823996 }),
+  new ParkingSpot(5, false, { lat: 43.889914262701481, lng: -79.312054366600677 }),
+  new ParkingSpot(6, true, { lat: 43.889846466442506, lng: -79.312020324377357 }),
+  new ParkingSpot(7, true, { lat: 43.88977867018354, lng: -79.31198628215404 }),
+  new ParkingSpot(8, false, { lat: 43.89030310172601, lng: -79.3119914067898 }),
+  new ParkingSpot(9, true, { lat: 43.890237943518422, lng: -79.311958462702719 }),
+  new ParkingSpot(10, false, { lat: 43.890172785310824, lng: -79.311925518615638 }),
+  new ParkingSpot(11, false, { lat: 43.890107627103234, lng: -79.311892574528557 }),
+  new ParkingSpot(12, false, { lat: 43.890042468895643, lng: -79.311859630441461 }),
+  new ParkingSpot(13, true, { lat: 43.889977310688053, lng: -79.311826686354379 }),
+  new ParkingSpot(14, true, { lat: 43.889912152480456, lng: -79.311793742267298 }),
+  new ParkingSpot(15, true, { lat: 43.889846994272865, lng: -79.31176079818022 }),
 ];
 
 var analyticsData = [
-  { name: "12am", occupancy: 10 },
-  { name: "1am", occupancy: 10 },
-  { name: "2am", occupancy: 10 },
-  { name: "3am", occupancy: 10 },
-  { name: "4am", occupancy: 10 },
-  { name: "5am", occupancy: 10 },
-  { name: "6am", occupancy: 20 },
-  { name: "7am", occupancy: 30 },
+  { name: "12am", occupancy: 0 },
+  { name: "1am", occupancy: 0 },
+  { name: "2am", occupancy: 0 },
+  { name: "3am", occupancy: 0 },
+  { name: "4am", occupancy: 0 },
+  { name: "5am", occupancy: 5 },
+  { name: "6am", occupancy: 15 },
+  { name: "7am", occupancy: 35 },
   { name: "8am", occupancy: 40 },
   { name: "9am", occupancy: 50 },
   { name: "10am", occupancy: 80 },
   { name: "11am", occupancy: 90 },
   { name: "12pm", occupancy: 100 },
-  { name: "1pm", occupancy: 90 },
-  { name: "2pm", occupancy: 80 },
-  { name: "3pm", occupancy: 50 },
-  { name: "4pm", occupancy: 60 },
-  { name: "5pm", occupancy: 70 },
-  { name: "6pm", occupancy: 80 },
-  { name: "7pm", occupancy: 90 },
-  { name: "8pm", occupancy: 60 },
-  { name: "9pm", occupancy: 30 },
-  { name: "10pm", occupancy: 20 },
-  { name: "11pm", occupancy: 10 },
+  { name: "1pm", occupancy: 100 },
+  { name: "2pm", occupancy: 95 },
+  { name: "3pm", occupancy: 80 },
+  { name: "4pm", occupancy: 30 },
+  { name: "5pm", occupancy: 35 },
+  { name: "6pm", occupancy: 40 },
+  { name: "7pm", occupancy: 40 },
+  { name: "8pm", occupancy: 35 },
+  { name: "9pm", occupancy: 20 },
+  { name: "10pm", occupancy: 10 },
+  { name: "11pm", occupancy: 0 },
 ];
 
 function initMap() {
+  initPage();
+
   directionsRenderer = new google.maps.DirectionsRenderer({
     suppressMarkers: true,
   });
@@ -102,17 +95,12 @@ function initMap() {
       );
       pickDestination();
     } else if (clickChoice == 1) {
-      clickDestination = { coords: event.latLng };
-      // directionsRenderer.setMap(map);
-      // getRoute();
-      // pickDone();
       // check clickDestination to be within bounds of parking lot
+      clickDestination = { coords: event.latLng };
       toggleSelection();
       clickChoice = 2;
     }
   });
-
-  initPage();
 }
 
 function initPage() {
