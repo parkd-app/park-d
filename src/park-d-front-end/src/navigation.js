@@ -46,32 +46,9 @@ function initMap(){
     map = new google.maps.Map(document.getElementById('map'), defaultOptions);
     mapBounds = new google.maps.LatLngBounds();
 
-    // for development reference
-    polygon = new google.maps.Polygon({
-        paths: [
-            { lat: 43.890092, lng: -79.312103 },
-            { lat: 43.890068, lng: -79.312093 },
-            { lat: 43.890083, lng: -79.312025 },
-            { lat: 43.890107, lng: -79.312033 },
-        ],
-        strokeColor: "#FF0000",
-        strokeOpacity: 0.8,
-        strokeWeight: 2,
-        fillColor: "#FF0000",
-        fillOpacity: 0.35,
-        editable: true,
-        draggable: true,
-        geodesic: true
-    });
-
-    polygon.setMap(map);
-
     let json_obj = JSON.parse(Get(jsonURL));
-    let statuses = json_obj.map(space => [space.lat, space.lng])
-    putSpot(statuses[0][0], statuses[0][1])
-    putSpot(statuses[1][0], statuses[1][1])
-    putSpot(statuses[2][0], statuses[2][1])
-    putSpot(statuses[3][0], statuses[3][1])
+    console.log(json_obj);
+    loadSpots(json_obj)
 
     google.maps.event.addListener(map, 'click', function(event){
         if (clickChoice == 0)
@@ -166,6 +143,7 @@ function resetSpot()
     resetData();
 }
 
+// initiating placing spot from ui
 function addSpot()
 {
     if (!adding)
@@ -183,7 +161,7 @@ function addSpot()
     }
 }
 
-// calculates points given origin, length, and angle. math needs adjustment
+// admin placing spot
 function putSpot(lat, lng)
 {
     eventLat = lat;
@@ -212,4 +190,31 @@ function putSpot(lat, lng)
     });
     window['spot'+numSpots].setMap(map);
     numSpots += 1;
+}
+
+// loading all spots from remote
+function loadSpots(spots)
+{
+    for (let i = 0; i < spots.length; i++) {
+        let coords = spots[i].corners;
+        let open = spots[i].open;
+        window['spot'+numSpots] = new google.maps.Polygon({
+            paths: [
+                { lat: coords[0][0], lng: coords[0][1] },
+                { lat: coords[1][0], lng: coords[1][1] },
+                { lat: coords[2][0], lng: coords[2][1] },
+                { lat: coords[3][0], lng: coords[3][1] },
+            ],
+            strokeColor: open ? "#00FF00": "#FF0000",
+            strokeOpacity: 0.8,
+            strokeWeight: 2,
+            fillColor: open ? "#00FF00": "#FF0000",
+            fillOpacity: 0.35,
+            editable: true,
+            draggable: true,
+            geodesic: true
+        });
+        window['spot'+numSpots].setMap(map);
+        numSpots += 1;
+    }
 }
