@@ -72,24 +72,24 @@ class MotionDetector:
             new_frame = frame.copy()
             logging.debug("new_frame: %s", new_frame)
 
-            position_in_seconds = capture.get(open_cv.CAP_PROP_POS_MSEC) \
-                                  / 1000.0
+            position_in_seconds = capture.get(
+                open_cv.CAP_PROP_POS_MSEC) / 1000.0
 
             for index, contour in enumerate(coordinates_data):
                 status = self.__apply(grayed, index, contour)
 
                 if times[index] is not None and self.same_status(
-                    statuses, index, status
+                        statuses, index, status
                 ):
                     times[index] = None
                     continue
 
                 if times[index] is not None and self.status_changed(
-                    statuses, index, status
+                        statuses, index, status
                 ):
                     if (
-                        position_in_seconds - times[index]
-                        >= MotionDetector.DETECT_DELAY
+                            position_in_seconds - times[index]
+                            >= MotionDetector.DETECT_DELAY
                     ):
                         statuses[index] = status
                         times[index] = None
@@ -100,7 +100,7 @@ class MotionDetector:
                     continue
 
                 if times[index] is None and self.status_changed(
-                    statuses, index, status
+                        statuses, index, status
                 ):
                     times[index] = position_in_seconds
 
@@ -139,16 +139,18 @@ class MotionDetector:
         rect = self.bounds[index]
         logging.debug("rect: %s", rect)
 
-        roi_gray = grayed[rect[1]: (rect[1] + rect[3]),
-                   rect[0]: (rect[0] + rect[2])]
+        roi_gray = grayed[
+                   rect[1]: (rect[1] + rect[3]),
+                   rect[0]: (rect[0] + rect[2])
+                   ]
         laplacian = open_cv.Laplacian(roi_gray, open_cv.CV_64F)
 
         coordinates[:, 0] = coordinates[:, 0] - rect[0]
         coordinates[:, 1] = coordinates[:, 1] - rect[1]
 
         status = (
-            np.mean(np.abs(laplacian * self.mask[index]))
-            < MotionDetector.LAPLACIAN
+                np.mean(np.abs(laplacian * self.mask[index]))
+                < MotionDetector.LAPLACIAN
         )
         logging.debug("status: %s", status)
 

@@ -1,7 +1,7 @@
 import argparse
 from coordinates_generator import CoordinatesGenerator
 from motion_detector import MotionDetector
-from colors import *
+from colors import COLOR_RED
 import logging
 import yaml
 import socket
@@ -35,7 +35,8 @@ def main():
         with open(data_file, "r") as data:
             points = yaml.load(data)
             print(points)
-            detector = MotionDetector(args.video_file, points, int(start_frame))
+            detector = MotionDetector(args.video_file, points,
+                                      int(start_frame))
             detector.detect_motion()
 
 
