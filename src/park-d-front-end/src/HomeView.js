@@ -1,3 +1,14 @@
+const jsonURL = 'http://localhost:8000/parking_spaces'
+
+function Get(URL){
+    var Httpreq = new XMLHttpRequest(); // a new request
+    Httpreq.open("GET",URL,false);
+    Httpreq.send(null);
+    return Httpreq.responseText;          
+}
+
+setInterval(updateSpots, 2000);
+
 var map;
 var noPoi = [
   {
@@ -20,6 +31,9 @@ var clickOrigin;
 var clickDestination;
 var clickChoice = 0;
 var routeMarkers = [];
+
+var spotData;
+var numSpots;
 
 var selectionToggle = false;
 class ParkingSpot {
@@ -129,6 +143,8 @@ function initMap() {
   directionsService = new google.maps.DirectionsService();
 
   map = new google.maps.Map(document.getElementById("map"), defaultOptions);
+  loadAllSpots();
+
   google.maps.event.addListener(map, "click", function (event) {
     if (clickChoice == 0) {
       clickOrigin = { coords: event.latLng };
@@ -331,4 +347,44 @@ function updateAnalytics() {
 
 function getDocEle(className) {
   return document.getElementsByClassName(className)[0];
+}
+
+function loadAllSpots()
+{
+    spotData = JSON.parse(Get(jsonURL));
+    numSpots = spotData.length;
+
+    for (let i = 0; i < numSpots; i++) {
+        let coords = spotData[i].corners;
+        let open = spotData[i].open;
+
+        // spots are stored here, by ID
+        window['spot'+spotData[i].id] = new google.maps.Polygon({
+            paths: [
+                { lat: coords[0][0], lng: coords[0][1] },
+                { lat: coords[1][0], lng: coords[1][1] },
+                { lat: coords[2][0], lng: coords[2][1] },
+                { lat: coords[3][0], lng: coords[3][1] },
+            ],
+            strokeColor: open ? "#00FF00": "#FF0000",
+            strokeOpacity: 0.8,
+            strokeWeight: 2,
+            fillColor: open ? "#00FF00": "#FF0000",
+            fillOpacity: 0.35,
+            geodesic: true
+        });
+        window['spot'+spotData[i].id].setMap(map);
+    }
+}
+
+function updateSpots()
+{
+    let json_obj = JSON.parse(Get(jsonURL));
+    for(let i = 0; i < json_obj.length; i++) {
+        let spot = json_obj[i];
+        if (!(spot.open === window['spot'+spot.id].open)) {
+            window['spot'+spot.id].setOptions({strokeColor: spot.open ? "#00FF00": "#FF0000", fillColor: spot.open ? "#00FF00": "#FF0000"});
+            window['spot'+spot.id].open = spot.open;
+        }
+    }
 }
