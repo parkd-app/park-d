@@ -216,7 +216,7 @@
   box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25);
   overflow: hidden;
 }
-.magnifying_glass_bg {
+.reset_button_bg {
   width: 20px;
   height: 20px;
   background: rgba(255, 255, 255, 1);
@@ -226,7 +226,7 @@
   left: 387px;
   overflow: hidden;
 }
-.magnifying_glass {
+.reset_button {
   width: 20px;
   height: 20px;
   background: url("Images/refresh.png");
@@ -356,7 +356,7 @@
   opacity: 1;
   text-align: center;
 }
-.marker1_bg1 {
+.marker_bg1 {
   width: 180px;
   height: 80px;
   background: transparent;
@@ -365,11 +365,9 @@
   background-size: cover;
   opacity: 1;
   position: absolute;
-  top: 428px;
-  left: 660px;
   overflow: hidden;
 }
-.marker1_bg2 {
+.marker_bg2 {
   width: 180px;
   height: 50px;
   background: transparent;
@@ -384,7 +382,7 @@
   border-radius: 40px;
   overflow: hidden;
 }
-.marker1_bg3 {
+.marker_bg3 {
   width: 180px;
   height: 50px;
   background: transparent;
@@ -397,7 +395,7 @@
   left: 0px;
   overflow: hidden;
 }
-.marker1_text_bg {
+.marker_text_bg {
   width: 180px;
   height: 50px;
   background: rgba(0, 255, 10, 1);
@@ -411,146 +409,12 @@
   border-bottom-right-radius: 40px;
   overflow: hidden;
 }
-.marker1_text {
+.marker_text {
   width: 69px;
   color: rgba(0, 0, 0, 1);
   position: absolute;
   top: 8px;
   left: 55px;
-  font-family: Montserrat;
-  font-weight: bold;
-  font-size: 20px;
-  opacity: 1;
-  text-align: center;
-}
-.marker2_bg1 {
-  width: 180px;
-  height: 80px;
-  background: transparent;
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: cover;
-  opacity: 1;
-  position: absolute;
-  top: 645px;
-  left: 1147px;
-  overflow: hidden;
-}
-.marker2_bg2 {
-  width: 180px;
-  height: 50px;
-  background: transparent;
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: cover;
-  opacity: 1;
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  border-radius: 40px;
-  overflow: hidden;
-}
-.marker2_bg3 {
-  width: 180px;
-  height: 50px;
-  background: transparent;
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: cover;
-  opacity: 1;
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  overflow: hidden;
-}
-.marker2_text_bg {
-  width: 180px;
-  height: 50px;
-  background: rgba(249, 255, 0, 1);
-  opacity: 1;
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  border-top-left-radius: 40px;
-  border-top-right-radius: 40px;
-  border-bottom-left-radius: 40px;
-  border-bottom-right-radius: 40px;
-  overflow: hidden;
-}
-.marker2_text {
-  width: 69px;
-  color: rgba(0, 0, 0, 1);
-  position: absolute;
-  top: 8px;
-  left: 55px;
-  font-family: Montserrat;
-  font-weight: bold;
-  font-size: 20px;
-  opacity: 1;
-  text-align: center;
-}
-.marker3_bg1 {
-  width: 180px;
-  height: 80px;
-  background: transparent;
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: cover;
-  opacity: 1;
-  position: absolute;
-  top: 819px;
-  left: 239px;
-  overflow: hidden;
-}
-.marker3_bg2 {
-  width: 180px;
-  height: 50px;
-  background: transparent;
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: cover;
-  opacity: 1;
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  border-radius: 40px;
-  overflow: hidden;
-}
-.marker3_bg3 {
-  width: 180px;
-  height: 50px;
-  background: transparent;
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: cover;
-  opacity: 1;
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  overflow: hidden;
-}
-.marker3_text_bg {
-  width: 180px;
-  height: 50px;
-  background: rgba(255, 0, 0, 1);
-  opacity: 1;
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  border-top-left-radius: 40px;
-  border-top-right-radius: 40px;
-  border-bottom-left-radius: 40px;
-  border-bottom-right-radius: 40px;
-  overflow: hidden;
-}
-.marker3_text {
-  width: 106px;
-  color: rgba(0, 0, 0, 1);
-  position: absolute;
-  top: 9px;
-  left: 37px;
   font-family: Montserrat;
   font-weight: bold;
   font-size: 20px;
@@ -804,8 +668,8 @@
   left: 5px;
   overflow: hidden;
 }
-.analytics_card2_bg1 {
-  width: 198px;
+.analytics_card_bg1 {
+  width: 200px;
   height: 239px;
   background: transparent;
   background-repeat: no-repeat;
@@ -814,13 +678,11 @@
   opacity: 1;
   position: absolute;
   top: 0px;
-  left: 487px;
   overflow: hidden;
 }
-.analytics_card2_bg {
-  width: 198px;
+.analytics_card_bg {
+  width: 200px;
   height: 239px;
-  background: rgba(255, 164, 0, 1);
   opacity: 1;
   position: absolute;
   top: 0px;
@@ -831,162 +693,36 @@
   border-bottom-right-radius: 10px;
   overflow: hidden;
 }
-.analytics_card2_total {
-  width: 106px;
+.analytics_card_total {
+  width: 200px;
   color: rgba(255, 255, 255, 1);
   position: absolute;
   top: 188px;
-  left: 46px;
+  left: 0px;
   font-family: Montserrat;
   font-weight: Medium;
   font-size: 27px;
   opacity: 1;
   text-align: center;
 }
-.analytics_card2_number {
-  width: 61px;
+.analytics_card_number {
+  width: 200px;
   color: rgba(255, 255, 255, 1);
   position: absolute;
   top: 66px;
-  left: 70px;
+  left: 0px;
   font-family: Montserrat;
   font-weight: Medium;
   font-size: 90px;
   opacity: 1;
   text-align: center;
 }
-.analytics_card2_name {
-  width: 152px;
+.analytics_card_name {
+  width: 200px;
   color: rgba(255, 255, 255, 1);
   position: absolute;
   top: 19px;
-  left: 23px;
-  font-family: Montserrat;
-  font-weight: Medium;
-  font-size: 27px;
-  opacity: 1;
-  text-align: center;
-}
-.analytics_card1_bg1 {
-  width: 198px;
-  height: 239px;
-  background: transparent;
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: cover;
-  opacity: 1;
-  position: absolute;
-  top: 0px;
-  left: 244px;
-  overflow: hidden;
-}
-.analytics_card1_bg {
-  width: 198px;
-  height: 239px;
-  background: rgba(0, 86, 150, 1);
-  opacity: 1;
-  position: absolute;
-  top: 0px;
   left: 0px;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
-  overflow: hidden;
-}
-.analytics_card1_total {
-  width: 105px;
-  color: rgba(255, 255, 255, 1);
-  position: absolute;
-  top: 188px;
-  left: 48px;
-  font-family: Montserrat;
-  font-weight: Medium;
-  font-size: 27px;
-  opacity: 1;
-  text-align: center;
-}
-.analytics_card1_number {
-  width: 61px;
-  color: rgba(255, 255, 255, 1);
-  position: absolute;
-  top: 66px;
-  left: 70px;
-  font-family: Montserrat;
-  font-weight: Medium;
-  font-size: 90px;
-  opacity: 1;
-  text-align: center;
-}
-.analytics_card1_name {
-  width: 173px;
-  color: rgba(255, 255, 255, 1);
-  position: absolute;
-  top: 19px;
-  left: 13px;
-  font-family: Montserrat;
-  font-weight: Medium;
-  font-size: 27px;
-  opacity: 1;
-  text-align: left;
-}
-.analytics_card0_bg1 {
-  width: 198px;
-  height: 239px;
-  background: transparent;
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: cover;
-  opacity: 1;
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  overflow: hidden;
-}
-.analytics_card0_bg {
-  width: 198px;
-  height: 239px;
-  background: rgba(8, 160, 69, 1);
-  opacity: 1;
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
-  overflow: hidden;
-}
-.analytics_card0_total {
-  width: 150px;
-  color: rgba(255, 255, 255, 1);
-  position: absolute;
-  top: 188px;
-  left: 24px;
-  font-family: Montserrat;
-  font-weight: Medium;
-  font-size: 27px;
-  opacity: 1;
-  text-align: center;
-}
-.analytics_card0_number {
-  width: 61px;
-  color: rgba(255, 255, 255, 1);
-  position: absolute;
-  top: 66px;
-  left: 70px;
-  font-family: Montserrat;
-  font-weight: Medium;
-  font-size: 90px;
-  opacity: 1;
-  text-align: center;
-}
-.analytics_card0_name {
-  width: 124px;
-  color: rgba(255, 255, 255, 1);
-  position: absolute;
-  top: 19px;
-  left: 18px;
   font-family: Montserrat;
   font-weight: Medium;
   font-size: 27px;

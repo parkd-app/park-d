@@ -12,7 +12,7 @@ var defaultOptions = {
   styles: noPoi,
 };
 
-var userMode = false;
+var userMode = true;
 
 var directionsRenderer;
 var directionsService;
@@ -33,22 +33,64 @@ class ParkingSpot {
 }
 
 var parkingLayout = [
-  new ParkingSpot(0, false, { lat: 43.890253243996334, lng: -79.31222457771726 }),
-  new ParkingSpot(1, false, { lat: 43.890185447737366, lng: -79.312190535493940 }),
-  new ParkingSpot(2, true, { lat: 43.890117651478391, lng: -79.312156493270621 }),
-  new ParkingSpot(3, false, { lat: 43.890049855219424, lng: -79.312122451047301 }),
-  new ParkingSpot(4, true, { lat: 43.889982058960449, lng: -79.312088408823996 }),
-  new ParkingSpot(5, false, { lat: 43.889914262701481, lng: -79.312054366600677 }),
-  new ParkingSpot(6, true, { lat: 43.889846466442506, lng: -79.312020324377357 }),
+  new ParkingSpot(0, false, {
+    lat: 43.890253243996334,
+    lng: -79.31222457771726,
+  }),
+  new ParkingSpot(1, false, {
+    lat: 43.890185447737366,
+    lng: -79.31219053549394,
+  }),
+  new ParkingSpot(2, true, {
+    lat: 43.890117651478391,
+    lng: -79.312156493270621,
+  }),
+  new ParkingSpot(3, false, {
+    lat: 43.890049855219424,
+    lng: -79.312122451047301,
+  }),
+  new ParkingSpot(4, true, {
+    lat: 43.889982058960449,
+    lng: -79.312088408823996,
+  }),
+  new ParkingSpot(5, false, {
+    lat: 43.889914262701481,
+    lng: -79.312054366600677,
+  }),
+  new ParkingSpot(6, true, {
+    lat: 43.889846466442506,
+    lng: -79.312020324377357,
+  }),
   new ParkingSpot(7, true, { lat: 43.88977867018354, lng: -79.31198628215404 }),
   new ParkingSpot(8, false, { lat: 43.89030310172601, lng: -79.3119914067898 }),
-  new ParkingSpot(9, true, { lat: 43.890237943518422, lng: -79.311958462702719 }),
-  new ParkingSpot(10, false, { lat: 43.890172785310824, lng: -79.311925518615638 }),
-  new ParkingSpot(11, false, { lat: 43.890107627103234, lng: -79.311892574528557 }),
-  new ParkingSpot(12, false, { lat: 43.890042468895643, lng: -79.311859630441461 }),
-  new ParkingSpot(13, true, { lat: 43.889977310688053, lng: -79.311826686354379 }),
-  new ParkingSpot(14, true, { lat: 43.889912152480456, lng: -79.311793742267298 }),
-  new ParkingSpot(15, true, { lat: 43.889846994272865, lng: -79.31176079818022 }),
+  new ParkingSpot(9, true, {
+    lat: 43.890237943518422,
+    lng: -79.311958462702719,
+  }),
+  new ParkingSpot(10, false, {
+    lat: 43.890172785310824,
+    lng: -79.311925518615638,
+  }),
+  new ParkingSpot(11, false, {
+    lat: 43.890107627103234,
+    lng: -79.311892574528557,
+  }),
+  new ParkingSpot(12, false, {
+    lat: 43.890042468895643,
+    lng: -79.311859630441461,
+  }),
+  new ParkingSpot(13, true, {
+    lat: 43.889977310688053,
+    lng: -79.311826686354379,
+  }),
+  new ParkingSpot(14, true, {
+    lat: 43.889912152480456,
+    lng: -79.311793742267298,
+  }),
+  new ParkingSpot(15, true, {
+    lat: 43.889846994272865,
+    lng: -79.31176079818022,
+  }),
 ];
 
 var analyticsData = [
@@ -109,8 +151,6 @@ function initPage() {
   getDocEle("spot_selection").style.display = "none";
   getDocEle("search_bar_bg1").style.display = userMode ? "block" : "none";
 
-  // toggleSelection();
-
   updateSelection();
   updateAnalytics();
 }
@@ -122,7 +162,7 @@ function pickDone() {
 
 function pickDestination() {
   clickChoice = 1;
-  getDocEle("direction_guide").textContent = "Select Destination";
+  getDocEle("direction_guide").textContent = "Select Parking Lot";
 }
 
 function placeMarker(position, icon) {
@@ -278,9 +318,9 @@ function updateAnalytics() {
   totalSpots = 0;
   totalAvailable = 0;
   for (let index = 0; index < availability.length; index++) {
-    getDocEle("analytics_card" + index + "_total").textContent =
+    document.getElementById("analytics_card" + index + "_total").textContent =
       "out of " + availability[index].total;
-    getDocEle("analytics_card" + index + "_number").textContent =
+    document.getElementById("analytics_card" + index + "_number").textContent =
       availability[index].number;
     totalSpots += availability[index].total;
     totalAvailable += availability[index].number;
