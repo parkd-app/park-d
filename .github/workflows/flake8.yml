@@ -3,11 +3,11 @@ name: Flake8 Linting
 on:
   push:
     paths:
-      - src/park-d-api/**
+      - src/pard-d-api/**
       - src/park_d_model_service/**
   pull_request:
     paths:
-      - src/park-d-api/**
+      - src/pard-d-api/**
       - src/park_d_model_service/**
 
 jobs:
