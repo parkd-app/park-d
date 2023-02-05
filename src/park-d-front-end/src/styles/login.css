@@ -1,0 +1,159 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
+*{
+	font-family: 'Montserrat', sans-serif;
+	margin: 0;
+	padding: 0;
+}
+
+.wrapper{
+	background: #ffffff;
+}
+
+.main {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	min-height: 100vh;
+	min-width: 100vw;
+}
+
+.row{
+	width: 900vw;
+	height: 100vh;
+	background: #fff;
+}
+
+.side-image{
+	background-image: url("../Images/background.svg");
+	background-position: center;
+	background-color: #181818;
+	background-size: cover;
+	position: relative;
+}
+
+.logo-slogan{
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+.logo-slogan img{
+	position: relative;
+	width: 30vw;
+}
+
+.landscape {
+	margin: 0;
+}
+.landscape .car img {
+	position: absolute;
+	bottom: 0%;
+	left: 0%;
+	width: 25vw;
+}
+
+.landscape .toronto img {
+	position: absolute;
+	bottom: 0%;
+	left: 0%;
+	width: 50vw;
+}
+.text{
+	position: relative;
+	text-align: center;
+}
+
+.text p {
+	color: #fff;
+	font-size: 30px;
+	padding-top: 15px;
+}
+
+.right{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: relative;
+}
+
+.input-box{
+	width: 40vw;
+	box-sizing: border-box;
+}
+
+.input-box header{
+	font-weight: bolder;
+	font-size: 26px;
+	text-align: left;
+	margin-bottom: 26px;
+}
+
+.input-field{
+	display: flex;
+	flex-direction: column;
+	position: relative;
+}
+
+.input {
+	height: 45px;
+	width: 100%;
+	background: transparent;
+	margin-bottom: 20px;
+	color: #181818;
+	padding: 10px;
+	border-radius: 10px;
+}
+
+.input-box .input-field label {
+	position: absolute;
+	top: 10px;
+	left: 10px;
+	pointer-events: none;
+	transition: .15s;
+}
+
+.input-field .input:focus ~ label {
+	opacity: 0;
+}
+
+.submit {
+	border: none;
+	outline: none;
+	height: 45px;
+	background: #ececec;
+	border-radius: 10px;
+	transition: .4s;
+}
+
+.submit:hover{
+	background: #faff00;
+}
+
+.signup{
+	text-align: center;
+	font-size: small;
+	margin-top: 25px;
+}
+
+.span a {
+	text-decoration: none;
+	font-weight: 700;
+	color: #000;
+	transition: .5s;
+}
+
+span a:hover {
+	text-decoration: underline;
+	color: #000;
+}
+
+@media only screen and (max-width: 768px) {
+	.side-image{
+		height: 200px;
+	}
+
+	.logo-slogan img {
+		width: 50vw;
+	}
+}
