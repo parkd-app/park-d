@@ -18,7 +18,7 @@ def mouseClick(events, x, y, flags, params):
             x1, y1 = pos
             if x1 < x < x1 + rectW and y1 < y < y1 + rectH:
                 posList.pop(i)
-    with open('carParkPos', 'wb') as f:
+    with open("carParkPos", "wb") as f:
         pickle.dump(posList, f)
 
 
@@ -30,4 +30,3 @@ while True:
     cv2.imshow("Image", img)
     cv2.setMouseCallback("Image", mouseClick)
     cv2.waitKey(1)
-
