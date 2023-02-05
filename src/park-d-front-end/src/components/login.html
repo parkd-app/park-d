@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Park'd - Log In</title>
+    <link rel="stylesheet" href="../styles/login.css" />
+    <script type="module" src="../scripts/Login.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="container main">
+        <div class="row">
+          <div class="col-md-6 side-image">
+            <div class="logo-slogan">
+              <img src="../Images/park-d-logo-large.svg" alt="" />
+              <div class="text">
+                <p>Find Parking for Less</p>
+              </div>
+            </div>
+            <div class="landscape">
+              <div class="toronto">
+                <img src="../Images/Landscape.svg" alt="" />
+              </div>
+              <div class="car">
+                <img src="../Images/Car.svg" alt="" />
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 right">
+            <div class="input-box">
+              <header>Log In</header>
+              <label>Email</label>
+              <div class="input-field">
+                <input
+                  type="text"
+                  class="input"
+                  id="email"
+                  required
+                  autocomplete="off"
+                />
+                <!-- <label for="email">Email</label> -->
+              </div>
+              <label>Password</label>
+              <div class="input-field">
+                <input type="password" class="input" id="password" required />
+                <!-- <label for="password">Password</label> -->
+              </div>
+              <div class="input-field">
+                <input
+                  type="submit"
+                  class="submit"
+                  id="submit"
+                  value="Log In"
+                />
+              </div>
+              <div id="divLoginError" class="group">
+                <div id="lblLoginErrorMessage" class="errorlabel">
+                  Error message
+                </div>
+              </div>
+              <div class="signup">
+                <span
+                  >Do not have an account? <a href="#">Sign up here</a></span
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- <div id="login">
+      <div class="header">
+        <h1>Log In</h1>
+      </div>
+      <form>
+        <div class="group">
+          <input type="email" id="txtEmail" />
+          <label>Email Address</label>
+        </div>
+        <div class="group">
+          <input type="password" id="txtPassword" />
+          <label>Password</label>
+        </div>
+        <div id="divLoginError" class="group">
+          <div id="lblLoginErrorMessage" class="errorlabel">Error Message</div>
+        </div>
+        <button type="button" id="btnLogin" class="button buttonBlue">
+          Login
+        </button>
+        <button id="btnSignup" type="button" class="button buttonBlue">
+          Sign up
+        </button>
+      </form>
+    </div>
+
+    <div id="app">
+      <div class="header">
+        <h1>Welcome to Your Amazing App</h1>
+      </div>
+      <form>
+        <div class="group">
+          <div id="lblAuthState" class="authlabel"></div>
+        </div>
+        <button id="btnLogout" type="button" class="button buttonBlue">
+          Log out
+        </button>
+      </form>
+    </div> -->
+  </body>
+</html>
