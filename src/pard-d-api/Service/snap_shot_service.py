@@ -1,4 +1,3 @@
-
 import cv2
 import os
 import logging
@@ -27,3 +26,4 @@ def save_frame_sec(video_path, sec, result_path):
         logging.info("write to path")
         cv2.imwrite(result_path, frame)
     return True
+
