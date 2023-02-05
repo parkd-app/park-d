@@ -3,12 +3,12 @@ name: Flake8 Linting
 on:
   push:
     paths:
-      - "src/pard-d-api/*"
-      - "src/park_d_model_service/*"
+      - "src/pard-d-api/**"
+      - "src/park_d_model_service/**"
   pull_request:
     paths:
-      - "src/pard-d-api/*"
-      - "src/park_d_model_service/*"
+      - "src/pard-d-api/**"
+      - "src/park_d_model_service/**"
 
 jobs:
   flake8-lint:
