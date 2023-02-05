@@ -1,15 +1,15 @@
 // json parsing
 const jsonURL = 'http://localhost:8000/parking_spaces'
 
-// update status every 2 seconds
-setInterval(updateSpots, 2000);
-
-function Get(jsonURlL){
+function Get(jsonURL){
     var Httpreq = new XMLHttpRequest(); // a new request
     Httpreq.open("GET",jsonURL,false);
     Httpreq.send(null);
     return Httpreq.responseText;          
 }
+
+// update status every 2 seconds
+setInterval(updateSpots, 2000);
 
 var map;
 var noPoi = [
@@ -35,15 +35,11 @@ var clickDestination;
 var clickChoice = 0;
 var routeMarkers = [];
 
-var polygon;
 var adding = false;
+var pointsClicked = 0;
+var corners = [];
+
 var numSpots = 0;
-
-const spotWidth = 0.000025;
-const spotLength = 0.00007;
-const spotAngle = 109;
-
-var spotData;
 
 function initMap(){
     directionsRenderer = new google.maps.DirectionsRenderer({suppressMarkers: true});
@@ -52,9 +48,8 @@ function initMap(){
     map = new google.maps.Map(document.getElementById('map'), defaultOptions);
     mapBounds = new google.maps.LatLngBounds();
 
-    spotData = JSON.parse(Get(jsonURL));
-    console.log(spotData);
-    loadSpots(spotData);
+    // load and put spots
+    loadAllSpots();
 
     google.maps.event.addListener(map, 'click', function(event){
         if (clickChoice == 0)
@@ -72,7 +67,16 @@ function initMap(){
         }
         else if (clickChoice == 2)
         {
-            putSpot(event.latLng.lat(), event.latLng.lng());
+            pointsClicked++;
+            document.getElementById("PickLabel").textContent = "Select " + (4 - pointsClicked) + " more points";
+            corners.push(event.latLng);
+
+            if (pointsClicked == 4) {
+                pointsClicked = 0;
+                putSpot(corners);
+                corners = [];
+                document.getElementById("PickLabel").textContent = "Spot added. Keep clicking to add more";
+            }
         }
     });
 }
@@ -143,14 +147,17 @@ function getRoute(directionsRenderer, directionsService)
 
 }
 
-function resetSpot()
+function resetAdding()
 {
     document.getElementById("AddSpotButton").textContent = "Add Parking Spot";
+    adding = false;
+    corners = [];
+    pointsClicked = 0;
     resetData();
 }
 
 // initiating placing spot from ui
-function addSpot()
+function addingSpot()
 {
     if (!adding)
     {
@@ -161,50 +168,42 @@ function addSpot()
     }
     else
     {
-        adding = false;
-        clickChoice = 0;
-        resetSpot();
+        resetAdding();
     }
 }
 
 // admin placing spot
-function putSpot(lat, lng)
+function putSpot(corners)
 {
-    eventLat = lat;
-    eventLng = lng;
-    point2 = [eventLat+spotWidth*Math.sin(spotAngle*Math.PI/180), eventLng+spotWidth*Math.cos(spotAngle*Math.PI/180)]
-    
-    // strangely not 90 degree adjustment
-    point3 = [point2[0]+spotLength*Math.sin((spotAngle+85)*Math.PI/180), point2[1]+spotLength*Math.cos((spotAngle+85)*Math.PI/180)]
-    point4 = [point3[0]+spotWidth*Math.sin((spotAngle+180)*Math.PI/180), point3[1]+spotWidth*Math.cos((spotAngle+180)*Math.PI/180)]
-    
-    window['spot'+numSpots] = new google.maps.Polygon({
-        paths: [
-            { lat: eventLat, lng: eventLng },
-            { lat: point2[0], lng: point2[1] },
-            { lat: point3[0], lng: point3[1] },
-            { lat: point4[0], lng: point4[1] },
-        ],
-        strokeColor: "#FF0000",
+    // add POST to json later
+
+    window['spot'+(numSpots + 1)] = new google.maps.Polygon({
+        paths: corners,
+        strokeColor: "#00FF00",
         strokeOpacity: 0.8,
         strokeWeight: 2,
-        fillColor: "#FF0000",
+        fillColor: "#00FF00",
         fillOpacity: 0.35,
         editable: true,
         draggable: true,
         geodesic: true
     });
-    window['spot'+numSpots].setMap(map);
-    numSpots += 1;
+    window['spot'+(numSpots + 1)].setMap(map);
+    numSpots++;
 }
 
 // loading all spots from remote
-function loadSpots(spots)
+function loadAllSpots()
 {
-    for (let i = 0; i < spots.length; i++) {
-        let coords = spots[i].corners;
-        let open = spots[i].open;
-        window['spot'+numSpots] = new google.maps.Polygon({
+    let spotData = JSON.parse(Get(jsonURL));
+    numSpots = spotData.length;
+
+    for (let i = 0; i < numSpots; i++) {
+        let coords = spotData[i].corners;
+        let open = spotData[i].open;
+
+        // spots are stored here, by ID
+        window['spot'+spotData[i].id] = new google.maps.Polygon({
             paths: [
                 { lat: coords[0][0], lng: coords[0][1] },
                 { lat: coords[1][0], lng: coords[1][1] },
@@ -220,18 +219,19 @@ function loadSpots(spots)
             draggable: true,
             geodesic: true
         });
-        window['spot'+numSpots].setMap(map);
-        numSpots += 1;
+        window['spot'+spotData[i].id].setMap(map);
     }
 }
 
+// check json for updates and apply them
 function updateSpots()
 {
-    let statuses = JSON.parse(Get(jsonURL)).map(space => space.open);
-    for(let i = 0; i < statuses.length; i++) {
-        if (!(statuses[i] === spotData[i].open)) {
-            window['spot'+i].setOptions({strokeColor: statuses[i] ? "#00FF00": "#FF0000", fillColor: statuses[i] ? "#00FF00": "#FF0000"});
-            spotData[i].open = statuses[i];
+    let json_obj = JSON.parse(Get(jsonURL));
+    for(let i = 0; i < json_obj.length; i++) {
+        let spot = json_obj[i];
+        if (!(spot.open === window['spot'+spot.id].open)) {
+            window['spot'+spot.id].setOptions({strokeColor: spot.open ? "#00FF00": "#FF0000", fillColor: spot.open ? "#00FF00": "#FF0000"});
+            window['spot'+spot.id].open = spot.open;
         }
     }
 }
