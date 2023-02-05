@@ -22,13 +22,13 @@ def main():
             generator.generate()
 
     serversocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    serversocket.bind(('localhost', 12000))
+    serversocket.bind(("localhost", 12000))
     print("model start listening for request")
 
     while serversocket.listen() != -1:
         connection, address = serversocket.accept()
         data = connection.recv(1024)
-        if data == 'close':
+        if data == "close":
             serversocket.close()
             break
 
@@ -39,33 +39,40 @@ def main():
             detector.detect_motion()
 
 
-
 def parse_args():
-    parser = argparse.ArgumentParser(description='Generates Coordinates File')
+    parser = argparse.ArgumentParser(description="Generates Coordinates File")
 
-    parser.add_argument("--image",
-                        dest="image_file",
-                        required=False,
-                        help="Image file to generate coordinates on")
+    parser.add_argument(
+        "--image",
+        dest="image_file",
+        required=False,
+        help="Image file to generate coordinates on",
+    )
 
-    parser.add_argument("--video",
-                        dest="video_file",
-                        required=True,
-                        help="Video file to detect motion on")
+    parser.add_argument(
+        "--video",
+        dest="video_file",
+        required=True,
+        help="Video file to detect motion on",
+    )
 
-    parser.add_argument("--data",
-                        dest="data_file",
-                        required=True,
-                        help="Data file to be used with OpenCV")
+    parser.add_argument(
+        "--data",
+        dest="data_file",
+        required=True,
+        help="Data file to be used with OpenCV",
+    )
 
-    parser.add_argument("--start-frame",
-                        dest="start_frame",
-                        required=False,
-                        default=1,
-                        help="Starting frame on the video")
+    parser.add_argument(
+        "--start-frame",
+        dest="start_frame",
+        required=False,
+        default=1,
+        help="Starting frame on the video",
+    )
 
     return parser.parse_args()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

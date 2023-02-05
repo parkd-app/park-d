@@ -4,6 +4,7 @@ import logging
 from drawing_utils import draw_contours
 from colors import COLOR_GREEN, COLOR_WHITE, COLOR_BLUE
 
+
 class MotionDetector:
     LAPLACIAN = 1.4
     DETECT_DELAY = 1
@@ -34,9 +35,9 @@ class MotionDetector:
             logging.debug("new_coordinates: %s", new_coordinates)
             k = open_cv.waitKey(1)
             if k == ord("k"):
-                print('rec: ', rect)
-                print('coordinates: ', coordinates)
-                print('new_coordinates: ', new_coordinates)
+                print("rec: ", rect)
+                print("coordinates: ", coordinates)
+                print("new_coordinates: ", new_coordinates)
 
             self.contours.append(coordinates)
             self.bounds.append(rect)
@@ -47,7 +48,8 @@ class MotionDetector:
                 contourIdx=-1,
                 color=255,
                 thickness=-1,
-                lineType=open_cv.LINE_8)
+                lineType=open_cv.LINE_8,
+            )
 
             mask = mask == 255
             self.mask.append(mask)
@@ -56,13 +58,14 @@ class MotionDetector:
         statuses = [False] * len(coordinates_data)
         times = [None] * len(coordinates_data)
         while capture.isOpened():
-
             result, frame = capture.read()
             if frame is None:
                 break
 
             if not result:
-                raise CaptureReadError("Error reading video capture on frame %s" % str(frame))
+                raise CaptureReadError(
+                    "Error reading video capture on frame %s" % str(frame)
+                )
 
             blurred = open_cv.GaussianBlur(frame.copy(), (5, 5), 3)
             grayed = open_cv.cvtColor(blurred, open_cv.COLOR_BGR2GRAY)
@@ -74,36 +77,50 @@ class MotionDetector:
             for index, contour in enumerate(coordinates_data):
                 status = self.__apply(grayed, index, contour)
 
-                if times[index] is not None and \
-                        self.same_status(statuses, index, status):
+                if times[index] is not None and self.same_status(
+                    statuses, index, status
+                ):
                     times[index] = None
                     continue
 
-                if times[index] is not None and \
-                        self.status_changed(statuses, index, status):
-                    if position_in_seconds - times[index] >= \
-                            MotionDetector.DETECT_DELAY:
+                if times[index] is not None and self.status_changed(
+                    statuses, index, status
+                ):
+                    if (
+                        position_in_seconds - times[index]
+                        >= MotionDetector.DETECT_DELAY
+                    ):
                         statuses[index] = status
                         times[index] = None
                         print("Status changed!!!")
                         print("statues ", statuses)
-                        with open('parking_info.txt', 'w') as file:
+                        with open("parking_info.txt", "w") as file:
                             file.write(str(statuses))
                     continue
 
-                if times[index] is None and \
-                        self.status_changed(statuses, index, status):
+                if times[index] is None and self.status_changed(
+                    statuses, index, status
+                ):
                     times[index] = position_in_seconds
 
             for index, p_array in enumerate(coordinates_data):
                 coordinates = self._coordinates(p_array)
                 color = COLOR_GREEN if statuses[index] else COLOR_BLUE
-                draw_contours(new_frame, coordinates, str(p_array["id"] + 1), COLOR_WHITE, color)
+                draw_contours(
+                    new_frame, coordinates, str(p_array["id"] + 1), COLOR_WHITE, color
+                )
 
             open_cv.rectangle(new_frame, (45, 30), (250, 75), (180, 0, 180), -1)
             spaceCount = sum([1 for i in statuses if i == True])
-            open_cv.putText(new_frame, f'Free: {spaceCount}/{len(statuses)}', (50, 60), open_cv.FONT_HERSHEY_SIMPLEX, 0.9,
-                            (255, 255, 255), 2)
+            open_cv.putText(
+                new_frame,
+                f"Free: {spaceCount}/{len(statuses)}",
+                (50, 60),
+                open_cv.FONT_HERSHEY_SIMPLEX,
+                0.9,
+                (255, 255, 255),
+                2,
+            )
             open_cv.imshow(str(self.video), new_frame)
             k = open_cv.waitKey(1)
             if k == ord("q"):
@@ -119,15 +136,15 @@ class MotionDetector:
         rect = self.bounds[index]
         logging.debug("rect: %s", rect)
 
-        roi_gray = grayed[rect[1]:(rect[1] + rect[3]), rect[0]:(rect[0] +
-                                                                rect[2])]
+        roi_gray = grayed[rect[1] : (rect[1] + rect[3]), rect[0] : (rect[0] + rect[2])]
         laplacian = open_cv.Laplacian(roi_gray, open_cv.CV_64F)
 
         coordinates[:, 0] = coordinates[:, 0] - rect[0]
         coordinates[:, 1] = coordinates[:, 1] - rect[1]
 
-        status = np.mean(np.abs(laplacian * self.mask[index]))\
-                 < MotionDetector.LAPLACIAN
+        status = (
+            np.mean(np.abs(laplacian * self.mask[index])) < MotionDetector.LAPLACIAN
+        )
         logging.debug("status: %s", status)
 
         return status
