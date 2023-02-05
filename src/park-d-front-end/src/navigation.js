@@ -1,6 +1,10 @@
 // json parsing
 const jsonURL = 'http://localhost:8000/parking_spaces'
-function Get(jsonURL){
+
+// update status every 2 seconds
+setInterval(updateSpots, 2000);
+
+function Get(jsonURlL){
     var Httpreq = new XMLHttpRequest(); // a new request
     Httpreq.open("GET",jsonURL,false);
     Httpreq.send(null);
@@ -39,6 +43,8 @@ const spotWidth = 0.000025;
 const spotLength = 0.00007;
 const spotAngle = 109;
 
+var spotData;
+
 function initMap(){
     directionsRenderer = new google.maps.DirectionsRenderer({suppressMarkers: true});
     directionsService = new google.maps.DirectionsService();
@@ -46,9 +52,9 @@ function initMap(){
     map = new google.maps.Map(document.getElementById('map'), defaultOptions);
     mapBounds = new google.maps.LatLngBounds();
 
-    let json_obj = JSON.parse(Get(jsonURL));
-    console.log(json_obj);
-    loadSpots(json_obj)
+    spotData = JSON.parse(Get(jsonURL));
+    console.log(spotData);
+    loadSpots(spotData);
 
     google.maps.event.addListener(map, 'click', function(event){
         if (clickChoice == 0)
@@ -216,5 +222,16 @@ function loadSpots(spots)
         });
         window['spot'+numSpots].setMap(map);
         numSpots += 1;
+    }
+}
+
+function updateSpots()
+{
+    let statuses = JSON.parse(Get(jsonURL)).map(space => space.open);
+    for(let i = 0; i < statuses.length; i++) {
+        if (!(statuses[i] === spotData[i].open)) {
+            window['spot'+i].setOptions({strokeColor: statuses[i] ? "#00FF00": "#FF0000", fillColor: statuses[i] ? "#00FF00": "#FF0000"});
+            spotData[i].open = statuses[i];
+        }
     }
 }
