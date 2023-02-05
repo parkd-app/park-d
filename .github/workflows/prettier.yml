@@ -1,0 +1,22 @@
+name: Prettier Check
+
+on:
+  push:
+    paths:
+      - "src/park-d-front-end/**"
+  pull_request:
+    paths:
+      - "src/park-d-front-end/**"
+
+jobs:
+  prettier-linting:
+    name: Run Prettier Check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Install packages
+        run: npm install prettier
+        working-directory: ./src/park-d-front-end
+      - name: Prettier
+        run: npm run style:all
+        working-directory: ./src/park-d-front-end
