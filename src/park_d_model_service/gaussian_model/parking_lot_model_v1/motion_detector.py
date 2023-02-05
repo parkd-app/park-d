@@ -72,7 +72,8 @@ class MotionDetector:
             new_frame = frame.copy()
             logging.debug("new_frame: %s", new_frame)
 
-            position_in_seconds = capture.get(open_cv.CAP_PROP_POS_MSEC) / 1000.0
+            position_in_seconds = capture.get(open_cv.CAP_PROP_POS_MSEC) \
+                                  / 1000.0
 
             for index, contour in enumerate(coordinates_data):
                 status = self.__apply(grayed, index, contour)
@@ -107,11 +108,13 @@ class MotionDetector:
                 coordinates = self._coordinates(p_array)
                 color = COLOR_GREEN if statuses[index] else COLOR_BLUE
                 draw_contours(
-                    new_frame, coordinates, str(p_array["id"] + 1), COLOR_WHITE, color
+                    new_frame, coordinates, str(p_array["id"] + 1),
+                    COLOR_WHITE, color
                 )
 
-            open_cv.rectangle(new_frame, (45, 30), (250, 75), (180, 0, 180), -1)
-            spaceCount = sum([1 for i in statuses if i == True])
+            open_cv.rectangle(new_frame, (45, 30), (250, 75),
+                              (180, 0, 180), -1)
+            spaceCount = sum([1 for i in statuses if i])
             open_cv.putText(
                 new_frame,
                 f"Free: {spaceCount}/{len(statuses)}",
@@ -136,14 +139,16 @@ class MotionDetector:
         rect = self.bounds[index]
         logging.debug("rect: %s", rect)
 
-        roi_gray = grayed[rect[1] : (rect[1] + rect[3]), rect[0] : (rect[0] + rect[2])]
+        roi_gray = grayed[rect[1]: (rect[1] + rect[3]),
+                   rect[0]: (rect[0] + rect[2])]
         laplacian = open_cv.Laplacian(roi_gray, open_cv.CV_64F)
 
         coordinates[:, 0] = coordinates[:, 0] - rect[0]
         coordinates[:, 1] = coordinates[:, 1] - rect[1]
 
         status = (
-            np.mean(np.abs(laplacian * self.mask[index])) < MotionDetector.LAPLACIAN
+            np.mean(np.abs(laplacian * self.mask[index]))
+            < MotionDetector.LAPLACIAN
         )
         logging.debug("status: %s", status)
 

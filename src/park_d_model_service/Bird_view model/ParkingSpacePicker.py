@@ -25,7 +25,8 @@ def mouseClick(events, x, y, flags, params):
 while True:
     img = cv2.imread("frame.png")
     for pos in posList:
-        cv2.rectangle(img, pos, (pos[0] + rectW, pos[1] + rectH), (0, 0, 255), 2)
+        cv2.rectangle(img, pos, (pos[0] + rectW, pos[1] + rectH),
+                      (0, 0, 255), 2)
 
     cv2.imshow("Image", img)
     cv2.setMouseCallback("Image", mouseClick)

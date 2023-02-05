@@ -1,9 +1,5 @@
 import cv2
-import os
 import numpy as np
-import io
-import time
-
 
 cap = cv2.VideoCapture(1)
 print(cap.isOpened())
@@ -39,27 +35,28 @@ while True:
 
     mask = cv2.morphologyEx(mask, cv2.MORPH_CLOSE, kernel)
 
-    # TODO CHANGE VALUE 15 12, 115 1, 113, 3, adaptive method, thresh_binary_inv
     mask = cv2.adaptiveThreshold(
-        mask, 255, cv2.ADAPTIVE_THRESH_MEAN_C, cv2.THRESH_BINARY, 15, 4
+        mask, 255, cv2.ADAPTIVE_THRESH_MEAN_C,
+        cv2.THRESH_BINARY, 15, 4
     )
 
-    contours, hierarchy = cv2.findContours(mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_NONE)
+    contours, hierarchy = cv2.findContours(mask, cv2.RETR_TREE,
+                                           cv2.CHAIN_APPROX_NONE)
     hull = [cv2.convexHull(c) for c in contours]
 
     hull.sort(key=lambda x: cv2.boundingRect(x)[0])
     number_box = 1
 
     for contour in hull:
-        approx = cv2.approxPolyDP(contour, 0.01 * cv2.arcLength(contour, True), True)
+        approx = cv2.approxPolyDP(contour, 0.01 *
+                                  cv2.arcLength(contour, True), True)
 
         # if it is square
         if len(approx) == 4:
             x, y, w, h = cv2.boundingRect(contour)
 
-            # TODO change the width value depending on camera position
             if w > min_width and w < max_width:
-                roi = canny[y : y + h, x : x + w]
+                roi = canny[y: y + h, x: x + w]
                 cv2.putText(
                     frame,
                     str(number_box),
@@ -73,13 +70,15 @@ while True:
                 roi_value = cv2.countNonZero(roi)
                 if roi_value > threshold_detection:
                     # print(str(number_box) + " got parked car")
-                    cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 0, 255), 2)
+                    cv2.rectangle(frame, (x, y), (x + w, y + h),
+                                  (0, 0, 255), 2)
                     print("spot detected!")
 
                     # cloud vision api executes
                     cv2.imwrite("parking_car.jpg", frame)
                     print(str(number_box) + " has car")
-                    cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 0, 255), 2)
+                    cv2.rectangle(frame, (x, y), (x + w, y + h),
+                                  (0, 0, 255), 2)
 
                 number_box += 1
 

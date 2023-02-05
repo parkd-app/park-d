@@ -48,7 +48,8 @@ class CoordinatesGenerator:
 
     def __handle_click_progress(self):
         open_cv.line(
-            self.image, self.coordinates[-2], self.coordinates[-1], (255, 0, 0), 1
+            self.image, self.coordinates[-2],
+            self.coordinates[-1], (255, 0, 0), 1
         )
 
     def __handle_done(self):
