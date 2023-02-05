@@ -92,6 +92,19 @@
   left: 40px;
   overflow: hidden;
 }
+.admin_bg1 {
+  width: 105px;
+  height: 60px;
+  background: rgba(0, 0, 0, 0);
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  opacity: 1;
+  position: absolute;
+  top: 12px;
+  left: 1189px;
+  overflow: hidden;
+}
 .logout_bg1 {
   width: 105px;
   height: 60px;
