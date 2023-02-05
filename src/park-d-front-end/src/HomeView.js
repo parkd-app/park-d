@@ -1,10 +1,21 @@
 const jsonURL = "http://localhost:8000/parking_spaces";
+const setUpURL = "http://127.0.0.1:5000/set_up";
 
 function Get(URL) {
   var Httpreq = new XMLHttpRequest(); // a new request
   Httpreq.open("GET", URL, false);
   Httpreq.send(null);
   return Httpreq.responseText;
+}
+
+function setUpModel(URL) {
+  fetch(URL + "?angle=bird", {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    }
+  });
 }
 
 setInterval(updateSpots, 2000);
@@ -143,6 +154,7 @@ function initMap() {
   directionsService = new google.maps.DirectionsService();
 
   map = new google.maps.Map(document.getElementById("map"), defaultOptions);
+  setUpModel(setUpURL);
   loadAllSpots();
 
   google.maps.event.addListener(map, "click", function (event) {
