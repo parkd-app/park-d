@@ -86,7 +86,9 @@ def get_snapshot():
                 "./static_resources/parking_lot_2.png", mimetype="image/png"
             )
         else:
-            ret = send_file("./static_resources/bird.png", mimetype="image/png")
+            ret = send_file(
+                "./static_resources/bird.png", mimetype="image/png"
+            )
 
     return ret
 

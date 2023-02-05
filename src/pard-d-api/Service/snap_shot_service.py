@@ -26,4 +26,3 @@ def save_frame_sec(video_path, sec, result_path):
         logging.info("write to path")
         cv2.imwrite(result_path, frame)
     return True
-
