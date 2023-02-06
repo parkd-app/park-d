@@ -296,8 +296,8 @@ function uploadSpots() {
       coords.push([coord.lat(), coord.lng()]);
     }
     birdSpotData[i].corners = coords;
-    Post(postURL + "?angle=bird");
   }
+  Post(postURL + "?angle=bird", birdSpotData);
   for (let i = 0; i < numSideSpots; i++) {
     let coords = [];
     let path = window["sspot" + sideSpotData[i].id].getPath();
@@ -306,8 +306,8 @@ function uploadSpots() {
       coords.push([coord.lat(), coord.lng()]);
     }
     sideSpotData[i].corners = coords;
-    Post(postURL + "?angle=side");
   }
+  Post(postURL + "?angle=side", sideSpotData);
   // for (let i = initialSpots; i < numSpots; i++) {
   //   let coords = [];
   //   let path = window["spot" + i].getPath();
