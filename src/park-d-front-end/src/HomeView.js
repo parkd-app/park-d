@@ -8,20 +8,16 @@ function Get(URL) {
   return Httpreq.responseText;
 }
 
-function setup() {
-  setUpModel(setUpURL);
+function setupBird() {
+  setUpModel(setUpURL, "bird");
 }
 
-function setUpModel(URL) {
-  fetch(URL + "?angle=bird", {
-    method: "POST",
-    headers: {
-      Accept: "text/plain",
-      "Content-Type": "text/plain",
-    },
-    body: "set me up",
-  });
-  fetch(URL + "?angle=side", {
+function setupSide() {
+  setUpModel(setUpURL, "side");
+}
+
+function setUpModel(URL, angle) {
+  fetch(URL + "?angle=" + angle, {
     method: "POST",
     headers: {
       Accept: "text/plain",
