@@ -31,7 +31,7 @@
   opacity: 1;
   position: relative;
   top: 100px;
-  left: 50px;
+  left: 15%;
   overflow: hidden;
 }
 .header {
@@ -158,4 +158,80 @@
   font-size: 20px;
   opacity: 1;
   text-align: left;
+}
+.drawtool_bg1 {
+  width: 85px;
+  height: 30px;
+  background: rgba(0, 0, 0, 0);
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  opacity: 1;
+  position: absolute;
+  top: 12px;
+  left: 80px;
+  overflow: hidden;
+}
+.drawtool_bg2 {
+  width: 85px;
+  height: 30px;
+  background: rgba(0, 0, 0, 0);
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  opacity: 1;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  overflow: hidden;
+}
+.drawtool_border {
+  width: 85px;
+  height: 30px;
+  background: rgba(249, 255, 0, 1);
+  opacity: 1;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  border: 3px solid rgba(249, 255, 0, 0.800000011920929);
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+.drawtool_text {
+  width: auto;
+  color: rgba(31, 31, 31, 1);
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  font-family: Montserrat;
+  font-weight: Medium;
+  font-size: 13px;
+  opacity: 1;
+  text-align: left;
+}
+.ann_image {
+  display: flex;
+  justify-content: center;
+  top: 100px;
+  border: 3px solid #939393;
+  border-radius: 4px;
+  padding: 10px;
+  max-width: 1200px;
+}
+.button {
+  background-color: rgba(249, 255, 0, 1); /* Green */
+  border: 2px solid black; 
+  color: black;
+  padding: 10px 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-family: Montserrat;
+  font-weight: Medium;
+  font-size: 16px;
+  border-radius: 8px;
 }
