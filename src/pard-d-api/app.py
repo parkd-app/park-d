@@ -2,7 +2,7 @@ import sys
 import os
 from flask import Flask, send_file
 import logging
-from Service import parsing_service, slow_initiate_service, model_selection_service
+from Service import parsing_service, slow_initiate_service, model_selection_service,save_coord
 from Constants import constants
 from flask_cors import CORS, cross_origin
 import cv2
@@ -38,11 +38,22 @@ def setup_logging():
             app.logger.handler_set = True
         return app.logger
 
+@app.route("/save_coord", methods=['POST'])
+def save_coord():
+    angle = request.args.get('angle')
+    data = request.json
+    ret = save_coord.save_coordinates(data, angle)
+    return {'result': True}
 
 @app.route("/rt_parking_info", methods=["GET"])
 @cross_origin()
 def requires_parking_spot():  # put application's code here
-    ret = parsing_service.parsing((constants.PARKING_INFO_PATH))
+    angle = request.args.get('angle')
+    if angle == 'side':
+        path = constants.PARKING_INFO_PATH
+    else:
+        path = constants.PARKING_INFO_PATH_BIRD
+    ret = parsing_service.parsing(path, angle)
     app.logger.info("ret: %s", ret)
     # response = Flask.jsonify({'parking_spaces': ret})
     # response.headers.add('Access-Control-Allow-Origin', '*')

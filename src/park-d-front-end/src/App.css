@@ -24,13 +24,13 @@
   bottom: 5%;
 }
 
-.ParkingPref button{
+.ParkingPref button {
   border: 2px solid #000;
   text-align: center;
   padding: 10px;
   font-size: medium;
   font-weight: 600;
-  color:#000;
+  color: #000;
   background-color: #fff;
   border-radius: 12px;
 }
@@ -70,7 +70,7 @@
   padding: 10px;
   font-size: medium;
   font-weight: 600;
-  color:#000;
+  color: #000;
   background-color: #fff;
   border-radius: 12px;
 }

@@ -1,4 +1,5 @@
-def parsing(path):
+import pickle
+def parsing(path, angle):
     with open(path, 'r') as f:
         parking_info = f.read()
 
@@ -11,10 +12,15 @@ def parsing(path):
             val.append(True)
         else:
             val.append(False)
-    for i, ele in enumerate(val):
-        ret.append({
-            'id': i + 1,
-            'status': ele
-        })
 
-    return ret
+    with open(
+            "C:\\Users\\g7543\\OneDrive\\桌面\\Capstone_project"
+            "\\park-d\\src\\pard-d-api\\static_resources\\coordinates_" + angle, "rb"
+    ) as f:
+        posList = pickle.load(f)
+        spaces = posList["parking_spaces"]
+
+    for i, spot in enumerate(spaces):
+        spot["open"] = val[i]
+
+    return posList
