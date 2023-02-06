@@ -1,28 +1,9 @@
-// async function fetchAnnotations() {
-//   try {
-//     const response = await fetch("http://localhost:8000/annotations", {
-//       method: "GET",
-//       credentials: "same-origin",
-//     });
-//     const obj = await response.json();
-//     return obj;
-//   } catch (error) {
-//     console.error(error);
-//   }
-// }
-
-// async function renderAnnotations() {
-//   const obj = await fetchAnnotations();
-//   console.log(obj);
-//   let str = JSON.stringify(obj);
-//   console.log(str);
-//   return str;
-// }
+var view = "bird";
 
 function writeToJSON(annotation, currAnnotations) {
   newId = currAnnotations.length - 2;
   annotation.id = newId;
-  fetch("http://localhost:8000/annotations", {
+  fetch("http://localhost:8000/annotations_" + view, {
     method: "POST",
     headers: {
       Accept: "application/json",
@@ -35,7 +16,7 @@ function writeToJSON(annotation, currAnnotations) {
 }
 
 function deleteAnnotation(annotation) {
-  fetch("http://localhost:8000/annotations/" + annotation.id, {
+  fetch("http://localhost:8000/annotations_" + view + "/" + annotation.id, {
     method: "DELETE",
     headers: {
       Accept: "application/json",
@@ -59,4 +40,11 @@ function getImage(view) {
       console.log(imageObjectURL);
       return imageObjectURL;
     });
+}
+function getView() {
+  return view;
+}
+
+function setView(newView) {
+  view = newView;
 }

@@ -39,28 +39,8 @@
                 <button class="button" id="birdbtn" onclick="show('bird')">Load Bird View</button>
             </p>
             <div class="ann_image">
-                <img id="test_lot" src="http://localhost:8000/assets/images/lot_side.png" style="max-width:100%;">
+                <img id="test_lot" src="http://localhost:8000/assets/images/lot_bird.png" style="max-width:100%;">
             </div>
-            <script>
-                function show(view) {
-
-                    /* Access image by id and change
-                    the display property to block*/
-                    // document.getElementById('image')
-                    //     .style.display = "block";
-
-                    // document.getElementById('btnID')
-                    //     .style.display = "none";
-                    if (view == "side") {
-                        document.getElementById('test_lot')
-                            .src = "http://localhost:8000/assets/images/lot_side.png";
-                    } else {
-                        document.getElementById('test_lot')
-                            .src = "http://localhost:8000/assets/images/lot_bird.png";
-                    }
-
-                }
-            </script>
         </div>
     </div>
     <script>
@@ -118,7 +98,7 @@
                 // console.log('leave', annotation);
             });
 
-            anno.loadAnnotations('http://localhost:8000/annotations');
+            anno.loadAnnotations('http://localhost:8000/annotations_bird');
 
             var toolToggle = document.getElementById('current-tool');
             toolToggle.addEventListener('click', function () {
@@ -130,6 +110,20 @@
                     anno.setDrawingTool('rect');
                 }
             });
+        }
+        function show(view) {
+            if (view == "side") {
+                document.getElementById('test_lot')
+                    .src = "http://localhost:8000/assets/images/lot_side.png";
+                    anno.loadAnnotations('http://localhost:8000/annotations_side');
+                    setView("side");
+            } else {
+                document.getElementById('test_lot')
+                    .src = "http://localhost:8000/assets/images/lot_bird.png";
+                    anno.loadAnnotations('http://localhost:8000/annotations_bird');
+                    setView("bird");
+            }
+
         }
     </script>
     <script src="./Annotate.js"></script>
