@@ -8,6 +8,10 @@ function Get(URL) {
   return Httpreq.responseText;
 }
 
+function setup() {
+  setUpModel(setUpURL)
+}
+
 function setUpModel(URL) {
   fetch(URL + "?angle=bird", {
     method: "POST",
@@ -163,7 +167,6 @@ function initMap() {
   directionsService = new google.maps.DirectionsService();
 
   map = new google.maps.Map(document.getElementById("map"), defaultOptions);
-  setUpModel(setUpURL);
   loadAllSpots();
 
   google.maps.event.addListener(map, "click", function (event) {
@@ -372,8 +375,8 @@ function getDocEle(className) {
 }
 
 function loadAllSpots() {
-  birdSpotData = JSON.parse(Get(jsonURL + "?angle=bird"))['parking_spaces'];
-  sideSpotData = JSON.parse(Get(jsonURL + "?angle=side"))['parking_spaces'];
+  birdSpotData = JSON.parse(Get(jsonURL + "?angle=bird"))["parking_spaces"];
+  sideSpotData = JSON.parse(Get(jsonURL + "?angle=side"))["parking_spaces"];
   numBirdSpots = birdSpotData.length;
   numSideSpots = sideSpotData.length;
 
@@ -424,8 +427,7 @@ function loadAllSpots() {
 }
 
 function updateSpots() {
-  console.log("got here")
-  var json_obj = JSON.parse(Get(jsonURL + "?angle=bird"))['parking_spaces'];
+  var json_obj = JSON.parse(Get(jsonURL + "?angle=bird"))["parking_spaces"];
   for (let i = 0; i < json_obj.length; i++) {
     let spot = json_obj[i];
     if (!(spot.open === window["bspot" + spot.id].open)) {
@@ -436,7 +438,7 @@ function updateSpots() {
       window["bspot" + spot.id].open = spot.open;
     }
   }
-  json_obj = JSON.parse(Get(jsonURL + "?angle=side"))['parking_spaces'];
+  json_obj = JSON.parse(Get(jsonURL + "?angle=side"))["parking_spaces"];
   for (let i = 0; i < json_obj.length; i++) {
     let spot = json_obj[i];
     if (!(spot.open === window["sspot" + spot.id].open)) {
