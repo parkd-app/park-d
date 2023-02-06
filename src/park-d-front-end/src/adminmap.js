@@ -14,16 +14,18 @@ function setUpModel(URL) {
   fetch(URL + "?angle=bird", {
     method: "POST",
     headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
+      Accept: "text/plain",
+      "Content-Type": "text/plain",
     },
+    body: "set me up",
   });
   fetch(URL + "?angle=side", {
     method: "POST",
     headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
+      Accept: "text/plain",
+      "Content-Type": "text/plain",
     },
+    body: "set me up",
   });
 }
 
