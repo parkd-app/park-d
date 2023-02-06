@@ -234,4 +234,5 @@
   font-weight: Medium;
   font-size: 16px;
   border-radius: 8px;
+  min-width:110px;
 }

@@ -35,35 +35,32 @@
         <div class="annotate-window">
             <p>
                 <button class="button" id="current-tool">Rectangle</button>
-                <!-- <button id="current-tool">Rectangle</button> -->
-                <!-- <button id="load-side" onclick="loadSide()">Load Side View </button>
-                <button id="load-side" onclick="loadBird()">Load Bird View</button> -->
+                <button class="button" id="sidebtn" onclick="show('side')">Load Side View</button>
+                <button class="button" id="birdbtn" onclick="show('bird')">Load Bird View</button>
             </p>
             <div class="ann_image">
-                <img id="test_lot" src="http://localhost:8000/assets/images/lot_bird.png" style="max-width:100%;">
-                <!-- <script>
-                    // var up = document.getElementById('GFG_UP');
-                    // up.innerHTML = "Click on the button to add image element";
-                    // var down = document.getElementById('GFG_DOWN');
-    
-                    function loadSide() {
-                        var img = new Image();
-                        img.src =
-                            'http://localhost:8000/public/assets/images/lot_side';
-                        img.id = "test_lot";
-                        document.getElementById('body').appendChild(img);
-                        down.innerHTML = "Image Element Added.";
-                    }
-                    function loadBird() {
-                        var img = new Image();
-                        img.src =
-                            'http://localhost:8000/public/assets/images/lot_bird';
-                        img.id = "test_lot";
-                        document.getElementById('body').appendChild(img);
-                        down.innerHTML = "Image Element Added.";
-                    }
-                </script> -->
+                <img id="test_lot" src="http://localhost:8000/assets/images/lot_side.png" style="max-width:100%;">
             </div>
+            <script>
+                function show(view) {
+
+                    /* Access image by id and change
+                    the display property to block*/
+                    // document.getElementById('image')
+                    //     .style.display = "block";
+
+                    // document.getElementById('btnID')
+                    //     .style.display = "none";
+                    if (view == "side") {
+                        document.getElementById('test_lot')
+                            .src = "http://localhost:8000/assets/images/lot_side.png";
+                    } else {
+                        document.getElementById('test_lot')
+                            .src = "http://localhost:8000/assets/images/lot_bird.png";
+                    }
+
+                }
+            </script>
         </div>
     </div>
     <script>
