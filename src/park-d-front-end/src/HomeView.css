@@ -213,6 +213,60 @@
   opacity: 1;
   text-align: left;
 }
+.adminmap_bg1 {
+  width: 130px;
+  height: 60px;
+  background: rgba(0, 0, 0, 0);
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  opacity: 1;
+  position: absolute;
+  top: 12px;
+  left: 1000px;
+  overflow: hidden;
+}
+.adminmap_bg2 {
+  width: 130px;
+  height: 60px;
+  background: rgba(0, 0, 0, 0);
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  opacity: 1;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  overflow: hidden;
+}
+.adminmap_border {
+  width: 130px;
+  height: 60px;
+  background: rgba(249, 255, 0, 1);
+  opacity: 1;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  border: 3px solid rgba(249, 255, 0, 0.800000011920929);
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+.adminmap_text {
+  width: auto;
+  color: rgba(31, 31, 31, 1);
+  position: absolute;
+  top: 18px;
+  left: 16px;
+  font-family: Montserrat;
+  font-weight: Medium;
+  font-size: 20px;
+  opacity: 1;
+  text-align: left;
+}
 .cogwheel_bg1 {
   width: 50px;
   height: 50px;
