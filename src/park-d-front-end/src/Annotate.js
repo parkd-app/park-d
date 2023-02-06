@@ -6,7 +6,8 @@ var birdURL = "http://127.0.0.1:5000/get_parking_snapshot?angle=bird";
 
 var currW3cBird = [];
 var currW3cSide = [];
-var workingAnnotations = [];
+var workingBird = [];
+var workingSide = [];
 
 function Get(URL) {
   var Httpreq = new XMLHttpRequest(); // a new request
@@ -44,7 +45,7 @@ function writeToJSON(annotation, currAnnotations) {
     // console.log(annotation);
     currW3cBird.push(annotation);
     // console.log(currW3cBird);
-    workingAnnotations.push([w3cToBird(annotation)]);
+    workingBird.push([w3cToBird(annotation)]);
     // console.log(workingAnnotations);
   } else {
     newId = currW3cSide.length - 2;
@@ -52,7 +53,7 @@ function writeToJSON(annotation, currAnnotations) {
     // console.log(annotation);
     currW3cSide.push(annotation);
     // console.log(currW3cBird);
-    workingAnnotations.push([w3cToSide(annotation)]);
+    workingSide.push([w3cToSide(annotation)]);
     // console.log(workingAnnotations);
   }
 
@@ -163,22 +164,21 @@ function saveAnn() {
 }
 
 function saveBirdAnn() {
-  console.log(workingAnnotations);
   var birdForm = {
     identifier: "bird",
-    coordinates: workingAnnotations,
+    coordinates: workingBird,
   };
   Post(coordURL, birdForm);
-  workingAnnotations = [];
+  workingBird = [];
 }
 
 function saveSideAnn() {
   var sideForm = {
     identifier: "side",
-    coordinates: workingAnnotations,
+    coordinates: workingSide,
   };
   Post(coordURL, sideForm);
-  workingAnnotations = [];
+  workingSide = [];
 }
 
 function getW3cBird() {
