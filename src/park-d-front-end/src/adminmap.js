@@ -1,5 +1,6 @@
 // json parsing
-const jsonURL = "http://localhost:8000/parking_spaces";
+const jsonURL = "http://127.0.0.1:5000/rt_parking_info";
+const postURL = "http://127.0.0.1:5000/post_coord";
 const setUpURL = "http://127.0.0.1:5000/set_up";
 
 function Get(URL) {
@@ -11,6 +12,13 @@ function Get(URL) {
 
 function setUpModel(URL) {
   fetch(URL + "?angle=bird", {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+  });
+  fetch(URL + "?angle=side", {
     method: "POST",
     headers: {
       Accept: "application/json",
@@ -72,8 +80,10 @@ var adding = false;
 var pointsClicked = 0;
 var corners = [];
 
-var spotData;
-var numSpots = 0;
+var birdSpotData;
+var sideSpotData;
+var numBirdSpots;
+var numSideSpots;
 var initialSpots = 0;
 
 function initMap() {
@@ -86,7 +96,6 @@ function initMap() {
   mapBounds = new google.maps.LatLngBounds();
 
   // load and put spots
-  setUpModel(setUpURL);
   loadAllSpots();
 
   google.maps.event.addListener(map, "click", function (event) {
@@ -223,16 +232,17 @@ function putSpot(corners) {
 
 // loading all spots from remote
 function loadAllSpots() {
-  spotData = JSON.parse(Get(jsonURL));
-  numSpots = spotData.length;
-  initialSpots = numSpots;
+  birdSpotData = JSON.parse(Get(jsonURL + "?angle=bird"))["parking_spaces"];
+  sideSpotData = JSON.parse(Get(jsonURL + "?angle=side"))["parking_spaces"];
+  numBirdSpots = birdSpotData.length;
+  numSideSpots = sideSpotData.length;
 
-  for (let i = 0; i < numSpots; i++) {
-    let coords = spotData[i].corners;
-    let open = spotData[i].open;
+  for (let i = 0; i < numBirdSpots; i++) {
+    let coords = birdSpotData[i].corners;
+    let open = birdSpotData[i].open;
 
     // spots are stored here, by ID
-    window["spot" + spotData[i].id] = new google.maps.Polygon({
+    window["bspot" + birdSpotData[i].id] = new google.maps.Polygon({
       paths: [
         { lat: coords[0][0], lng: coords[0][1] },
         { lat: coords[1][0], lng: coords[1][1] },
@@ -244,39 +254,70 @@ function loadAllSpots() {
       strokeWeight: 2,
       fillColor: open ? "#00FF00" : "#FF0000",
       fillOpacity: 0.35,
-      editable: true,
-      draggable: true,
+      clickable: false,
       geodesic: true,
     });
-    window["spot" + spotData[i].id].setMap(map);
+    window["bspot" + birdSpotData[i].id].setMap(map);
+  }
+  for (let i = 0; i < numSideSpots; i++) {
+    let coords = sideSpotData[i].corners;
+    let open = sideSpotData[i].open;
+
+    // spots are stored here, by ID
+    window["sspot" + sideSpotData[i].id] = new google.maps.Polygon({
+      paths: [
+        { lat: coords[0][0], lng: coords[0][1] },
+        { lat: coords[1][0], lng: coords[1][1] },
+        { lat: coords[2][0], lng: coords[2][1] },
+        { lat: coords[3][0], lng: coords[3][1] },
+      ],
+      strokeColor: open ? "#00FF00" : "#FF0000",
+      strokeOpacity: 0.8,
+      strokeWeight: 2,
+      fillColor: open ? "#00FF00" : "#FF0000",
+      fillOpacity: 0.35,
+      clickable: false,
+      geodesic: true,
+    });
+    window["sspot" + sideSpotData[i].id].setMap(map);
   }
 }
 
 function uploadSpots() {
-  for (let i = 0; i < initialSpots; i++) {
+  for (let i = 0; i < numBirdSpots; i++) {
     let coords = [];
-    let path = window["spot" + spotData[i].id].getPath();
+    let path = window["bspot" + birdSpotData[i].id].getPath();
     for (let j = 0; j < 4; j++) {
       let coord = path.getAt(j);
       coords.push([coord.lat(), coord.lng()]);
     }
-    spotData[i].corners = coords;
-    Put(jsonURL + "/" + i, spotData[i]);
+    birdSpotData[i].corners = coords;
+    Post(postURL + "?angle=bird");
   }
-  for (let i = initialSpots; i < numSpots; i++) {
+  for (let i = 0; i < numSideSpots; i++) {
     let coords = [];
-    let path = window["spot" + i].getPath();
+    let path = window["sspot" + sideSpotData[i].id].getPath();
     for (let j = 0; j < 4; j++) {
       let coord = path.getAt(j);
       coords.push([coord.lat(), coord.lng()]);
     }
-    spotData[i] = {};
-    spotData[i].id = i;
-    spotData[i].coordinates = [];
-    spotData[i].corners = coords;
-    spotData[i].open = false;
-    Post(jsonURL, spotData[i]);
+    sideSpotData[i].corners = coords;
+    Post(postURL + "?angle=side");
   }
+  // for (let i = initialSpots; i < numSpots; i++) {
+  //   let coords = [];
+  //   let path = window["spot" + i].getPath();
+  //   for (let j = 0; j < 4; j++) {
+  //     let coord = path.getAt(j);
+  //     coords.push([coord.lat(), coord.lng()]);
+  //   }
+  //   spotData[i] = {};
+  //   spotData[i].id = i;
+  //   spotData[i].coordinates = [];
+  //   spotData[i].corners = coords;
+  //   spotData[i].open = false;
+  //   Post(jsonURL, spotData[i]);
+  // }
   document.getElementById("SaveButton").textContent = "Save Successful";
   setTimeout(() => {
     document.getElementById("SaveButton").textContent = "Save Changes";
