@@ -1,12 +1,12 @@
 import pickle
 
-
+#coordinates_3 for test
 def saved_coordinates(data):
     if data['identifier'] == 'side':
         with open(
                 "C:\\Users\\g7543\\OneDrive\\桌面\\Capstone_project\\park-d\\"
                 "src\\park_d_model_service\\gaussian_model\\"
-                "parking_lot_model_v1\\data\\coordinates_2.yml",
+                "parking_lot_model_v1\\data\\coordinates_3.yml",
                 "w+"
         ) as points:
             coorall = data['coordinates']
@@ -37,6 +37,7 @@ def saved_coordinates(data):
                         + str(coordinates[3][1])
                         + "]]\n"
                     )
+    #carpost2 for setup
     else:
         posList = []
         for pairs in data['coordinates']:

@@ -37,10 +37,11 @@ def setup_logging():
             app.logger.propagate = False
             app.logger.handler_set = True
         return app.logger
-
+#david
 @app.route("/save_coord", methods=['POST'])
 def save_coord():
     angle = request.args.get('angle')
+    print("angle from save: ", angle)
     data = request.json
     ret = save_coord_service.save_coordinates(data, angle)
     return {'result': True}
@@ -59,7 +60,7 @@ def requires_parking_spot():  # put application's code here
     # response.headers.add('Access-Control-Allow-Origin', '*')
     return {"parking_spaces": ret}
 
-
+#jon
 @app.route("/req_coordinate", methods=["POST"])
 def requires_coordinate():
     data = request.json
@@ -70,7 +71,6 @@ def requires_coordinate():
 @app.route("/set_up", methods=["POST"])
 def slow_initiate():
     model = request.args.get("angle")
-    app.logger.info("model", model)
     ret = slow_initiate_service.start(model)
     return {"result": ret}
 
@@ -98,10 +98,12 @@ def get_snapshot():
             ret = send_file(
                 "./static_resources/parking_lot_2.png", mimetype="image/png"
             )
+            print("get side")
         else:
             ret = send_file(
                 "./static_resources/bird.png", mimetype="image/png"
             )
+            print("get bird")
 
     return ret
 
