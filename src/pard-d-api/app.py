@@ -2,7 +2,7 @@ import sys
 import os
 from flask import Flask, send_file
 import logging
-from Service import parsing_service, slow_initiate_service, model_selection_service,save_coord
+from Service import parsing_service, slow_initiate_service, model_selection_service, save_coord_service
 from Constants import constants
 from flask_cors import CORS, cross_origin
 import cv2
@@ -42,7 +42,7 @@ def setup_logging():
 def save_coord():
     angle = request.args.get('angle')
     data = request.json
-    ret = save_coord.save_coordinates(data, angle)
+    ret = save_coord_service.save_coordinates(data, angle)
     return {'result': True}
 
 @app.route("/rt_parking_info", methods=["GET"])
@@ -57,7 +57,7 @@ def requires_parking_spot():  # put application's code here
     app.logger.info("ret: %s", ret)
     # response = Flask.jsonify({'parking_spaces': ret})
     # response.headers.add('Access-Control-Allow-Origin', '*')
-    return {"parking_space": ret}
+    return {"parking_spaces": ret}
 
 
 @app.route("/req_coordinate", methods=["POST"])

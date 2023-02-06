@@ -5,11 +5,13 @@ PARKING_INFO_PATH = (
     "parking_lot_model_v1\\parking_info.txt"
 )
 
-PARKING_INFO_PATH_BIRD = (
-    "C:\\Users\\g7543\\OneDrive\\桌面\\"
+ROOT =  ( "C:\\Users\\g7543\\OneDrive\\桌面\\"
     "Capstone_project\\park-d\\"
-    "src\\park_d_model_service\\Bird_view_model\\"
-    "parking_info.txt"
+    "src\\park_d_model_service\\"
+)
+
+PARKING_INFO_PATH_BIRD = (
+   ROOT + "\\Bird_view model\\parking_info.txt"
 )
 
 VIDEO_PATH_BIRD = (

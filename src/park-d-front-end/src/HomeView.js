@@ -372,8 +372,8 @@ function getDocEle(className) {
 }
 
 function loadAllSpots() {
-  birdSpotData = JSON.parse(Get(jsonURL + "?angle=bird"));
-  sideSpotData = JSON.parse(Get(jsonURL + "?angle=side"));
+  birdSpotData = JSON.parse(Get(jsonURL + "?angle=bird"))['parking_spaces'];
+  sideSpotData = JSON.parse(Get(jsonURL + "?angle=side"))['parking_spaces'];
   numBirdSpots = birdSpotData.length;
   numSideSpots = sideSpotData.length;
 
@@ -424,7 +424,8 @@ function loadAllSpots() {
 }
 
 function updateSpots() {
-  var json_obj = JSON.parse(Get(jsonURL + "?angle=bird"));
+  console.log("got here")
+  var json_obj = JSON.parse(Get(jsonURL + "?angle=bird"))['parking_spaces'];
   for (let i = 0; i < json_obj.length; i++) {
     let spot = json_obj[i];
     if (!(spot.open === window["bspot" + spot.id].open)) {
@@ -435,10 +436,11 @@ function updateSpots() {
       window["bspot" + spot.id].open = spot.open;
     }
   }
-  json_obj = JSON.parse(Get(jsonURL + "?angle=side"));
+  json_obj = JSON.parse(Get(jsonURL + "?angle=side"))['parking_spaces'];
   for (let i = 0; i < json_obj.length; i++) {
     let spot = json_obj[i];
     if (!(spot.open === window["sspot" + spot.id].open)) {
+      console.log(spot.id);
       window["sspot" + spot.id].setOptions({
         strokeColor: spot.open ? "#00FF00" : "#FF0000",
         fillColor: spot.open ? "#00FF00" : "#FF0000",

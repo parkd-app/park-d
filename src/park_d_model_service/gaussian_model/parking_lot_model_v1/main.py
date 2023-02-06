@@ -6,7 +6,7 @@ import logging
 import yaml
 import socket
 
-
+# python main.py --image images/parking_lot_2.png --data data/coordinates_2.yml --video videos/parking_lot_2.mp4 --start-frame 200
 def main():
     logging.basicConfig(level=logging.INFO)
 

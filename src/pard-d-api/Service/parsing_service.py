@@ -12,6 +12,12 @@ def parsing(path, angle):
             val.append(True)
         else:
             val.append(False)
+    # for i, ele in enumerate(val):
+    #     ret.append({
+    #         'id': i + 1,
+    #         'status': ele
+    #     })
+    print(val)
 
     with open(
             "C:\\Users\\g7543\\OneDrive\\桌面\\Capstone_project"
@@ -22,7 +28,7 @@ def parsing(path, angle):
         spaces = posList["parking_spaces"]
 
     for i, spot in enumerate(spaces):
-        spot["open"] = val[i]
-    print(posList)
+        if i < len(val):
+            spot["open"] = val[i]
 
-    return posList
+    return posList["parking_spaces"]
