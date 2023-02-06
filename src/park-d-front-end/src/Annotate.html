@@ -14,47 +14,56 @@
 </head>
 
 <body>
-    <!-- <div class="header">
-        <div class="logo_bg1">
-          <div class="logo_bg2">
-            <span class="logo_text"></span>
-            <div class="logo"></div>
-          </div>
-          <div class="old_logo"></div>
+    <div class="background">
+        <div class="header">
+            <div class="logo_bg1">
+                <div class="logo_bg2">
+                    <span class="logo_text"></span>
+                    <div class="logo"></div>
+                </div>
+                <div class="old_logo"></div>
+            </div>
+            <a href="HomeView.html">
+                <div class="home_bg1">
+                  <div class="home_bg2">
+                    <div class="home_border"></div>
+                    <span class="home_text">Home</span>
+                  </div>
+                </div>
+              </a>
         </div>
-    </div>   -->
-    <div class="annotate-window">
-        <p>
-            <button id="current-tool">Rectangle</button>
-            <!-- <button id="load-side" onclick="loadSide()">Load Side View </button>
-            <button id="load-side" onclick="loadBird()">Load Bird View</button> -->
-        </p>
-        <div style="max-width: 1200px">
-            <img id="test_lot" src="http://localhost:8000/assets/images/lot_bird.png" style="max-width:100%;">
-            <!-- <script>
-                // var up = document.getElementById('GFG_UP');
-                // up.innerHTML = "Click on the button to add image element";
-                // var down = document.getElementById('GFG_DOWN');
-
-                function loadSide() {
-                    var img = new Image();
-                    img.src =
-                        'http://localhost:8000/public/assets/images/lot_side';
-                    img.id = "test_lot";
-                    document.getElementById('body').appendChild(img);
-                    down.innerHTML = "Image Element Added.";
-                }
-                function loadBird() {
-                    var img = new Image();
-                    img.src =
-                        'http://localhost:8000/public/assets/images/lot_bird';
-                    img.id = "test_lot";
-                    document.getElementById('body').appendChild(img);
-                    down.innerHTML = "Image Element Added.";
-                }
-            </script> -->
+        <div class="annotate-window">
+            <p>
+                <button id="current-tool">Rectangle</button>
+                <!-- <button id="load-side" onclick="loadSide()">Load Side View </button>
+                <button id="load-side" onclick="loadBird()">Load Bird View</button> -->
+            </p>
+            <div style="max-width: 1200px">
+                <img id="test_lot" src="http://localhost:8000/assets/images/lot_bird.png" style="max-width:100%;">
+                <!-- <script>
+                    // var up = document.getElementById('GFG_UP');
+                    // up.innerHTML = "Click on the button to add image element";
+                    // var down = document.getElementById('GFG_DOWN');
+    
+                    function loadSide() {
+                        var img = new Image();
+                        img.src =
+                            'http://localhost:8000/public/assets/images/lot_side';
+                        img.id = "test_lot";
+                        document.getElementById('body').appendChild(img);
+                        down.innerHTML = "Image Element Added.";
+                    }
+                    function loadBird() {
+                        var img = new Image();
+                        img.src =
+                            'http://localhost:8000/public/assets/images/lot_bird';
+                        img.id = "test_lot";
+                        document.getElementById('body').appendChild(img);
+                        down.innerHTML = "Image Element Added.";
+                    }
+                </script> -->
+            </div>
         </div>
-    </div>
     </div>
     <script>
         window.onload = function () {
@@ -126,6 +135,7 @@
         }
     </script>
     <script src="./Annotate.js"></script>
+    </div>
 </body>
 
 </html>

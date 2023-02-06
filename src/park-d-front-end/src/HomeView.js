@@ -23,7 +23,7 @@ var defaultOptions = {
   styles: noPoi,
 };
 
-var userMode = true;
+var userMode = false;
 
 var directionsRenderer;
 var directionsService;
@@ -162,6 +162,7 @@ function initMap() {
 }
 
 function initPage() {
+  getDocEle("annotate_bg1").style.display = userMode ? "none" : "block";
   getDocEle("chevron_bg1").style.display = userMode ? "none" : "block";
   getDocEle("analytics_bg1").style.display = "none";
   getDocEle("spot_selection").style.display = "none";
