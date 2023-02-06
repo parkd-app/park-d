@@ -37,9 +37,10 @@
                 <button class="button" id="current-tool">Rectangle</button>
                 <button class="button" id="sidebtn" onclick="show('side')">Load Side View</button>
                 <button class="button" id="birdbtn" onclick="show('bird')">Load Bird View</button>
+                <button class="button" id="birdbtn" onclick="saveAnn()">Save Annotations</button>
             </p>
             <div class="ann_image">
-                <img id="test_lot" src="http://localhost:8000/assets/images/lot_bird.png" style="max-width:100%;">
+                <img id="test_lot" src="./lot_bird.png" style="max-width:100%;">
             </div>
         </div>
     </div>
@@ -98,7 +99,7 @@
                 // console.log('leave', annotation);
             });
 
-            anno.loadAnnotations('http://localhost:8000/annotations_bird');
+            anno.loadAnnotations(getBirdAnn());
 
             var toolToggle = document.getElementById('current-tool');
             toolToggle.addEventListener('click', function () {
@@ -114,14 +115,14 @@
         function show(view) {
             if (view == "side") {
                 document.getElementById('test_lot')
-                    .src = "http://localhost:8000/assets/images/lot_side.png";
-                    anno.loadAnnotations('http://localhost:8000/annotations_side');
-                    setView("side");
+                    .src = getSideURL();
+                anno.loadAnnotations(getSideAnn());
+                setView("side");
             } else {
                 document.getElementById('test_lot')
-                    .src = "http://localhost:8000/assets/images/lot_bird.png";
-                    anno.loadAnnotations('http://localhost:8000/annotations_bird');
-                    setView("bird");
+                    .src = getBirdURL();
+                anno.loadAnnotations(getBirdAnn());
+                setView("bird");
             }
 
         }
