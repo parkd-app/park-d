@@ -18,9 +18,11 @@ def parsing(path, angle):
             "\\park-d\\src\\pard-d-api\\static_resources\\coordinates_" + angle, "rb"
     ) as f:
         posList = pickle.load(f)
+        print(posList)
         spaces = posList["parking_spaces"]
 
     for i, spot in enumerate(spaces):
         spot["open"] = val[i]
+    print(posList)
 
     return posList
