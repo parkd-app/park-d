@@ -1,6 +1,6 @@
 // json parsing
 const jsonURL = "http://127.0.0.1:5000/rt_parking_info";
-const postURL = "http://127.0.0.1:5000/post_coord";
+const postURL = "http://127.0.0.1:5000/save_coord";
 const setUpURL = "http://127.0.0.1:5000/set_up";
 
 function Get(URL) {
@@ -10,16 +10,16 @@ function Get(URL) {
   return Httpreq.responseText;
 }
 
-function setUpModel(URL) {
-  fetch(URL + "?angle=bird", {
-    method: "POST",
-    headers: {
-      Accept: "text/plain",
-      "Content-Type": "text/plain",
-    },
-    body: "set me up",
-  });
-  fetch(URL + "?angle=side", {
+function setupBird() {
+  setUpModel(setUpURL, "bird");
+}
+
+function setupSide() {
+  setUpModel(setUpURL, "side");
+}
+
+function setUpModel(URL, angle) {
+  fetch(URL + "?angle=" + angle, {
     method: "POST",
     headers: {
       Accept: "text/plain",
@@ -256,7 +256,8 @@ function loadAllSpots() {
       strokeWeight: 2,
       fillColor: open ? "#00FF00" : "#FF0000",
       fillOpacity: 0.35,
-      clickable: false,
+      editable: true,
+      draggable: true,
       geodesic: true,
     });
     window["bspot" + birdSpotData[i].id].setMap(map);
@@ -278,7 +279,8 @@ function loadAllSpots() {
       strokeWeight: 2,
       fillColor: open ? "#00FF00" : "#FF0000",
       fillOpacity: 0.35,
-      clickable: false,
+      editable: true,
+      draggable: true,
       geodesic: true,
     });
     window["sspot" + sideSpotData[i].id].setMap(map);
@@ -329,15 +331,27 @@ function uploadSpots() {
 // check json for changes in occupancy
 // a refresh is needed for new spots or changed coordinates
 function updateSpots() {
-  let json_obj = JSON.parse(Get(jsonURL));
+  var json_obj = JSON.parse(Get(jsonURL + "?angle=bird"))["parking_spaces"];
   for (let i = 0; i < json_obj.length; i++) {
     let spot = json_obj[i];
-    if (!(spot.open === window["spot" + spot.id].open)) {
-      window["spot" + spot.id].setOptions({
+    if (!(spot.open === window["bspot" + spot.id].open)) {
+      window["bspot" + spot.id].setOptions({
         strokeColor: spot.open ? "#00FF00" : "#FF0000",
         fillColor: spot.open ? "#00FF00" : "#FF0000",
       });
-      window["spot" + spot.id].open = spot.open;
+      window["bspot" + spot.id].open = spot.open;
+    }
+  }
+  json_obj = JSON.parse(Get(jsonURL + "?angle=side"))["parking_spaces"];
+  for (let i = 0; i < json_obj.length; i++) {
+    let spot = json_obj[i];
+    if (!(spot.open === window["sspot" + spot.id].open)) {
+      console.log(spot.id);
+      window["sspot" + spot.id].setOptions({
+        strokeColor: spot.open ? "#00FF00" : "#FF0000",
+        fillColor: spot.open ? "#00FF00" : "#FF0000",
+      });
+      window["sspot" + spot.id].open = spot.open;
     }
   }
 }
