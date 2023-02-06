@@ -2,7 +2,7 @@ import sys
 import os
 from flask import Flask, send_file
 import logging
-from Service import parsing_service, slow_initiate_service
+from Service import parsing_service, slow_initiate_service, model_selection_service
 from Constants import constants
 from flask_cors import CORS, cross_origin
 import cv2
@@ -49,9 +49,11 @@ def requires_parking_spot():  # put application's code here
     return {"parking_space": ret}
 
 
-@app.route("/req_coordinate", methods=["GET"])
+@app.route("/req_coordinate", methods=["POST"])
 def requires_coordinate():
-    return {"result": True}
+    data = request.json
+    ret = model_selection_service.saved_coordinates(data)
+    return {"result": ret }
 
 
 @app.route("/set_up", methods=["POST"])
