@@ -9,7 +9,7 @@ function Get(URL) {
 }
 
 function setup() {
-  setUpModel(setUpURL)
+  setUpModel(setUpURL);
 }
 
 function setUpModel(URL) {
@@ -18,14 +18,14 @@ function setUpModel(URL) {
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
-    }
+    },
   });
   fetch(URL + "?angle=side", {
     method: "POST",
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
-    }
+    },
   });
 }
 

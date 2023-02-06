@@ -224,7 +224,7 @@
 }
 .button {
   background-color: rgba(249, 255, 0, 1); /* Green */
-  border: 2px solid black; 
+  border: 2px solid black;
   color: black;
   padding: 10px 10px;
   text-align: center;
@@ -234,5 +234,5 @@
   font-weight: Medium;
   font-size: 16px;
   border-radius: 8px;
-  min-width:110px;
+  min-width: 110px;
 }
