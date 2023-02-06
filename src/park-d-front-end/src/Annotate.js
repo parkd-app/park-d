@@ -4,7 +4,10 @@ var imgURL = "http://127.0.0.1:5000/get_parking_snapshot?angle=";
 var sideURL = "http://127.0.0.1:5000/get_parking_snapshot?angle=side";
 var birdURL = "http://127.0.0.1:5000/get_parking_snapshot?angle=bird";
 
-var workingAnnotations = [];
+var currW3cBird = [];
+var currW3cSide = [];
+var workingBird = [];
+var workingSide = [];
 
 function Get(URL) {
   var Httpreq = new XMLHttpRequest(); // a new request
@@ -37,23 +40,33 @@ function Put(URL, content) {
 
 function writeToJSON(annotation, currAnnotations) {
   if (view == "bird") {
-    workingAnnotations.push(w3cToBird(annotation));
+    newId = currW3cBird.length - 2;
+    annotation.id = newId;
+    // console.log(annotation);
+    currW3cBird.push(annotation);
+    // console.log(currW3cBird);
+    workingBird.push([w3cToBird(annotation)]);
+    // console.log(workingAnnotations);
   } else {
-    workingAnnotations.push(w3cToSide(annotation));
+    newId = currW3cSide.length - 2;
+    annotation.id = newId;
+    // console.log(annotation);
+    currW3cSide.push(annotation);
+    // console.log(currW3cBird);
+    workingSide.push([w3cToSide(annotation)]);
+    // console.log(workingAnnotations);
   }
 
-  newId = currAnnotations.length - 2;
-  annotation.id = newId;
-  fetch(imgURL + view, {
-    method: "POST",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(annotation),
-  })
-    .then((response) => response.json())
-    .then((response) => console.log(JSON.stringify(response)));
+  // fetch(imgURL + view, {
+  //   method: "POST",
+  //   headers: {
+  //     Accept: "application/json",
+  //     "Content-Type": "application/json",
+  //   },
+  //   body: JSON.stringify(annotation),
+  // })
+  //   .then((response) => response.json())
+  //   .then((response) => console.log(JSON.stringify(response)));
 }
 
 function deleteAnnotation(annotation) {
@@ -91,11 +104,12 @@ function setView(newView) {
 }
 
 function w3cToBird(annotation) {
+  // console.log(annotation);
   var annStr = JSON.stringify(annotation.target.selector.value);
   annStr = annStr.slice(12, annStr.length - 1);
   annArr = annStr.split(",");
-  console.log("annStr = " + annStr);
-  console.log(annArr);
+  // console.log("annStr = " + annStr);
+  // console.log(annArr);
   return annArr;
 }
 
@@ -103,8 +117,8 @@ function w3cToSide(annotation) {
   var annStr = JSON.stringify(annotation.target.selector.value);
   annStr = annStr.slice(24, annStr.length - 20);
   annArr = annStr.split(" ");
-  console.log("annStr = " + annStr);
-  console.log(annArr);
+  // console.log("annStr = " + annStr);
+  // console.log(annArr);
   return annArr;
 }
 
@@ -152,19 +166,29 @@ function saveAnn() {
 function saveBirdAnn() {
   var birdForm = {
     identifier: "bird",
-    coordinates: workingAnnotations,
+    coordinates: workingBird,
   };
   Post(coordURL, birdForm);
-  workingAnnotations = [];
+  workingBird = [];
 }
 
 function saveSideAnn() {
   var sideForm = {
     identifier: "side",
-    coordinates: workingAnnotations,
+    coordinates: workingSide,
   };
   Post(coordURL, sideForm);
-  workingAnnotations = [];
+  workingSide = [];
+}
+
+function getW3cBird() {
+  console.log(currW3cBird);
+  return currW3cBird;
+}
+
+function getW3cSide() {
+  console.log(currW3cSide);
+  return currW3cSide;
 }
 
 // function birdToW3c(annotation) {

@@ -40,7 +40,7 @@
                 <button class="button" id="birdbtn" onclick="saveAnn()">Save Annotations</button>
             </p>
             <div class="ann_image">
-                <img id="test_lot" src="./lot_bird.png" style="max-width:100%;">
+                <img id="test_lot" src="" style="max-width:100%;">
             </div>
         </div>
     </div>
@@ -99,7 +99,7 @@
                 // console.log('leave', annotation);
             });
 
-            anno.loadAnnotations(getBirdAnn());
+            // anno.loadAnnotations(getBirdAnn());
 
             var toolToggle = document.getElementById('current-tool');
             toolToggle.addEventListener('click', function () {
@@ -116,12 +116,20 @@
             if (view == "side") {
                 document.getElementById('test_lot')
                     .src = getSideURL();
-                anno.loadAnnotations(getSideAnn());
+                anno.clearAnnotations();
+                for (i = 0; i < getW3cSide().length; i++) {
+                    console.log(getW3cSide()[i]);
+                    anno.addAnnotation(getW3cSide()[i]);
+                }
                 setView("side");
             } else {
                 document.getElementById('test_lot')
                     .src = getBirdURL();
-                anno.loadAnnotations(getBirdAnn());
+                anno.clearAnnotations();
+                for (i = 0; i < getW3cBird().length; i++) {
+                    console.log(getW3cBird()[i]);
+                    anno.addAnnotation(getW3cBird()[i]);
+                }
                 setView("bird");
             }
 
