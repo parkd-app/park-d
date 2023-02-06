@@ -1,0 +1,238 @@
+/* .annotate-window {
+  display: none;
+  width: 544px;
+  height: 895px;
+  background: rgba(255, 255, 255, 1);
+  opacity: 1;
+  position: absolute;
+  top: 1000;
+  left: 1000;
+  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+  transform: scale(0.75);
+} */
+.background {
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 1);
+  opacity: 1;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  overflow: hidden;
+}
+.annotate-window {
+  width: 100%;
+  height: 88.5%;
+  background: transparent;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  opacity: 1;
+  position: relative;
+  top: 100px;
+  left: 15%;
+  overflow: hidden;
+}
+.header {
+  width: 100%;
+  height: 87px;
+  background: rgba(24, 24, 24, 1);
+  opacity: 1;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+.logo_bg1 {
+  width: 202px;
+  height: 56px;
+  background: rgba(0, 0, 0, 0);
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  opacity: 1;
+  position: absolute;
+  top: 16px;
+  left: 655px;
+  overflow: hidden;
+}
+.logo_bg2 {
+  width: 202px;
+  height: 56px;
+  background: rgba(0, 0, 0, 0);
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  opacity: 1;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  overflow: hidden;
+}
+.logo_text {
+  width: 202px;
+  color: rgba(0, 0, 0, 0);
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  font-family: Montserrat;
+  font-weight: Medium;
+  font-size: 50px;
+  opacity: 1;
+  text-align: left;
+}
+.logo {
+  width: 194px;
+  height: 38px;
+  background: url("Images/park'd_logo.png");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  opacity: 1;
+  position: absolute;
+  top: 11px;
+  left: 0px;
+  overflow: hidden;
+}
+.old_logo {
+  width: 264px;
+  height: 93px;
+  background: rgba(255, 255, 255, 0);
+  opacity: 1;
+  position: absolute;
+  top: 22px;
+  left: 40px;
+  overflow: hidden;
+}
+.home_bg1 {
+  width: 90px;
+  height: 60px;
+  background: rgba(0, 0, 0, 0);
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  opacity: 1;
+  position: absolute;
+  top: 12px;
+  left: 20px;
+  overflow: hidden;
+}
+.home_bg2 {
+  width: 90px;
+  height: 60px;
+  background: rgba(0, 0, 0, 0);
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  opacity: 1;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  overflow: hidden;
+}
+.home_border {
+  width: 90px;
+  height: 60px;
+  background: rgba(249, 255, 0, 1);
+  opacity: 1;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  border: 3px solid rgba(249, 255, 0, 0.800000011920929);
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+.home_text {
+  width: auto;
+  color: rgba(31, 31, 31, 1);
+  position: absolute;
+  top: 18px;
+  left: 16px;
+  font-family: Montserrat;
+  font-weight: Medium;
+  font-size: 20px;
+  opacity: 1;
+  text-align: left;
+}
+.drawtool_bg1 {
+  width: 85px;
+  height: 30px;
+  background: rgba(0, 0, 0, 0);
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  opacity: 1;
+  position: absolute;
+  top: 12px;
+  left: 80px;
+  overflow: hidden;
+}
+.drawtool_bg2 {
+  width: 85px;
+  height: 30px;
+  background: rgba(0, 0, 0, 0);
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  opacity: 1;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  overflow: hidden;
+}
+.drawtool_border {
+  width: 85px;
+  height: 30px;
+  background: rgba(249, 255, 0, 1);
+  opacity: 1;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  border: 3px solid rgba(249, 255, 0, 0.800000011920929);
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+.drawtool_text {
+  width: auto;
+  color: rgba(31, 31, 31, 1);
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  font-family: Montserrat;
+  font-weight: Medium;
+  font-size: 13px;
+  opacity: 1;
+  text-align: left;
+}
+.ann_image {
+  display: flex;
+  justify-content: center;
+  top: 100px;
+  border: 3px solid #939393;
+  border-radius: 4px;
+  padding: 10px;
+  max-width: 1200px;
+}
+.button {
+  background-color: rgba(249, 255, 0, 1); /* Green */
+  border: 2px solid black; 
+  color: black;
+  padding: 10px 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-family: Montserrat;
+  font-weight: Medium;
+  font-size: 16px;
+  border-radius: 8px;
+  min-width:110px;
+}
