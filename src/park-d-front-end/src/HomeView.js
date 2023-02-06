@@ -8,6 +8,10 @@ function Get(URL) {
   return Httpreq.responseText;
 }
 
+function setup() {
+  setUpModel(setUpURL)
+}
+
 function setUpModel(URL) {
   fetch(URL + "?angle=bird", {
     method: "POST",
@@ -163,7 +167,6 @@ function initMap() {
   directionsService = new google.maps.DirectionsService();
 
   map = new google.maps.Map(document.getElementById("map"), defaultOptions);
-  setUpModel(setUpURL);
   loadAllSpots();
 
   google.maps.event.addListener(map, "click", function (event) {
