@@ -1,15 +1,50 @@
 var view = "bird";
+var coordURL = "http://127.0.0.1:5000/req_coordinate";
+var imgURL = "http://127.0.0.1:5000/get_parking_snapshot?angle=";
+var sideURL = "http://127.0.0.1:5000/get_parking_snapshot?angle=side";
+var birdURL = "http://127.0.0.1:5000/get_parking_snapshot?angle=bird";
+
+var workingAnnotations = [];
+
+function Get(URL) {
+  var Httpreq = new XMLHttpRequest(); // a new request
+  Httpreq.open("GET", URL, false);
+  Httpreq.send(null);
+  return Httpreq.responseText;
+}
+
+function Post(URL, content) {
+  fetch(URL, {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(content),
+  });
+}
+
+function Put(URL, content) {
+  fetch(URL, {
+    method: "PUT",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(content),
+  });
+}
 
 function writeToJSON(annotation, currAnnotations) {
   if (view == "bird") {
-    w3cToBird(annotation);
+    workingAnnotations.push(w3cToBird(annotation));
   } else {
-    w3cToSide(annotation);
+    workingAnnotations.push(w3cToSide(annotation));
   }
 
   newId = currAnnotations.length - 2;
   annotation.id = newId;
-  fetch("http://localhost:8000/annotations_" + view, {
+  fetch(imgURL + view, {
     method: "POST",
     headers: {
       Accept: "application/json",
@@ -22,7 +57,7 @@ function writeToJSON(annotation, currAnnotations) {
 }
 
 function deleteAnnotation(annotation) {
-  fetch("http://localhost:8000/annotations_" + view + "/" + annotation.id, {
+  fetch(imgURL + view + "/" + annotation.id, {
     method: "DELETE",
     headers: {
       Accept: "application/json",
@@ -35,7 +70,7 @@ function deleteAnnotation(annotation) {
 }
 
 function getImage(view) {
-  const imageUrl = "http://localhost:8000/public/assets/images/lot_" + view;
+  const imageUrl = imgURL + view;
 
   fetch(imageUrl)
     //                         vvvv
@@ -61,6 +96,7 @@ function w3cToBird(annotation) {
   annArr = annStr.split(",");
   console.log("annStr = " + annStr);
   console.log(annArr);
+  return annArr;
 }
 
 function w3cToSide(annotation) {
@@ -69,4 +105,136 @@ function w3cToSide(annotation) {
   annArr = annStr.split(" ");
   console.log("annStr = " + annStr);
   console.log(annArr);
+  return annArr;
 }
+
+function getCoordURL() {
+  return coordURL;
+}
+
+function getSideURL() {
+  return sideURL;
+}
+
+function getBirdURL() {
+  return birdURL;
+}
+
+function getImgURL() {
+  return imgURL;
+}
+
+// function getAnn() {
+//   var currAnn = Get(coordURL);
+//   return currAnn;
+// }
+
+// function getSideAnn() {
+//   var currAnn = sideToW3c(getAnn());
+//   var w3cAnn = sideToW3c(currAnn);
+//   return w3cAnn;
+// }
+
+// function getBirdAnn() {
+//   var currAnn = birdToW3c(getAnn());
+//   var w3cAnn = birdToW3c(currAnn);
+//   return w3cAnn;
+// }
+
+function saveAnn() {
+  if (view == "bird") {
+    saveBirdAnn();
+  } else {
+    saveSideAnn();
+  }
+}
+
+function saveBirdAnn() {
+  var birdForm = {
+    identifier: "bird",
+    coordinates: workingAnnotations,
+  };
+  Post(coordURL, birdForm);
+  workingAnnotations = [];
+}
+
+function saveSideAnn() {
+  var sideForm = {
+    identifier: "side",
+    coordinates: workingAnnotations,
+  };
+  Post(coordURL, sideForm);
+  workingAnnotations = [];
+}
+
+// function birdToW3c(annotation) {
+//   var currAnn = annotation;
+
+//   var w3cForm = {
+//     annotations_bird: [
+//       {
+//         "@context": "http://www.w3.org/ns/anno.jsonld",
+//         type: "Annotation",
+//         body: [
+//           {
+//             type: "TextualBody",
+//             value: "asdf",
+//             purpose: "commenting",
+//             creator: {
+//               id: "http://www.example.com/yapetej",
+//               name: "Jonathan",
+//             },
+//             created: "2023-02-05T07:35:15.562Z",
+//             modified: "2023-02-05T07:35:15.716Z",
+//           },
+//         ],
+//         target: {
+//           source:
+//             "http://127.0.0.1:5500/park-d/src/park-d-front-end/src/test_lot.png",
+//           selector: {
+//             type: "FragmentSelector",
+//             conformsTo: "http://www.w3.org/TR/media-frags/",
+//             value: "xywh=pixel:13,148,120,250",
+//           },
+//         },
+//         id: -1,
+//       },
+//     ],
+//   };
+// }
+
+// function sideToW3c(annotation) {
+//   var currAnn = annotation;
+//   var w3cForm = {
+//     annotations_bird: [
+//       {
+//         "@context": "http://www.w3.org/ns/anno.jsonld",
+//         type: "Annotation",
+//         body: [
+//           {
+//             type: "TextualBody",
+//             value: "asdf",
+//             purpose: "commenting",
+//             creator: {
+//               id: "http://www.example.com/yapetej",
+//               name: "Jonathan",
+//             },
+//             created: "2023-02-05T07:35:15.562Z",
+//             modified: "2023-02-05T07:35:15.716Z",
+//           },
+//         ],
+//         target: {
+//           source:
+//             "http://127.0.0.1:5500/park-d/src/park-d-front-end/src/test_lot.png",
+//           selector: {
+//             type: "FragmentSelector",
+//             conformsTo: "http://www.w3.org/TR/media-frags/",
+//             value:
+//               '<svg><polygon points="694,597 892,473 594,279 422,395"></polygon></svg>',
+//           },
+//         },
+//         id: -1,
+//       },
+//     ],
+//   };
+// }
