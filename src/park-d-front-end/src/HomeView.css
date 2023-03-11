@@ -757,6 +757,7 @@
   border-bottom-right-radius: 10px;
   box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
   overflow: hidden;
+  cursor: pointer;
 }
 .chevron_bg2 {
   width: 20px;
@@ -926,20 +927,6 @@
   left: 5px;
   overflow: hidden;
 }
-.total_bg2 {
-  width: 684px;
-  height: 65px;
-  background: rgba(235, 242, 250, 1);
-  opacity: 1;
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
-  overflow: hidden;
-}
 .total_text {
   width: 648px;
   color: rgba(0, 0, 0, 1);
@@ -952,45 +939,11 @@
   opacity: 1;
   text-align: center;
 }
-.graph_axis {
-  width: 693px;
-  color: rgba(0, 0, 0, 1);
-  position: absolute;
-  top: 801px;
-  left: 0px;
-  font-family: Cabin;
-  font-weight: Regular;
-  font-size: 13px;
-  opacity: 1;
-  text-align: left;
-}
-.graph_bars {
-  width: 679px;
-  height: 285px;
-  background: transparent;
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: cover;
-  opacity: 1;
-  position: absolute;
-  top: 506px;
-  left: 8px;
-  overflow: hidden;
-}
-.graph_bar {
-  height: 50px;
-  top: 230px;
-  width: 15px;
-  background: rgba(173, 255, 0, 1);
-  opacity: 1;
-  position: absolute;
-  overflow: hidden;
-}
 .last_updated_text {
   width: 227px;
   color: rgba(80, 80, 80, 1);
   position: absolute;
-  top: 824px;
+  top: 850px;
   left: 467px;
   font-family: Montserrat;
   font-weight: Medium;

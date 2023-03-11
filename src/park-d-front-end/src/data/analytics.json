@@ -11,8 +11,8 @@
               "occupancy": 
                 {
                     "std": [true, false, false, false, false, false, false, false, false, false],
-                    "acc": [true, false, false, false],
-                    "res": [true, false, false, false, false, false]
+                    "acc": [false, false, false, false],
+                    "res": [false, false, false, false, false, false]
                 }
             },
             { "hour": "1am", 

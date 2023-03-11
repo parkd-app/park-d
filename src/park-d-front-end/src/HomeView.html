@@ -10,13 +10,17 @@
     />
     <link rel="stylesheet" href="homeView.css" />
     <script src="HomeView.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.8.0/chart.min.js"></script>
     <!-- <script type="module" src="./scripts/HomeViewAuth.js"></script> -->
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"> </script>
     <script>
       $(function() {
         $.getJSON('./data/analytics.json', function(data) {
           const info = data.data;
+
+          const colours = [
+            "#61FF00", "#CCFF00", "#FFE600", "#FF8A00", "#FF0000", "#FF0F0F"
+          ]
 
           document.getElementById("location_name").innerHTML = info.location.name;
           document.getElementById("location_address").innerHTML = info.location.address;
@@ -44,6 +48,7 @@
 
           let hours = [];
           let occupied = [];
+          let backgroundColours = [];
           
           $.each(occupancy, function(i, f) {
             resSpots = f.occupancy.res.length;
@@ -68,23 +73,49 @@
               document.getElementById("std_total").innerHTML = "out of " + stdSpots;
 
               document.getElementById("total_text").innerHTML = "TOTAL AVAILABLE - " + totalAvail + "/" + totalSpots;
+              document.getElementById("spot_selection_stats").innerHTML = totalAvail + " Spots Available";
             }
 
+            totalOccupied = totalSpots - totalAvail;
+            ratio = totalOccupied/totalAvail;
+
             hours.push(f.hour);
-            occupied.push(totalSpots - totalAvail);
+            occupied.push(totalOccupied);
+
+            if (ratio < 0.1)
+              backgroundColours.push(colours[0]);
+            else if (ratio < 0.25) 
+              backgroundColours.push(colours[1]);
+            else if (ratio < 0.45) 
+              backgroundColours.push(colours[2]);
+            else if (ratio < 0.60) 
+              backgroundColours.push(colours[3]);
+            else if (ratio < 0.80) 
+              backgroundColours.push(colours[4]);
+            else 
+              backgroundColours.push(colours[5]);
           });
 
-          var ctx = document.getElementById('myChart');
-            var myChart = new Chart(ctx, {
+          var ctx = document.getElementById('analyticsGraph');
+          
+          var analyticsGraph = new Chart(ctx, {
             type: 'bar',
             data: {
                 labels: hours,
                 datasets: [{
                     label: 'Occupancy',
-                    data: occupied
-                }]
+                    data: occupied,
+                    backgroundColor: backgroundColours
+                }],
             },
-            })
+            options: {
+              scales: {
+                y: {
+                    beginAtZero: true
+                }
+              }
+            }
+          })
         });
       });
     </script>
@@ -182,7 +213,7 @@
       <div class="path"></div> -->
       <div class="spot_selection">
         <span class="spot_selection_prompt">Pick Your Spot</span>
-        <span class="spot_selection_stats">70 Spots Available</span>
+        <span class="spot_selection_stats" id="spot_selection_stats"></span>
         <div class="parking_layout"></div>
         <div class="select_parking_bg1">
           <div class="select_parking_bg2">
@@ -323,7 +354,7 @@
             <span class="total_text" id="total_text" style="margin: 20px;"></span>
           </div>
 
-          <canvas id="myChart" width="800" height="400"></canvas>
+          <canvas id="analyticsGraph" width="800" height="400" style="margin-top: 450px;"></canvas>
 
           <span class="last_updated_text" id="last_updated_text"></span>
         </div>
