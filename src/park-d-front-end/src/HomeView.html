@@ -3,12 +3,14 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link
       href="https://fonts.googleapis.com/css?family=Montserrat&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="homeView.css" />
     <script src="HomeView.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
     <!-- <script type="module" src="./scripts/HomeViewAuth.js"></script> -->
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"> </script>
     <script>
@@ -26,7 +28,10 @@
 
           let time = parseInt(dateTimeSplit[4].split(":")[0]);
 
-          if (time > 12) {
+          if (time == 0) {
+            time = "12am";
+          }
+          else if (time > 12) {
             time = time % 12 + "pm";
           }
           else {
@@ -36,21 +41,24 @@
           let day = dateTimeSplit[1] + " " + dateTimeSplit[2] + ", " + dateTimeSplit[3];
 
           document.getElementById("last_updated_text").innerHTML = "Last Updated - " + day + " @ " + time;
+
+          let hours = [];
+          let occupied = [];
           
           $.each(occupancy, function(i, f) {
+            resSpots = f.occupancy.res.length;
+            accSpots = f.occupancy.acc.length;
+            stdSpots = f.occupancy.std.length;
+
+            totalSpots = resSpots + accSpots + stdSpots;
+
+            resAvail = resSpots - f.occupancy.res.filter(Boolean).length;
+            accAvail = accSpots - f.occupancy.acc.filter(Boolean).length;
+            stdAvail = stdSpots - f.occupancy.std.filter(Boolean).length;
+
+            totalAvail = resAvail + accAvail + stdAvail;
+
             if (f.hour === time) {
-              resSpots = f.occupancy.res.length;
-              accSpots = f.occupancy.acc.length;
-              stdSpots = f.occupancy.std.length;
-
-              totalSpots = resSpots + accSpots + stdSpots;
-
-              resAvail = resSpots - f.occupancy.res.filter(Boolean).length;
-              accAvail = accSpots - f.occupancy.acc.filter(Boolean).length;
-              stdAvail = stdSpots - f.occupancy.std.filter(Boolean).length;
-
-              totalAvail = resAvail + accAvail + stdAvail;
-
               document.getElementById("res_number").innerHTML = resAvail;
               document.getElementById("acc_number").innerHTML = accAvail;
               document.getElementById("std_number").innerHTML = stdAvail;
@@ -62,7 +70,21 @@
               document.getElementById("total_text").innerHTML = "TOTAL AVAILABLE - " + totalAvail + "/" + totalSpots;
             }
 
+            hours.push(f.hour);
+            occupied.push(totalSpots - totalAvail);
           });
+
+          var ctx = document.getElementById('myChart');
+            var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: hours,
+                datasets: [{
+                    label: 'Occupancy',
+                    data: occupied
+                }]
+            },
+            })
         });
       });
     </script>
@@ -300,6 +322,8 @@
           <div class="total_bg1">
             <span class="total_text" id="total_text" style="margin: 20px;"></span>
           </div>
+
+          <canvas id="myChart" width="800" height="400"></canvas>
 
           <span class="last_updated_text" id="last_updated_text"></span>
         </div>
