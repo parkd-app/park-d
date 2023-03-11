@@ -1,141 +1,148 @@
 <!DOCTYPE html>
 <html>
-
-<head>
+  <head>
     <meta charset="utf-8" />
     <title>Park'd Annotation</title>
     <link rel="annotorious.min.css" href="styles.css" />
-    <link rel="stylesheet" href="annotorious.min.css">
+    <link rel="stylesheet" href="annotorious.min.css" />
     <script src="annotorious.min.js"></script>
     <script src="./Annotate.js"></script>
-    <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Montserrat&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="homeView.css" />
     <link rel="stylesheet" href="Annotate.css" />
-</head>
+  </head>
 
-<body>
+  <body>
     <div class="background">
-        <div class="header">
-            <div class="logo_bg1">
-                <div class="logo_bg2">
-                    <span class="logo_text"></span>
-                    <div class="logo"></div>
-                </div>
-                <div class="old_logo"></div>
-            </div>
-            <a href="HomeView.html">
-                <div class="home_bg1">
-                    <div class="home_bg2">
-                        <div class="home_border"></div>
-                        <span class="home_text">Home</span>
-                    </div>
-                </div>
-            </a>
+      <div class="header">
+        <div class="logo_bg1">
+          <div class="logo_bg2">
+            <span class="logo_text"></span>
+            <div class="logo"></div>
+          </div>
+          <div class="old_logo"></div>
         </div>
-        <div class="annotate-window">
-            <p>
-                <button class="button" id="current-tool">Rectangle</button>
-                <button class="button" id="sidebtn" onclick="show('side')">Load Side View</button>
-                <button class="button" id="birdbtn" onclick="show('bird')">Load Bird View</button>
-                <button class="button" id="birdbtn" onclick="saveAnn()">Save Annotations</button>
-            </p>
-            <div class="ann_image">
-                <img id="test_lot" src="" style="max-width:100%;">
+        <a href="HomeView.html">
+          <div class="home_bg1">
+            <div class="home_bg2">
+              <div class="home_border"></div>
+              <span class="home_text">Home</span>
             </div>
+          </div>
+        </a>
+      </div>
+      <div class="annotate-window">
+        <p>
+          <button class="button" id="current-tool">Rectangle</button>
+          <button class="button" id="sidebtn" onclick="show('side')">
+            Load Side View
+          </button>
+          <button class="button" id="birdbtn" onclick="show('bird')">
+            Load Bird View
+          </button>
+          <button class="button" id="birdbtn" onclick="saveAnn()">
+            Save Annotations
+          </button>
+        </p>
+        <div class="ann_image">
+          <img id="test_lot" src="" style="max-width: 100%" />
         </div>
+      </div>
     </div>
     <script>
-        window.onload = function () {
-            anno = Annotorious.init({
-                image: 'test_lot',
-                locale: 'auto',
-                drawOnSingleClick: true,
-                widgets: [
-                    { widget: 'COMMENT' },
-                    { widget: 'TAG', vocabulary: ['Default', 'Reserved', 'Accessible'] }
-                ]
-            });
+      window.onload = function () {
+        anno = Annotorious.init({
+          image: "test_lot",
+          locale: "auto",
+          drawOnSingleClick: true,
+          widgets: [
+            { widget: "COMMENT" },
+            {
+              widget: "TAG",
+              vocabulary: ["Default", "Reserved", "Accessible"],
+            },
+          ],
+        });
 
-            anno.setAuthInfo({
-                id: 'http://www.example.com/yapetej',
-                displayName: 'Jonathan'
-            });
+        anno.setAuthInfo({
+          id: "http://www.example.com/yapetej",
+          displayName: "Jonathan",
+        });
 
-            anno.on('selectAnnotation', function (a, shape) {
-                // console.log('selected');
-            });
+        anno.on("selectAnnotation", function (a, shape) {
+          // console.log('selected');
+        });
 
-            anno.on('cancelSelected', function (a) {
-                // console.log('cancel');
-            });
+        anno.on("cancelSelected", function (a) {
+          // console.log('cancel');
+        });
 
-            anno.on('changeSelected', function (selected, previous) {
-                // console.log('changed from', previous, 'to', selected);
-            });
+        anno.on("changeSelected", function (selected, previous) {
+          // console.log('changed from', previous, 'to', selected);
+        });
 
-            anno.on('createAnnotation', function (annotation) {
-                //   console.log('created', annotation);
-                writeToJSON(annotation, anno.getAnnotations());
-            });
+        anno.on("createAnnotation", function (annotation) {
+          //   console.log('created', annotation);
+          writeToJSON(annotation, anno.getAnnotations());
+        });
 
-            anno.on('updateAnnotation', function (annotation, previous) {
-                // console.log('updated', previous, 'with', annotation);
-            });
+        anno.on("updateAnnotation", function (annotation, previous) {
+          // console.log('updated', previous, 'with', annotation);
+        });
 
-            anno.on('clickAnnotation', function (annotation, shape) {
-                // console.log('clicked', annotation);
-            });
+        anno.on("clickAnnotation", function (annotation, shape) {
+          // console.log('clicked', annotation);
+        });
 
-            anno.on('deleteAnnotation', function (annotation) {
-                console.log('deleted', annotation);
-                deleteAnnotation(annotation);
-            });
+        anno.on("deleteAnnotation", function (annotation) {
+          console.log("deleted", annotation);
+          deleteAnnotation(annotation);
+        });
 
-            anno.on('mouseEnterAnnotation', function (annotation) {
-                // console.log('enter', annotation);
-            });
+        anno.on("mouseEnterAnnotation", function (annotation) {
+          // console.log('enter', annotation);
+        });
 
-            anno.on('mouseLeaveAnnotation', function (annotation) {
-                // console.log('leave', annotation);
-            });
+        anno.on("mouseLeaveAnnotation", function (annotation) {
+          // console.log('leave', annotation);
+        });
 
-            // anno.loadAnnotations(getBirdAnn());
+        // anno.loadAnnotations(getBirdAnn());
 
-            var toolToggle = document.getElementById('current-tool');
-            toolToggle.addEventListener('click', function () {
-                if (toolToggle.innerHTML == 'Rectangle') {
-                    toolToggle.innerHTML = 'Polygon';
-                    anno.setDrawingTool('polygon');
-                } else {
-                    toolToggle.innerHTML = 'Rectangle';
-                    anno.setDrawingTool('rect');
-                }
-            });
+        var toolToggle = document.getElementById("current-tool");
+        toolToggle.addEventListener("click", function () {
+          if (toolToggle.innerHTML == "Rectangle") {
+            toolToggle.innerHTML = "Polygon";
+            anno.setDrawingTool("polygon");
+          } else {
+            toolToggle.innerHTML = "Rectangle";
+            anno.setDrawingTool("rect");
+          }
+        });
+      };
+      function show(view) {
+        if (view == "side") {
+          document.getElementById("test_lot").src = getSideURL();
+          anno.clearAnnotations();
+          for (i = 0; i < getW3cSide().length; i++) {
+            console.log(getW3cSide()[i]);
+            anno.addAnnotation(getW3cSide()[i]);
+          }
+          setView("side");
+        } else {
+          document.getElementById("test_lot").src = getBirdURL();
+          anno.clearAnnotations();
+          for (i = 0; i < getW3cBird().length; i++) {
+            console.log(getW3cBird()[i]);
+            anno.addAnnotation(getW3cBird()[i]);
+          }
+          setView("bird");
         }
-        function show(view) {
-            if (view == "side") {
-                document.getElementById('test_lot')
-                    .src = getSideURL();
-                anno.clearAnnotations();
-                for (i = 0; i < getW3cSide().length; i++) {
-                    console.log(getW3cSide()[i]);
-                    anno.addAnnotation(getW3cSide()[i]);
-                }
-                setView("side");
-            } else {
-                document.getElementById('test_lot')
-                    .src = getBirdURL();
-                anno.clearAnnotations();
-                for (i = 0; i < getW3cBird().length; i++) {
-                    console.log(getW3cBird()[i]);
-                    anno.addAnnotation(getW3cBird()[i]);
-                }
-                setView("bird");
-            }
-
-        }
+      }
     </script>
     <script src="./Annotate.js"></script>
-</body>
-
+  </body>
 </html>

@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <link
       href="https://fonts.googleapis.com/css?family=Montserrat&display=swap"
       rel="stylesheet"
@@ -12,7 +12,10 @@
     <script src="HomeView.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.8.0/chart.min.js"></script>
     <!-- <script type="module" src="./scripts/HomeViewAuth.js"></script> -->
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"> </script>
+    <script
+      type="text/javascript"
+      src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"
+    ></script>
     <script>
       analytics();
     </script>
@@ -51,8 +54,12 @@
           </div>
         </div>
         <div class="setup-window">
-          <button class="button" id="birdbtn" onclick="setupBird()">Setup Large Lot</button>
-          <button class="button" id="sidebtn" onclick="setupSide()">Setup Small Lot</button>
+          <button class="button" id="birdbtn" onclick="setupBird()">
+            Setup Large Lot
+          </button>
+          <button class="button" id="sidebtn" onclick="setupSide()">
+            Setup Small Lot
+          </button>
         </div>
         <a href="settings.html">
           <div class="cogwheel_bg1">
@@ -224,16 +231,19 @@
 
       <div class="analytics_bg1">
         <div>
-          <div class="location_name" >
+          <div class="location_name">
             <span id="location_name"></span>
           </div>
-          
-          <div class="location_address" >
+
+          <div class="location_address">
             <span id="location_address"></span>
           </div>
-          
+
           <div class="analytics_cards_bg">
-            <div class="analytics_card_bg" style="background: rgba(255, 164, 0, 1)">
+            <div
+              class="analytics_card_bg"
+              style="background: rgba(255, 164, 0, 1)"
+            >
               <div class="analytics_card_name">
                 <span>RESERVED</span>
               </div>
@@ -245,7 +255,10 @@
               </div>
             </div>
 
-            <div class="analytics_card_bg" style="background: rgba(0, 86, 150, 1)">
+            <div
+              class="analytics_card_bg"
+              style="background: rgba(0, 86, 150, 1)"
+            >
               <div class="analytics_card_name">
                 <span>ACCESSIBLE</span>
               </div>
@@ -257,36 +270,42 @@
               </div>
             </div>
 
-            <div class="analytics_card_bg" style="background: rgba(8, 160, 69, 1)"">
-              <div class="analytics_card_name">
-                <span>STANDARD</span>
-              </div>
-              <div class="analytics_card_number">
-                <span id="std_number"></span>
-              </div>
-              <div class="analytics_card_total">
-                <span id="std_total"></span>
-              </div>
+            <div class="analytics_card_bg" style="background: rgba(8, 160, 69,
+            1)"">
+            <div class="analytics_card_name">
+              <span>STANDARD</span>
+            </div>
+            <div class="analytics_card_number">
+              <span id="std_number"></span>
+            </div>
+            <div class="analytics_card_total">
+              <span id="std_total"></span>
             </div>
           </div>
+        </div>
 
-          <div class="total_text">
-            <span id="total_text"></span>
-          </div>
+        <div class="total_text">
+          <span id="total_text"></span>
+        </div>
 
-          <canvas id="analyticsGraph" width="800" height="500" style="padding-left: 10px; padding-right: 10px"></canvas>
-          
-          <div class="last_updated_text">
-            <span id="last_updated_text"></span>
-          </div>
+        <canvas
+          id="analyticsGraph"
+          width="800"
+          height="500"
+          style="padding-left: 10px; padding-right: 10px"
+        ></canvas>
+
+        <div class="last_updated_text">
+          <span id="last_updated_text"></span>
         </div>
       </div>
+    </div>
 
-      <div class="chevron_bg1" onclick="toggleSelection()">
-        <div class="chevron_bg2">
-          <div class="chevron"></div>
-        </div>
+    <div class="chevron_bg1" onclick="toggleSelection()">
+      <div class="chevron_bg2">
+        <div class="chevron"></div>
       </div>
+    </div>
     <script
       async
       defer

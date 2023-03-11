@@ -239,17 +239,21 @@ function getRoute() {
 
 function toggleSelection() {
   selectionToggle = !selectionToggle;
-  let selectionTogglePos = (window.innerWidth <= 750) ? "90vw" : "30vw"
+  let selectionTogglePos = window.innerWidth <= 750 ? "90vw" : "30vw";
   if (userMode) {
     getDocEle("spot_selection").style.display = selectionToggle
       ? "block"
       : "none";
-      getDocEle("chevron_bg1").style.left = selectionToggle ? selectionTogglePos : "0px";
+    getDocEle("chevron_bg1").style.left = selectionToggle
+      ? selectionTogglePos
+      : "0px";
   } else {
     getDocEle("analytics_bg1").style.display = selectionToggle
       ? "block"
       : "none";
-      getDocEle("chevron_bg1").style.left = selectionToggle ? selectionTogglePos : "0px";
+    getDocEle("chevron_bg1").style.left = selectionToggle
+      ? selectionTogglePos
+      : "0px";
   }
   getDocEle("chevron").style.transform = selectionToggle
     ? "scaleX(1)"
@@ -257,15 +261,19 @@ function toggleSelection() {
 }
 
 function updateChevronPos() {
-  let selectionTogglePos = (window.innerWidth <= 750) ? "90vw" : "30vw"
+  let selectionTogglePos = window.innerWidth <= 750 ? "90vw" : "30vw";
   if (userMode) {
-    getDocEle("chevron_bg1").style.left = selectionToggle ? selectionTogglePos : "0px";
+    getDocEle("chevron_bg1").style.left = selectionToggle
+      ? selectionTogglePos
+      : "0px";
   } else {
-    getDocEle("chevron_bg1").style.left = selectionToggle ? selectionTogglePos : "0px";
+    getDocEle("chevron_bg1").style.left = selectionToggle
+      ? selectionTogglePos
+      : "0px";
   }
 }
 
-window.onresize = updateChevronPos
+window.onresize = updateChevronPos;
 
 function selectionSelect(id) {
   if (
@@ -383,24 +391,26 @@ function updateSpots() {
 }
 
 function analytics() {
-  $.getJSON('./data/analytics.json', function(data) {
+  $.getJSON("./data/analytics.json", function (data) {
     const info = data.data;
 
     document.getElementById("location_name").innerHTML = info.location.name;
-    document.getElementById("location_address").innerHTML = info.location.address;
+    document.getElementById("location_address").innerHTML =
+      info.location.address;
 
     const occupancy = info.occupancy;
 
     [time, day] = getDateAndTime();
 
-    document.getElementById("last_updated_text").innerHTML = "Last Updated - " + day + " @ " + time;
+    document.getElementById("last_updated_text").innerHTML =
+      "Last Updated - " + day + " @ " + time;
 
     let hours = [];
     let occupied = [];
     let backgroundColours = [];
     let totalSpots = 0;
-    
-    $.each(occupancy, function(i, f) {
+
+    $.each(occupancy, function (i, f) {
       resSpots = f.occupancy.res.length;
       accSpots = f.occupancy.acc.length;
       stdSpots = f.occupancy.std.length;
@@ -422,17 +432,19 @@ function analytics() {
         document.getElementById("acc_total").innerHTML = "out of " + accSpots;
         document.getElementById("std_total").innerHTML = "out of " + stdSpots;
 
-        document.getElementById("total_text").innerHTML = "TOTAL AVAILABLE - " + totalAvail + "/" + totalSpots;
-        document.getElementById("spot_selection_stats").innerHTML = totalAvail + " Spots Available";
+        document.getElementById("total_text").innerHTML =
+          "TOTAL AVAILABLE - " + totalAvail + "/" + totalSpots;
+        document.getElementById("spot_selection_stats").innerHTML =
+          totalAvail + " Spots Available";
       }
 
       totalOccupied = totalSpots - totalAvail;
-      ratio = totalOccupied/totalAvail;
+      ratio = totalOccupied / totalAvail;
 
       hours.push(f.hour);
       occupied.push(totalOccupied);
 
-      backgroundColours.push(generateColour(ratio))
+      backgroundColours.push(generateColour(ratio));
     });
 
     drawGraph(hours, occupied, backgroundColours, totalSpots);
@@ -445,12 +457,9 @@ function getDateAndTime() {
 
   let time = parseInt(dateTimeSplit[4].split(":")[0]);
 
-  if (time == 0)
-    time = "12am";
-  else if (time > 12)
-    time = time % 12 + "pm";
-  else
-    time += "am";
+  if (time == 0) time = "12am";
+  else if (time > 12) time = (time % 12) + "pm";
+  else time += "am";
 
   let day = dateTimeSplit[1] + " " + dateTimeSplit[2] + ", " + dateTimeSplit[3];
 
@@ -459,49 +468,51 @@ function getDateAndTime() {
 
 function generateColour(ratio) {
   const colours = [
-    "#61FF00", "#CCFF00", "#FFE600", "#FF8A00", "#FF0000", "#FF0F0F"
-  ]
+    "#61FF00",
+    "#CCFF00",
+    "#FFE600",
+    "#FF8A00",
+    "#FF0000",
+    "#FF0F0F",
+  ];
 
   let backgroundColour = colours[5];
 
-  if (ratio < 0.1)
-    backgroundColour = colours[0];
-  else if (ratio < 0.25) 
-    backgroundColour = colours[1];
-  else if (ratio < 0.45) 
-    backgroundColour = colours[2];
-  else if (ratio < 0.60) 
-    backgroundColour = colours[3];
-  else
-    backgroundColour = colours[4];
+  if (ratio < 0.1) backgroundColour = colours[0];
+  else if (ratio < 0.25) backgroundColour = colours[1];
+  else if (ratio < 0.45) backgroundColour = colours[2];
+  else if (ratio < 0.6) backgroundColour = colours[3];
+  else backgroundColour = colours[4];
 
   return backgroundColour;
 }
 
 function drawGraph(labels, data, backgroundColours, totalSpots) {
-  var ctx = document.getElementById('analyticsGraph');
-    
+  var ctx = document.getElementById("analyticsGraph");
+
   var analyticsGraph = new Chart(ctx, {
-    type: 'bar',
+    type: "bar",
     data: {
-        labels: labels,
-        datasets: [{
-            data: data,
-            backgroundColor: backgroundColours
-        }],
+      labels: labels,
+      datasets: [
+        {
+          data: data,
+          backgroundColor: backgroundColours,
+        },
+      ],
     },
     options: {
       plugins: {
         legend: {
-          display: false
-        }
+          display: false,
+        },
       },
       scales: {
         y: {
-            beginAtZero: true,
-            suggestedMax: totalSpots
-        }
-      }
-    }
+          beginAtZero: true,
+          suggestedMax: totalSpots,
+        },
+      },
+    },
   });
 }
