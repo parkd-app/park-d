@@ -192,7 +192,6 @@ function initPage() {
   getDocEle("search_bar_bg1").style.display = userMode ? "block" : "none";
 
   updateSelection();
-  updateAnalytics();
 }
 
 function pickDone() {
@@ -314,59 +313,6 @@ function updateSelection() {
     available + " Spots Available";
   getDocEle("spot_availability_text").textContent =
     available + " Spots Available";
-}
-
-function updateAnalytics() {
-  h = 0;
-  maxH = 300;
-  red = 0;
-  green = 0;
-  occupancyRate = 0;
-  for (let index = 0; index < analyticsData.length; index++) {
-    occupancyRate = analyticsData[index].occupancy / 100;
-    h = occupancyRate * maxH;
-    if (occupancyRate <= 0.5) {
-      red = 2 * occupancyRate * 255;
-      green = 255;
-    } else {
-      red = 255;
-      green = (1 - 2 * occupancyRate) * 255;
-    }
-    document.getElementById("graph_bar" + index).style.height = h + "px";
-    document.getElementById("graph_bar" + index).style.top = maxH - h + "px";
-    document.getElementById("graph_bar" + index).style.background =
-      "rgba(" + red + "," + green + "0,1)";
-  }
-
-  availability = [
-    { number: 0, total: 0 },
-    { number: 0, total: 0 },
-    { number: 0, total: 0 },
-  ];
-  type = 0;
-  for (let index = 0; index < parkingLayout.length; index++) {
-    if (parkingLayout[index].handicapped) {
-      type = 1;
-    } else if (parkingLayout[index].reserved) {
-      type = 2;
-    } else {
-      type = 0;
-    }
-    availability[type].total += 1;
-    availability[type].number += parkingLayout[index].open ? 1 : 0;
-  }
-  totalSpots = 0;
-  totalAvailable = 0;
-  for (let index = 0; index < availability.length; index++) {
-    document.getElementById("analytics_card" + index + "_total").textContent =
-      "out of " + availability[index].total;
-    document.getElementById("analytics_card" + index + "_number").textContent =
-      availability[index].number;
-    totalSpots += availability[index].total;
-    totalAvailable += availability[index].number;
-  }
-  getDocEle("total_text").textContent =
-    "TOTAL AVAILABLE - " + totalAvailable + "/" + totalSpots;
 }
 
 function getDocEle(className) {
