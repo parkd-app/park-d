@@ -60,7 +60,7 @@ def requires_parking_spot():  # put application's code here
     # response.headers.add('Access-Control-Allow-Origin', '*')
     return {"parking_spaces": ret}
 
-#jon
+#jon_saving
 @app.route("/req_coordinate", methods=["POST"])
 def requires_coordinate():
     data = request.json
@@ -80,7 +80,7 @@ def close_model():
     ret = slow_initiate_service.closemodel("bird")
     return {"result": ret}
 
-
+#jon
 @app.route("/get_parking_snapshot", methods=["GET"])
 def get_snapshot():
     model = request.args.get("angle")
