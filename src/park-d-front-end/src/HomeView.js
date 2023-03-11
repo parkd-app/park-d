@@ -129,33 +129,6 @@ var parkingLayout = [
   }),
 ];
 
-var analyticsData = [
-  { name: "12am", occupancy: 0 },
-  { name: "1am", occupancy: 0 },
-  { name: "2am", occupancy: 0 },
-  { name: "3am", occupancy: 0 },
-  { name: "4am", occupancy: 0 },
-  { name: "5am", occupancy: 5 },
-  { name: "6am", occupancy: 15 },
-  { name: "7am", occupancy: 35 },
-  { name: "8am", occupancy: 40 },
-  { name: "9am", occupancy: 50 },
-  { name: "10am", occupancy: 80 },
-  { name: "11am", occupancy: 90 },
-  { name: "12pm", occupancy: 100 },
-  { name: "1pm", occupancy: 100 },
-  { name: "2pm", occupancy: 95 },
-  { name: "3pm", occupancy: 80 },
-  { name: "4pm", occupancy: 30 },
-  { name: "5pm", occupancy: 35 },
-  { name: "6pm", occupancy: 40 },
-  { name: "7pm", occupancy: 40 },
-  { name: "8pm", occupancy: 35 },
-  { name: "9pm", occupancy: 20 },
-  { name: "10pm", occupancy: 10 },
-  { name: "11pm", occupancy: 0 },
-];
-
 function initMap() {
   initPage();
 
@@ -395,4 +368,122 @@ function updateSpots() {
       window["sspot" + spot.id].open = spot.open;
     }
   }
+}
+
+function analytics() {
+  $.getJSON('./data/analytics.json', function(data) {
+    const info = data.data;
+
+    document.getElementById("location_name").innerHTML = info.location.name;
+    document.getElementById("location_address").innerHTML = info.location.address;
+
+    const occupancy = info.occupancy;
+
+    [time, day] = getDateAndTime();
+
+    document.getElementById("last_updated_text").innerHTML = "Last Updated - " + day + " @ " + time;
+
+    let hours = [];
+    let occupied = [];
+    let backgroundColours = [];
+    
+    $.each(occupancy, function(i, f) {
+      resSpots = f.occupancy.res.length;
+      accSpots = f.occupancy.acc.length;
+      stdSpots = f.occupancy.std.length;
+
+      totalSpots = resSpots + accSpots + stdSpots;
+
+      resAvail = resSpots - f.occupancy.res.filter(Boolean).length;
+      accAvail = accSpots - f.occupancy.acc.filter(Boolean).length;
+      stdAvail = stdSpots - f.occupancy.std.filter(Boolean).length;
+
+      totalAvail = resAvail + accAvail + stdAvail;
+
+      if (f.hour === time) {
+        document.getElementById("res_number").innerHTML = resAvail;
+        document.getElementById("acc_number").innerHTML = accAvail;
+        document.getElementById("std_number").innerHTML = stdAvail;
+
+        document.getElementById("res_total").innerHTML = "out of " + resSpots;
+        document.getElementById("acc_total").innerHTML = "out of " + accSpots;
+        document.getElementById("std_total").innerHTML = "out of " + stdSpots;
+
+        document.getElementById("total_text").innerHTML = "TOTAL AVAILABLE - " + totalAvail + "/" + totalSpots;
+        document.getElementById("spot_selection_stats").innerHTML = totalAvail + " Spots Available";
+      }
+
+      totalOccupied = totalSpots - totalAvail;
+      ratio = totalOccupied/totalAvail;
+
+      hours.push(f.hour);
+      occupied.push(totalOccupied);
+
+      backgroundColours.push(generateColour(ratio))
+    });
+
+    drawGraph(hours, occupied, backgroundColours);
+  });
+}
+
+function getDateAndTime() {
+  let dateTime = new Date();
+  let dateTimeSplit = dateTime.toString().split(" ");
+
+  let time = parseInt(dateTimeSplit[4].split(":")[0]);
+
+  if (time == 0)
+    time = "12am";
+  else if (time > 12)
+    time = time % 12 + "pm";
+  else
+    time += "am";
+
+  let day = dateTimeSplit[1] + " " + dateTimeSplit[2] + ", " + dateTimeSplit[3];
+
+  return [time, day];
+}
+
+function generateColour(ratio) {
+  const colours = [
+    "#61FF00", "#CCFF00", "#FFE600", "#FF8A00", "#FF0000", "#FF0F0F"
+  ]
+
+  let backgroundColour = colours[5];
+
+  if (ratio < 0.1)
+    backgroundColour = colours[0];
+  else if (ratio < 0.25) 
+    backgroundColour = colours[1];
+  else if (ratio < 0.45) 
+    backgroundColour = colours[2];
+  else if (ratio < 0.60) 
+    backgroundColour = colours[3];
+  else
+    backgroundColour = colours[4];
+
+  return backgroundColour;
+}
+
+function drawGraph(labels, data, backgroundColours) {
+  var ctx = document.getElementById('analyticsGraph');
+    
+  var analyticsGraph = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: labels,
+        datasets: [{
+            label: 'Occupancy',
+            data: data,
+            backgroundColor: backgroundColours
+        }],
+    },
+    options: {
+      scales: {
+        y: {
+            beginAtZero: true
+        }
+      }
+    }
+  });
 }
