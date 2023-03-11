@@ -474,12 +474,16 @@ function drawGraph(labels, data, backgroundColours, totalSpots) {
     data: {
         labels: labels,
         datasets: [{
-            label: 'Occupancy',
             data: data,
             backgroundColor: backgroundColours
         }],
     },
     options: {
+      plugins: {
+        legend: {
+          display: false
+        }
+      },
       scales: {
         y: {
             beginAtZero: true,

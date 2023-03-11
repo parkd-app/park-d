@@ -6,11 +6,10 @@
   position: absolute;
   top: 0px;
   left: 0px;
-  overflow: hidden;
 }
 .map {
   width: 100%;
-  height: 88.5%;
+  height: 100%;
   background: transparent;
   background-repeat: no-repeat;
   background-position: center center;
@@ -19,7 +18,6 @@
   position: absolute;
   top: 87px;
   left: 0px;
-  overflow: hidden;
 }
 .header {
   width: 100%;
@@ -777,13 +775,14 @@
   width: 30vw;
   height: 100%;
   background: rgb(255, 255, 255);
+  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
   position: absolute;
   top: 87px;
 }
 .location_name {
   font-family: Montserrat;
   font-weight: Medium;
-  font-size: 30px;
+  font-size: 25px;
   padding: 20px;
 }
 .location_address {
@@ -793,14 +792,16 @@
   padding-left: 20px;
 }
 .analytics_cards_bg {
-  width: 30vw;
+  width: 25vw;
   display: flex;
   justify-content: space-around;
+  margin-left: auto;
+  margin-right: auto;
   padding-top: 20px;
 }
 .analytics_card_bg {
-  width: 30%;
-  height: 25vh;
+  width: 32%;
+  height: 23vh;
   border-radius: 10px;
   text-align: center;
 }
@@ -822,6 +823,35 @@
   font-family: Montserrat;
   font-size: 27px;
 }
+
+@media screen and (max-width: 1450px) {
+  .analytics_cards_bg {
+    width: 90%;
+    display: block;
+    padding-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .analytics_card_bg {
+    width: 100%;
+    height: 13vh;
+    margin-bottom: 10px;
+  }
+  .analytics_card_name {
+    font-size: 15px;
+    padding-top: 10px;
+    padding-bottom: 5px;
+  }
+  .analytics_card_number {
+    width: 100%;
+    font-size: 30px;
+  }
+  .analytics_card_total {
+    width: 100%;
+    font-size: 15px;
+  }
+}
+
 .total_text {
   width: 100%;
   font-family: Montserrat;
