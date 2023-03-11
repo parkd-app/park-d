@@ -1,28 +1,35 @@
 {
-    "data": [
-        { "hour": "12am", "occupancy": [true, false, false, false, false, false, false, false, false, false] },
-        { "hour": "1am", "occupancy": [true, false, false, false, false, false, false, false, false, false] },
-        { "hour": "2am", "occupancy": [true, false, false, false, false, false, false, false, false, false] },
-        { "hour": "3am", "occupancy": [true, false, false, false, false, false, false, false, false, false] },
-        { "hour": "4am", "occupancy": [true, false, false, false, false, false, false, false, false, false] },
-        { "hour": "5am", "occupancy": [true, false, false, false, false, false, false, false, false, true] },
-        { "hour": "6am", "occupancy": [true, false, false, false, false, false, false, false, false, true] },
-        { "hour": "7am", "occupancy": [true, false, false, false, false, false, false, false, true, true] },
-        { "hour": "8am", "occupancy": [true, false, true, false, false, false, false, false, true, true] },
-        { "hour": "9am", "occupancy": [true, false, true, true, false, false, false, false, true, true] },
-        { "hour": "10am", "occupancy": [true, true, true, true, true, true, false, false, true, true] },
-        { "hour": "11am", "occupancy": [true, true, true, true, true, true, false, true, true, true] },
-        { "hour": "12pm", "occupancy": [true, true, true, true, true, true, true, true, true, true] },
-        { "hour": "1pm", "occupancy": [true, true, true, true, true, true, false, true, true, true] },
-        { "hour": "2pm", "occupancy": [true, true, true, true, true, true, false, false, true, true] },
-        { "hour": "3pm", "occupancy": [true, false, true, true, false, false, false, false, true, true] },
-        { "hour": "4pm", "occupancy": [true, true, true, true, false, false, false, false, true, true] },
-        { "hour": "5pm", "occupancy": [true, true, true, true, true, false, false, false, true, true] },
-        { "hour": "6pm", "occupancy": [true, true, true, true, true, true, false, false, true, true] },
-        { "hour": "7pm", "occupancy": [true, true, true, true, true, true, false, true, true, true] },
-        { "hour": "8pm", "occupancy": [true, true, true, true, false, false, false, false, true, true] },
-        { "hour": "9pm", "occupancy": [true, false, false, false, false, false, false, false, true, true] },
-        { "hour": "10pm", "occupancy": [true, false, false, false, false, false, false, false, false, true] },
-        { "hour": "11pm", "occupancy": [true, false, false, false, false, false, false, false, false, false] }
-    ]
+    "data": {
+        "id": 1,
+        "location": { 
+            "name": "Pierre Elliott Trudeau High School", 
+            "address": "90 Bur Oak Ave, Markham, ON L6C 2E6" 
+        },
+        "occupancy": [
+            { "hour": "12am", "occupancy": [true, false, false, false, false, false, false, false, false, false] },
+            { "hour": "1am", "occupancy": [true, false, false, false, false, false, false, false, false, false] },
+            { "hour": "2am", "occupancy": [true, false, false, false, false, false, false, false, false, false] },
+            { "hour": "3am", "occupancy": [true, false, false, false, false, false, false, false, false, false] },
+            { "hour": "4am", "occupancy": [true, false, false, false, false, false, false, false, false, false] },
+            { "hour": "5am", "occupancy": [true, false, false, false, false, false, false, false, false, true] },
+            { "hour": "6am", "occupancy": [true, false, false, false, false, false, false, false, false, true] },
+            { "hour": "7am", "occupancy": [true, false, false, false, false, false, false, false, true, true] },
+            { "hour": "8am", "occupancy": [true, false, true, false, false, false, false, false, true, true] },
+            { "hour": "9am", "occupancy": [true, false, true, true, false, false, false, false, true, true] },
+            { "hour": "10am", "occupancy": [true, true, true, true, true, true, false, false, true, true] },
+            { "hour": "11am", "occupancy": [true, true, true, true, true, true, false, true, true, true] },
+            { "hour": "12pm", "occupancy": [true, true, true, true, true, true, true, true, true, true] },
+            { "hour": "1pm", "occupancy": [true, true, true, true, true, true, false, true, true, true] },
+            { "hour": "2pm", "occupancy": [true, true, true, true, true, true, false, false, true, true] },
+            { "hour": "3pm", "occupancy": [true, false, true, true, false, false, false, false, true, true] },
+            { "hour": "4pm", "occupancy": [true, true, true, true, false, false, false, false, true, true] },
+            { "hour": "5pm", "occupancy": [true, true, true, true, true, false, false, false, true, true] },
+            { "hour": "6pm", "occupancy": [true, true, true, true, true, true, false, false, true, true] },
+            { "hour": "7pm", "occupancy": [true, true, true, true, true, true, false, true, true, true] },
+            { "hour": "8pm", "occupancy": [true, true, true, true, false, false, false, false, true, true] },
+            { "hour": "9pm", "occupancy": [true, false, false, false, false, false, false, false, true, true] },
+            { "hour": "10pm", "occupancy": [true, false, false, false, false, false, false, false, false, true] },
+            { "hour": "11pm", "occupancy": [true, false, false, false, false, false, false, false, false, false] }
+        ]
+    }
 }
