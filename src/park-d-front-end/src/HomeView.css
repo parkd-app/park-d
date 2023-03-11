@@ -852,6 +852,13 @@
   }
 }
 
+@media screen and (max-width: 750px) {
+  .analytics_bg1 {
+    display: none;
+    width: 90vw;
+  }
+}
+
 .total_text {
   width: 100%;
   font-family: Montserrat;

@@ -239,21 +239,33 @@ function getRoute() {
 
 function toggleSelection() {
   selectionToggle = !selectionToggle;
+  let selectionTogglePos = (window.innerWidth <= 750) ? "90vw" : "30vw"
   if (userMode) {
     getDocEle("spot_selection").style.display = selectionToggle
       ? "block"
       : "none";
-    getDocEle("chevron_bg1").style.left = selectionToggle ? "30vw" : "0px";
+      getDocEle("chevron_bg1").style.left = selectionToggle ? selectionTogglePos : "0px";
   } else {
     getDocEle("analytics_bg1").style.display = selectionToggle
       ? "block"
       : "none";
-    getDocEle("chevron_bg1").style.left = selectionToggle ? "30vw" : "0px";
+      getDocEle("chevron_bg1").style.left = selectionToggle ? selectionTogglePos : "0px";
   }
   getDocEle("chevron").style.transform = selectionToggle
     ? "scaleX(1)"
     : "scaleX(-1)";
 }
+
+function updateChevronPos() {
+  let selectionTogglePos = (window.innerWidth <= 750) ? "90vw" : "30vw"
+  if (userMode) {
+    getDocEle("chevron_bg1").style.left = selectionToggle ? selectionTogglePos : "0px";
+  } else {
+    getDocEle("chevron_bg1").style.left = selectionToggle ? selectionTogglePos : "0px";
+  }
+}
+
+window.onresize = updateChevronPos
 
 function selectionSelect(id) {
   if (
