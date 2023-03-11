@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link
       href="https://fonts.googleapis.com/css?family=Montserrat&display=swap"
       rel="stylesheet"
@@ -14,13 +16,13 @@
         $.getJSON('./data/analytics.json', function(data) {
           const info = data.data;
 
-          const locationName = info.location.name;
-          const locationAddress = info.location.address;
+          document.getElementById("location_name").innerHTML = info.location.name;
+          document.getElementById("location_address").innerHTML = info.location.address;
 
           const locationOccupancy = info.occupancy;
 
           $.each(locationOccupancy, function(i, f) {
-            console.log(f.hour);
+            // console.log(f.hour);
           });
         });
       });
@@ -231,7 +233,7 @@
         </div>
       </div>
       <div class="analytics_bg1">
-        <div class="analytics_bg2">
+        <div class="analytics_bg2" id="analytics_bg2">
           <div class="analytics_cards_bg">
             <div
               class="analytics_card_bg1"
@@ -294,10 +296,8 @@
               </span>
             </div>
           </div>
-          <span class="location_name">Pierre Elliott Trudeau High School</span>
-          <span class="location_address"
-            >90 Bur Oak Ave, Markham, ON L6C 2E6</span
-          >
+          <span class="location_name" id="location_name"/>
+          <span class="location_address" id="location_address"/>
           <span class="timeline_text">Timeline</span>
           <div class="total_bg1">
             <div class="total_bg2"></div>
