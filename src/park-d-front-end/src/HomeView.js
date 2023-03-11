@@ -243,12 +243,12 @@ function toggleSelection() {
     getDocEle("spot_selection").style.display = selectionToggle
       ? "block"
       : "none";
-    getDocEle("chevron_bg1").style.left = selectionToggle ? "405px" : "0px";
+    getDocEle("chevron_bg1").style.left = selectionToggle ? "30vw" : "0px";
   } else {
     getDocEle("analytics_bg1").style.display = selectionToggle
       ? "block"
       : "none";
-    getDocEle("chevron_bg1").style.left = selectionToggle ? "565px" : "0px";
+    getDocEle("chevron_bg1").style.left = selectionToggle ? "30vw" : "0px";
   }
   getDocEle("chevron").style.transform = selectionToggle
     ? "scaleX(1)"
@@ -386,6 +386,7 @@ function analytics() {
     let hours = [];
     let occupied = [];
     let backgroundColours = [];
+    let totalSpots = 0;
     
     $.each(occupancy, function(i, f) {
       resSpots = f.occupancy.res.length;
@@ -422,7 +423,7 @@ function analytics() {
       backgroundColours.push(generateColour(ratio))
     });
 
-    drawGraph(hours, occupied, backgroundColours);
+    drawGraph(hours, occupied, backgroundColours, totalSpots);
   });
 }
 
@@ -465,7 +466,7 @@ function generateColour(ratio) {
   return backgroundColour;
 }
 
-function drawGraph(labels, data, backgroundColours) {
+function drawGraph(labels, data, backgroundColours, totalSpots) {
   var ctx = document.getElementById('analyticsGraph');
     
   var analyticsGraph = new Chart(ctx, {
@@ -481,7 +482,8 @@ function drawGraph(labels, data, backgroundColours) {
     options: {
       scales: {
         y: {
-            beginAtZero: true
+            beginAtZero: true,
+            suggestedMax: totalSpots
         }
       }
     }

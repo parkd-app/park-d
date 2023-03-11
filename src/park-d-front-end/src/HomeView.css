@@ -748,15 +748,11 @@
 .chevron_bg1 {
   width: 45px;
   height: 146px;
-  background: rgba(255, 255, 255, 1);
-  opacity: 1;
+  background: rgb(255, 255, 255);
   position: absolute;
-  top: 215px;
-  left: 0px;
-  border-top-right-radius: 10px;
-  border-bottom-right-radius: 10px;
+  top: 25%;
+  border-radius: 0px 10px 10px 0;
   box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
-  overflow: hidden;
   cursor: pointer;
 }
 .chevron_bg2 {
@@ -767,187 +763,75 @@
   position: absolute;
   top: 63px;
   left: 13px;
-  overflow: hidden;
 }
 .chevron {
   width: 13px;
-  height: 17px;
+  height: 20px;
   background: url("Images/chevron.png");
-  opacity: 1;
-  position: absolute;
-  top: 1px;
-  left: 1px;
   transform: scaleX(-1);
 }
+
+/* Analytics CSS */
 .analytics_bg1 {
   display: none;
-  width: 757px;
-  height: 895px;
-  background: rgba(255, 255, 255, 1);
-  opacity: 1;
+  width: 30vw;
+  height: 100%;
+  background: rgb(255, 255, 255);
   position: absolute;
-  top: -25px;
-  left: -95px;
-  overflow: hidden;
-  transform: scale(0.75);
-}
-.analytics_bg2 {
-  width: 694px;
-  height: 848px;
-  background: transparent;
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: cover;
-  opacity: 1;
-  position: absolute;
-  top: 24px;
-  left: 31px;
-  overflow: hidden;
-}
-.analytics_cards_bg {
-  width: 684px;
-  height: 239px;
-  background: transparent;
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: cover;
-  opacity: 1;
-  position: absolute;
-  top: 115px;
-  left: 5px;
-  overflow: hidden;
-}
-.analytics_card_bg1 {
-  width: 200px;
-  height: 239px;
-  background: transparent;
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: cover;
-  opacity: 1;
-  position: absolute;
-  top: 0px;
-  overflow: hidden;
-}
-.analytics_card_bg {
-  width: 200px;
-  height: 239px;
-  opacity: 1;
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
-  overflow: hidden;
-}
-.analytics_card_total {
-  width: 200px;
-  color: rgba(255, 255, 255, 1);
-  position: absolute;
-  top: 188px;
-  left: 0px;
-  font-family: Montserrat;
-  font-weight: Medium;
-  font-size: 27px;
-  opacity: 1;
-  text-align: center;
-}
-.analytics_card_number {
-  width: 200px;
-  color: rgba(255, 255, 255, 1);
-  position: absolute;
-  top: 66px;
-  left: 0px;
-  font-family: Montserrat;
-  font-weight: Medium;
-  font-size: 90px;
-  opacity: 1;
-  text-align: center;
-}
-.analytics_card_name {
-  width: 200px;
-  color: rgba(255, 255, 255, 1);
-  position: absolute;
-  top: 19px;
-  left: 0px;
-  font-family: Montserrat;
-  font-weight: Medium;
-  font-size: 27px;
-  opacity: 1;
-  text-align: center;
+  top: 87px;
 }
 .location_name {
-  width: 678px;
-  color: rgba(0, 0, 0, 1);
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  font-family: Montserrat;
-  font-weight: Medium;
-  font-size: 40px;
-  opacity: 1;
-  text-align: left;
-}
-.location_address {
-  width: 600px;
-  color: rgba(0, 0, 0, 1);
-  position: absolute;
-  top: 72px;
-  left: 0px;
-  font-family: Montserrat;
-  font-weight: Regular;
-  font-size: 20px;
-  opacity: 1;
-  text-align: left;
-}
-.timeline_text {
-  width: 519px;
-  color: rgba(0, 0, 0, 1);
-  position: absolute;
-  top: 458px;
-  left: 4px;
   font-family: Montserrat;
   font-weight: Medium;
   font-size: 30px;
-  opacity: 1;
-  text-align: left;
+  padding: 20px;
 }
-.total_bg1 {
-  width: 684px;
-  height: 65px;
-  background: transparent;
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: cover;
-  opacity: 1;
-  position: absolute;
-  top: 376px;
-  left: 5px;
-  overflow: hidden;
-}
-.total_text {
-  width: 648px;
-  color: rgba(0, 0, 0, 1);
-  position: absolute;
-  top: 11px;
-  left: 19px;
+.location_address {
   font-family: Montserrat;
-  font-weight: Medium;
-  font-size: 35px;
-  opacity: 1;
+  font-weight: Regular;
+  font-size: 20px;
+  padding-left: 20px;
+}
+.analytics_cards_bg {
+  width: 30vw;
+  display: flex;
+  justify-content: space-around;
+  padding-top: 20px;
+}
+.analytics_card_bg {
+  width: 30%;
+  height: 25vh;
+  border-radius: 10px;
   text-align: center;
 }
-.last_updated_text {
-  width: 227px;
-  color: rgba(80, 80, 80, 1);
-  position: absolute;
-  top: 850px;
-  left: 467px;
+.analytics_card_name {
+  color: rgb(255, 255, 255);
   font-family: Montserrat;
-  font-weight: Medium;
+  font-size: 15px;
+  padding: 10px;
+}
+.analytics_card_number {
+  width: 100%;
+  color: rgb(255, 255, 255);
+  font-family: Montserrat;
+  font-size: 90px;
+}
+.analytics_card_total {
+  width: 100%;
+  color: rgb(255, 255, 255);
+  font-family: Montserrat;
+  font-size: 27px;
+}
+.total_text {
+  width: 100%;
+  font-family: Montserrat;
+  font-size: 25px;
+  text-align: center;
+  margin: 20px 0px 20px 0px;
+}
+.last_updated_text {
+  width: 100%;
+  font-family: Montserrat;
   font-size: 12px;
-  opacity: 1;
   text-align: right;
 }

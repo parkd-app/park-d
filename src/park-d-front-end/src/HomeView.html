@@ -223,37 +223,62 @@
       </div>
 
       <div class="analytics_bg1">
-        <div class="analytics_bg2" id="analytics_bg2">
-          <div class="analytics_cards_bg" style="padding: 20px">
-            <div class="analytics_card_bg" id="analytics_card1_bg" style="background: rgba(255, 164, 0, 1); left: 487px">
-              <span class="analytics_card_total" id="res_total"></span>
-              <span class="analytics_card_number" id="res_number"></span>
-              <span class="analytics_card_name">RESERVED</span>
+        <div>
+          <div class="location_name" >
+            <span id="location_name"></span>
+          </div>
+          
+          <div class="location_address" >
+            <span id="location_address"></span>
+          </div>
+          
+          <div class="analytics_cards_bg">
+            <div class="analytics_card_bg" style="background: rgba(255, 164, 0, 1)">
+              <div class="analytics_card_name">
+                <span>RESERVED</span>
+              </div>
+              <div class="analytics_card_number">
+                <span id="res_number"></span>
+              </div>
+              <div class="analytics_card_total">
+                <span id="res_total"></span>
+              </div>
             </div>
 
-            <div class="analytics_card_bg" id="analytics_card1_bg" style="background: rgba(0, 86, 150, 1); left: 244px">
-              <span class="analytics_card_total" id="acc_total"></span>
-              <span class="analytics_card_number" id="acc_number"></span>
-              <span class="analytics_card_name">ACCESSIBLE</span>
+            <div class="analytics_card_bg" style="background: rgba(0, 86, 150, 1)">
+              <div class="analytics_card_name">
+                <span>ACCESSIBLE</span>
+              </div>
+              <div class="analytics_card_number">
+                <span id="acc_number"></span>
+              </div>
+              <div class="analytics_card_total">
+                <span id="acc_total"></span>
+              </div>
             </div>
 
-            <div class="analytics_card_bg" id="analytics_card0_bg" style="background: rgba(8, 160, 69, 1); left: 0px"></div>
-              <span class="analytics_card_total" id="std_total"></span>
-              <span class="analytics_card_number" id="std_number"></span>
-              <span class="analytics_card_name">STANDARD</span>
+            <div class="analytics_card_bg" style="background: rgba(8, 160, 69, 1)"">
+              <div class="analytics_card_name">
+                <span>STANDARD</span>
+              </div>
+              <div class="analytics_card_number">
+                <span id="std_number"></span>
+              </div>
+              <div class="analytics_card_total">
+                <span id="std_total"></span>
+              </div>
             </div>
           </div>
 
-          <span class="location_name" id="location_name" style="padding: 20px; margin-bottom: 20px"></span>
-          <span class="location_address" id="location_address" style="padding: 20px"></span>
-
-          <div class="total_bg1">
-            <span class="total_text" id="total_text" style="margin: 20px;"></span>
+          <div class="total_text">
+            <span id="total_text"></span>
           </div>
 
-          <canvas id="analyticsGraph" width="800" height="400" style="margin-top: 450px;"></canvas>
-
-          <span class="last_updated_text" id="last_updated_text"></span>
+          <canvas id="analyticsGraph" width="800" height="400""></canvas>
+          
+          <div class="last_updated_text">
+            <span id="last_updated_text"></span>
+          </div>
         </div>
       </div>
 
