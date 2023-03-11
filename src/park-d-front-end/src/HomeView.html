@@ -19,10 +19,11 @@
           document.getElementById("location_name").innerHTML = info.location.name;
           document.getElementById("location_address").innerHTML = info.location.address;
 
-          const locationOccupancy = info.occupancy;
+          const occupancy = info.occupancy;
 
-          $.each(locationOccupancy, function(i, f) {
-            // console.log(f.hour);
+          $.each(occupancy, function(i, f) {
+            console.log(f.hour);
+            console.log(f.occupancy);
           });
         });
       });
