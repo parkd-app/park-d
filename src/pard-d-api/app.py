@@ -7,10 +7,12 @@ from Constants import constants
 from flask_cors import CORS, cross_origin
 import cv2
 from flask import request
+import Service.firebase_query as db
+
 
 app = Flask(__name__)
 CORS(app)
-
+db.start_db()
 # from flask_cors import CORS
 #
 # CORS(app)
@@ -40,11 +42,15 @@ def setup_logging():
 #david
 @app.route("/save_coord", methods=['POST'])
 def save_coord():
-    angle = request.args.get('angle')
-    print("angle from save: ", angle)
     data = request.json
-    ret = save_coord_service.save_coordinates(data, angle)
+    ret = save_coord_service.save_map_coordinate(data)
     return {'result': True}
+
+@app.route("/get_prev_layout", methods=['GET'])
+def get_layout():
+    data = request.json
+    ret = save_coord_service.get_existing_layout(data['id'], data['name'])
+    return {'result': ret}
 
 @app.route("/rt_parking_info", methods=["GET"])
 @cross_origin()
@@ -110,3 +116,4 @@ def get_snapshot():
 
 if __name__ == "__main__":
     app.run()
+

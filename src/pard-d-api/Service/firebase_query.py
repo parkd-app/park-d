@@ -7,7 +7,7 @@ from firebase_admin import db
 def start_db():
     current_dir = os.getcwd()
     parent_dir = os.path.dirname(current_dir)
-    credential_path = "park-d-dev-firebase-adminsdk-m7q98-c97bc3fdfc.json"
+    credential_path = "Service/park-d-dev-firebase-adminsdk-m7q98-c97bc3fdfc.json"
 
     cred = credentials.Certificate(credential_path)
     firebase_admin.initialize_app(cred, {
@@ -21,8 +21,10 @@ def query_by_key(key):
 
 
 def set_by_key(key,value):
-    ref = db.reference()
-    ret = ref.set({key:value})
+    ref = db.reference('/')
+    ret = ref.update({key:value})
     return  ret
+
+
 
 
