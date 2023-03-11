@@ -20,10 +20,27 @@
           document.getElementById("location_address").innerHTML = info.location.address;
 
           const occupancy = info.occupancy;
+          let dateTime = new Date();
+          let dateTimeSplit = dateTime.toString().split(" ");
 
+          let time = parseInt(dateTimeSplit[4].split(":")[0]);
+
+          if (time > 12) {
+            time = time % 12 + ":" + dateTimeSplit[4].split(":")[1]  + "pm";
+          }
+          else {
+            time += ":" + dateTimeSplit[4].split(":")[1] + "am";
+          }
+
+          let day = dateTimeSplit[1] + " " + dateTimeSplit[2] + ", " + dateTimeSplit[3];
+
+          // Last Updated - 2023/01/28 @ 11:59PM
+
+          document.getElementById("last_updated_text").innerHTML = "Last Updated - " + day + " @ " + time;
+          
           $.each(occupancy, function(i, f) {
-            console.log(f.hour);
-            console.log(f.occupancy);
+            // console.log(f.hour);
+            // console.log(f.occupancy);
           });
         });
       });
@@ -256,14 +273,14 @@
             </div>
           </div>
 
-          <span class="location_name" id="location_name" style="padding: 20px"></span>
+          <span class="location_name" id="location_name" style="padding: 20px; margin-bottom: 20px"></span>
           <span class="location_address" id="location_address" style="padding: 20px"></span>
 
           <div class="total_bg1">
             <span class="total_text" style="margin: 20px;">TOTAL AVAILABLE - 70/100</span>
           </div>
 
-          <span class="last_updated_text">Last Updated - 2023/01/28 @ 11:59PM</span>
+          <span class="last_updated_text" id="last_updated_text"></span>
         </div>
       </div>
 
