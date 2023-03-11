@@ -20,27 +20,48 @@
           document.getElementById("location_address").innerHTML = info.location.address;
 
           const occupancy = info.occupancy;
+          
           let dateTime = new Date();
           let dateTimeSplit = dateTime.toString().split(" ");
 
           let time = parseInt(dateTimeSplit[4].split(":")[0]);
 
           if (time > 12) {
-            time = time % 12 + ":" + dateTimeSplit[4].split(":")[1]  + "pm";
+            time = time % 12 + "pm";
           }
           else {
-            time += ":" + dateTimeSplit[4].split(":")[1] + "am";
+            time += "am";
           }
 
           let day = dateTimeSplit[1] + " " + dateTimeSplit[2] + ", " + dateTimeSplit[3];
 
-          // Last Updated - 2023/01/28 @ 11:59PM
-
           document.getElementById("last_updated_text").innerHTML = "Last Updated - " + day + " @ " + time;
           
           $.each(occupancy, function(i, f) {
-            // console.log(f.hour);
-            // console.log(f.occupancy);
+            if (f.hour === time) {
+              resSpots = f.occupancy.res.length;
+              accSpots = f.occupancy.acc.length;
+              stdSpots = f.occupancy.std.length;
+
+              totalSpots = resSpots + accSpots + stdSpots;
+
+              resAvail = resSpots - f.occupancy.res.filter(Boolean).length;
+              accAvail = accSpots - f.occupancy.acc.filter(Boolean).length;
+              stdAvail = stdSpots - f.occupancy.std.filter(Boolean).length;
+
+              totalAvail = resAvail + accAvail + stdAvail;
+
+              document.getElementById("res_number").innerHTML = resAvail;
+              document.getElementById("acc_number").innerHTML = accAvail;
+              document.getElementById("std_number").innerHTML = stdAvail;
+
+              document.getElementById("res_total").innerHTML = "out of " + resSpots;
+              document.getElementById("acc_total").innerHTML = "out of " + accSpots;
+              document.getElementById("std_total").innerHTML = "out of " + stdSpots;
+
+              document.getElementById("total_text").innerHTML = "TOTAL AVAILABLE - " + totalAvail + "/" + totalSpots;
+            }
+
           });
         });
       });
@@ -255,21 +276,21 @@
         <div class="analytics_bg2" id="analytics_bg2">
           <div class="analytics_cards_bg" style="padding: 20px">
             <div class="analytics_card_bg" id="analytics_card1_bg" style="background: rgba(255, 164, 0, 1); left: 487px">
-              <span class="analytics_card_total" id="analytics_card1_total">out of 4</span>
-              <span class="analytics_card_number" id="analytics_card1_number">0</span>
-              <span class="analytics_card_name" id="analytics_card1_name">RESERVED</span>
+              <span class="analytics_card_total" id="res_total"></span>
+              <span class="analytics_card_number" id="res_number"></span>
+              <span class="analytics_card_name">RESERVED</span>
             </div>
 
             <div class="analytics_card_bg" id="analytics_card1_bg" style="background: rgba(0, 86, 150, 1); left: 244px">
-              <span class="analytics_card_total" id="analytics_card1_total">out of 6</span>
-              <span class="analytics_card_number" id="analytics_card1_number">1</span>
-              <span class="analytics_card_name" id="analytics_card1_name">ACCESSIBLE</span>
+              <span class="analytics_card_total" id="acc_total"></span>
+              <span class="analytics_card_number" id="acc_number"></span>
+              <span class="analytics_card_name">ACCESSIBLE</span>
             </div>
 
             <div class="analytics_card_bg" id="analytics_card0_bg" style="background: rgba(8, 160, 69, 1); left: 0px"></div>
-              <span class="analytics_card_total" id="analytics_card0_total">out of 10</span>
-              <span class="analytics_card_number" id="analytics_card0_number">7</span>
-              <span class="analytics_card_name" id="analytics_card0_name">STANDARD</span>
+              <span class="analytics_card_total" id="std_total"></span>
+              <span class="analytics_card_number" id="std_number"></span>
+              <span class="analytics_card_name">STANDARD</span>
             </div>
           </div>
 
@@ -277,7 +298,7 @@
           <span class="location_address" id="location_address" style="padding: 20px"></span>
 
           <div class="total_bg1">
-            <span class="total_text" style="margin: 20px;">TOTAL AVAILABLE - 70/100</span>
+            <span class="total_text" id="total_text" style="margin: 20px;"></span>
           </div>
 
           <span class="last_updated_text" id="last_updated_text"></span>
