@@ -8,6 +8,23 @@
     <link rel="stylesheet" href="homeView.css" />
     <script src="HomeView.js"></script>
     <!-- <script type="module" src="./scripts/HomeViewAuth.js"></script> -->
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"> </script>
+    <script>
+      $(function() {
+        $.getJSON('./data/analytics.json', function(data) {
+          const info = data.data;
+
+          const locationName = info.location.name;
+          const locationAddress = info.location.address;
+
+          const locationOccupancy = info.occupancy;
+
+          $.each(locationOccupancy, function(i, f) {
+            console.log(f.hour);
+          });
+        });
+      });
+    </script>
   </head>
   <body>
     <div class="background">
