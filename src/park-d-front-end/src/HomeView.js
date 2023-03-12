@@ -38,7 +38,9 @@ var noPoi = [
 ];
 var defaultOptions = {
   zoom: 17,
-  center: { lat: 43.89043899872149, lng: -79.3134901958874 },
+  // center: { lat: 43.89043899872149, lng: -79.3134901958874 },
+  center: { lat: 43.2617, lng: -79.9228 },
+
   disableDefaultUI: true,
   styles: noPoi,
 };
@@ -51,6 +53,7 @@ var clickOrigin;
 var clickDestination;
 var clickChoice = 0;
 var routeMarkers = [];
+var locationNavigator;
 
 var birdSpotData;
 var sideSpotData;
@@ -140,14 +143,12 @@ function initMap() {
   map = new google.maps.Map(document.getElementById("map"), defaultOptions);
   loadAllSpots();
 
+  locationNavigator = navigator.geolocation;
+  locationNavigator.getCurrentPosition(currentPositionSuccess, currentPositionFailure);
+  // currentPositionSuccess();
+
   google.maps.event.addListener(map, "click", function (event) {
-    if (clickChoice == 0) {
-      clickOrigin = { coords: event.latLng };
-      routeMarkers.push(
-        placeMarker(clickOrigin.coords, "./Images/CarMarker.png")
-      );
-      pickDestination();
-    } else if (clickChoice == 1) {
+    if (clickChoice == 1) {
       // check clickDestination to be within bounds of parking lot
       clickDestination = { coords: event.latLng };
       directionsRenderer.setMap(map);
@@ -196,6 +197,7 @@ function resetData() {
   if (selectionToggle) {
     toggleSelection();
   }
+  locationNavigator.getCurrentPosition(currentPositionSuccess, currentPositionFailure);
 }
 
 function recenter() {
@@ -235,6 +237,19 @@ function getRoute() {
       );
     })
     .catch((e) => window.alert("Direction request failed."));
+}
+
+function currentPositionSuccess(position) {
+  clickOrigin = { coords: new google.maps.LatLng(position.coords.latitude, position.coords.longitude)};
+  routeMarkers.push(
+    placeMarker(clickOrigin.coords, "./Images/CarMarker.png")
+  );
+  pickDestination();
+}
+
+function currentPositionFailure() {
+  clickChoice = -1;
+  getDocEle("direction_guide").textContent = "Navigation Disabled";
 }
 
 function toggleSelection() {
