@@ -1,53 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Park'd Google Map</title>
-    <style>
-      #map {
-        height: 500px;
-        width: 100%;
-      }
-    </style>
-    <script src="./adminmap.js"></script>
-  </head>
-  <body>
-    <div id="floating-panel">
-      <div id="PickLabel">Editing Spot Layout</div>
-      <button
-        type="button"
-        id="ResetRouteButton"
-        onclick="resetData()"
-        disabled
-      >
-        Reset Route
-      </button>
-      <button type="button" id="RecenterButton" onclick="recenter()">
-        Recenter
-      </button>
-      <button type="button" id="AddSpotButton" onclick="addingSpot()">
-        Add Parking Spot
-      </button>
-      <button type="button" id="SaveButton" onclick="uploadSpots()">
-        Save Changes
-      </button>
-      <button type="button" id="SetupBirdButton" onclick="setupBird()">
-        Setup large lot
-      </button>
-      <button type="button" id="SetupSideButton" onclick="setupSide()">
-        Setup small lot
-      </button>
-    </div>
 
-    <h1>Park'd</h1>
-    <div id="map"></div>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>Park'd Google Map</title>
+  <style>
+    #map {
+      height: 500px;
+      width: 100%;
+    }
+  </style>
+  <script src="./adminmap.js"></script>
+</head>
 
-    <script
-      async
-      defer
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDWaVhLQMYdNjRXmcZga657_etUC-9HBmQ&callback=initMap"
-    ></script>
-  </body>
+<body>
+  <div id="floating-panel">
+    <div id="PickLabel">Editing Spot Layout</div>
+    <button type="button" id="ResetRouteButton" onclick="resetData()" disabled>
+      Reset Route
+    </button>
+    <button type="button" id="RecenterButton" onclick="recenter()">
+      Recenter
+    </button>
+    <button type="button" id="AddSpotButton" onclick="addingSpot()">
+      Add Parking Spot
+    </button>
+    <button type="button" id="SaveButton" onclick="uploadSpots()">
+      Save Changes
+    </button>
+    <button type="button" id="SetupBirdButton" onclick="setupBird()">
+      Setup large lot
+    </button>
+    <button type="button" id="SetupSideButton" onclick="setupSide()">
+      Setup small lot
+    </button>
+  </div>
+
+  <h1>Park'd</h1>
+  <div id="map"></div>
+
+  <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDWaVhLQMYdNjRXmcZga657_etUC-9HBmQ&callback=initMap"></script>
+</body>
+
 </html>

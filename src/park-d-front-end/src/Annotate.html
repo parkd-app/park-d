@@ -3,7 +3,8 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>Park'd Annotation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Park'd Labelling</title>
     <link rel="annotorious.min.css" href="styles.css" />
     <link rel="stylesheet" href="annotorious.min.css">
     <script src="annotorious.min.js"></script>
@@ -11,6 +12,26 @@
     <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="homeView.css" />
     <link rel="stylesheet" href="Annotate.css" />
+    <style>
+        #map {
+            height: 500px;
+            width: 50%;
+            position: relative;
+            /* background-position: right; */
+            left: 50%;
+            top: 150px;
+        }
+
+        #button-panel {
+            /* height: 500px; */
+            width: 50%;
+            position: relative;
+            /* background-position: right; */
+            left: 50%;
+            top: 150px;
+        }
+    </style>
+    <script src="./adminmap.js"></script>
 </head>
 
 <body>
@@ -43,6 +64,31 @@
             </div>
         </div>
     </div>
+    <div id="button-panel">
+        <div id="PickLabel">Editing Spot Layout</div>
+        <button type="button" id="ResetRouteButton" onclick="resetData()" disabled>
+            Reset Route
+        </button>
+        <button type="button" id="RecenterButton" onclick="recenter()">
+            Recenter
+        </button>
+        <button type="button" id="AddSpotButton" onclick="addingSpot()">
+            Add Parking Spot
+        </button>
+        <button type="button" id="SaveButton" onclick="uploadSpots()">
+            Save Changes
+        </button>
+        <button type="button" id="SetupBirdButton" onclick="setupBird()">
+            Setup large lot
+        </button>
+        <button type="button" id="SetupSideButton" onclick="setupSide()">
+            Setup small lot
+        </button>
+    </div>
+    <div id="map"></div>
+
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDWaVhLQMYdNjRXmcZga657_etUC-9HBmQ&callback=initMap"></script>
     <script>
         window.onload = function () {
             anno = Annotorious.init({
@@ -115,13 +161,13 @@
             if (view == "side") {
                 document.getElementById('test_lot')
                     .src = "http://localhost:8000/assets/images/lot_side.png";
-                    anno.loadAnnotations('http://localhost:8000/annotations_side');
-                    setView("side");
+                anno.loadAnnotations('http://localhost:8000/annotations_side');
+                setView("side");
             } else {
                 document.getElementById('test_lot')
                     .src = "http://localhost:8000/assets/images/lot_bird.png";
-                    anno.loadAnnotations('http://localhost:8000/annotations_bird');
-                    setView("bird");
+                anno.loadAnnotations('http://localhost:8000/annotations_bird');
+                setView("bird");
             }
 
         }

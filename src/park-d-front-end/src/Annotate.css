@@ -22,16 +22,16 @@
   overflow: hidden;
 }
 .annotate-window {
-  width: 100%;
+  width: 40%;
   height: 88.5%;
   background: transparent;
   background-repeat: no-repeat;
-  background-position: center center;
+  background-position: left;
   background-size: cover;
   opacity: 1;
   position: relative;
   top: 100px;
-  left: 15%;
+  left: 2%;
   overflow: hidden;
 }
 .header {
@@ -235,4 +235,18 @@
   font-size: 16px;
   border-radius: 8px;
   min-width: 110px;
+}
+
+.floating-panel{
+  /* width: 40%; */
+  /* height: 88.5%; */
+  /* background: transparent; */
+  /* background-repeat: no-repeat; */
+  background-position: right;
+  /* background-size: cover; */
+  /* opacity: 1; */
+  position: relative;
+  /* top: 300px; */
+  right: 2%;
+  /* overflow: hidden; */
 }
