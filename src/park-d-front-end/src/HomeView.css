@@ -578,7 +578,7 @@
 }
 .spot_selection {
   display: none;
-  width: 544px;
+  width: 35vw;
   height: 895px;
   background: rgba(255, 255, 255, 1);
   opacity: 1;

@@ -159,7 +159,7 @@ function initMap() {
 
 function initPage() {
   getDocEle("annotate_bg1").style.display = userMode ? "none" : "block";
-  getDocEle("chevron_bg1").style.display = userMode ? "none" : "block";
+  getDocEle("chevron_bg1").style.display = "block";
   getDocEle("analytics_bg1").style.display = "none";
   getDocEle("spot_selection").style.display = "none";
   getDocEle("search_bar_bg1").style.display = userMode ? "block" : "none";
@@ -244,8 +244,12 @@ function toggleSelection() {
     getDocEle("spot_selection").style.display = selectionToggle
       ? "block"
       : "none";
+    getDocEle("analytics_bg1").style.display = selectionToggle
+      ? "block"
+      : "none";
+    getDocEle("analytics_bg1").style.right = 0;
     getDocEle("chevron_bg1").style.left = selectionToggle
-      ? selectionTogglePos
+      ? "26.5vw"
       : "0px";
   } else {
     getDocEle("analytics_bg1").style.display = selectionToggle
@@ -264,7 +268,7 @@ function updateChevronPos() {
   let selectionTogglePos = window.innerWidth <= 750 ? "90vw" : "30vw";
   if (userMode) {
     getDocEle("chevron_bg1").style.left = selectionToggle
-      ? selectionTogglePos
+      ? "26.5vw"
       : "0px";
   } else {
     getDocEle("chevron_bg1").style.left = selectionToggle
