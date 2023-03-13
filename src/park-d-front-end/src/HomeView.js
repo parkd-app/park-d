@@ -248,9 +248,7 @@ function toggleSelection() {
       ? "block"
       : "none";
     getDocEle("analytics_bg1").style.right = 0;
-    getDocEle("chevron_bg1").style.left = selectionToggle
-      ? "26.5vw"
-      : "0px";
+    getDocEle("chevron_bg1").style.left = selectionToggle ? "26.5vw" : "0px";
   } else {
     getDocEle("analytics_bg1").style.display = selectionToggle
       ? "block"
@@ -267,9 +265,7 @@ function toggleSelection() {
 function updateChevronPos() {
   let selectionTogglePos = window.innerWidth <= 750 ? "90vw" : "30vw";
   if (userMode) {
-    getDocEle("chevron_bg1").style.left = selectionToggle
-      ? "26.5vw"
-      : "0px";
+    getDocEle("chevron_bg1").style.left = selectionToggle ? "26.5vw" : "0px";
   } else {
     getDocEle("chevron_bg1").style.left = selectionToggle
       ? selectionTogglePos
