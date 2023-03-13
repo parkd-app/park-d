@@ -37,7 +37,7 @@ var noPoi = [
   },
 ];
 var defaultOptions = {
-  zoom: 17,
+  zoom: 15,
   // center: { lat: 43.89043899872149, lng: -79.3134901958874 },
   center: { lat: 43.2617, lng: -79.9228 },
 
@@ -54,6 +54,8 @@ var clickDestination;
 var clickChoice = 0;
 var routeMarkers = [];
 var locationNavigator;
+var hasRoute = false;
+const distanceTol = 20;
 
 var birdSpotData;
 var sideSpotData;
@@ -144,16 +146,23 @@ function initMap() {
   loadAllSpots();
 
   locationNavigator = navigator.geolocation;
+  getDocEle("direction_guide").textContent = "Finding location";
   locationNavigator.getCurrentPosition(currentPositionSuccess, currentPositionFailure);
   // currentPositionSuccess();
+  navigator.geolocation.watchPosition(followPositionSuccess, followPositionFailure);
 
   google.maps.event.addListener(map, "click", function (event) {
     if (clickChoice == 1) {
       // check clickDestination to be within bounds of parking lot
       clickDestination = { coords: event.latLng };
       directionsRenderer.setMap(map);
+      hasRoute = true;
+      getDocEle("direction_guide").textContent = "Calculating Route";
       getRoute();
       pickDone();
+    }
+    else if (clickChoice == 2) {
+      followPositionSuccess(event.latLng)
     }
   });
 }
@@ -169,7 +178,7 @@ function initPage() {
 }
 
 function pickDone() {
-  clickChoice = -1;
+  clickChoice = 2;
   getDocEle("direction_guide").textContent = "Route Calculated";
 }
 
@@ -189,7 +198,7 @@ function placeMarker(position, icon) {
 
 function resetData() {
   clickChoice = 0;
-  getDocEle("direction_guide").textContent = "Select your location";
+  hasRoute = false;
   clearMarkers(routeMarkers);
   routeMarkers = [];
   directionsRenderer.setMap(null);
@@ -197,7 +206,18 @@ function resetData() {
   if (selectionToggle) {
     toggleSelection();
   }
+  getDocEle("direction_guide").textContent = "Finding location";
   locationNavigator.getCurrentPosition(currentPositionSuccess, currentPositionFailure);
+}
+
+function updateRoute(){
+  directionsRenderer.setMap(null);
+  directionsRenderer.setMap(map);
+  getRoute();
+  if (google.maps.geometry.spherical.computeDistanceBetween(clickOrigin.coords,clickDestination.coords) < distanceTol) {
+    getDocEle("direction_guide").textContent = "Destination Reached";
+    clickChoice = 0;
+  }
 }
 
 function recenter() {
@@ -248,6 +268,17 @@ function currentPositionSuccess(position) {
 }
 
 function currentPositionFailure() {
+  clickChoice = -1;
+  getDocEle("direction_guide").textContent = "Navigation Disabled";
+}
+
+function followPositionSuccess(position) {
+  if (!hasRoute) {return;}
+  clickOrigin = { coords: new google.maps.LatLng(position.lat(), position.lng())};
+  updateRoute();
+}
+
+function followPositionFailure() {
   clickChoice = -1;
   getDocEle("direction_guide").textContent = "Navigation Disabled";
 }
