@@ -56,6 +56,7 @@ var routeMarkers = [];
 var locationNavigator;
 var hasRoute = false;
 const distanceTol = 20;
+var targetSpot = -1;
 
 var birdSpotData;
 var sideSpotData;
@@ -157,11 +158,14 @@ function initMap() {
       clickDestination = { coords: event.latLng };
       directionsRenderer.setMap(map);
       hasRoute = true;
+      // determine spot based on coords, check if click is within bounding box?
+      targetSpot = 2;
       getDocEle("direction_guide").textContent = "Calculating Route";
       getRoute();
       pickDone();
     }
     else if (clickChoice == 2) {
+      parkingLayout[targetSpot].open = false;
       followPositionSuccess(event.latLng)
     }
   });
@@ -197,27 +201,45 @@ function placeMarker(position, icon) {
 }
 
 function resetData() {
-  clickChoice = 0;
-  hasRoute = false;
-  clearMarkers(routeMarkers);
-  routeMarkers = [];
-  directionsRenderer.setMap(null);
+  resetRoute(0);
   recenter();
   if (selectionToggle) {
     toggleSelection();
   }
-  getDocEle("direction_guide").textContent = "Finding location";
-  locationNavigator.getCurrentPosition(currentPositionSuccess, currentPositionFailure);
 }
 
 function updateRoute(){
   directionsRenderer.setMap(null);
   directionsRenderer.setMap(map);
-  getRoute();
   if (google.maps.geometry.spherical.computeDistanceBetween(clickOrigin.coords,clickDestination.coords) < distanceTol) {
-    getDocEle("direction_guide").textContent = "Destination Reached";
-    clickChoice = 0;
+    resetRoute(1);
   }
+  else if (!parkingLayout[targetSpot].open) {
+    resetRoute(2);
+  }
+  else {
+    getRoute();
+  }
+}
+
+function resetRoute(resetReason) {
+  clickChoice = 0;
+  targetSpot = -1;
+  hasRoute = false;
+  clearMarkers(routeMarkers);
+  routeMarkers = [];
+  directionsRenderer.setMap(null);
+  clickDestination = null;
+
+  if (resetReason == 0) {reason = "Finding location";}
+  else if (resetReason == 1) {reason = "Destination Reached. Select Parking Lot";}
+  else if (resetReason == 2) {reason = "Spot Taken. Select Parking Lot";}
+
+  getDocEle("direction_guide").textContent = reason;
+  routeMarkers.push(
+    placeMarker(clickOrigin.coords, "./Images/CarMarker.png")
+  );
+  clickChoice = 1;
 }
 
 function recenter() {
