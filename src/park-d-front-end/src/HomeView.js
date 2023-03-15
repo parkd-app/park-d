@@ -57,6 +57,9 @@ var locationNavigator;
 var hasRoute = false;
 const distanceTol = 20;
 var targetSpot = -1;
+var distMatrixservice;
+const timeoutTol = 60;
+var timeoutTime = -1;
 
 var birdSpotData;
 var sideSpotData;
@@ -151,6 +154,7 @@ function initMap() {
   locationNavigator.getCurrentPosition(currentPositionSuccess, currentPositionFailure);
   // currentPositionSuccess();
   navigator.geolocation.watchPosition(followPositionSuccess, followPositionFailure);
+  distMatrixservice = new google.maps.DistanceMatrixService();
 
   google.maps.event.addListener(map, "click", function (event) {
     if (clickChoice == 1) {
@@ -165,10 +169,18 @@ function initMap() {
       pickDone();
     }
     else if (clickChoice == 2) {
-      parkingLayout[targetSpot].open = false;
+      // parkingLayout[targetSpot].open = false;
       followPositionSuccess(event.latLng)
     }
   });
+}
+
+function setTimeoutTime(response, status) {
+  getDocEle("direction_guide").textContent = Math.floor(response.rows[0].elements[0].duration.value / 60) + "m " + 
+                                              response.rows[0].elements[0].duration.value % 60 + "s Remaining"; 
+  const d = new Date();
+  timeoutTime = d.getTime() / 1000 + response.rows[0].elements[0].duration.value + timeoutTol;
+  // timeoutTime = d.getTime() / 1000 + 1;
 }
 
 function initPage() {
@@ -211,11 +223,15 @@ function resetData() {
 function updateRoute(){
   directionsRenderer.setMap(null);
   directionsRenderer.setMap(map);
+  const d = new Date();
   if (google.maps.geometry.spherical.computeDistanceBetween(clickOrigin.coords,clickDestination.coords) < distanceTol) {
     resetRoute(1);
   }
   else if (!parkingLayout[targetSpot].open) {
     resetRoute(2);
+  }
+  else if (timeoutTime != -1 && d.getTime() / 1000 > timeoutTime) {
+    resetRoute(3);
   }
   else {
     getRoute();
@@ -226,14 +242,16 @@ function resetRoute(resetReason) {
   clickChoice = 0;
   targetSpot = -1;
   hasRoute = false;
+  timeoutTime = -1;
   clearMarkers(routeMarkers);
   routeMarkers = [];
   directionsRenderer.setMap(null);
   clickDestination = null;
 
   if (resetReason == 0) {reason = "Finding location";}
-  else if (resetReason == 1) {reason = "Destination Reached. Select Parking Lot";}
-  else if (resetReason == 2) {reason = "Spot Taken. Select Parking Lot";}
+  else if (resetReason == 1) {reason = "Destination Reached";}
+  else if (resetReason == 2) {reason = "Selected Spot Taken";}
+  else if (resetReason == 3) {reason = "Timeout";}
 
   getDocEle("direction_guide").textContent = reason;
   routeMarkers.push(
@@ -277,6 +295,12 @@ function getRoute() {
           "./Images/ParkingMarker.png"
         )
       );
+      distMatrixservice.getDistanceMatrix(
+        {
+          origins: [clickOrigin.coords],
+          destinations: [clickDestination.coords],
+          travelMode: 'DRIVING'
+        }, setTimeoutTime);
     })
     .catch((e) => window.alert("Direction request failed."));
 }
