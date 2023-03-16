@@ -60,6 +60,7 @@ var targetSpot = -1;
 var distMatrixservice;
 const timeoutTol = 60;
 var timeoutTime = -1;
+const positionUpdateTime = 1000;
 
 var birdSpotData;
 var sideSpotData;
@@ -138,6 +139,39 @@ var parkingLayout = [
   }),
 ];
 
+var analyticsData = [
+  { name: "12am", occupancy: 0 },
+  { name: "1am", occupancy: 0 },
+  { name: "2am", occupancy: 0 },
+  { name: "3am", occupancy: 0 },
+  { name: "4am", occupancy: 0 },
+  { name: "5am", occupancy: 5 },
+  { name: "6am", occupancy: 15 },
+  { name: "7am", occupancy: 35 },
+  { name: "8am", occupancy: 40 },
+  { name: "9am", occupancy: 50 },
+  { name: "10am", occupancy: 80 },
+  { name: "11am", occupancy: 90 },
+  { name: "12pm", occupancy: 100 },
+  { name: "1pm", occupancy: 100 },
+  { name: "2pm", occupancy: 95 },
+  { name: "3pm", occupancy: 80 },
+  { name: "4pm", occupancy: 30 },
+  { name: "5pm", occupancy: 35 },
+  { name: "6pm", occupancy: 40 },
+  { name: "7pm", occupancy: 40 },
+  { name: "8pm", occupancy: 35 },
+  { name: "9pm", occupancy: 20 },
+  { name: "10pm", occupancy: 10 },
+  { name: "11pm", occupancy: 0 },
+];
+
+const locationOptions = {
+  maximumAge:60000,
+  timeout:5000,
+  enableHighAccuracy:false
+}
+
 function initMap() {
   initPage();
 
@@ -151,9 +185,7 @@ function initMap() {
 
   locationNavigator = navigator.geolocation;
   getDocEle("direction_guide").textContent = "Finding location";
-  locationNavigator.getCurrentPosition(currentPositionSuccess, currentPositionFailure);
-  // currentPositionSuccess();
-  navigator.geolocation.watchPosition(followPositionSuccess, followPositionFailure);
+  updatePosition();
   distMatrixservice = new google.maps.DistanceMatrixService();
 
   google.maps.event.addListener(map, "click", function (event) {
@@ -170,7 +202,7 @@ function initMap() {
     }
     else if (clickChoice == 2) {
       // parkingLayout[targetSpot].open = false;
-      followPositionSuccess(event.latLng)
+      followPositionSuccess(event.latLng, 1)
     }
   });
 }
@@ -318,15 +350,31 @@ function currentPositionFailure() {
   getDocEle("direction_guide").textContent = "Navigation Disabled";
 }
 
-function followPositionSuccess(position) {
+function followPositionSuccess(position, fromClick = 0) {
   if (!hasRoute) {return;}
-  clickOrigin = { coords: new google.maps.LatLng(position.lat(), position.lng())};
+  if (fromClick == 0) { //from watcher
+    // clickOrigin = { coords: new google.maps.LatLng(clickOrigin.coords.lat()+0.0002, clickOrigin.coords.lng())};
+    clickOrigin = { coords: new google.maps.LatLng(position.coords.latitude, position.coords.longitude)};
+  }
+  else {
+    clickOrigin = { coords: new google.maps.LatLng(position.lat(), position.lng())};
+  }
   updateRoute();
 }
 
 function followPositionFailure() {
   clickChoice = -1;
   getDocEle("direction_guide").textContent = "Navigation Disabled";
+}
+
+function updatePosition() {
+  if (!hasRoute) {
+    locationNavigator.getCurrentPosition(currentPositionSuccess, currentPositionFailure, locationOptions);
+  }
+  else {
+    locationNavigator.getCurrentPosition(followPositionSuccess, followPositionFailure, locationOptions);
+  }
+  setTimeout(updatePosition,positionUpdateTime);
 }
 
 function toggleSelection() {
