@@ -167,9 +167,9 @@ var analyticsData = [
 ];
 
 const locationOptions = {
-  maximumAge:60000,
+  maximumAge:Infinity,
   timeout:5000,
-  enableHighAccuracy:false
+  enableHighAccuracy:true
 }
 
 function initMap() {
@@ -212,7 +212,7 @@ function setTimeoutTime(response, status) {
                                               response.rows[0].elements[0].duration.value % 60 + "s Remaining"; 
   const d = new Date();
   timeoutTime = d.getTime() / 1000 + response.rows[0].elements[0].duration.value + timeoutTol;
-  // timeoutTime = d.getTime() / 1000 + 1;
+  // timeoutTime = 1;
 }
 
 function initPage() {
@@ -286,9 +286,6 @@ function resetRoute(resetReason) {
   else if (resetReason == 3) {reason = "Timeout";}
 
   getDocEle("direction_guide").textContent = reason;
-  routeMarkers.push(
-    placeMarker(clickOrigin.coords, "./Images/CarMarker.png")
-  );
   clickChoice = 1;
 }
 
@@ -353,8 +350,13 @@ function currentPositionFailure() {
 function followPositionSuccess(position, fromClick = 0) {
   if (!hasRoute) {return;}
   if (fromClick == 0) { //from watcher
-    // clickOrigin = { coords: new google.maps.LatLng(clickOrigin.coords.lat()+0.0002, clickOrigin.coords.lng())};
-    clickOrigin = { coords: new google.maps.LatLng(position.coords.latitude, position.coords.longitude)};
+    dirLat = clickDestination.coords.lat() - clickOrigin.coords.lat();
+    dirLng = clickDestination.coords.lng() - clickOrigin.coords.lng();
+    dirLat = clickOrigin.coords.lat() + dirLat * 0.25;
+    dirLng = clickOrigin.coords.lng() + dirLng * 0.25;
+    clickOrigin = { coords: new google.maps.LatLng(dirLat, dirLng)};
+    
+    // clickOrigin = { coords: new google.maps.LatLng(position.coords.latitude, position.coords.longitude)};
   }
   else {
     clickOrigin = { coords: new google.maps.LatLng(position.lat(), position.lng())};
