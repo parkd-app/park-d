@@ -167,10 +167,10 @@ var analyticsData = [
 ];
 
 const locationOptions = {
-  maximumAge:Infinity,
-  timeout:5000,
-  enableHighAccuracy:true
-}
+  maximumAge: Infinity,
+  timeout: 5000,
+  enableHighAccuracy: true,
+};
 
 function initMap() {
   initPage();
@@ -199,19 +199,24 @@ function initMap() {
       getDocEle("direction_guide").textContent = "Calculating Route";
       getRoute();
       pickDone();
-    }
-    else if (clickChoice == 2) {
+    } else if (clickChoice == 2) {
       // parkingLayout[targetSpot].open = false;
-      followPositionSuccess(event.latLng, 1)
+      followPositionSuccess(event.latLng, 1);
     }
   });
 }
 
 function setTimeoutTime(response, status) {
-  getDocEle("direction_guide").textContent = Math.floor(response.rows[0].elements[0].duration.value / 60) + "m " + 
-                                              response.rows[0].elements[0].duration.value % 60 + "s Remaining"; 
+  getDocEle("direction_guide").textContent =
+    Math.floor(response.rows[0].elements[0].duration.value / 60) +
+    "m " +
+    (response.rows[0].elements[0].duration.value % 60) +
+    "s Remaining";
   const d = new Date();
-  timeoutTime = d.getTime() / 1000 + response.rows[0].elements[0].duration.value + timeoutTol;
+  timeoutTime =
+    d.getTime() / 1000 +
+    response.rows[0].elements[0].duration.value +
+    timeoutTol;
   // timeoutTime = 1;
 }
 
@@ -252,20 +257,22 @@ function resetData() {
   }
 }
 
-function updateRoute(){
+function updateRoute() {
   directionsRenderer.setMap(null);
   directionsRenderer.setMap(map);
   const d = new Date();
-  if (google.maps.geometry.spherical.computeDistanceBetween(clickOrigin.coords,clickDestination.coords) < distanceTol) {
+  if (
+    google.maps.geometry.spherical.computeDistanceBetween(
+      clickOrigin.coords,
+      clickDestination.coords
+    ) < distanceTol
+  ) {
     resetRoute(1);
-  }
-  else if (!parkingLayout[targetSpot].open) {
+  } else if (!parkingLayout[targetSpot].open) {
     resetRoute(2);
-  }
-  else if (timeoutTime != -1 && d.getTime() / 1000 > timeoutTime) {
+  } else if (timeoutTime != -1 && d.getTime() / 1000 > timeoutTime) {
     resetRoute(3);
-  }
-  else {
+  } else {
     getRoute();
   }
 }
@@ -280,10 +287,15 @@ function resetRoute(resetReason) {
   directionsRenderer.setMap(null);
   clickDestination = null;
 
-  if (resetReason == 0) {reason = "Finding location";}
-  else if (resetReason == 1) {reason = "Destination Reached";}
-  else if (resetReason == 2) {reason = "Selected Spot Taken";}
-  else if (resetReason == 3) {reason = "Timeout";}
+  if (resetReason == 0) {
+    reason = "Finding location";
+  } else if (resetReason == 1) {
+    reason = "Destination Reached";
+  } else if (resetReason == 2) {
+    reason = "Selected Spot Taken";
+  } else if (resetReason == 3) {
+    reason = "Timeout";
+  }
 
   getDocEle("direction_guide").textContent = reason;
   clickChoice = 1;
@@ -328,17 +340,22 @@ function getRoute() {
         {
           origins: [clickOrigin.coords],
           destinations: [clickDestination.coords],
-          travelMode: 'DRIVING'
-        }, setTimeoutTime);
+          travelMode: "DRIVING",
+        },
+        setTimeoutTime
+      );
     })
     .catch((e) => window.alert("Direction request failed."));
 }
 
 function currentPositionSuccess(position) {
-  clickOrigin = { coords: new google.maps.LatLng(position.coords.latitude, position.coords.longitude)};
-  routeMarkers.push(
-    placeMarker(clickOrigin.coords, "./Images/CarMarker.png")
-  );
+  clickOrigin = {
+    coords: new google.maps.LatLng(
+      position.coords.latitude,
+      position.coords.longitude
+    ),
+  };
+  routeMarkers.push(placeMarker(clickOrigin.coords, "./Images/CarMarker.png"));
   pickDestination();
 }
 
@@ -348,18 +365,22 @@ function currentPositionFailure() {
 }
 
 function followPositionSuccess(position, fromClick = 0) {
-  if (!hasRoute) {return;}
-  if (fromClick == 0) { //from watcher
+  if (!hasRoute) {
+    return;
+  }
+  if (fromClick == 0) {
+    //from watcher
     dirLat = clickDestination.coords.lat() - clickOrigin.coords.lat();
     dirLng = clickDestination.coords.lng() - clickOrigin.coords.lng();
     dirLat = clickOrigin.coords.lat() + dirLat * 0.25;
     dirLng = clickOrigin.coords.lng() + dirLng * 0.25;
-    clickOrigin = { coords: new google.maps.LatLng(dirLat, dirLng)};
-    
+    clickOrigin = { coords: new google.maps.LatLng(dirLat, dirLng) };
+
     // clickOrigin = { coords: new google.maps.LatLng(position.coords.latitude, position.coords.longitude)};
-  }
-  else {
-    clickOrigin = { coords: new google.maps.LatLng(position.lat(), position.lng())};
+  } else {
+    clickOrigin = {
+      coords: new google.maps.LatLng(position.lat(), position.lng()),
+    };
   }
   updateRoute();
 }
@@ -371,12 +392,19 @@ function followPositionFailure() {
 
 function updatePosition() {
   if (!hasRoute) {
-    locationNavigator.getCurrentPosition(currentPositionSuccess, currentPositionFailure, locationOptions);
+    locationNavigator.getCurrentPosition(
+      currentPositionSuccess,
+      currentPositionFailure,
+      locationOptions
+    );
+  } else {
+    locationNavigator.getCurrentPosition(
+      followPositionSuccess,
+      followPositionFailure,
+      locationOptions
+    );
   }
-  else {
-    locationNavigator.getCurrentPosition(followPositionSuccess, followPositionFailure, locationOptions);
-  }
-  setTimeout(updatePosition,positionUpdateTime);
+  setTimeout(updatePosition, positionUpdateTime);
 }
 
 function toggleSelection() {
