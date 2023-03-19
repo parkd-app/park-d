@@ -36,15 +36,15 @@
   </head>
   <body>
     <div class="background">
-      <div class="map" id="map"></div>
       <div class="header">
-        <div class="logo_bg1">
-          <div class="logo_bg2">
-            <span class="logo_text"></span>
-            <div class="logo"></div>
-          </div>
-          <div class="old_logo"></div>
+        <div class="header-left">
+          <a class="settings"></a>
         </div>
+        <a class="logo"></a>
+        <div class="header-right">
+          <a class="logout">LOGOUT</a>
+        </div>
+
         <a href="Annotate.html">
           <div class="annotate_bg1">
             <div class="annotate_bg2">
@@ -53,6 +53,7 @@
             </div>
           </div>
         </a>
+<<<<<<< HEAD
         <a href="adminmap.html">
           <div class="adminmap_bg1">
             <div class="adminmap_bg2">
@@ -83,9 +84,17 @@
             <div class="cogwheel_fg"></div>
           </div>
         </a>
+=======
+        <button type="button" id="SetupBirdButton" onclick="setupBird()">
+          Setup large lot
+        </button>
+        <button type="button" id="SetupSideButton" onclick="setupSide()">
+          Setup small lot
+        </button>
+>>>>>>> 95f1b97 (Dynamic header and map sizing)
       </div>
-      <div class="search_bar_bg1">
-        <div class="search_bar_bg2"></div>
+      <div class="map" id="map"></div>
+      <div class="search_bar_bg">
         <div class="reset_button_bg">
           <div class="reset_button" onclick="resetData()"></div>
         </div>

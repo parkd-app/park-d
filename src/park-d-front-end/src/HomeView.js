@@ -162,7 +162,7 @@ function initPage() {
   getDocEle("chevron_bg1").style.display = "block";
   getDocEle("analytics_bg1").style.display = "none";
   getDocEle("spot_selection").style.display = "none";
-  getDocEle("search_bar_bg1").style.display = userMode ? "block" : "none";
+  getDocEle("search_bar_bg").style.display = userMode ? "block" : "none";
 
   updateSelection();
 }
