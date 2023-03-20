@@ -1,33 +1,38 @@
 // json parsing
-const jsonURL = "http://127.0.0.1:5000/rt_parking_info";
-const postURL = "http://127.0.0.1:5000/save_coord";
-const setUpURL = "http://127.0.0.1:5000/set_up";
+const backendURL = "https://back-end-new-api.azurewebsites.net/";
+const jsonURL = backendURL + "rt_parking_info";
+const postURL = backendURL + "save_coord";
+const setUpURL = backendURL + "set_up";
 
 function Get(URL) {
+  var body = new Object();
+  body.parking_lot_id = 1;
+  body.owner = "5dert6";
+
   var Httpreq = new XMLHttpRequest(); // a new request
   Httpreq.open("GET", URL, false);
-  Httpreq.send(null);
+  Httpreq.send(JSON.stringify(body));
   return Httpreq.responseText;
 }
 
-function setupBird() {
-  setUpModel(setUpURL, "bird");
-}
+// function setupBird() {
+//   setUpModel(setUpURL, "bird");
+// }
 
-function setupSide() {
-  setUpModel(setUpURL, "side");
-}
+// function setupSide() {
+//   setUpModel(setUpURL, "side");
+// }
 
-function setUpModel(URL, angle) {
-  fetch(URL + "?angle=" + angle, {
-    method: "POST",
-    headers: {
-      Accept: "text/plain",
-      "Content-Type": "text/plain",
-    },
-    body: "set me up",
-  });
-}
+// function setUpModel(URL, angle) {
+//   fetch(URL + "?angle=" + angle, {
+//     method: "POST",
+//     headers: {
+//       Accept: "text/plain",
+//       "Content-Type": "text/plain",
+//     },
+//     body: "set me up",
+//   });
+// }
 
 function Put(URL, content) {
   fetch(URL, {
@@ -70,13 +75,7 @@ var defaultOptions = {
 };
 var mapBounds;
 
-var directionsRenderer;
-var directionsService;
-
-var clickOrigin;
-var clickDestination;
 var clickChoice = 0;
-var routeMarkers = [];
 
 var adding = false;
 var pointsClicked = 0;
@@ -89,10 +88,6 @@ var numSideSpots;
 var initialSpots = 0;
 
 function initMap() {
-  directionsRenderer = new google.maps.DirectionsRenderer({
-    suppressMarkers: true,
-  });
-  directionsService = new google.maps.DirectionsService();
 
   map = new google.maps.Map(document.getElementById("map"), defaultOptions);
   mapBounds = new google.maps.LatLngBounds();
@@ -101,16 +96,7 @@ function initMap() {
   loadAllSpots();
 
   google.maps.event.addListener(map, "click", function (event) {
-    if (clickChoice == 0) {
-      clickOrigin = { coords: event.latLng };
-      routeMarkers.push(placeMarker(clickOrigin.coords, "./CarMarker.png"));
-      pickDestination();
-    } else if (clickChoice == 1) {
-      clickDestination = { coords: event.latLng };
-      directionsRenderer.setMap(map);
-      getRoute(directionsRenderer, directionsService);
-      pickDone();
-    } else if (clickChoice == 2) {
+    if (clickChoice == 2) {
       pointsClicked++;
       document.getElementById("PickLabel").textContent =
         "Select " + (4 - pointsClicked) + " more points";
@@ -138,61 +124,16 @@ function pickDestination() {
   document.getElementById("PickLabel").textContent = "Choose Destination";
 }
 
-function placeMarker(position, icon) {
-  marker = new google.maps.Marker({
-    position: position,
-    map: map,
-    icon: icon,
-  });
-  return marker;
-}
-
 function resetData() {
   clickChoice = 0;
   document.getElementById("PickLabel").textContent = "Choose Origin";
   document.getElementById("ResetRouteButton").disabled = true;
-  clearMarkers(routeMarkers);
-  routeMarkers = [];
   directionsRenderer.setMap(null);
 }
 
 function recenter() {
   map.setCenter(defaultOptions.center);
   map.setZoom(defaultOptions.zoom);
-}
-
-function clearMarkers(markers) {
-  for (let index = 0; index < markers.length; index++) {
-    markers[index].setMap(null);
-    markers[index] = null;
-  }
-}
-
-function getRoute(directionsRenderer, directionsService) {
-  directionsService
-    .route({
-      origin: clickOrigin.coords,
-      destination: clickDestination.coords,
-      travelMode: google.maps.TravelMode["DRIVING"],
-    })
-    .then((response) => {
-      directionsRenderer.setDirections(response);
-      clearMarkers(routeMarkers);
-      routeMarkers = [];
-      routeMarkers.push(
-        placeMarker(
-          response.routes[0].legs[0].start_location,
-          "./CarMarker.png"
-        )
-      );
-      routeMarkers.push(
-        placeMarker(
-          response.routes[0].legs[0].end_location,
-          "./ParkingMarker.png"
-        )
-      );
-    })
-    .catch((e) => window.alert("Direction request failed."));
 }
 
 function resetAdding() {
