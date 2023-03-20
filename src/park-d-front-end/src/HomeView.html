@@ -31,7 +31,7 @@
       firebaseRef.once("value", function (snapshot) {
         var data = snapshot.val();
         analytics(data.data);
-      })
+      });
     </script>
   </head>
   <body>

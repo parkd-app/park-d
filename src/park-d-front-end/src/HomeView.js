@@ -406,18 +406,17 @@ function analytics(data) {
   let backgroundColours = [];
   let totalSpots = 0;
 
-  let numEntries = 0
+  let numEntries = 0;
 
-  occupancy.forEach(() => numEntries++)
+  occupancy.forEach(() => numEntries++);
 
   if (numEntries !== 24) {
     document.getElementById("analytics_cards_bg").style.visibility = "hidden";
 
     document.getElementById("total_text").innerHTML =
       "We are crunching these numbers for you... Come back soon!";
-  }
-  else {
-    occupancy.forEach(f => {
+  } else {
+    occupancy.forEach((f) => {
       resSpots = f.occupancy.res.length;
       accSpots = f.occupancy.acc.length;
       stdSpots = f.occupancy.std.length;
