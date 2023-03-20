@@ -4,6 +4,8 @@ const jsonURL = backendURL + "rt_parking_info";
 const postURL = backendURL + "save_coord";
 const setUpURL = backendURL + "set_up";
 
+const colorToType = {"#00FF00":0, "#0000FF":1, "#FF0000":2};
+
 function Get(URL) {
   var body = new Object();
   body.parking_lot_id = 1;
@@ -34,16 +36,16 @@ function Get(URL) {
 //   });
 // }
 
-function Put(URL, content) {
-  fetch(URL, {
-    method: "PUT",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(content),
-  });
-}
+// function Put(URL, content) {
+//   fetch(URL, {
+//     method: "PUT",
+//     headers: {
+//       Accept: "application/json",
+//       "Content-Type": "application/json",
+//     },
+//     body: JSON.stringify(content),
+//   });
+// }
 
 function Post(URL, content) {
   fetch(URL, {
@@ -57,7 +59,7 @@ function Post(URL, content) {
 }
 
 // update status every 2 seconds
-setInterval(updateSpots, 2000);
+setInterval(updateSpots, 5000);
 
 var map;
 var noPoi = [
@@ -147,10 +149,10 @@ function addingSpot() {
 function putSpot(corners) {
   window["spot" + numSpots] = new google.maps.Polygon({
     paths: corners,
-    strokeColor: "#FF0000",
+    strokeColor: document.getElementById("TypeMenu").value,
     strokeOpacity: 0.8,
     strokeWeight: 2,
-    fillColor: "#FF0000",
+    fillColor: "#888888",
     fillOpacity: 0.35,
     editable: true,
     draggable: true,
@@ -158,6 +160,10 @@ function putSpot(corners) {
   });
   window["spot" + numSpots].setMap(map);
   numSpots++;
+}
+
+function removingSpot() {
+
 }
 
 // loading all spots from remote
@@ -191,30 +197,33 @@ function loadAllSpots() {
 }
 
 function uploadSpots() {
+  payload = [];
   for (let i = 0; i < numSpots; i++) {
-    let coords = [];
-    let path = window["spot" + spotData[i].id].getPath();
-    for (let j = 0; j < 4; j++) {
-      let coord = path.getAt(j);
-      coords.push([coord.lat(), coord.lng()]);
+    if (window["spot" + i].get('fillColor') != "888888") {
+      let coords = [];
+      let path = window["spot" + spotData[i].id].getPath();
+      for (let j = 0; j < 4; j++) {
+        let coord = path.getAt(j);
+        coords.push([coord.lat(), coord.lng()]);
+      }
+      spotData[i].mapcoords = coords;
     }
-    spotData[i].mapcoords = coords;
-  }
-  for (let i = initialSpots; i < numSpots; i++) {
-    let coords = [];
-    let path = window["spot" + i].getPath();
-    for (let j = 0; j < 4; j++) {
-      let coord = path.getAt(j);
-      coords.push([coord.lat(), coord.lng()]);
+    else {
+      let coords = [];
+      let path = window["spot" + i].getPath();
+      for (let j = 0; j < 4; j++) {
+        let coord = path.getAt(j);
+        coords.push([coord.lat(), coord.lng()]);
+      }
+      spotData[i] = {};
+      spotData[i].id = i;
+      spotData[i].status = false;
+      spotData[i].camcoords = [];
+      spotData[i].mapcoords = coords;
+      spotData[i].type = colorToType[window["spot" + i].get('strokeColor')];
     }
-    spotData[i] = {};
-    spotData[i].id = i;
-    spotData[i].status = false;
-    spotData[i].camcoords = [];
-    spotData[i].mapcoords = coords;
-    spotData[i].type = 0;
   }
-  Post(postURL, spotData);
+  Post(postURL, payload);
   document.getElementById("SaveButton").textContent = "Save Successful";
   setTimeout(() => {
     document.getElementById("SaveButton").textContent = "Save Changes";
