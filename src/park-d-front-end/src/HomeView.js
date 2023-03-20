@@ -390,73 +390,72 @@ function updateSpots() {
   }
 }
 
-function analytics() {
-  $.getJSON("./data/analytics.json", function (data) {
-    const info = data.data;
+function analytics(data) {
+  document.getElementById("location_name").innerHTML = data.location.name;
+  document.getElementById("location_address").innerHTML = data.location.address;
 
-    document.getElementById("location_name").innerHTML = info.location.name;
-    document.getElementById("location_address").innerHTML =
-      info.location.address;
+  const occupancy = data.occupancy;
 
-    const occupancy = info.occupancy;
+  [time, day] = getDateAndTime();
 
-    [time, day] = getDateAndTime();
+  document.getElementById("last_updated_text").innerHTML =
+    "Last Updated - " + day + " @ " + time;
 
-    document.getElementById("last_updated_text").innerHTML =
-      "Last Updated - " + day + " @ " + time;
+  let hours = [];
+  let occupied = [];
+  let backgroundColours = [];
+  let totalSpots = 0;
 
-    let hours = [];
-    let occupied = [];
-    let backgroundColours = [];
-    let totalSpots = 0;
+  let numEntries = 0
 
-    if (occupancy.length !== 24) {
-      document.getElementById("analytics_cards_bg").style.visibility = "hidden";
+  occupancy.forEach(() => numEntries++)
 
-      document.getElementById("total_text").innerHTML =
-        "We are crunching these numbers for you... Come back soon!";
-    }
-    else {
-      $.each(occupancy, function (i, f) {
-        resSpots = f.occupancy.res.length;
-        accSpots = f.occupancy.acc.length;
-        stdSpots = f.occupancy.std.length;
+  if (numEntries !== 24) {
+    document.getElementById("analytics_cards_bg").style.visibility = "hidden";
 
-        totalSpots = resSpots + accSpots + stdSpots;
+    document.getElementById("total_text").innerHTML =
+      "We are crunching these numbers for you... Come back soon!";
+  }
+  else {
+    occupancy.forEach(f => {
+      resSpots = f.occupancy.res.length;
+      accSpots = f.occupancy.acc.length;
+      stdSpots = f.occupancy.std.length;
 
-        resAvail = resSpots - f.occupancy.res.filter(Boolean).length;
-        accAvail = accSpots - f.occupancy.acc.filter(Boolean).length;
-        stdAvail = stdSpots - f.occupancy.std.filter(Boolean).length;
+      totalSpots = resSpots + accSpots + stdSpots;
 
-        totalAvail = resAvail + accAvail + stdAvail;
+      resAvail = resSpots - f.occupancy.res.filter(Boolean).length;
+      accAvail = accSpots - f.occupancy.acc.filter(Boolean).length;
+      stdAvail = stdSpots - f.occupancy.std.filter(Boolean).length;
 
-        if (f.hour === time) {
-          document.getElementById("res_number").innerHTML = resAvail;
-          document.getElementById("acc_number").innerHTML = accAvail;
-          document.getElementById("std_number").innerHTML = stdAvail;
+      totalAvail = resAvail + accAvail + stdAvail;
 
-          document.getElementById("res_total").innerHTML = "out of " + resSpots;
-          document.getElementById("acc_total").innerHTML = "out of " + accSpots;
-          document.getElementById("std_total").innerHTML = "out of " + stdSpots;
+      if (f.hour === time) {
+        document.getElementById("res_number").innerHTML = resAvail;
+        document.getElementById("acc_number").innerHTML = accAvail;
+        document.getElementById("std_number").innerHTML = stdAvail;
 
-          document.getElementById("total_text").innerHTML =
-            "TOTAL AVAILABLE - " + totalAvail + "/" + totalSpots;
-          document.getElementById("spot_selection_stats").innerHTML =
-            totalAvail + " Spots Available";
-        }
+        document.getElementById("res_total").innerHTML = "out of " + resSpots;
+        document.getElementById("acc_total").innerHTML = "out of " + accSpots;
+        document.getElementById("std_total").innerHTML = "out of " + stdSpots;
 
-        totalOccupied = totalSpots - totalAvail;
-        ratio = totalOccupied / totalAvail;
-
-        hours.push(f.hour);
-        occupied.push(totalOccupied);
-
-        backgroundColours.push(generateColour(ratio));
-      });
-
-      drawGraph(hours, occupied, backgroundColours, totalSpots);
+        document.getElementById("total_text").innerHTML =
+          "TOTAL AVAILABLE - " + totalAvail + "/" + totalSpots;
+        document.getElementById("spot_selection_stats").innerHTML =
+          totalAvail + " Spots Available";
       }
-  });
+
+      totalOccupied = totalSpots - totalAvail;
+      ratio = totalOccupied / totalAvail;
+
+      hours.push(f.hour);
+      occupied.push(totalOccupied);
+
+      backgroundColours.push(generateColour(ratio));
+    });
+
+    drawGraph(hours, occupied, backgroundColours, totalSpots);
+  }
 }
 
 function getDateAndTime() {
