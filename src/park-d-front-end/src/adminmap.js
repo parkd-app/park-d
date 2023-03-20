@@ -81,11 +81,10 @@ var adding = false;
 var pointsClicked = 0;
 var corners = [];
 
-var birdSpotData;
-var sideSpotData;
-var numBirdSpots;
-var numSideSpots;
+var spotData;
+var numSpots;
 var initialSpots = 0;
+var changedSpots = [];
 
 function initMap() {
 
@@ -113,27 +112,15 @@ function initMap() {
   });
 }
 
-function pickDone() {
-  clickChoice = -1;
-  document.getElementById("PickLabel").textContent = "Route Calculated";
-  document.getElementById("ResetRouteButton").disabled = false;
-}
-
-function pickDestination() {
-  clickChoice = 1;
-  document.getElementById("PickLabel").textContent = "Choose Destination";
+function recenter() {
+  map.setCenter(defaultOptions.center);
+  map.setZoom(defaultOptions.zoom);
 }
 
 function resetData() {
   clickChoice = 0;
-  document.getElementById("PickLabel").textContent = "Choose Origin";
-  document.getElementById("ResetRouteButton").disabled = true;
+  document.getElementById("PickLabel").textContent = "Admin View";
   directionsRenderer.setMap(null);
-}
-
-function recenter() {
-  map.setCenter(defaultOptions.center);
-  map.setZoom(defaultOptions.zoom);
 }
 
 function resetAdding() {
@@ -175,17 +162,15 @@ function putSpot(corners) {
 
 // loading all spots from remote
 function loadAllSpots() {
-  birdSpotData = JSON.parse(Get(jsonURL + "?angle=bird"))["parking_spaces"];
-  sideSpotData = JSON.parse(Get(jsonURL + "?angle=side"))["parking_spaces"];
-  numBirdSpots = birdSpotData.length;
-  numSideSpots = sideSpotData.length;
+  spotData = JSON.parse(Get(jsonURL))["parking_lots"]["parking_spaces"];
+  numSpots = spotData.length;
 
-  for (let i = 0; i < numBirdSpots; i++) {
-    let coords = birdSpotData[i].corners;
-    let open = birdSpotData[i].open;
+  for (let i = 0; i < numSpots; i++) {
+    let coords = spotData[i].mapcoords;
+    let open = spotData[i].status;
 
     // spots are stored here, by ID
-    window["bspot" + birdSpotData[i].id] = new google.maps.Polygon({
+    window["spot" + spotData[i].id] = new google.maps.Polygon({
       paths: [
         { lat: coords[0][0], lng: coords[0][1] },
         { lat: coords[1][0], lng: coords[1][1] },
@@ -201,68 +186,35 @@ function loadAllSpots() {
       draggable: true,
       geodesic: true,
     });
-    window["bspot" + birdSpotData[i].id].setMap(map);
-  }
-  for (let i = 0; i < numSideSpots; i++) {
-    let coords = sideSpotData[i].corners;
-    let open = sideSpotData[i].open;
-
-    // spots are stored here, by ID
-    window["sspot" + sideSpotData[i].id] = new google.maps.Polygon({
-      paths: [
-        { lat: coords[0][0], lng: coords[0][1] },
-        { lat: coords[1][0], lng: coords[1][1] },
-        { lat: coords[2][0], lng: coords[2][1] },
-        { lat: coords[3][0], lng: coords[3][1] },
-      ],
-      strokeColor: open ? "#00FF00" : "#FF0000",
-      strokeOpacity: 0.8,
-      strokeWeight: 2,
-      fillColor: open ? "#00FF00" : "#FF0000",
-      fillOpacity: 0.35,
-      editable: true,
-      draggable: true,
-      geodesic: true,
-    });
-    window["sspot" + sideSpotData[i].id].setMap(map);
+    window["spot" + spotData[i].id].setMap(map);
   }
 }
 
 function uploadSpots() {
-  for (let i = 0; i < numBirdSpots; i++) {
+  for (let i = 0; i < numSpots; i++) {
     let coords = [];
-    let path = window["bspot" + birdSpotData[i].id].getPath();
+    let path = window["spot" + spotData[i].id].getPath();
     for (let j = 0; j < 4; j++) {
       let coord = path.getAt(j);
       coords.push([coord.lat(), coord.lng()]);
     }
-    birdSpotData[i].corners = coords;
+    spotData[i].mapcoords = coords;
   }
-  Post(postURL + "?angle=bird", birdSpotData);
-  for (let i = 0; i < numSideSpots; i++) {
+  for (let i = initialSpots; i < numSpots; i++) {
     let coords = [];
-    let path = window["sspot" + sideSpotData[i].id].getPath();
+    let path = window["spot" + i].getPath();
     for (let j = 0; j < 4; j++) {
       let coord = path.getAt(j);
       coords.push([coord.lat(), coord.lng()]);
     }
-    sideSpotData[i].corners = coords;
+    spotData[i] = {};
+    spotData[i].id = i;
+    spotData[i].status = false;
+    spotData[i].camcoords = [];
+    spotData[i].mapcoords = coords;
+    spotData[i].type = 0;
   }
-  Post(postURL + "?angle=side", sideSpotData);
-  // for (let i = initialSpots; i < numSpots; i++) {
-  //   let coords = [];
-  //   let path = window["spot" + i].getPath();
-  //   for (let j = 0; j < 4; j++) {
-  //     let coord = path.getAt(j);
-  //     coords.push([coord.lat(), coord.lng()]);
-  //   }
-  //   spotData[i] = {};
-  //   spotData[i].id = i;
-  //   spotData[i].coordinates = [];
-  //   spotData[i].corners = coords;
-  //   spotData[i].open = false;
-  //   Post(jsonURL, spotData[i]);
-  // }
+  Post(postURL, spotData);
   document.getElementById("SaveButton").textContent = "Save Successful";
   setTimeout(() => {
     document.getElementById("SaveButton").textContent = "Save Changes";
@@ -272,27 +224,15 @@ function uploadSpots() {
 // check json for changes in occupancy
 // a refresh is needed for new spots or changed coordinates
 function updateSpots() {
-  var json_obj = JSON.parse(Get(jsonURL + "?angle=bird"))["parking_spaces"];
+  var json_obj = JSON.parse(Get(jsonURL))["parking_lots"]["parking_spaces"];
   for (let i = 0; i < json_obj.length; i++) {
     let spot = json_obj[i];
-    if (!(spot.open === window["bspot" + spot.id].open)) {
-      window["bspot" + spot.id].setOptions({
-        strokeColor: spot.open ? "#00FF00" : "#FF0000",
-        fillColor: spot.open ? "#00FF00" : "#FF0000",
+    if (!(spot.status === window["spot" + spot.id].status)) {
+      window["spot" + spot.id].setOptions({
+        strokeColor: spot.status ? "#00FF00" : "#FF0000",
+        fillColor: spot.status ? "#00FF00" : "#FF0000",
       });
-      window["bspot" + spot.id].open = spot.open;
-    }
-  }
-  json_obj = JSON.parse(Get(jsonURL + "?angle=side"))["parking_spaces"];
-  for (let i = 0; i < json_obj.length; i++) {
-    let spot = json_obj[i];
-    if (!(spot.open === window["sspot" + spot.id].open)) {
-      console.log(spot.id);
-      window["sspot" + spot.id].setOptions({
-        strokeColor: spot.open ? "#00FF00" : "#FF0000",
-        fillColor: spot.open ? "#00FF00" : "#FF0000",
-      });
-      window["sspot" + spot.id].open = spot.open;
+      window["spot" + spot.id].status = spot.status;
     }
   }
 }
