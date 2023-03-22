@@ -55,12 +55,14 @@ var clickChoice = 0;
 var routeMarkers = [];
 var locationNavigator;
 var hasRoute = false;
-const distanceTol = 20;
+const distanceTol = 10;
 var targetSpot = -1;
 var distMatrixservice;
 const timeoutTol = 60;
 var timeoutTime = -1;
-const positionUpdateTime = 1000;
+const positionUpdateTime = 100;
+var routeSteps = null;
+const autoRouteDist = 0.00001; //Might need to tweek numbers to prevent skipping around, but it can't be perfect
 
 var birdSpotData;
 var sideSpotData;
@@ -322,30 +324,45 @@ function getRoute() {
     })
     .then((response) => {
       directionsRenderer.setDirections(response);
-      clearMarkers(routeMarkers);
-      routeMarkers = [];
-      routeMarkers.push(
-        placeMarker(
-          response.routes[0].legs[0].start_location,
-          "./Images/CarMarker.png"
-        )
-      );
-      routeMarkers.push(
-        placeMarker(
-          response.routes[0].legs[0].end_location,
-          "./Images/ParkingMarker.png"
-        )
-      );
+
+      routeSteps = response.routes[0].legs[0].steps;
+      if (routeSteps.length == 1) {
+        routeSteps = clickDestination;
+      }
+      else {
+        routeSteps = { coords: new google.maps.LatLng(routeSteps[1].start_point.lat(), routeSteps[1].start_point.lng()) };
+      }
+
+      if (routeMarkers.length == 0){
+        routeMarkers.push(
+          placeMarker(
+            response.routes[0].legs[0].start_location,
+            "./Images/CarMarker.png"
+          )
+        );
+      }
+      else{
+        routeMarkers[0].setPosition(response.routes[0].legs[0].start_location);
+      }
+
+      if (routeMarkers.length == 1){
+        routeMarkers.push(
+          placeMarker(
+            response.routes[0].legs[0].end_location,
+            "./Images/ParkingMarker.png"
+          )
+        );
+      }
+
       distMatrixservice.getDistanceMatrix(
         {
-          origins: [clickOrigin.coords],
-          destinations: [clickDestination.coords],
+          origins: [response.routes[0].legs[0].start_location],
+          destinations: [response.routes[0].legs[0].end_location],
           travelMode: "DRIVING",
         },
         setTimeoutTime
       );
     })
-    .catch((e) => window.alert("Direction request failed."));
 }
 
 function currentPositionSuccess(position) {
@@ -355,7 +372,12 @@ function currentPositionSuccess(position) {
       position.coords.longitude
     ),
   };
-  routeMarkers.push(placeMarker(clickOrigin.coords, "./Images/CarMarker.png"));
+  if (routeMarkers.length == 0){
+    routeMarkers.push(placeMarker(clickOrigin.coords, "./Images/CarMarker.png"));
+  }
+  else {
+    routeMarkers[0].setPosition(clickOrigin.coords);
+  }
   pickDestination();
 }
 
@@ -370,10 +392,14 @@ function followPositionSuccess(position, fromClick = 0) {
   }
   if (fromClick == 0) {
     //from watcher
-    dirLat = clickDestination.coords.lat() - clickOrigin.coords.lat();
-    dirLng = clickDestination.coords.lng() - clickOrigin.coords.lng();
-    dirLat = clickOrigin.coords.lat() + dirLat * 0.25;
-    dirLng = clickOrigin.coords.lng() + dirLng * 0.25;
+
+    dirLat = routeSteps.coords.lat() - clickOrigin.coords.lat();
+    dirLng = routeSteps.coords.lng() - clickOrigin.coords.lng();
+    mag = Math.sqrt(Math.pow(dirLat, 2) + Math.pow(dirLng, 2));
+    dirLat = (dirLat/mag);
+    dirLng = (dirLng/mag);
+    dirLat = clickOrigin.coords.lat() + dirLat * autoRouteDist;
+    dirLng = clickOrigin.coords.lng() + dirLng * autoRouteDist;
     clickOrigin = { coords: new google.maps.LatLng(dirLat, dirLng) };
 
     // clickOrigin = { coords: new google.maps.LatLng(position.coords.latitude, position.coords.longitude)};
