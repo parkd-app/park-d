@@ -10,10 +10,10 @@ const newSpotColor = "#888888";
 
 const updateInterval = 5000;
 
-function Get(URL) {
+function Get(URL, ID, owner) {
   var body = {};
-  body.parking_lot_id = 1;
-  body.owner = "gary_hand_drawn_1_parking_lot";
+  body.parking_lot_id = ID;
+  body.owner = owner;
 
   var Httpreq = new XMLHttpRequest(); // a new request
   Httpreq.open("GET", URL, false);
@@ -63,7 +63,7 @@ function initMap() {
   mapBounds = new google.maps.LatLngBounds();
 
   // load and put spots
-  loadAllSpots();
+  //loadAllSpots();
 
   google.maps.event.addListener(map, "click", function (event) {
     if (clickChoice == 1) {
@@ -97,6 +97,16 @@ function resetData() {
   document.getElementById("AddSpotButton").textContent = "Add Parking Spot";
   document.getElementById("RemoveSpotButton").textContent =
     "Remove Parking Spot";
+}
+
+function loadLot() {
+  let lotID = document.getElementById("IDBox").value;
+  let owner = document.getElementById("OwnerBox").textContent;
+  try {
+    loadAllSpots(lotID, owner);
+  } catch (e) {
+    console.log(e);
+  }
 }
 
 function creatingLot() {
@@ -168,8 +178,8 @@ function addSpaceListener(ID) {
 }
 
 // loading all spots from remote
-function loadAllSpots() {
-  spotData = JSON.parse(Get(jsonURL))["parking_spaces"];
+function loadAllSpots(ID, owner) {
+  spotData = JSON.parse(Get(jsonURL, ID, owner))["parking_spaces"];
   console.log(spotData);
 
   for (let i = 0; i < spotData.length; i++) {
@@ -200,6 +210,13 @@ function loadAllSpots() {
   }
   nextID++;
   numSpots = spotData.length;
+
+  setUpButtons();
+}
+
+function setUpButtons() {
+  document.getElementById("LotButtons").style.display = "none";
+  document.getElementById("SpaceButtons").style.display = "block";
 }
 
 function uploadSpots() {
