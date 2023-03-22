@@ -55,7 +55,7 @@ var clickChoice = 0;
 var routeMarkers = [];
 var locationNavigator;
 var hasRoute = false;
-const distanceTol = 10;
+const distanceTol = 5;
 var targetSpot = -1;
 var distMatrixservice;
 const timeoutTol = 60;
@@ -63,6 +63,8 @@ var timeoutTime = -1;
 const positionUpdateTime = 100;
 var routeSteps = null;
 const autoRouteDist = 0.00001; //Might need to tweek numbers to prevent skipping around, but it can't be perfect
+var autoNavMode = true;
+var autoNavComplete = false;
 
 var birdSpotData;
 var sideSpotData;
@@ -284,6 +286,7 @@ function resetRoute(resetReason) {
   targetSpot = -1;
   hasRoute = false;
   timeoutTime = -1;
+  autoNavComplete = false;
   clearMarkers(routeMarkers);
   routeMarkers = [];
   directionsRenderer.setMap(null);
@@ -293,6 +296,9 @@ function resetRoute(resetReason) {
     reason = "Finding location";
   } else if (resetReason == 1) {
     reason = "Destination Reached";
+    if (autoNavMode) {
+      autoNavComplete = true;
+    }
   } else if (resetReason == 2) {
     reason = "Selected Spot Taken";
   } else if (resetReason == 3) {
@@ -326,7 +332,7 @@ function getRoute() {
       directionsRenderer.setDirections(response);
 
       routeSteps = response.routes[0].legs[0].steps;
-      if (routeSteps.length == 1) {
+      if (!autoNavMode || routeSteps.length == 1) {
         routeSteps = clickDestination;
       } else {
         routeSteps = {
@@ -369,12 +375,14 @@ function getRoute() {
 }
 
 function currentPositionSuccess(position) {
-  clickOrigin = {
-    coords: new google.maps.LatLng(
-      position.coords.latitude,
-      position.coords.longitude
-    ),
-  };
+  if (!autoNavMode && !autoNavComplete) {
+    clickOrigin = {
+      coords: new google.maps.LatLng(
+        position.coords.latitude,
+        position.coords.longitude
+      ),
+    };
+  }
   if (routeMarkers.length == 0) {
     routeMarkers.push(
       placeMarker(clickOrigin.coords, "./Images/CarMarker.png")
@@ -396,17 +404,23 @@ function followPositionSuccess(position, fromClick = 0) {
   }
   if (fromClick == 0) {
     //from watcher
-
-    dirLat = routeSteps.coords.lat() - clickOrigin.coords.lat();
-    dirLng = routeSteps.coords.lng() - clickOrigin.coords.lng();
-    mag = Math.sqrt(Math.pow(dirLat, 2) + Math.pow(dirLng, 2));
-    dirLat = dirLat / mag;
-    dirLng = dirLng / mag;
-    dirLat = clickOrigin.coords.lat() + dirLat * autoRouteDist;
-    dirLng = clickOrigin.coords.lng() + dirLng * autoRouteDist;
-    clickOrigin = { coords: new google.maps.LatLng(dirLat, dirLng) };
-
-    // clickOrigin = { coords: new google.maps.LatLng(position.coords.latitude, position.coords.longitude)};
+    if (autoNavMode) {
+      dirLat = routeSteps.coords.lat() - clickOrigin.coords.lat();
+      dirLng = routeSteps.coords.lng() - clickOrigin.coords.lng();
+      mag = Math.sqrt(Math.pow(dirLat, 2) + Math.pow(dirLng, 2));
+      dirLat = dirLat / mag;
+      dirLng = dirLng / mag;
+      dirLat = clickOrigin.coords.lat() + dirLat * autoRouteDist;
+      dirLng = clickOrigin.coords.lng() + dirLng * autoRouteDist;
+      clickOrigin = { coords: new google.maps.LatLng(dirLat, dirLng) };
+    } else {
+      clickOrigin = {
+        coords: new google.maps.LatLng(
+          position.coords.latitude,
+          position.coords.longitude
+        ),
+      };
+    }
   } else {
     clickOrigin = {
       coords: new google.maps.LatLng(position.lat(), position.lng()),
