@@ -53,6 +53,7 @@ var clickDestination;
 var clickChoice = 0;
 var routeMarkers = [];
 var locationNavigator;
+var navDisable = false;
 var hasRoute = false;
 const distanceTol = 5;
 var targetSpot = -1;
@@ -298,7 +299,7 @@ function updateRoute() {
 }
 
 function resetRoute(resetReason) {
-  clickChoice = 1;
+  clickChoice = navDisable? -1 : 1;
   targetSpot = -1;
   hasRoute = false;
   timeoutTime = -1;
@@ -310,7 +311,7 @@ function resetRoute(resetReason) {
   routeSteps = null;
 
   if (resetReason == 0) {
-    reason = "Select Parking Lot";
+    reason = navDisable ? "Navigation Disabled" : "Select Parking Lot";
   } else if (resetReason == 1) {
     reason = "Destination Reached";
     if (autoNavMode) {
@@ -416,6 +417,7 @@ function currentPositionSuccess(position) {
 function currentPositionFailure() {
   clickChoice = -1;
   getDocEle("direction_guide").textContent = "Navigation Disabled";
+  navDisable = true;
 }
 
 function followPositionSuccess(position, fromClick = 0) {
@@ -452,9 +454,11 @@ function followPositionSuccess(position, fromClick = 0) {
 function followPositionFailure() {
   clickChoice = -1;
   getDocEle("direction_guide").textContent = "Navigation Disabled";
+  navDisable = true;
 }
 
 function updatePosition() {
+  if (navDisable) {return;}
   if (!hasRoute) {
     locationNavigator.getCurrentPosition(
       currentPositionSuccess,
