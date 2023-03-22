@@ -328,24 +328,27 @@ function getRoute() {
       routeSteps = response.routes[0].legs[0].steps;
       if (routeSteps.length == 1) {
         routeSteps = clickDestination;
-      }
-      else {
-        routeSteps = { coords: new google.maps.LatLng(routeSteps[1].start_point.lat(), routeSteps[1].start_point.lng()) };
+      } else {
+        routeSteps = {
+          coords: new google.maps.LatLng(
+            routeSteps[1].start_point.lat(),
+            routeSteps[1].start_point.lng()
+          ),
+        };
       }
 
-      if (routeMarkers.length == 0){
+      if (routeMarkers.length == 0) {
         routeMarkers.push(
           placeMarker(
             response.routes[0].legs[0].start_location,
             "./Images/CarMarker.png"
           )
         );
-      }
-      else{
+      } else {
         routeMarkers[0].setPosition(response.routes[0].legs[0].start_location);
       }
 
-      if (routeMarkers.length == 1){
+      if (routeMarkers.length == 1) {
         routeMarkers.push(
           placeMarker(
             response.routes[0].legs[0].end_location,
@@ -362,7 +365,7 @@ function getRoute() {
         },
         setTimeoutTime
       );
-    })
+    });
 }
 
 function currentPositionSuccess(position) {
@@ -372,10 +375,11 @@ function currentPositionSuccess(position) {
       position.coords.longitude
     ),
   };
-  if (routeMarkers.length == 0){
-    routeMarkers.push(placeMarker(clickOrigin.coords, "./Images/CarMarker.png"));
-  }
-  else {
+  if (routeMarkers.length == 0) {
+    routeMarkers.push(
+      placeMarker(clickOrigin.coords, "./Images/CarMarker.png")
+    );
+  } else {
     routeMarkers[0].setPosition(clickOrigin.coords);
   }
   pickDestination();
@@ -396,8 +400,8 @@ function followPositionSuccess(position, fromClick = 0) {
     dirLat = routeSteps.coords.lat() - clickOrigin.coords.lat();
     dirLng = routeSteps.coords.lng() - clickOrigin.coords.lng();
     mag = Math.sqrt(Math.pow(dirLat, 2) + Math.pow(dirLng, 2));
-    dirLat = (dirLat/mag);
-    dirLng = (dirLng/mag);
+    dirLat = dirLat / mag;
+    dirLng = dirLng / mag;
     dirLat = clickOrigin.coords.lat() + dirLat * autoRouteDist;
     dirLng = clickOrigin.coords.lng() + dirLng * autoRouteDist;
     clickOrigin = { coords: new google.maps.LatLng(dirLat, dirLng) };
