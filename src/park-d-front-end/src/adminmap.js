@@ -1,7 +1,7 @@
 // json parsing
-const backendURL = "https://back-end-new-api.azurewebsites.net/";
-const jsonURL = backendURL + "rt_parking_info";
-const postURL = backendURL + "save_coord";
+const backendURL = "http://localhost:8000/";
+const jsonURL = backendURL + "parking_lots";
+const postURL = backendURL + "parking_lots";
 
 // green:regular, blue:accessible, red:reserved
 const colorToType = { "#00FF00": 0, "#0000FF": 1, "#FF0000": 2 };
@@ -16,6 +16,7 @@ function Get(URL) {
   var Httpreq = new XMLHttpRequest(); // a new request
   Httpreq.open("GET", URL, false);
   Httpreq.send(JSON.stringify(body));
+  console.log(Httpreq.responseText);
   return Httpreq.responseText;
 }
 
@@ -29,9 +30,6 @@ function Post(URL, content) {
     body: JSON.stringify(content),
   });
 }
-
-// update status every 5 seconds
-setInterval(updateSpots, updateInterval);
 
 var map;
 var noPoi = [
@@ -120,6 +118,7 @@ function addingSpot() {
 
 // admin placing spot
 function putSpot(corners) {
+  numSpots++;
   window["spot" + numSpots] = new google.maps.Polygon({
     paths: corners,
     strokeColor: document.getElementById("TypeMenu").value,
@@ -132,7 +131,6 @@ function putSpot(corners) {
     geodesic: true,
   });
   window["spot" + numSpots].setMap(map);
-  numSpots++;
 }
 
 function removingSpot() {
@@ -146,7 +144,7 @@ function removeSpot() {
 
 // loading all spots from remote
 function loadAllSpots() {
-  spotData = JSON.parse(Get(jsonURL))["parking_lots"]["parking_spaces"];
+  spotData = JSON.parse(Get(jsonURL))["parking_spaces"];
   numSpots = spotData.length;
 
   for (let i = 0; i < numSpots; i++) {
@@ -175,8 +173,12 @@ function loadAllSpots() {
 }
 
 function uploadSpots() {
-  payload = [];
+  let payload = {};
+  payload.id = 1;
+  payload.owner = "5dert6";
+  let spaces = [];
   for (let i = 0; i < numSpots; i++) {
+    if (window["spot" + i] == undefined) continue;
     if (window["spot" + i].get("fillColor") != "888888") {
       let coords = [];
       let path = window["spot" + spotData[i].id].getPath();
@@ -200,7 +202,9 @@ function uploadSpots() {
       spotData[i].mapcoords = coords;
       spotData[i].type = colorToType[window["spot" + i].get("strokeColor")];
     }
+    spaces.push(spotData[i]);
   }
+  payload.parking_spaces = spaces;
   Post(postURL, payload);
   document.getElementById("SaveButton").textContent = "Save Successful";
   setTimeout(() => {
