@@ -38,7 +38,6 @@ var noPoi = [
 ];
 var defaultOptions = {
   zoom: 15,
-  // center: { lat: 43.89043899872149, lng: -79.3134901958874 },
   center: { lat: 43.2617, lng: -79.9228 },
 
   disableDefaultUI: true,
@@ -60,10 +59,10 @@ var targetSpot = -1;
 var distMatrixservice;
 const timeoutTol = 60;
 var timeoutTime = -1;
-const positionUpdateTime = 100;
+const positionUpdateTime = 500;
 var routeSteps = null;
-const autoRouteDist = 0.00001; //Might need to tweek numbers to prevent skipping around, but it can't be perfect
-var autoNavMode = true;
+const autoRouteDist = 0.00005; //Might need to tweek numbers to prevent skipping around, but it can't be perfect
+var autoNavMode = false;
 var autoNavComplete = false;
 
 var birdSpotData;
@@ -143,6 +142,8 @@ var parkingLayout = [
   }),
 ];
 
+var parkingLayoutIds = [];
+
 var analyticsData = [
   { name: "12am", occupancy: 0 },
   { name: "1am", occupancy: 0 },
@@ -194,23 +195,43 @@ function initMap() {
 
   google.maps.event.addListener(map, "click", function (event) {
     if (clickChoice == 1) {
-      // check clickDestination to be within bounds of parking lot
+      var selection = verifySpotSelect(event.latLng);
+      if (selection == -1) {
+        getDocEle("direction_guide").textContent = "Invalid Spot";
+        return;
+      }
+      else if (!window[parkingLayoutIds[selection]].open) {
+        getDocEle("direction_guide").textContent = "Spot Taken";
+        return;
+      }
       clickDestination = { coords: event.latLng };
       directionsRenderer.setMap(map);
       hasRoute = true;
-      // determine spot based on coords, check if click is within bounding box?
-      targetSpot = 2;
+      targetSpot = parkingLayoutIds[selection];
       getDocEle("direction_guide").textContent = "Calculating Route";
       getRoute();
       pickDone();
     } else if (clickChoice == 2) {
-      // parkingLayout[targetSpot].open = false;
-      followPositionSuccess(event.latLng, 1);
+      // window[targetSpot].open = false;
+      // followPositionSuccess(event.latLng, 1);
     }
   });
 }
 
+function verifySpotSelect(dest){
+  dest = new google.maps.LatLng(dest.lat(), dest.lng());
+  for (let index = 0; index < parkingLayoutIds.length; index++) {
+    poly = window[parkingLayoutIds[index]];
+    contains = google.maps.geometry.poly.containsLocation(dest, poly);
+    if (contains) {
+      return index;
+    }    
+  }
+  return -1;
+}
+
 function setTimeoutTime(response, status) {
+  if (!hasRoute) {return;}
   getDocEle("direction_guide").textContent =
     Math.floor(response.rows[0].elements[0].duration.value / 60) +
     "m " +
@@ -237,11 +258,6 @@ function initPage() {
 function pickDone() {
   clickChoice = 2;
   getDocEle("direction_guide").textContent = "Route Calculated";
-}
-
-function pickDestination() {
-  clickChoice = 1;
-  getDocEle("direction_guide").textContent = "Select Parking Lot";
 }
 
 function placeMarker(position, icon) {
@@ -272,7 +288,7 @@ function updateRoute() {
     ) < distanceTol
   ) {
     resetRoute(1);
-  } else if (!parkingLayout[targetSpot].open) {
+  } else if (!window[targetSpot].open) {
     resetRoute(2);
   } else if (timeoutTime != -1 && d.getTime() / 1000 > timeoutTime) {
     resetRoute(3);
@@ -282,7 +298,7 @@ function updateRoute() {
 }
 
 function resetRoute(resetReason) {
-  clickChoice = 0;
+  clickChoice = 1;
   targetSpot = -1;
   hasRoute = false;
   timeoutTime = -1;
@@ -291,9 +307,10 @@ function resetRoute(resetReason) {
   routeMarkers = [];
   directionsRenderer.setMap(null);
   clickDestination = null;
+  routeSteps = null;
 
   if (resetReason == 0) {
-    reason = "Finding location";
+    reason = "Select Parking Lot";
   } else if (resetReason == 1) {
     reason = "Destination Reached";
     if (autoNavMode) {
@@ -306,7 +323,6 @@ function resetRoute(resetReason) {
   }
 
   getDocEle("direction_guide").textContent = reason;
-  clickChoice = 1;
 }
 
 function recenter() {
@@ -375,7 +391,7 @@ function getRoute() {
 }
 
 function currentPositionSuccess(position) {
-  if (!autoNavMode && !autoNavComplete) {
+  if (!autoNavMode || (autoNavMode && !autoNavComplete)) {
     clickOrigin = {
       coords: new google.maps.LatLng(
         position.coords.latitude,
@@ -390,7 +406,11 @@ function currentPositionSuccess(position) {
   } else {
     routeMarkers[0].setPosition(clickOrigin.coords);
   }
-  pickDestination();
+
+  if (getDocEle("direction_guide").textContent == "Finding location") {
+    getDocEle("direction_guide").textContent = "Select Parking Spot";
+    clickChoice = 1;
+  }
 }
 
 function currentPositionFailure() {
@@ -553,6 +573,7 @@ function loadAllSpots() {
       geodesic: true,
     });
     window["bspot" + birdSpotData[i].id].setMap(map);
+    parkingLayoutIds.push("bspot" + birdSpotData[i].id);
   }
   for (let i = 0; i < numSideSpots; i++) {
     let coords = sideSpotData[i].corners;
@@ -575,6 +596,7 @@ function loadAllSpots() {
       geodesic: true,
     });
     window["sspot" + sideSpotData[i].id].setMap(map);
+    parkingLayoutIds.push("sspot" + sideSpotData[i].id);
   }
 }
 
