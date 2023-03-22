@@ -5,6 +5,8 @@ const postURL = backendURL + "parking_lots";
 
 // green:regular, blue:accessible, red:reserved
 const colorToType = { "#00FF00": 0, "#0000FF": 1, "#FF0000": 2 };
+const typeToColor = { 0: "#00FF00", 1: "#0000FF", 2: "#FF0000" };
+const newSpotColor = "#888888";
 
 const updateInterval = 5000;
 
@@ -54,8 +56,7 @@ var corners = [];
 
 var spotData;
 var numSpots;
-var initialSpots = 0;
-var changedSpots = [];
+var nextID = -1;
 
 function initMap() {
   map = new google.maps.Map(document.getElementById("map"), defaultOptions);
@@ -118,19 +119,26 @@ function addingSpot() {
 
 // admin placing spot
 function putSpot(corners) {
-  numSpots++;
-  window["spot" + numSpots] = new google.maps.Polygon({
+  window["spot" + nextID] = new google.maps.Polygon({
     paths: corners,
     strokeColor: document.getElementById("TypeMenu").value,
     strokeOpacity: 0.8,
     strokeWeight: 2,
-    fillColor: "#888888",
+    fillColor: newSpotColor,
     fillOpacity: 0.35,
     editable: true,
     draggable: true,
     geodesic: true,
   });
-  window["spot" + numSpots].setMap(map);
+  window["spot" + nextID].setMap(map);
+  let newSpot = {};
+  newSpot.id = nextID;
+  newSpot.status = true;
+  newSpot.camcoords = [];
+  newSpot.type = colorToType[window["spot" + nextID].get("strokeColor")];
+  spotData[numSpots] = newSpot;
+  nextID++;
+  numSpots++;
 }
 
 function removingSpot() {
@@ -145,11 +153,12 @@ function removeSpot() {
 // loading all spots from remote
 function loadAllSpots() {
   spotData = JSON.parse(Get(jsonURL))["parking_spaces"];
-  numSpots = spotData.length;
+  console.log(spotData);
 
-  for (let i = 0; i < numSpots; i++) {
+  for (let i = 0; i < spotData.length; i++) {
     let coords = spotData[i].mapcoords;
     let open = spotData[i].status;
+    let type = spotData[i].type;
 
     // spots are stored here, by ID
     window["spot" + spotData[i].id] = new google.maps.Polygon({
@@ -159,7 +168,7 @@ function loadAllSpots() {
         { lat: coords[2][0], lng: coords[2][1] },
         { lat: coords[3][0], lng: coords[3][1] },
       ],
-      strokeColor: open ? "#00FF00" : "#FF0000",
+      strokeColor: typeToColor[type],
       strokeOpacity: 0.8,
       strokeWeight: 2,
       fillColor: open ? "#00FF00" : "#FF0000",
@@ -169,7 +178,10 @@ function loadAllSpots() {
       geodesic: true,
     });
     window["spot" + spotData[i].id].setMap(map);
+    if (spotData[i].id > nextID) nextID = spotData[i].id;
   }
+  nextID++;
+  numSpots = spotData.length;
 }
 
 function uploadSpots() {
@@ -177,31 +189,18 @@ function uploadSpots() {
   payload.id = 1;
   payload.owner = "5dert6";
   let spaces = [];
-  for (let i = 0; i < numSpots; i++) {
-    if (window["spot" + i] == undefined) continue;
-    if (window["spot" + i].get("fillColor") != "888888") {
-      let coords = [];
-      let path = window["spot" + spotData[i].id].getPath();
-      for (let j = 0; j < 4; j++) {
-        let coord = path.getAt(j);
-        coords.push([coord.lat(), coord.lng()]);
-      }
-      spotData[i].status = true;
-      spotData[i].mapcoords = coords;
-    } else {
-      let coords = [];
-      let path = window["spot" + i].getPath();
-      for (let j = 0; j < 4; j++) {
-        let coord = path.getAt(j);
-        coords.push([coord.lat(), coord.lng()]);
-      }
-      spotData[i] = {};
-      spotData[i].id = i;
-      spotData[i].status = true;
-      spotData[i].camcoords = [];
-      spotData[i].mapcoords = coords;
-      spotData[i].type = colorToType[window["spot" + i].get("strokeColor")];
+  for (let i = 0; i < spotData.length; i++) {
+    if (window["spot" + spotData[i].id] == undefined) continue;
+
+    let coords = [];
+    let path = window["spot" + spotData[i].id].getPath();
+    for (let j = 0; j < 4; j++) {
+      let coord = path.getAt(j);
+      coords.push([coord.lat(), coord.lng()]);
     }
+    spotData[i].status = true;
+    spotData[i].mapcoords = coords;
+
     spaces.push(spotData[i]);
   }
   payload.parking_spaces = spaces;
