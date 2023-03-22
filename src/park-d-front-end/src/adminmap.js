@@ -2,50 +2,22 @@
 const backendURL = "https://back-end-new-api.azurewebsites.net/";
 const jsonURL = backendURL + "rt_parking_info";
 const postURL = backendURL + "save_coord";
-const setUpURL = backendURL + "set_up";
 
-const colorToType = {"#00FF00":0, "#0000FF":1, "#FF0000":2};
+// green:regular, blue:accessible, red:reserved
+const colorToType = { "#00FF00": 0, "#0000FF": 1, "#FF0000": 2 };
+
+const updateInterval = 5000;
 
 function Get(URL) {
-  var body = new Object();
+  var body = {};
   body.parking_lot_id = 1;
-  body.owner = "5dert6";
+  body.owner = "gary_hand_drawn_1_parking_lot";
 
   var Httpreq = new XMLHttpRequest(); // a new request
   Httpreq.open("GET", URL, false);
   Httpreq.send(JSON.stringify(body));
   return Httpreq.responseText;
 }
-
-// function setupBird() {
-//   setUpModel(setUpURL, "bird");
-// }
-
-// function setupSide() {
-//   setUpModel(setUpURL, "side");
-// }
-
-// function setUpModel(URL, angle) {
-//   fetch(URL + "?angle=" + angle, {
-//     method: "POST",
-//     headers: {
-//       Accept: "text/plain",
-//       "Content-Type": "text/plain",
-//     },
-//     body: "set me up",
-//   });
-// }
-
-// function Put(URL, content) {
-//   fetch(URL, {
-//     method: "PUT",
-//     headers: {
-//       Accept: "application/json",
-//       "Content-Type": "application/json",
-//     },
-//     body: JSON.stringify(content),
-//   });
-// }
 
 function Post(URL, content) {
   fetch(URL, {
@@ -58,8 +30,8 @@ function Post(URL, content) {
   });
 }
 
-// update status every 2 seconds
-setInterval(updateSpots, 5000);
+// update status every 5 seconds
+setInterval(updateSpots, updateInterval);
 
 var map;
 var noPoi = [
@@ -79,7 +51,6 @@ var mapBounds;
 
 var clickChoice = 0;
 
-var adding = false;
 var pointsClicked = 0;
 var corners = [];
 
@@ -89,7 +60,6 @@ var initialSpots = 0;
 var changedSpots = [];
 
 function initMap() {
-
   map = new google.maps.Map(document.getElementById("map"), defaultOptions);
   mapBounds = new google.maps.LatLngBounds();
 
@@ -97,7 +67,7 @@ function initMap() {
   loadAllSpots();
 
   google.maps.event.addListener(map, "click", function (event) {
-    if (clickChoice == 2) {
+    if (clickChoice == 1) {
       pointsClicked++;
       document.getElementById("PickLabel").textContent =
         "Select " + (4 - pointsClicked) + " more points";
@@ -110,6 +80,8 @@ function initMap() {
         document.getElementById("PickLabel").textContent =
           "Spot added. Keep clicking to add more";
       }
+    } else if (clickChoice == 2) {
+    } else if (clickChoice == 3) {
     }
   });
 }
@@ -121,27 +93,28 @@ function recenter() {
 
 function resetData() {
   clickChoice = 0;
-  document.getElementById("PickLabel").textContent = "Admin View";
-  directionsRenderer.setMap(null);
-}
-
-function resetAdding() {
-  document.getElementById("AddSpotButton").textContent = "Add Parking Spot";
-  adding = false;
   corners = [];
   pointsClicked = 0;
-  resetData();
+  document.getElementById("PickLabel").textContent = "Admin View";
+}
+
+function creatingLot() {
+  // create a parking lot
+  clickChoice = 2;
+}
+
+function createLot() {
+  // create a parking lot
 }
 
 // initiating placing spot from ui
 function addingSpot() {
-  if (!adding) {
-    adding = true;
-    clickChoice = 2;
+  if (clickChoice != 1) {
+    clickChoice = 1;
     document.getElementById("PickLabel").textContent = "Click to add a spot";
     document.getElementById("AddSpotButton").textContent = "Done";
   } else {
-    resetAdding();
+    resetData();
   }
 }
 
@@ -163,7 +136,12 @@ function putSpot(corners) {
 }
 
 function removingSpot() {
+  // remove the spot
+  clickChoice = 3;
+}
 
+function removeSpot() {
+  // remove the spot
 }
 
 // loading all spots from remote
@@ -199,16 +177,16 @@ function loadAllSpots() {
 function uploadSpots() {
   payload = [];
   for (let i = 0; i < numSpots; i++) {
-    if (window["spot" + i].get('fillColor') != "888888") {
+    if (window["spot" + i].get("fillColor") != "888888") {
       let coords = [];
       let path = window["spot" + spotData[i].id].getPath();
       for (let j = 0; j < 4; j++) {
         let coord = path.getAt(j);
         coords.push([coord.lat(), coord.lng()]);
       }
+      spotData[i].status = true;
       spotData[i].mapcoords = coords;
-    }
-    else {
+    } else {
       let coords = [];
       let path = window["spot" + i].getPath();
       for (let j = 0; j < 4; j++) {
@@ -217,10 +195,10 @@ function uploadSpots() {
       }
       spotData[i] = {};
       spotData[i].id = i;
-      spotData[i].status = false;
+      spotData[i].status = true;
       spotData[i].camcoords = [];
       spotData[i].mapcoords = coords;
-      spotData[i].type = colorToType[window["spot" + i].get('strokeColor')];
+      spotData[i].type = colorToType[window["spot" + i].get("strokeColor")];
     }
   }
   Post(postURL, payload);
@@ -228,20 +206,4 @@ function uploadSpots() {
   setTimeout(() => {
     document.getElementById("SaveButton").textContent = "Save Changes";
   }, 1000);
-}
-
-// check json for changes in occupancy
-// a refresh is needed for new spots or changed coordinates
-function updateSpots() {
-  var json_obj = JSON.parse(Get(jsonURL))["parking_lots"]["parking_spaces"];
-  for (let i = 0; i < json_obj.length; i++) {
-    let spot = json_obj[i];
-    if (!(spot.status === window["spot" + spot.id].status)) {
-      window["spot" + spot.id].setOptions({
-        strokeColor: spot.status ? "#00FF00" : "#FF0000",
-        fillColor: spot.status ? "#00FF00" : "#FF0000",
-      });
-      window["spot" + spot.id].status = spot.status;
-    }
-  }
 }
