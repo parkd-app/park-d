@@ -80,7 +80,6 @@ function initMap() {
           "Spot added. Keep clicking to add more";
       }
     } else if (clickChoice == 2) {
-    } else if (clickChoice == 3) {
     }
   });
 }
@@ -95,6 +94,9 @@ function resetData() {
   corners = [];
   pointsClicked = 0;
   document.getElementById("PickLabel").textContent = "Admin View";
+  document.getElementById("AddSpotButton").textContent = "Add Parking Spot";
+  document.getElementById("RemoveSpotButton").textContent =
+    "Remove Parking Spot";
 }
 
 function creatingLot() {
@@ -131,6 +133,8 @@ function putSpot(corners) {
     geodesic: true,
   });
   window["spot" + nextID].setMap(map);
+  addSpaceListener(nextID);
+
   let newSpot = {};
   newSpot.id = nextID;
   newSpot.status = true;
@@ -143,11 +147,24 @@ function putSpot(corners) {
 
 function removingSpot() {
   // remove the spot
-  clickChoice = 3;
+  if (clickChoice != 3) {
+    resetData();
+    clickChoice = 3;
+    document.getElementById("PickLabel").textContent =
+      "Click a spot to remove it";
+    document.getElementById("RemoveSpotButton").textContent = "Done";
+  } else {
+    resetData();
+  }
 }
 
-function removeSpot() {
-  // remove the spot
+function addSpaceListener(ID) {
+  google.maps.event.addListener(window["spot" + ID], "click", function (event) {
+    if (clickChoice == 3) {
+      window["spot" + ID].setMap(null);
+      window["spot" + ID] = undefined;
+    }
+  });
 }
 
 // loading all spots from remote
@@ -178,6 +195,7 @@ function loadAllSpots() {
       geodesic: true,
     });
     window["spot" + spotData[i].id].setMap(map);
+    addSpaceListener(spotData[i].id);
     if (spotData[i].id > nextID) nextID = spotData[i].id;
   }
   nextID++;
