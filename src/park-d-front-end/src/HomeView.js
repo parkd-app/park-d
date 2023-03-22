@@ -200,8 +200,7 @@ function initMap() {
       if (selection == -1) {
         getDocEle("direction_guide").textContent = "Invalid Spot";
         return;
-      }
-      else if (!window[parkingLayoutIds[selection]].open) {
+      } else if (!window[parkingLayoutIds[selection]].open) {
         getDocEle("direction_guide").textContent = "Spot Taken";
         return;
       }
@@ -219,20 +218,22 @@ function initMap() {
   });
 }
 
-function verifySpotSelect(dest){
+function verifySpotSelect(dest) {
   dest = new google.maps.LatLng(dest.lat(), dest.lng());
   for (let index = 0; index < parkingLayoutIds.length; index++) {
     poly = window[parkingLayoutIds[index]];
     contains = google.maps.geometry.poly.containsLocation(dest, poly);
     if (contains) {
       return index;
-    }    
+    }
   }
   return -1;
 }
 
 function setTimeoutTime(response, status) {
-  if (!hasRoute) {return;}
+  if (!hasRoute) {
+    return;
+  }
   getDocEle("direction_guide").textContent =
     Math.floor(response.rows[0].elements[0].duration.value / 60) +
     "m " +
@@ -299,7 +300,7 @@ function updateRoute() {
 }
 
 function resetRoute(resetReason) {
-  clickChoice = navDisable? -1 : 1;
+  clickChoice = navDisable ? -1 : 1;
   targetSpot = -1;
   hasRoute = false;
   timeoutTime = -1;
@@ -458,7 +459,9 @@ function followPositionFailure() {
 }
 
 function updatePosition() {
-  if (navDisable) {return;}
+  if (navDisable) {
+    return;
+  }
   if (!hasRoute) {
     locationNavigator.getCurrentPosition(
       currentPositionSuccess,
