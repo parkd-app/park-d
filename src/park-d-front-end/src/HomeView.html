@@ -1,148 +1,134 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <link
-      href="https://fonts.googleapis.com/css?family=Montserrat&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="homeView.css" />
-    <script src="HomeView.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.8.0/chart.min.js"></script>
-    <!-- <script type="module" src="./scripts/HomeViewAuth.js"></script> -->
-    <script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-database.js"></script>
-    <script>
-      firebase.initializeApp({
-        apiKey: "AIzaSyASQl2l6JG5WTrVMw66ZHFMdlfn8fFOuwo",
-        authDomain: "park-d-dev.firebaseapp.com",
-        databaseURL: "https://park-d-dev-default-rtdb.firebaseio.com",
-        projectId: "park-d-dev",
-        storageBucket: "park-d-dev.appspot.com",
-        messagingSenderId: "881254921401",
-        appId: "1:881254921401:web:53e0bcf60deb0b7433d768",
-        measurementId: "G-587V6BC6ZQ",
-      });
 
-      var firebaseRef = firebase.database().ref("analytics");
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="homeView.css" />
+  <script src="HomeView.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.8.0/chart.min.js"></script>
+  <!-- <script type="module" src="./scripts/HomeViewAuth.js"></script> -->
+  <script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-database.js"></script>
+  <script>
+    firebase.initializeApp({
+      apiKey: "AIzaSyASQl2l6JG5WTrVMw66ZHFMdlfn8fFOuwo",
+      authDomain: "park-d-dev.firebaseapp.com",
+      databaseURL: "https://park-d-dev-default-rtdb.firebaseio.com",
+      projectId: "park-d-dev",
+      storageBucket: "park-d-dev.appspot.com",
+      messagingSenderId: "881254921401",
+      appId: "1:881254921401:web:53e0bcf60deb0b7433d768",
+      measurementId: "G-587V6BC6ZQ",
+    });
 
-      firebaseRef.once("value", function (snapshot) {
-        var data = snapshot.val();
-        analytics(data.data);
-      });
-    </script>
-  </head>
-  <body>
-    <div class="background">
-      <div class="header">
-        <div class="header-left">
-          <a class="viewButton" id="SetupBirdButton" onclick="setupBird()">Setup large lot</a>
-          <a class="viewButton" id="SetupSideButton" onclick="setupSide()">Setup small lot</a>
-        </div>
-        <div class="header-center">
-          <a class="logo"></a>
-        </div>
-        <div class="header-right">
-          <a href="adminmap.html">
-            <a class="adminMap">Edit Map</a>
-          </a>
-          <a href="Annotate.html">
-            <a class="annotate">Annotate</a>
-          </a>
-          <a class="logout">LOGOUT</a>
-        </div>
+    var firebaseRef = firebase.database().ref("analytics");
+
+    firebaseRef.once("value", function (snapshot) {
+      var data = snapshot.val();
+      analytics(data.data);
+    });
+  </script>
+</head>
+
+<body>
+  <div class="background">
+    <div class="header">
+      <div class="header-left">
+        <a class="viewButton" id="SetupBirdButton" onclick="setupBird()">Setup large lot</a>
+        <a class="viewButton" id="SetupSideButton" onclick="setupSide()">Setup small lot</a>
       </div>
-      <div class="map" id="map"></div>
-      <div class="search_bar_bg">
-        <div class="reset_button_bg">
-          <div class="reset_button" onclick="resetData()"></div>
-        </div>
-        <span class="direction_guide">Select your location</span>
+      <div class="header-center">
+        <a class="logo"></a>
       </div>
+      <div class="header-right">
+        <a href="adminmap.html">
+          <a class="adminMap">Edit Map</a>
+        </a>
+        <a href="Annotate.html">
+          <a class="annotate">Annotate</a>
+        </a>
+        <a class="logout">LOGOUT</a>
+      </div>
+    </div>
+    <div class="map" id="map"></div>
+    <div class="search_bar_bg">
+      <div class="reset_button_bg">
+        <div class="reset_button" onclick="resetData()"></div>
+      </div>
+      <span class="direction_guide">Select your location</span>
+    </div>
 
-      <div class="analytics_bg1">
-        <div>
-          <div class="location_name">
-            <span id="location_name"></span>
-          </div>
+    <div class="analytics_bg1">
+      <div>
+        <div class="location_name">
+          <span id="location_name"></span>
+        </div>
 
-          <div class="location_address">
-            <span id="location_address"></span>
-          </div>
+        <div class="location_address">
+          <span id="location_address"></span>
+        </div>
 
-          <div class="analytics_cards_bg" id="analytics_cards_bg">
-            <div
-              class="analytics_card_bg"
-              style="background: rgba(255, 164, 0, 1)"
-            >
-              <div class="analytics_card_name">
-                <span>RESERVED</span>
-              </div>
-              <div class="analytics_card_number">
-                <span id="res_number"></span>
-              </div>
-              <div class="analytics_card_total">
-                <span id="res_total"></span>
-              </div>
-            </div>
-
-            <div
-              class="analytics_card_bg"
-              style="background: rgba(0, 86, 150, 1)"
-            >
-              <div class="analytics_card_name">
-                <span>ACCESSIBLE</span>
-              </div>
-              <div class="analytics_card_number">
-                <span id="acc_number"></span>
-              </div>
-              <div class="analytics_card_total">
-                <span id="acc_total"></span>
-              </div>
-            </div>
-
-            <div class="analytics_card_bg" style="background: rgba(8, 160, 69,
-            1)"">
+        <div class="analytics_cards_bg" id="analytics_cards_bg">
+          <div class="analytics_card_bg" style="background: rgba(255, 164, 0, 1)">
             <div class="analytics_card_name">
-              <span>STANDARD</span>
+              <span>RESERVED</span>
             </div>
             <div class="analytics_card_number">
-              <span id="std_number"></span>
+              <span id="res_number"></span>
             </div>
             <div class="analytics_card_total">
-              <span id="std_total"></span>
+              <span id="res_total"></span>
             </div>
           </div>
-        </div>
 
-        <div class="total_text">
-          <span id="total_text"></span>
-        </div>
+          <div class="analytics_card_bg" style="background: rgba(0, 86, 150, 1)">
+            <div class="analytics_card_name">
+              <span>ACCESSIBLE</span>
+            </div>
+            <div class="analytics_card_number">
+              <span id="acc_number"></span>
+            </div>
+            <div class="analytics_card_total">
+              <span id="acc_total"></span>
+            </div>
+          </div>
 
-        <canvas
-          id="analyticsGraph"
-          width="800"
-          height="500"
-          style="padding-left: 10px; padding-right: 10px"
-        ></canvas>
-
-        <div class="last_updated_text">
-          <span id="last_updated_text"></span>
+          <div class="analytics_card_bg" style="background: rgba(8, 160, 69,
+            1)"">
+            <div class=" analytics_card_name">
+            <span>STANDARD</span>
+          </div>
+          <div class="analytics_card_number">
+            <span id="std_number"></span>
+          </div>
+          <div class="analytics_card_total">
+            <span id="std_total"></span>
+          </div>
         </div>
       </div>
-    </div>
 
-    <div class="chevron_bg1" onclick="toggleSelection()">
-      <div class="chevron_bg2">
-        <div class="chevron"></div>
+      <div class="total_text">
+        <span id="total_text"></span>
+      </div>
+
+      <canvas id="analyticsGraph" width="800" height="500" style="padding-left: 10px; padding-right: 10px"></canvas>
+
+      <div class="last_updated_text">
+        <span id="last_updated_text"></span>
       </div>
     </div>
-    <script
-      async
-      defer
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDWaVhLQMYdNjRXmcZga657_etUC-9HBmQ&callback=initMap"
-    ></script>
-  </body>
+  </div>
+
+  <div class="chevron_bg1" onclick="toggleSelection()">
+    <div class="chevron_bg2">
+      <div class="chevron"></div>
+    </div>
+  </div>
+  <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDWaVhLQMYdNjRXmcZga657_etUC-9HBmQ&callback=initMap"></script>
+</body>
+
 </html>

@@ -1,18 +1,20 @@
 body {
   margin: 0;
 }
+
 .background {
   width: 100%;
   height: 100vh;
   display: block;
   overflow: hidden;
 }
+
 .header {
   overflow: hidden;
   background-color: black;
 }
+
 .header a {
-  /* height: 80px; */
   float: left;
   color: black;
   text-align: center;
@@ -25,17 +27,21 @@ body {
   display: flex;
   justify-content: space-around;
 }
+
 .header-center {
   width: 100%;
 }
+
 .header a.logo {
   content: url("Images/park'd_logo.png");
   display: flex;
   justify-content: center;
 }
+
 .header a.settings {
   content: url("Images/cogwheel.png");
 }
+
 .header a.viewButton {
   width: 150px;
   height: 50px;
@@ -48,6 +54,7 @@ body {
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
 }
+
 .admin_bg1 {
   width: 105px;
   height: 60px;
@@ -61,6 +68,7 @@ body {
   left: 1189px;
   overflow: hidden;
 }
+
 .header a.logout {
   width: 105px;
   height: 50px;
@@ -73,9 +81,11 @@ body {
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
 }
+
 .header-right {
   float: right;
 }
+
 .header a.annotate {
   width: 105px;
   height: 50px;
@@ -88,6 +98,7 @@ body {
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
 }
+
 .header a.adminMap {
   width: 100px;
   height: 50px;
@@ -100,6 +111,7 @@ body {
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
 }
+
 .setup-window {
   width: 50%;
   height: 50%;
@@ -113,8 +125,10 @@ body {
   left: 15%;
   overflow: hidden;
 }
+
 .button {
-  background-color: rgba(249, 255, 0, 1); /* Green */
+  background-color: rgba(249, 255, 0, 1);
+  /* Green */
   border: 2px solid black;
   color: black;
   padding: 10px 10px;
@@ -127,6 +141,7 @@ body {
   border-radius: 8px;
   min-width: 110px;
 }
+
 .cogwheel_bg1 {
   width: 50px;
   height: 50px;
@@ -140,9 +155,11 @@ body {
   left: 24px;
   overflow: hidden;
 }
+
 .header-left {
   float: left;
 }
+
 .search_bar_bg {
   width: 426px;
   height: 60px;
@@ -156,6 +173,7 @@ body {
   border-bottom-right-radius: 10px;
   box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25);
 }
+
 .reset_button_bg {
   width: 20px;
   height: 20px;
@@ -164,11 +182,13 @@ body {
   margin-right: 10px;
   float: right;
 }
+
 .reset_button {
   width: 20px;
   height: 20px;
   content: url("Images/refresh.png");
 }
+
 .direction_guide {
   width: 80%;
   color: rgba(157, 163, 174, 1);
@@ -180,382 +200,24 @@ body {
   font-size: 20px;
   text-align: left;
 }
+
 .map {
   width: 100%;
   height: 90vh;
   overflow: hidden;
 }
+
 @media screen and (max-width: 500px) {
-  /* .header a {
-    float: none;
-    display: block;
-    text-align: left;
-  }
-  .header-right {
-    float: none;
-  } */
   .search_bar_bg {
     width: 213px;
     height: 80px;
-    /* top: 25%; */
   }
+
   .reset_button_bg {
     margin-top: 15%;
   }
-  /* .map {
-    height: 89vh;
-  } */
 }
-.location_bg1 {
-  width: 174px;
-  height: 101px;
-  background: transparent;
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: cover;
-  opacity: 1;
-  position: absolute;
-  top: 833px;
-  left: 879px;
-  overflow: hidden;
-}
-.location_bg2 {
-  width: 65px;
-  height: 65px;
-  background: transparent;
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: cover;
-  opacity: 1;
-  position: absolute;
-  top: 0px;
-  left: 55px;
-  overflow: hidden;
-}
-.location_ring1 {
-  width: 65px;
-  height: 65px;
-  background: rgba(198, 211, 255, 0.800000011920929);
-  opacity: 1;
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  border-radius: 50%;
-}
-.location_ring2 {
-  width: 40px;
-  height: 40px;
-  background: rgba(99, 134, 255, 0.800000011920929);
-  opacity: 1;
-  position: absolute;
-  top: 13px;
-  left: 12px;
-  border-radius: 50%;
-}
-.location_ring3 {
-  width: 25px;
-  height: 25px;
-  background: rgba(0, 56, 255, 0.800000011920929);
-  opacity: 1;
-  position: absolute;
-  top: 20px;
-  left: 20px;
-  border-radius: 50%;
-}
-.location_text_bg1 {
-  width: 174px;
-  height: 35px;
-  background: transparent;
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: cover;
-  opacity: 1;
-  position: absolute;
-  top: 66px;
-  left: 0px;
-  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25);
-  overflow: hidden;
-}
-.location_text_bg2 {
-  width: 174px;
-  height: 35px;
-  background: transparent;
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: cover;
-  opacity: 1;
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  overflow: hidden;
-}
-.location_text_fg {
-  width: 174px;
-  height: 35px;
-  background: rgba(255, 255, 255, 1);
-  opacity: 1;
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  border-top-left-radius: 40px;
-  border-top-right-radius: 40px;
-  border-bottom-left-radius: 40px;
-  border-bottom-right-radius: 40px;
-  overflow: hidden;
-}
-.location_text {
-  width: 127px;
-  color: rgba(0, 0, 0, 1);
-  position: absolute;
-  top: 6px;
-  left: 23px;
-  font-family: Montserrat;
-  font-weight: bold;
-  font-size: 20px;
-  opacity: 1;
-  text-align: center;
-}
-.marker_bg1 {
-  width: 180px;
-  height: 80px;
-  background: transparent;
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: cover;
-  opacity: 1;
-  position: absolute;
-  overflow: hidden;
-}
-.marker_bg2 {
-  width: 180px;
-  height: 50px;
-  background: transparent;
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: cover;
-  opacity: 1;
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  border-radius: 40px;
-  overflow: hidden;
-}
-.marker_bg3 {
-  width: 180px;
-  height: 50px;
-  background: transparent;
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: cover;
-  opacity: 1;
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  overflow: hidden;
-}
-.marker_text_bg {
-  width: 180px;
-  height: 50px;
-  background: rgba(0, 255, 10, 1);
-  opacity: 1;
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  border-top-left-radius: 40px;
-  border-top-right-radius: 40px;
-  border-bottom-left-radius: 40px;
-  border-bottom-right-radius: 40px;
-  overflow: hidden;
-}
-.marker_text {
-  width: 69px;
-  color: rgba(0, 0, 0, 1);
-  position: absolute;
-  top: 8px;
-  left: 55px;
-  font-family: Montserrat;
-  font-weight: bold;
-  font-size: 20px;
-  opacity: 1;
-  text-align: center;
-}
-.path {
-  width: 242px;
-  height: 359px;
-  background: url("Images/path.png");
-  opacity: 1;
-  position: absolute;
-  top: 507px;
-  left: 724px;
-}
-.spot_selection {
-  display: none;
-  width: 35vw;
-  height: 895px;
-  background: rgba(255, 255, 255, 1);
-  opacity: 1;
-  position: absolute;
-  top: -25px;
-  left: -70px;
-  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
-  overflow: hidden;
-  transform: scale(0.75);
-}
-.spot_selection_prompt {
-  width: 338px;
-  color: rgba(0, 0, 0, 1);
-  position: absolute;
-  top: 30px;
-  left: 32px;
-  font-family: Montserrat;
-  font-weight: Bold;
-  font-size: 30px;
-  opacity: 1;
-  text-align: left;
-}
-.spot_selection_stats {
-  width: 312px;
-  color: rgba(0, 0, 0, 1);
-  position: absolute;
-  top: 84px;
-  left: 32px;
-  font-family: Montserrat;
-  font-weight: bold;
-  font-size: 20px;
-  opacity: 1;
-  text-align: left;
-}
-.parking_layout {
-  width: 434px;
-  height: 609px;
-  background: url("Images/parking_layout.png");
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: cover;
-  opacity: 1;
-  position: absolute;
-  top: 175px;
-  left: 45px;
-  overflow: hidden;
-}
-.select_parking_bg1 {
-  width: 476px;
-  height: 60px;
-  background: transparent;
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: cover;
-  opacity: 1;
-  position: absolute;
-  top: 789px;
-  left: 32px;
-  overflow: hidden;
-}
-.select_parking_bg2 {
-  width: 476px;
-  height: 60px;
-  background: transparent;
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: cover;
-  opacity: 1;
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  overflow: hidden;
-}
-.select_parking_text_bg {
-  width: 476px;
-  height: 60px;
-  background: rgba(249, 255, 0, 1);
-  opacity: 1;
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  border: 3px solid rgba(249, 255, 0, 0.800000011920929);
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
-  overflow: hidden;
-}
-.select_parking_text {
-  width: 330px;
-  color: rgba(31, 31, 31, 1);
-  position: absolute;
-  top: 18px;
-  left: 72px;
-  font-family: Montserrat;
-  font-weight: bold;
-  font-size: 20px;
-  opacity: 1;
-  text-align: center;
-}
-.parking_cars {
-  width: 402px;
-  height: 600px;
-  /* background: url("Images/parking_cars.png"); */
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: cover;
-  opacity: 1;
-  position: absolute;
-  top: 175px;
-  left: 61px;
-  overflow: hidden;
-}
-.parked_car {
-  width: 125px;
-  height: 67px;
-  background: none;
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: cover;
-  opacity: 1;
-  position: absolute;
-  overflow: hidden;
-}
-.spot_availability_bg {
-  width: 80px;
-  height: 609px;
-  background: transparent;
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: cover;
-  opacity: 1;
-  position: absolute;
-  top: 169px;
-  left: 222px;
-  overflow: hidden;
-}
-.spot_availability_text_bg {
-  width: 80px;
-  height: 609px;
-  background: rgba(249, 255, 0, 0.4000000059604645);
-  opacity: 1;
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
-  overflow: hidden;
-}
-.spot_availability_text {
-  height: 454px;
-  color: rgba(0, 0, 0, 1);
-  position: absolute;
-  top: 81px;
-  left: 25px;
-  font-family: Montserrat;
-  font-weight: bold;
-  font-size: 30px;
-  opacity: 1;
-  text-align: center;
-  writing-mode: vertical-lr;
-}
+
 .chevron_bg1 {
   width: 45px;
   height: 146px;
@@ -566,6 +228,7 @@ body {
   box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
   cursor: pointer;
 }
+
 .chevron_bg2 {
   width: 20px;
   height: 20px;
@@ -575,6 +238,7 @@ body {
   top: 63px;
   left: 13px;
 }
+
 .chevron {
   width: 13px;
   height: 20px;
@@ -592,18 +256,21 @@ body {
   position: absolute;
   top: 87px;
 }
+
 .location_name {
   font-family: Montserrat;
   font-weight: Medium;
   font-size: 25px;
   padding: 20px;
 }
+
 .location_address {
   font-family: Montserrat;
   font-weight: Regular;
   font-size: 20px;
   padding-left: 20px;
 }
+
 .analytics_cards_bg {
   width: 25vw;
   display: flex;
@@ -612,24 +279,28 @@ body {
   margin-right: auto;
   padding-top: 20px;
 }
+
 .analytics_card_bg {
   width: 32%;
   height: 23vh;
   border-radius: 10px;
   text-align: center;
 }
+
 .analytics_card_name {
   color: rgb(255, 255, 255);
   font-family: Montserrat;
   font-size: 15px;
   padding: 10px;
 }
+
 .analytics_card_number {
   width: 100%;
   color: rgb(255, 255, 255);
   font-family: Montserrat;
   font-size: 90px;
 }
+
 .analytics_card_total {
   width: 100%;
   color: rgb(255, 255, 255);
@@ -645,20 +316,24 @@ body {
     margin-left: auto;
     margin-right: auto;
   }
+
   .analytics_card_bg {
     width: 100%;
     height: 11vh;
     margin-bottom: 10px;
   }
+
   .analytics_card_name {
     font-size: 15px;
     padding-top: 10px;
     padding-bottom: 5px;
   }
+
   .analytics_card_number {
     width: 100%;
     font-size: 30px;
   }
+
   .analytics_card_total {
     width: 100%;
     font-size: 15px;
@@ -679,6 +354,7 @@ body {
   text-align: center;
   margin: 20px 0px 20px 0px;
 }
+
 .last_updated_text {
   width: 100%;
   font-family: Montserrat;
