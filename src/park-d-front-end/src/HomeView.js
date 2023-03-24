@@ -3,7 +3,10 @@
 const backendURL = "http://localhost:8000/";
 //const jsonURL = backendURL + "rt_parking_info";
 const jsonURL = backendURL + "parking_lots";
-const postURL = backendURL + "parking_lots";
+//const lotsURL = backendURL + "get_all_parking_lots";
+const lotsURL = "http://localhost:8001/parking_lots";
+
+const updateInterval = 5000;
 
 const typeToColor = { 0: "#00FF00", 1: "#0000FF", 2: "#FF0000" };
 
@@ -37,11 +40,12 @@ var clickDestination;
 var clickChoice = 0;
 var routeMarkers = [];
 
+var lotData;
 var spotData;
 var numSpots;
 
 var lotID;
-var owner;
+var lotOwner;
 
 var selectionToggle = false;
 class ParkingSpot {
@@ -152,8 +156,12 @@ function initMap() {
 
   map = new google.maps.Map(document.getElementById("map"), defaultOptions);
 
-  loadAllSpots();
-  setInterval(updateSpots, 5000);
+  try {
+    loadAllLots();
+  } catch (e) {
+    console.log(e);
+    window.alert("Couldn't load parking lot locations.");
+  }
 
   google.maps.event.addListener(map, "click", function (event) {
     if (clickChoice == 0) {
@@ -361,8 +369,49 @@ function getDocEle(className) {
   return document.getElementsByClassName(className)[0];
 }
 
+function loadAllLots() {
+  lotData = JSON.parse(Get(lotsURL, {}));
+  console.log(lotData);
+  for (let i = 0; i < 1; i++) {
+    // TODO change < 1 to lotData.length
+    body = {};
+    body.parking_lot_id = lotData[i].id;
+    body.owner = lotData[i].name;
+    let spots = JSON.parse(Get(jsonURL, body))["parking_spaces"];
+    console.log(spots);
+    window["lot" + lotData[i].name + lotData[i].id] = new google.maps.Circle({
+      strokeColor: "#FF0000",
+      fillColor: "#FF0000",
+      map,
+      center: {
+        lat: spots[0].mapcoords[0][0],
+        lng: spots[0].mapcoords[0][1],
+      },
+      radius: 10,
+    });
+    addLotListener(lotData[i].name, lotData[i].id);
+  }
+}
+
+function addLotListener(name, ID) {
+  google.maps.event.addListener(
+    window["lot" + name + ID],
+    "click",
+    function (event) {
+      try {
+        loadAllSpots(ID, name);
+        window["lot" + name + ID].setMap(null);
+      } catch (e) {
+        window.alert("Couldn't load parking lot.");
+      }
+    }
+  );
+}
+
 // loading all spots from remote
 function loadAllSpots(ID, owner) {
+  lotID = ID;
+  lotOwner = owner;
   body = {};
   body.parking_lot_id = ID;
   body.owner = owner;
@@ -393,12 +442,13 @@ function loadAllSpots(ID, owner) {
     window["spot" + spotData[i].id].setMap(map);
   }
   numSpots = spotData.length;
+  setInterval(updateSpots, updateInterval);
 }
 
 function updateSpots() {
   body = {};
   body.parking_lot_id = lotID;
-  body.owner = owner;
+  body.owner = lotOwner;
   var spots = JSON.parse(Get(jsonURL, body))["parking_spaces"];
   for (let i = 0; i < spots.length; i++) {
     let spot = spots[i];
