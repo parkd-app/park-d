@@ -109,7 +109,7 @@ function initMap() {
         return;
       } else {
         clickDestination = { coords: event.latLng };
-        //open analytics then to confirmSpotSelect
+        confirmSpotSelect();
       }
     } else if (clickChoice == 2) {
       // window[targetSpot].open = false;
