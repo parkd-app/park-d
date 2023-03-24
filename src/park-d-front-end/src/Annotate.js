@@ -1,10 +1,10 @@
 var coordURL = "http://localhost:8000/parking_lots";
 var w3cURL = "http://localhost:8000/w3c";
-var coordBird = "http://localhost:8000/formatted_bird";
-var coordSide = "http://localhost:8000/formatted_side";
-var imgURL = "http://localhost:8000/assets/images/";
-var sideURL = "http://localhost:8000/assets/images/lot_side.png";
-var birdURL = "http://localhost:8000/assets/images/lot_bird.png";
+// var coordBird = "http://localhost:8000/formatted_bird";
+// var coordSide = "http://localhost:8000/formatted_side";
+// var imgURL = "http://localhost:8000/assets/images/";
+// var sideURL = "http://localhost:8000/assets/images/lot_side.png";
+// var birdURL = "http://localhost:8000/assets/images/lot_bird.png";
 var backendURL = "https://back-end-new-api.azurewebsites.net/";
 
 var view = "bird";
@@ -30,6 +30,7 @@ function Get(URL, ID, owner) {
 }
 
 function createAnnotation(annotation, currAnnotations) {
+  console.log(w3cToBird(annotation));
   let maxId = 0;
   //  find highest id for current annotations
   for (i = 0; i < currAnnotations.length; i++) {
@@ -38,12 +39,24 @@ function createAnnotation(annotation, currAnnotations) {
       maxId = annId;
     }
   }
-  newId = maxId + 1;
-  // console.log("new id = " + newId);
+  newId = maxId;
+  console.log("new id = " + newId);
   annotation.id = newId;
   annotation.lot = 1;
+  annotation.owner = lotOwner;
+  annotation.type = 0;
   newAnnotations.push(annotation);
   activeAnnotations.push(annotation);
+
+  let newSpot = {};
+  newSpot.id = newId;
+  newSpot.status = true;
+  console.log(annotation);
+  newSpot.camcoords = w3cCoords(annotation);
+  newSpot.spotType = 0;
+  spotData[spotData.length] = newSpot;
+  // nextID++;
+  // numSpots++;
 }
 
 function deleteAnnotation(annotation) {
@@ -101,6 +114,10 @@ function getImgURL() {
   return imgURL;
 }
 
+function w3cCoords(annotation) {
+  // console.log(annotation);
+}
+
 function savew3c() {
   for (i = 0; i < deletedAnnotations.length; i++) {
     fetch(w3cURL + "/" + deletedAnnotations[i].id, {
@@ -132,7 +149,9 @@ function savew3c() {
   // console.log("Saved W3C");
 }
 
-function saveFormatted(ID, owner) {}
+function saveFormatted(ID, owner) {
+  spotData;
+}
 
 function saveAnn() {
   savew3c();
@@ -232,14 +251,14 @@ function saveAnn() {
 //   workingAnnotations = [];
 // }
 
-// function w3cToBird(annotation) {
-//   var annStr = JSON.stringify(annotation.target.selector.value);
-//   annStr = annStr.slice(12, annStr.length - 1);
-//   annArr = annStr.split(",");
-//   console.log("annStr = " + annStr);
-//   console.log(annArr);
-//   return annArr;
-// }
+function w3cToBird(annotation) {
+  var annStr = JSON.stringify(annotation.target.selector.value);
+  annStr = annStr.slice(12, annStr.length - 1);
+  annArr = annStr.split(",");
+  // console.log("annStr = " + annStr);
+  console.log(annArr);
+  return annArr;
+}
 
 // function w3cToSide(annotation) {
 //   var annStr = JSON.stringify(annotation.target.selector.value);
