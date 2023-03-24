@@ -44,7 +44,7 @@ var defaultOptions = {
   styles: noPoi,
 };
 
-var userMode = false;
+var userMode = true;
 
 var directionsRenderer;
 var directionsService;
@@ -107,17 +107,10 @@ function initMap() {
       if (selection == -1) {
         getDocEle("direction_guide").textContent = "Invalid Spot";
         return;
-      } else if (!window[parkingLayoutIds[selection]].open) {
-        getDocEle("direction_guide").textContent = "Spot Taken";
-        return;
+      } else {
+        clickDestination = { coords: event.latLng };
+        //open analytics then to confirmSpotSelect
       }
-      clickDestination = { coords: event.latLng };
-      directionsRenderer.setMap(map);
-      hasRoute = true;
-      targetSpot = parkingLayoutIds[selection];
-      getDocEle("direction_guide").textContent = "Calculating Route";
-      getRoute();
-      pickDone();
     } else if (clickChoice == 2) {
       // window[targetSpot].open = false;
       // followPositionSuccess(event.latLng, 1);
@@ -135,6 +128,15 @@ function verifySpotSelect(dest) {
     }
   }
   return -1;
+}
+
+function confirmSpotSelect() {
+  directionsRenderer.setMap(map);
+  hasRoute = true;
+  targetSpot = parkingLayoutIds[selection];
+  getDocEle("direction_guide").textContent = "Calculating Route";
+  getRoute();
+  pickDone();
 }
 
 function setTimeoutTime(response, status) {
