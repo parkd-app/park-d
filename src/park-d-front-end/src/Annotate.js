@@ -67,6 +67,14 @@ function createAnnotation(annotation, currAnnotations) {
 
 function deleteAnnotation(annotation) {
   deletedAnnotations.push(annotation);
+  var annId = annotation.id;
+  var index;
+  for (i = 0; i < spotData.length; i++) {
+    if (spotData[i].id == annId) {
+      index = i;
+    }
+  }
+  spotData.splice(index, 1);
 }
 
 function updateAnnotation(annotation, previous) {
