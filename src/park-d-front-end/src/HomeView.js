@@ -189,6 +189,11 @@ function initMap() {
   map = new google.maps.Map(document.getElementById("map"), defaultOptions);
   loadAllSpots();
 
+  if (!userMode) {
+    disableNavigation();
+    return;
+  }
+
   locationNavigator = navigator.geolocation;
   getDocEle("direction_guide").textContent = "Finding location";
   updatePosition();
@@ -422,9 +427,7 @@ function currentPositionSuccess(position) {
 }
 
 function currentPositionFailure() {
-  clickChoice = -1;
-  getDocEle("direction_guide").textContent = "Navigation Disabled";
-  navDisable = true;
+  disableNavigation();
 }
 
 function followPositionSuccess(position, fromClick = 0) {
@@ -459,6 +462,10 @@ function followPositionSuccess(position, fromClick = 0) {
 }
 
 function followPositionFailure() {
+  disableNavigation();
+}
+
+function disableNavigation() {
   clickChoice = -1;
   getDocEle("direction_guide").textContent = "Navigation Disabled";
   navDisable = true;
