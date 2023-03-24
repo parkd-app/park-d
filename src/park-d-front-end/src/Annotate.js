@@ -15,7 +15,7 @@ var deletedAnnotations = [];
 var spotData;
 
 var activeLot = 1;
-var lotOwner = "5dert6";
+var lotOwner = "lot";
 
 function Get(URL, ID, owner) {
   var body = {};
@@ -30,21 +30,27 @@ function Get(URL, ID, owner) {
 }
 
 function createAnnotation(annotation, currAnnotations) {
-  console.log(w3cToBird(annotation));
-  let maxId = 0;
+  // console.log(w3cToBird(annotation));
+  var maxId = 0;
+  console.log(currAnnotations);
   //  find highest id for current annotations
-  for (i = 0; i < currAnnotations.length; i++) {
-    annId = currAnnotations[i].id;
-    if (annId > maxId) {
-      maxId = annId;
+  if (currAnnotations.length == 1) {
+    maxId = 0;
+  } else {
+    for (i = 0; i < currAnnotations.length; i++) {
+      annId = currAnnotations[i].id;
+      console.log(annId);
+      if (annId > maxId) {
+        maxId = annId;
+      }
     }
   }
-  newId = maxId;
-  console.log("new id = " + newId);
+  newId = maxId + 1;
+  console.log("new id = " + maxId);
   annotation.id = newId;
   annotation.lot = 1;
   annotation.owner = lotOwner;
-  annotation.type = 0;
+  annotation.spotType = 0;
   newAnnotations.push(annotation);
   activeAnnotations.push(annotation);
 
@@ -53,10 +59,10 @@ function createAnnotation(annotation, currAnnotations) {
   newSpot.status = true;
   console.log(annotation);
   newSpot.camcoords = w3cCoords(annotation);
-  newSpot.spotType = 0;
+  newSpot.type = 0;
   spotData[spotData.length] = newSpot;
-  // nextID++;
-  // numSpots++;
+  nextID++;
+  numSpots++;
 }
 
 function deleteAnnotation(annotation) {
