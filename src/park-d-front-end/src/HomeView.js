@@ -377,11 +377,11 @@ function loadAllLots() {
     body = {};
     body.parking_lot_id = lotData[i].id;
     body.owner = lotData[i].name;
-    let spots = JSON.parse(Get(jsonURL, body))["parking_spaces"];
+    let spots = JSON.parse(Get(jsonURL, body))["parking_spaces"]; // TODO make sure this matches Gary's
     console.log(spots);
     window["lot" + lotData[i].name + lotData[i].id] = new google.maps.Circle({
-      strokeColor: "#FF0000",
-      fillColor: "#FF0000",
+      strokeColor: "#0000FF",
+      fillColor: "#0000FF",
       map,
       center: {
         lat: spots[0].mapcoords[0][0],
@@ -415,7 +415,7 @@ function loadAllSpots(ID, owner) {
   body = {};
   body.parking_lot_id = ID;
   body.owner = owner;
-  spotData = JSON.parse(Get(jsonURL, body))["parking_spaces"];
+  spotData = JSON.parse(Get(jsonURL, body))["parking_spaces"]; // TODO make sure this matches Gary's
   console.log(spotData);
 
   for (let i = 0; i < spotData.length; i++) {

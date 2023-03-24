@@ -3,7 +3,10 @@
 const backendURL = "http://localhost:8000/";
 //const jsonURL = backendURL + "rt_parking_info";
 const jsonURL = backendURL + "parking_lots";
+//const postURL = backendURL + "save_coord";
 const postURL = backendURL + "parking_lots";
+const createLotURL = backendURL + "create_parking_lot";
+const allLotURL = backendURL + "get_all_parking_lot_id";
 
 // green:regular, blue:accessible, red:reserved
 const colorToType = { "#00FF00": 0, "#0000FF": 1, "#FF0000": 2 };
@@ -120,11 +123,30 @@ function setUpButtons() {
 }
 
 function creatingLot() {
-  // create a parking lot
+  // show necessary boxes
+  document.getElementById("LotButtons").style.display = "none";
+  document.getElementById("NewLotButtons").style.display = "block";
 }
 
 function createLot() {
   // create a parking lot
+  newOwner = document.getElementById("NewOwnerBox").value;
+  youtubeURL = document.getElementById("URLBox").value;
+  lots = JSON.parse(Get(jsonURL, { name: newOwner }));
+  console.log(lots);
+  newID = lots.parking_lot_id[lots.parking_lot_id.length - 1] + 1;
+  payload = {};
+  payload.id = newID;
+  payload.name = newOwner;
+  payload.url = youtubeURL;
+  Post(createLotURL, payload);
+
+  spotData = {};
+  nextID = 1;
+  numSpots = 0;
+
+  document.getElementById("NewLotButtons").style.display = "none";
+  document.getElementById("SpaceButtons").style.display = "block";
 }
 
 // initiating placing spot from ui
@@ -195,7 +217,7 @@ function loadAllSpots(ID, owner) {
   body = {};
   body.parking_lot_id = ID;
   body.owner = owner;
-  spotData = JSON.parse(Get(jsonURL, body))["parking_spaces"];
+  spotData = JSON.parse(Get(jsonURL, body))["parking_spaces"]; // TODO make sure this matches Gary's
   console.log(spotData);
 
   for (let i = 0; i < spotData.length; i++) {

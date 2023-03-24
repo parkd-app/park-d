@@ -33,6 +33,15 @@
         Create New Lot
       </button>
     </div>
+    <div id = "NewLotButtons" style="display:none">
+      <label id="NewOwnerLabel" for="NewOwnerBox">Owner:</label>
+      <input type="text" id="NewOwnerBox" name="NewOwnerBox"><br>
+      <label id="URLLabel" for="URLBox">YouTube stream URL:</label>
+      <input type="text" id="URLBox" name="URLBox"><br>
+      <button type="button" id="CreateLotButton" onclick="createLot()">
+        Create Lot
+      </button>
+    </div>
     <div id="SpaceButtons" style="display:none">
       <button type="button" id="AddSpotButton" onclick="addingSpot()">
         Add Spot
