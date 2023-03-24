@@ -248,11 +248,17 @@ function setTimeoutTime(response, status) {
 }
 
 function initPage() {
-  getDocEle("annotate_bg1").style.display = userMode ? "none" : "block";
-  getDocEle("chevron_bg1").style.display = "block";
+  getDocEle("chevron_bg1").style.display = userMode ? "none" : "block";
   getDocEle("analytics_bg1").style.display = "none";
   getDocEle("spot_selection").style.display = "none";
+
+  getDocEle("logout").style.display = userMode ? "none" : "block";
   getDocEle("search_bar_bg").style.display = userMode ? "block" : "none";
+  getDocEle("annotate").style.display = userMode ? "none" : "block";
+  document.getElementById("SetupBirdButton").style.display = userMode ? "none" : "block";
+  document.getElementById("SetupSideButton").style.display = userMode ? "none" : "block";
+
+
 
   updateSelection();
 }
