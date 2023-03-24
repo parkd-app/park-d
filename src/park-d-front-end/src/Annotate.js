@@ -162,7 +162,22 @@ function savew3c() {
 }
 
 function saveFormatted(ID, owner) {
-  spotData;
+  let payload = {};
+  payload.id = ID;
+  payload.owner = owner;
+  payload.parking_spaces = [spotData];
+  try {
+    Post(postURL, payload);
+    document.getElementById("SaveButton").textContent = "Save Successful";
+    setTimeout(() => {
+      document.getElementById("SaveButton").textContent = "Save Changes";
+    }, 1000);
+  } catch (e) {
+    document.getElementById("SaveButton").textContent = "Save Failed!";
+    setTimeout(() => {
+      document.getElementById("SaveButton").textContent = "Save Changes";
+    }, 2000);
+  }
 }
 
 function saveAnn() {
