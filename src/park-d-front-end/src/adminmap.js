@@ -1,5 +1,7 @@
 // json parsing
+//const backendURL = "https://back-end-new-api.azurewebsites.net/";
 const backendURL = "http://localhost:8000/";
+//const jsonURL = backendURL + "rt_parking_info";
 const jsonURL = backendURL + "parking_lots";
 const postURL = backendURL + "parking_lots";
 
@@ -10,11 +12,8 @@ const newSpotColor = "#888888";
 
 const updateInterval = 5000;
 
-function Get(URL, ID, owner) {
-  var body = {};
-  body.parking_lot_id = ID;
-  body.owner = owner;
-
+function Get(URL, body) {
+  console.log(JSON.stringify(body));
   var Httpreq = new XMLHttpRequest(); // a new request
   Httpreq.open("GET", URL, false);
   Httpreq.send(JSON.stringify(body));
@@ -58,6 +57,9 @@ var spotData;
 var numSpots;
 var nextID = -1;
 
+var lotID;
+var owner;
+
 function initMap() {
   map = new google.maps.Map(document.getElementById("map"), defaultOptions);
   mapBounds = new google.maps.LatLngBounds();
@@ -79,7 +81,6 @@ function initMap() {
         document.getElementById("PickLabel").textContent =
           "Spot added. Keep clicking to add more";
       }
-    } else if (clickChoice == 2) {
     }
   });
 }
@@ -94,24 +95,32 @@ function resetData() {
   corners = [];
   pointsClicked = 0;
   document.getElementById("PickLabel").textContent = "Admin View";
-  document.getElementById("AddSpotButton").textContent = "Add Parking Spot";
-  document.getElementById("RemoveSpotButton").textContent =
-    "Remove Parking Spot";
+  document.getElementById("AddSpotButton").textContent = "Add Spot";
+  document.getElementById("ChangeSpotButton").textContent = "Change Spot Type";
+  document.getElementById("RemoveSpotButton").textContent = "Remove Spot";
 }
 
 function loadLot() {
-  let lotID = document.getElementById("IDBox").value;
-  let owner = document.getElementById("OwnerBox").textContent;
+  lotID = parseInt(document.getElementById("IDBox").value);
+  owner = document.getElementById("OwnerBox").value;
   try {
     loadAllSpots(lotID, owner);
   } catch (e) {
+    document.getElementById("LoadLotButton").textContent = "Load Failed!";
+    setTimeout(() => {
+      document.getElementById("LoadLotButton").textContent = "Load Lot";
+    }, 2000);
     console.log(e);
   }
 }
 
+function setUpButtons() {
+  document.getElementById("LotButtons").style.display = "none";
+  document.getElementById("SpaceButtons").style.display = "block";
+}
+
 function creatingLot() {
   // create a parking lot
-  clickChoice = 2;
 }
 
 function createLot() {
@@ -155,6 +164,19 @@ function putSpot(corners) {
   numSpots++;
 }
 
+function changingSpot() {
+  // changing spot
+  if (clickChoice != 2) {
+    resetData();
+    clickChoice = 2;
+    document.getElementById("PickLabel").textContent =
+      "Click a spot to change to current selected type";
+    document.getElementById("ChangeSpotButton").textContent = "Done";
+  } else {
+    resetData();
+  }
+}
+
 function removingSpot() {
   // remove the spot
   if (clickChoice != 3) {
@@ -168,18 +190,12 @@ function removingSpot() {
   }
 }
 
-function addSpaceListener(ID) {
-  google.maps.event.addListener(window["spot" + ID], "click", function (event) {
-    if (clickChoice == 3) {
-      window["spot" + ID].setMap(null);
-      window["spot" + ID] = undefined;
-    }
-  });
-}
-
 // loading all spots from remote
 function loadAllSpots(ID, owner) {
-  spotData = JSON.parse(Get(jsonURL, ID, owner))["parking_spaces"];
+  body = {};
+  body.parking_lot_id = ID;
+  body.owner = owner;
+  spotData = JSON.parse(Get(jsonURL, body))["parking_spaces"];
   console.log(spotData);
 
   for (let i = 0; i < spotData.length; i++) {
@@ -214,34 +230,51 @@ function loadAllSpots(ID, owner) {
   setUpButtons();
 }
 
-function setUpButtons() {
-  document.getElementById("LotButtons").style.display = "none";
-  document.getElementById("SpaceButtons").style.display = "block";
+function addSpaceListener(ID) {
+  google.maps.event.addListener(window["spot" + ID], "click", function (event) {
+    if (clickChoice == 2) {
+      window["spot" + ID].setOptions({
+        strokeColor: document.getElementById("TypeMenu").value,
+      });
+    } else if (clickChoice == 3) {
+      window["spot" + ID].setMap(null);
+      window["spot" + ID] = undefined;
+    }
+  });
 }
 
 function uploadSpots() {
   let payload = {};
-  payload.id = 1;
-  payload.owner = "5dert6";
+  payload.id = lotID;
+  payload.owner = owner;
   let spaces = [];
   for (let i = 0; i < spotData.length; i++) {
-    if (window["spot" + spotData[i].id] == undefined) continue;
+    let spotID = spotData[i].id;
+    if (window["spot" + spotID] == undefined) continue;
 
     let coords = [];
-    let path = window["spot" + spotData[i].id].getPath();
+    let path = window["spot" + spotID].getPath();
     for (let j = 0; j < 4; j++) {
       let coord = path.getAt(j);
       coords.push([coord.lat(), coord.lng()]);
     }
     spotData[i].status = true;
     spotData[i].mapcoords = coords;
+    spotData[i].type = colorToType[window["spot" + spotID].get("strokeColor")];
 
     spaces.push(spotData[i]);
   }
   payload.parking_spaces = spaces;
-  Post(postURL, payload);
-  document.getElementById("SaveButton").textContent = "Save Successful";
-  setTimeout(() => {
-    document.getElementById("SaveButton").textContent = "Save Changes";
-  }, 1000);
+  try {
+    Post(postURL, payload);
+    document.getElementById("SaveButton").textContent = "Save Successful";
+    setTimeout(() => {
+      document.getElementById("SaveButton").textContent = "Save Changes";
+    }, 1000);
+  } catch (e) {
+    document.getElementById("SaveButton").textContent = "Save Failed!";
+    setTimeout(() => {
+      document.getElementById("SaveButton").textContent = "Save Changes";
+    }, 2000);
+  }
 }
