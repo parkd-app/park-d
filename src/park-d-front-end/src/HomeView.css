@@ -3,14 +3,16 @@ body {
 }
 .background {
   width: 100%;
-  height: 100%;
+  height: 100vh;
   display: block;
+  overflow: hidden;
 }
 .header {
   overflow: hidden;
   background-color: black;
 }
 .header a {
+  /* height: 80px; */
   float: left;
   color: black;
   text-align: center;
@@ -20,10 +22,16 @@ body {
   line-height: 25px;
   border-radius: 4px;
   box-sizing: border-box;
+  display: flex;
+  justify-content: space-around;
+}
+.header-center {
+  width: 100%;
 }
 .header a.logo {
   content: url("Images/park'd_logo.png");
-  /* margin-left: 40%; */
+  display: flex;
+  justify-content: center;
 }
 .header a.settings {
   content: url("Images/cogwheel.png");
@@ -217,27 +225,28 @@ body {
 .map {
   width: 100%;
   height: 90vh;
+  overflow: hidden;
 }
 @media screen and (max-width: 500px) {
-  .header a {
+  /* .header a {
     float: none;
     display: block;
     text-align: left;
   }
   .header-right {
     float: none;
-  }
+  } */
   .search_bar_bg {
     width: 213px;
     height: 80px;
-    top: 25%;
+    /* top: 25%; */
   }
   .reset_button_bg {
     margin-top: 15%;
   }
-  .map {
-    height: 78vh;
-  }
+  /* .map {
+    height: 89vh;
+  } */
 }
 .location_bg1 {
   width: 174px;

@@ -263,6 +263,7 @@ function initPage() {
   document.getElementById("SetupBirdButton").style.display = userMode ? "none" : "block";
   document.getElementById("SetupSideButton").style.display = userMode ? "none" : "block";
 
+  getDocEle("header-center").style.margin = userMode ? "0 0 0 40%" : "0 0 0 42.5%";
 
 
   updateSelection();
