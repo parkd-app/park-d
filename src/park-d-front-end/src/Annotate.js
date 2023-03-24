@@ -32,21 +32,21 @@ function Get(URL, ID, owner) {
 function createAnnotation(annotation, currAnnotations) {
   // console.log(w3cToBird(annotation));
   var maxId = 0;
-  console.log(currAnnotations);
+  // console.log(currAnnotations);
   //  find highest id for current annotations
   if (currAnnotations.length == 1) {
     maxId = 0;
   } else {
     for (i = 0; i < currAnnotations.length; i++) {
       annId = currAnnotations[i].id;
-      console.log(annId);
+      // console.log(annId);
       if (annId > maxId) {
         maxId = annId;
       }
     }
   }
   newId = maxId + 1;
-  console.log("new id = " + maxId);
+  // console.log("new id = " + maxId);
   annotation.id = newId;
   annotation.lot = 1;
   annotation.owner = lotOwner;
@@ -57,12 +57,12 @@ function createAnnotation(annotation, currAnnotations) {
   let newSpot = {};
   newSpot.id = newId;
   newSpot.status = true;
-  console.log(annotation);
+  // console.log(annotation);
   newSpot.camcoords = w3cCoords(annotation);
+  newSpot.mapcoords = [];
   newSpot.type = 0;
   spotData[spotData.length] = newSpot;
-  nextID++;
-  numSpots++;
+  console.log(spotData);
 }
 
 function deleteAnnotation(annotation) {
@@ -121,7 +121,13 @@ function getImgURL() {
 }
 
 function w3cCoords(annotation) {
-  // console.log(annotation);
+  coordArr = w3cToBird(annotation);
+  return [
+    [coordArr[0], coordArr[1]],
+    [coordArr[0] + coordArr[2], coordArr[1]],
+    [coordArr[0], coordArr[1] + coordArr[3]],
+    [coordArr[0] + coordArr[2], coordArr[1] + coordArr[3]],
+  ];
 }
 
 function savew3c() {
@@ -262,7 +268,10 @@ function w3cToBird(annotation) {
   annStr = annStr.slice(12, annStr.length - 1);
   annArr = annStr.split(",");
   // console.log("annStr = " + annStr);
-  console.log(annArr);
+  // console.log(annArr);
+  for (i = 0; i < annArr.length; i++) {
+    annArr[i] = parseFloat(annArr[i]);
+  }
   return annArr;
 }
 
