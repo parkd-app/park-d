@@ -187,7 +187,7 @@ function initMap() {
   directionsService = new google.maps.DirectionsService();
 
   map = new google.maps.Map(document.getElementById("map"), defaultOptions);
-  loadAllSpots();
+  // loadAllSpots();
 
   if (!userMode) {
     disableNavigation();
@@ -253,20 +253,16 @@ function setTimeoutTime(response, status) {
 }
 
 function initPage() {
-  getDocEle("chevron_bg1").style.display = userMode ? "none" : "block";
   getDocEle("analytics_bg1").style.display = "none";
-  getDocEle("spot_selection").style.display = "none";
 
   getDocEle("logout").style.display = userMode ? "none" : "block";
   getDocEle("search_bar_bg").style.display = userMode ? "block" : "none";
   getDocEle("annotate").style.display = userMode ? "none" : "block";
+  getDocEle("adminMap").style.display = userMode ? "none" : "block";
   document.getElementById("SetupBirdButton").style.display = userMode ? "none" : "block";
   document.getElementById("SetupSideButton").style.display = userMode ? "none" : "block";
 
   getDocEle("header-center").style.margin = userMode ? "0 0 0 40%" : "0 0 0 42.5%";
-
-
-  updateSelection();
 }
 
 function pickDone() {
@@ -496,22 +492,16 @@ function toggleSelection() {
   selectionToggle = !selectionToggle;
   let selectionTogglePos = window.innerWidth <= 750 ? "90vw" : "30vw";
   if (userMode) {
-    getDocEle("spot_selection").style.display = selectionToggle
-      ? "block"
-      : "none";
-    getDocEle("analytics_bg1").style.display = selectionToggle
-      ? "block"
-      : "none";
-    getDocEle("analytics_bg1").style.right = 0;
     getDocEle("chevron_bg1").style.left = selectionToggle ? "26.5vw" : "0px";
   } else {
-    getDocEle("analytics_bg1").style.display = selectionToggle
-      ? "block"
-      : "none";
     getDocEle("chevron_bg1").style.left = selectionToggle
       ? selectionTogglePos
       : "0px";
   }
+  getDocEle("analytics_bg1").style.right = 0;
+  getDocEle("analytics_bg1").style.display = selectionToggle
+  ? "block"
+  : "none";
   getDocEle("chevron").style.transform = selectionToggle
     ? "scaleX(1)"
     : "scaleX(-1)";
@@ -529,39 +519,6 @@ function updateChevronPos() {
 }
 
 window.onresize = updateChevronPos;
-
-function selectionSelect(id) {
-  if (
-    clickChoice != 2 ||
-    id > parkingLayout.length ||
-    !parkingLayout[id].open
-  ) {
-    return;
-  }
-
-  clickDestination = { coords: parkingLayout[id].coords };
-  directionsRenderer.setMap(map);
-  getRoute();
-  pickDone();
-  toggleSelection();
-  parkingLayout[id].open = false;
-  updateSelection();
-}
-
-function updateSelection() {
-  var available = 0;
-  for (let index = 0; index < parkingLayout.length; index++) {
-    document.getElementById("parked_car" + index).style.background =
-      parkingLayout[index].open ? "none" : "url(Images/parked_car.png)";
-    if (parkingLayout[index].open) {
-      available += 1;
-    }
-  }
-  getDocEle("spot_selection_stats").textContent =
-    available + " Spots Available";
-  getDocEle("spot_availability_text").textContent =
-    available + " Spots Available";
-}
 
 function getDocEle(className) {
   return document.getElementsByClassName(className)[0];
@@ -697,8 +654,6 @@ function analytics(data) {
 
         document.getElementById("total_text").innerHTML =
           "TOTAL AVAILABLE - " + totalAvail + "/" + totalSpots;
-        document.getElementById("spot_selection_stats").innerHTML =
-          totalAvail + " Spots Available";
       }
 
       totalOccupied = totalSpots - totalAvail;

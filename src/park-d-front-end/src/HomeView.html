@@ -38,7 +38,6 @@
     <div class="background">
       <div class="header">
         <div class="header-left">
-          <!-- <a class="settings"></a> -->
           <a class="viewButton" id="SetupBirdButton" onclick="setupBird()">Setup large lot</a>
           <a class="viewButton" id="SetupSideButton" onclick="setupSide()">Setup small lot</a>
         </div>
@@ -46,52 +45,14 @@
           <a class="logo"></a>
         </div>
         <div class="header-right">
+          <a href="adminmap.html">
+            <a class="adminMap">Edit Map</a>
+          </a>
           <a href="Annotate.html">
             <a class="annotate">Annotate</a>
           </a>
           <a class="logout">LOGOUT</a>
         </div>
-
-        <a href="Annotate.html">
-          <div class="annotate_bg1">
-            <div class="annotate_bg2">
-              <div class="annotate_border"></div>
-              <span class="annotate_text">Annotate</span>
-            </div>
-          </div>
-        </a>
-        <a href="adminmap.html">
-          <div class="adminmap_bg1">
-            <div class="adminmap_bg2">
-              <div class="adminmap_border"></div>
-              <span class="adminmap_text">Edit Map</span>
-            </div>
-          </div>
-        </a>
-        <div class="logout_bg1" id="btnLogout" onclick="logout()">
-          <div class="logout_bg2">
-            <div class="logout_border"></div>
-            <span class="logout_text">Logout</span>
-          </div>
-        </div>
-        <div class="setup-window">
-          <button class="button" id="birdbtn" onclick="setupBird()">
-            Setup Large Lot
-          </button>
-          <button class="button" id="sidebtn" onclick="setupSide()">
-            Setup Small Lot
-          </button>
-        </div>
-        <a href="settings.html">
-          <div class="cogwheel_bg1">
-            <div class="cogwheel_bg2">
-              <div class="cogwheel"></div>
-            </div>
-            <div class="cogwheel_fg"></div>
-          </div>
-        </a>
-=======
->>>>>>> 57121ef (Adjust admin buttons)
       </div>
       <div class="map" id="map"></div>
       <div class="search_bar_bg">
@@ -99,157 +60,6 @@
           <div class="reset_button" onclick="resetData()"></div>
         </div>
         <span class="direction_guide">Select your location</span>
-      </div>
-      <!-- <div class="location_bg1">
-        <div class="location_bg2">
-          <div class="location_ring1"></div>
-          <div class="location_ring2"></div>
-          <div class="location_ring3"></div>
-        </div>
-        <div class="location_text_bg1">
-          <div class="location_text_bg2">
-            <div class="location_text_fg"></div>
-            <span class="location_text">You are here</span>
-          </div>
-        </div>
-      </div>
-      <div class="marker_bg1">
-        <div class="marker_bg2">
-          <div class="marker_bg3">
-            <div class="marker_text_bg" style="background: rgba(0, 255, 10, 1)"></div>
-            <span class="marker_text">70/100</span>
-          </div>
-        </div>
-      </div>
-      <div class="marker_bg1">
-        <div class="marker_bg2">
-          <div class="marker_bg3">
-            <div class="marker_text_bg" style="background: rgba(249, 255, 0, 1)"></div>
-            <span class="marker_text">30/100</span>
-          </div>
-        </div>
-      </div>
-      <div class="marker_bg1">
-        <div class="marker_bg2">
-          <div class="marker_bg3">
-            <div class="marker_text_bg" style="background: rgba(255, 0, 0, 1)"></div>
-            <span class="marker_text">0/120</span>
-          </div>
-        </div>
-      </div>
-      <div class="path"></div> -->
-      <div class="spot_selection">
-        <span class="spot_selection_prompt">Pick Your Spot</span>
-        <span class="spot_selection_stats" id="spot_selection_stats"></span>
-        <div class="parking_layout"></div>
-        <div class="select_parking_bg1">
-          <div class="select_parking_bg2">
-            <div class="select_parking_text_bg"></div>
-            <span class="select_parking_text">Select Parking Space</span>
-          </div>
-        </div>
-        <div class="parking_cars">
-          <div
-            class="parked_car"
-            id="parked_car0"
-            onclick="selectionSelect(0)"
-            style="top: 5px; left: 0px; transform: rotate(180deg)"
-          ></div>
-          <div
-            class="parked_car"
-            id="parked_car1"
-            onclick="selectionSelect(1)"
-            style="top: 78px; left: 0px; transform: rotate(180deg)"
-          ></div>
-          <div
-            class="parked_car"
-            id="parked_car2"
-            onclick="selectionSelect(2)"
-            style="top: 151px; left: 0px; transform: rotate(180deg)"
-          ></div>
-          <div
-            class="parked_car"
-            id="parked_car3"
-            onclick="selectionSelect(3)"
-            style="top: 231px; left: 0px; transform: rotate(180deg)"
-          ></div>
-          <div
-            class="parked_car"
-            id="parked_car4"
-            onclick="selectionSelect(4)"
-            style="top: 308px; left: 0px; transform: rotate(180deg)"
-          ></div>
-          <div
-            class="parked_car"
-            id="parked_car5"
-            onclick="selectionSelect(5)"
-            style="top: 385px; left: 0px; transform: rotate(180deg)"
-          ></div>
-          <div
-            class="parked_car"
-            id="parked_car6"
-            onclick="selectionSelect(6)"
-            style="top: 455px; left: 0px; transform: rotate(180deg)"
-          ></div>
-          <div
-            class="parked_car"
-            id="parked_car7"
-            onclick="selectionSelect(7)"
-            style="top: 530px; left: 0px; transform: rotate(180deg)"
-          ></div>
-          <div
-            class="parked_car"
-            id="parked_car8"
-            onclick="selectionSelect(8)"
-            style="top: 5px; left: 277px; transform: rotate(0deg)"
-          ></div>
-          <div
-            class="parked_car"
-            id="parked_car9"
-            onclick="selectionSelect(9)"
-            style="top: 78px; left: 277px; transform: rotate(0deg)"
-          ></div>
-          <div
-            class="parked_car"
-            id="parked_car10"
-            onclick="selectionSelect(10)"
-            style="top: 151px; left: 277px; transform: rotate(0deg)"
-          ></div>
-          <div
-            class="parked_car"
-            id="parked_car11"
-            onclick="selectionSelect(11)"
-            style="top: 231px; left: 277px; transform: rotate(0deg)"
-          ></div>
-          <div
-            class="parked_car"
-            id="parked_car12"
-            onclick="selectionSelect(12)"
-            style="top: 308px; left: 277px; transform: rotate(0deg)"
-          ></div>
-          <div
-            class="parked_car"
-            id="parked_car13"
-            onclick="selectionSelect(13)"
-            style="top: 385px; left: 277px; transform: rotate(0deg)"
-          ></div>
-          <div
-            class="parked_car"
-            id="parked_car14"
-            onclick="selectionSelect(14)"
-            style="top: 455px; left: 277px; transform: rotate(0deg)"
-          ></div>
-          <div
-            class="parked_car"
-            id="parked_car15"
-            onclick="selectionSelect(15)"
-            style="top: 530px; left: 277px; transform: rotate(0deg)"
-          ></div>
-        </div>
-        <div class="spot_availability_bg">
-          <div class="spot_availability_text_bg"></div>
-          <span class="spot_availability_text">70 Spots Available</span>
-        </div>
       </div>
 
       <div class="analytics_bg1">
