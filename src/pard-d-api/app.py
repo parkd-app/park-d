@@ -1,11 +1,11 @@
 import sys
 import os
-from flask import Flask, send_file
+from flask import Flask, send_file, render_template, Response
 import logging
-from Service import parsing_service, slow_initiate_service, model_selection_service, save_coord_service
+from Service import parsing_service,response_handler ,slow_initiate_service, model_selection_service, save_coord_service, coordinate_input_service, snap_shot_service
 from Constants import constants
 from flask_cors import CORS, cross_origin
-import cv2
+#import cv2
 from flask import request
 import Service.firebase_query as db
 
@@ -44,41 +44,53 @@ def setup_logging():
 def save_coord():
     data = request.json
     ret = save_coord_service.save_map_coordinate(data)
-    return {'result': True}
 
-@app.route("/get_prev_layout", methods=['GET'])
+    return response_handler.handle_response({'result': True})
+
+@app.route("/")
+def index():
+   print('Request for index page received')
+   return render_template('index.html')
+
+@app.route("/get_prev_layout", methods=['POST'])
 def get_layout():
     data = request.json
     ret = save_coord_service.get_existing_layout(data['id'], data['name'])
-    return {'result': ret}
+    return response_handler.handle_response({'result': ret})
 
-@app.route("/rt_parking_info", methods=["GET"])
+@app.route("/rt_parking_info", methods=['POST'])
 @cross_origin()
 def requires_parking_spot():  # put application's code here
-    angle = request.args.get('angle')
-    if angle == 'side':
-        path = constants.PARKING_INFO_PATH
-    else:
-        path = constants.PARKING_INFO_PATH_BIRD
-    ret = parsing_service.parsing(path, angle)
-    app.logger.info("ret: %s", ret)
-    # response = Flask.jsonify({'parking_spaces': ret})
-    # response.headers.add('Access-Control-Allow-Origin', '*')
-    return {"parking_spaces": ret}
+    # angle = request.args.get('angle')
+    # if angle == 'side':
+    #     path = constants.PARKING_INFO_PATH
+    # else:
+    #     path = constants.PARKING_INFO_PATH_BIRD
+    # ret = parsing_service.parsing(path, angle)
+    # app.logger.info("ret: %s", ret)
+    # # response = Flask.jsonify({'parking_spaces': ret})
+    # # response.headers.add('Access-Control-Allow-Origin', '*')
+    data = request.json
+    id = data["parking_lot_id"]
+    name = data["owner"]
+    url = coordinate_input_service.get_parking_url(id, name)
+    coordinate_input_service.set_current_input(url)
+    coordinate_input_service.set_current_coordinates(id, name)
+    return response_handler.handle_response(parsing_service.parsing(id,name))
 
 #jon_saving
 @app.route("/req_coordinate", methods=["POST"])
 def requires_coordinate():
     data = request.json
     ret = model_selection_service.saved_coordinates(data)
-    return {"result": ret }
+    return response_handler.handle_response({"result": ret })
 
 
 @app.route("/set_up", methods=["POST"])
 def slow_initiate():
     model = request.args.get("angle")
     ret = slow_initiate_service.start(model)
-    return {"result": ret}
+    return response_handler.handle_response({"result": ret})
 
 
 @app.route("/close_model", methods=["POST"])
@@ -87,31 +99,43 @@ def close_model():
     return {"result": ret}
 
 #jon
-@app.route("/get_parking_snapshot", methods=["GET"])
+@app.route("/get_parking_snapshot", methods=['POST'])
 def get_snapshot():
-    model = request.args.get("angle")
-    vidcap = cv2.VideoCapture(constants.VIDEO_PATH_BIRD)
-    success, image = vidcap.read()
-    if image:
-        full_path = constants.IMAGE_PATH + "frame_bird.jpg"
-        if not os.path.exists(constants.IMAGE_PATH):
-            assert Exception
-        if not cv2.imwrite(full_path, image):
-            cv2.imwrite(".\\static_resources\\frame.png", image)
-        print("Read a new frame:", success)
-    else:
-        if model == "side":
-            ret = send_file(
-                "./static_resources/parking_lot_2.png", mimetype="image/png"
-            )
-            print("get side")
-        else:
-            ret = send_file(
-                "./static_resources/bird.png", mimetype="image/png"
-            )
-            print("get bird")
+    name = request.args.get("name")
+    url = request.json["url"]
 
-    return ret
+    frame = snap_shot_service.save_frame_sec(url)
+    #frame = db.down_load_snapshot(name)
+    headers = {
+        "Content-Type": "image/jpeg",
+        "Content-Disposition": "attachment; filename=image.jpg"
+    }
+    response = Response(frame, headers=headers)
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return send_file(frame, mimetype='image/jpeg')
+
+
+@app.route("/create_parking_lot", methods=["POST"])
+def create_parking_lots():
+    data = request.json
+    id = data["id"]
+    name = data["name"]
+    url = data["url"]
+    coordinate_input_service.set_parking_url(id,name,url)
+    coordinate_input_service.add_parking_lots_to_list(id, name)
+    return response_handler.handle_response({"result:": True})
+@app.route("/get_all_parking_lots", methods=['POST'])
+def get_parking_lots_for_render():
+    lot_key = "created_parking_lots"
+    ret = db.query_by_key(lot_key)
+    return response_handler.handle_response(ret)
+
+@app.route("/get_analytics", methods=['POST'])
+def get_analytics():
+    return {"ret": True}
+
+
+
 
 
 if __name__ == "__main__":
