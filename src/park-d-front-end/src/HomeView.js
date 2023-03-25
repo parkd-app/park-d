@@ -1,10 +1,10 @@
 // json parsing
-//const backendURL = "https://back-end-new-api.azurewebsites.net/";
-const backendURL = "http://localhost:8000/";
-//const jsonURL = backendURL + "rt_parking_info";
-const jsonURL = backendURL + "parking_lots";
-//const lotsURL = backendURL + "get_all_parking_lots";
-const lotsURL = "http://localhost:8001/parking_lots";
+const backendURL = "https://back-end-new-api.azurewebsites.net/";
+//const backendURL = "http://localhost:8000/";
+const jsonURL = backendURL + "rt_parking_info";
+//const jsonURL = backendURL + "parking_lots";
+const lotsURL = backendURL + "get_all_parking_lots";
+//const lotsURL = "http://localhost:8001/parking_lots";
 
 const updateInterval = 5000;
 

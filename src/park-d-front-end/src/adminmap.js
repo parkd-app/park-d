@@ -1,12 +1,12 @@
 // json parsing
-//const backendURL = "https://back-end-new-api.azurewebsites.net/";
-var backendURL = "http://localhost:8000/";
-//const jsonURL = backendURL + "rt_parking_info";
-const jsonURL = backendURL + "parking_lots";
-//const postURL = backendURL + "save_coord";
-const postURL = backendURL + "parking_lots";
+const backendURL = "https://back-end-new-api.azurewebsites.net/";
+//var backendURL = "http://localhost:8000/";
+const jsonURL = backendURL + "rt_parking_info";
+//const jsonURL = backendURL + "parking_lots";
+const postURL = backendURL + "save_coord";
+//const postURL = backendURL + "parking_lots";
 const createLotURL = backendURL + "create_parking_lot";
-const allLotURL = backendURL + "get_all_parking_lot_id";
+const allLotURL = backendURL + "get_all_parking_lots";;
 
 // green:regular, blue:accessible, red:reserved
 var colorToType = { "#00FF00": 0, "#0000FF": 1, "#FF0000": 2 };
@@ -16,9 +16,10 @@ var newSpotColor = "#888888";
 var updateInterval = 5000;
 
 function Get(URL, body) {
-  console.log(JSON.stringify(body));
+  console.log(body);
   var Httpreq = new XMLHttpRequest(); // a new request
-  Httpreq.open("GET", URL, false);
+  Httpreq.open("POST", URL, false);
+  Httpreq.setRequestHeader("Content-Type", "application/json");
   Httpreq.send(JSON.stringify(body));
   console.log(Httpreq.responseText);
   return Httpreq.responseText;
@@ -130,14 +131,14 @@ function creatingLot() {
 
 function createLot() {
   // create a parking lot
-  newOwner = document.getElementById("NewOwnerBox").value;
+  owner = document.getElementById("NewOwnerBox").value;
   youtubeURL = document.getElementById("URLBox").value;
-  lots = JSON.parse(Get(jsonURL, { name: newOwner }));
+  lots = JSON.parse(Get(allLotURL, {}));
   console.log(lots);
-  newID = lots.parking_lot_id[lots.parking_lot_id.length - 1] + 1;
+  lotID = 72;//lots.parking_lot_id[lots.parking_lot_id.length - 1] + 1;
   payload = {};
-  payload.id = newID;
-  payload.name = newOwner;
+  payload.id = lotID;
+  payload.name = owner;
   payload.url = youtubeURL;
   Post(createLotURL, payload);
 
@@ -182,6 +183,7 @@ function putSpot(corners) {
   newSpot.camcoords = [];
   newSpot.type = colorToType[window["spot" + nextID].get("strokeColor")];
   spotData[numSpots] = newSpot;
+  console.log(spotData);
   nextID++;
   numSpots++;
 }
@@ -217,7 +219,7 @@ function loadAllSpots(ID, owner) {
   body = {};
   body.parking_lot_id = ID;
   body.owner = owner;
-  spotData = JSON.parse(Get(jsonURL, body))["parking_spaces"]; // TODO make sure this matches Gary's
+  spotData = JSON.parse(Get(jsonURL, body))["parking_lots"]["parking_spaces"]; // TODO make sure this matches Gary's
   console.log(spotData);
 
   for (let i = 0; i < spotData.length; i++) {
@@ -287,6 +289,7 @@ function uploadSpots() {
     spaces.push(spotData[i]);
   }
   payload.parking_spaces = spaces;
+  console.log(payload);
   try {
     Post(postURL, payload);
     document.getElementById("SaveButton").textContent = "Save Successful";
