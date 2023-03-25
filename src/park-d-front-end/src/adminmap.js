@@ -6,7 +6,7 @@ const jsonURL = backendURL + "rt_parking_info";
 const postURL = backendURL + "save_coord";
 //const postURL = backendURL + "parking_lots";
 const createLotURL = backendURL + "create_parking_lot";
-const allLotURL = backendURL + "get_all_parking_lots";;
+const allLotURL = backendURL + "get_all_parking_lots";
 
 // green:regular, blue:accessible, red:reserved
 var colorToType = { "#00FF00": 0, "#0000FF": 1, "#FF0000": 2 };
@@ -135,7 +135,7 @@ function createLot() {
   youtubeURL = document.getElementById("URLBox").value;
   lots = JSON.parse(Get(allLotURL, {}));
   console.log(lots);
-  lotID = 72;//lots.parking_lot_id[lots.parking_lot_id.length - 1] + 1;
+  lotID = 72; //lots.parking_lot_id[lots.parking_lot_id.length - 1] + 1;
   payload = {};
   payload.id = lotID;
   payload.name = owner;

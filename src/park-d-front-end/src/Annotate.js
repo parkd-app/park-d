@@ -1,11 +1,13 @@
-var coordURL = "http://localhost:8000/parking_lots";
-var w3cURL = "http://localhost:8000/w3c";
+var localURL = "http://localhost:8000/";
+var backendURL = "https://back-end-new-api.azurewebsites.net/";
+var coordURL = backendURL + "rt_parking_info";
+var w3cURL = backendURL + "w3c";
+var snapURL = backendURL + "get_parking_snapshot";
 // var coordBird = "http://localhost:8000/formatted_bird";
 // var coordSide = "http://localhost:8000/formatted_side";
 // var imgURL = "http://localhost:8000/assets/images/";
 // var sideURL = "http://localhost:8000/assets/images/lot_side.png";
 // var birdURL = "http://localhost:8000/assets/images/lot_bird.png";
-var backendURL = "https://back-end-new-api.azurewebsites.net/";
 
 var view = "bird";
 
@@ -27,6 +29,17 @@ function Get(URL, ID, owner) {
   Httpreq.send(JSON.stringify(body));
   // console.log(Httpreq.responseText);
   return Httpreq.responseText;
+}
+
+function Post(URL, content) {
+  fetch(URL, {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(content),
+  });
 }
 
 function createAnnotation(annotation, currAnnotations) {
@@ -127,8 +140,11 @@ function setView(newView) {
 }
 
 function loadBirdAnn(lotId) {
-  spotData = JSON.parse(Get(coordURL, lotId, lotOwner))["parking_spaces"];
-  // console.log(spotData);
+  body = {};
+  body.parking_lot_id = lotId;
+  body.owner = lotOwner;
+  spotData = JSON.parse(Post(coordURL, body))["parking_spaces"];
+  console.log(spotData);
   return w3cURL + "?lot=" + lotId;
 }
 
@@ -226,6 +242,16 @@ function w3cToBird(annotation) {
     annArr[i] = parseFloat(annArr[i]);
   }
   return annArr;
+}
+
+function getSnapshot() {
+  body = {};
+  body.url = "https://www.youtube.com/watch?v=c38K8IsYnB0";
+  console.log("getting snapshot");
+  console.log("body = ");
+  console.log(body);
+  var image = Post(snapURL, body);
+  return image;
 }
 
 // function Get(URL) {
