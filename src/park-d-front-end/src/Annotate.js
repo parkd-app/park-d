@@ -8,7 +8,7 @@ var w3cURL = backendURL + "w3c";
 var backURL = "https://back-end-new-api.azurewebsites.net/";
 var coordURL = backURL + "get_prev_layout";
 var w3cURL = backURL + "w3c";
-var snapURL = backURL + "get_parking_snapshot?name=Gary";
+var snapURL = backURL + "get_parking_snapshot?name=";
 var snapBackupURL = backURL + "get_parking_snapshot_backup";
 var saveURL = backURL + "save_coord";
 // var coordBird = "http://localhost:8000/formatted_bird";
@@ -24,6 +24,7 @@ var activeAnnotations = [];
 // var deletedAnnotations = [];
 var lotData = [];
 var spotData = [];
+var lotURL;
 
 var activeLot;
 var lotOwner;
@@ -63,9 +64,16 @@ function Post(URL, payload) {
   return Httpreq.responseText;
 }
 
-function loadAnnotations(image) {
-  lotID = parseInt(document.getElementById("IDBox").value);
-  owner = document.getElementById("OwnerBox").value;
+function loadAnnotations(newLot, image) {
+  if (newLot) {
+    owner = document.getElementById("NewOwnerBox").value;
+    lotURL = document.getElementById("URLBox").value;
+    lotID = 1;
+  } else {
+    lotID = parseInt(document.getElementById("IDBox").value);
+    owner = document.getElementById("OwnerBox").value;
+  }
+  parkingLot = Get();
   activeLot = lotID;
   lotOwner = owner;
   anno.setAnnotations(loadBirdAnn(activeLot));
@@ -179,6 +187,9 @@ function checkIntersection(selection) {
   }
   var intExist = false;
   selectionCoords = w3cToSide(selection);
+  if (selectionCoords.length != 4) {
+    return true;
+  }
   console.log(JSON.stringify(selectionCoords));
   console.log(activeAnnotations.length);
   for (index = 0; index < activeAnnotations.length; index++) {
@@ -233,6 +244,7 @@ function loadBirdAnn(lotId) {
   payload = {};
   payload.id = lotId;
   payload.name = lotOwner;
+  payload.url = lotURL;
   lotData = JSON.parse(Get(coordURL, payload)).result;
   console.log("lotData = ");
   console.log(lotData);
@@ -261,8 +273,8 @@ function saveFormatted(ID, owner) {
   payload.parking_lots.owner = owner;
   payload.parking_lots.parking_spaces = spotData;
   payload.parking_lots.w3c = activeAnnotations;
-  // console.log("payload");
-  // console.log(payload);
+  console.log("payload");
+  console.log(payload);
   // console.log(JSON.stringify(payload));
   Post(saveURL, payload);
 }
@@ -319,14 +331,14 @@ function getSnapshot() {
   // body.url =
   //   "https://www.youtube.com/watch?v=pOGKQmIpcm0&ab_channel=ELCOMLoznica";
   payload = {
-    name: "Gary",
+    name: "Jon",
   };
   // console.log("getting snapshot");
   // console.log("body = ");
   // console.log(body);
   // var imageURL = JSON.parse(Get(snapBackupURL, body)).url;
   console.log(payload);
-  var imageURL = JSON.parse(Get(snapURL)).url;
+  var imageURL = JSON.parse(Get(snapURL + "Jon")).url;
   return imageURL;
 }
 
