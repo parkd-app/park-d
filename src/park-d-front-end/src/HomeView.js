@@ -32,11 +32,14 @@ var clickChoice = 0;
 var routeMarkers = [];
 
 var lotData;
-var spotData;
+var spotData = [];
 var numSpots;
 
 var lotID;
 var lotOwner;
+
+var intervalID;
+var initialized = false;
 
 var selectionToggle = false;
 class ParkingSpot {
@@ -398,11 +401,22 @@ function addLotListener(name, ID) {
 
 // loading all spots from remote
 function loadAllSpots(ID, owner) {
+  if (!initialized) {
+    initialized = true;
+  } else {
+    window["lot" + lotOwner + lotID].setMap(map);
+  }
+  // remove old spaces and restore circle
+  for (let i = 0; i < spotData.length; i++) {
+    window["spot" + spotData[i].id].setMap(null);
+  }
+
   lotID = ID;
   lotOwner = owner;
   body = {};
   body.parking_lot_id = ID;
   body.owner = owner;
+
   spotData = JSON.parse(Get(jsonURL, body))["parking_lots"]["parking_spaces"];
   console.log(spotData);
 
@@ -430,7 +444,8 @@ function loadAllSpots(ID, owner) {
     window["spot" + spotData[i].id].setMap(map);
   }
   numSpots = spotData.length;
-  setInterval(updateSpots, updateInterval);
+  clearInterval(intervalID);
+  intervalID = setInterval(updateSpots, updateInterval);
 }
 
 function updateSpots() {
