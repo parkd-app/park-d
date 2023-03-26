@@ -149,6 +149,12 @@
   font-weight: Medium;
 }
 
+.flex-container {
+  display: flex;
+  padding: 10px 10px;
+  justify-content: space-between;
+}
+
 .logo_bg1 {
   width: 202px;
   height: 56px;
