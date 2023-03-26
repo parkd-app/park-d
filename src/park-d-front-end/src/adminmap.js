@@ -61,7 +61,7 @@ var spotData;
 var numSpots;
 var nextID = -1;
 
-var lotID;
+var lotID = 1;
 var owner;
 
 function initMap() {
@@ -133,16 +133,21 @@ function createLot() {
   // create a parking lot
   owner = document.getElementById("NewOwnerBox").value;
   youtubeURL = document.getElementById("URLBox").value;
-  lots = JSON.parse(Get(allLotURL, {}));
-  console.log(lots);
-  lotID = 72;//lots.parking_lot_id[lots.parking_lot_id.length - 1] + 1;
+  lots = JSON.parse(Get(allLotURL, {}))["parking_lots"];
+  console.log(lots)
+  for (let i = 0; i < lots.length; i++) {
+    if (lots[i].name == owner) {
+      if (lots[i].id >= lotID) lotID = lots[i].id + 1;
+    }
+  }
   payload = {};
   payload.id = lotID;
   payload.name = owner;
   payload.url = youtubeURL;
+  console.log(payload);
   Post(createLotURL, payload);
 
-  spotData = {};
+  spotData = [];
   nextID = 1;
   numSpots = 0;
 
@@ -268,10 +273,11 @@ function addSpaceListener(ID) {
 }
 
 function uploadSpots() {
-  let payload = {};
-  payload.id = lotID;
-  payload.owner = owner;
+  let body = {};
+  body.id = lotID;
+  body.owner = owner;
   let spaces = [];
+  console.log(spotData.length)
   for (let i = 0; i < spotData.length; i++) {
     let spotID = spotData[i].id;
     if (window["spot" + spotID] == undefined) continue;
@@ -288,7 +294,9 @@ function uploadSpots() {
 
     spaces.push(spotData[i]);
   }
-  payload.parking_spaces = spaces;
+  body.parking_spaces = spaces;
+  let payload = {};
+  payload.parking_lots = body;
   console.log(payload);
   try {
     Post(postURL, payload);

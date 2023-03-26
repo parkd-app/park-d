@@ -17,17 +17,17 @@ var spotData;
 var activeLot = 1;
 var lotOwner = "lot";
 
-function Get(URL, ID, owner) {
-  var body = {};
-  body.parking_lot_id = ID;
-  body.owner = owner;
+// function Get(URL, ID, owner) {
+//   var body = {};
+//   body.parking_lot_id = ID;
+//   body.owner = owner;
 
-  var Httpreq = new XMLHttpRequest(); // a new request
-  Httpreq.open("GET", URL, false);
-  Httpreq.send(JSON.stringify(body));
-  // console.log(Httpreq.responseText);
-  return Httpreq.responseText;
-}
+//   var Httpreq = new XMLHttpRequest(); // a new request
+//   Httpreq.open("GET", URL, false);
+//   Httpreq.send(JSON.stringify(body));
+//   // console.log(Httpreq.responseText);
+//   return Httpreq.responseText;
+// }
 
 function createAnnotation(annotation, currAnnotations) {
   // console.log(w3cToBird(annotation));
