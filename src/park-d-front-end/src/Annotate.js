@@ -15,6 +15,7 @@ var view = "bird";
 var activeAnnotations = [];
 var newAnnotations = [];
 var deletedAnnotations = [];
+var lotData = [];
 var spotData = [];
 
 var activeLot = 1;
@@ -79,6 +80,7 @@ function createAnnotation(annotation, currAnnotations) {
   newSpot.mapcoords = [];
   newSpot.type = 0;
   if (spotData == null) {
+    spotData = [];
     spotData[0] = newSpot;
     // console.log(spotData[0]);
   } else {
@@ -150,9 +152,14 @@ function loadBirdAnn(lotId) {
   body = {};
   body.parking_lot_id = lotId;
   body.owner = lotOwner;
-  spotData = JSON.parse(Get(coordURL, body));
-  var w3c = spotData.parking_lots.w3c;
-  // console.log(JSON.stringify(w3c));
+  lotData = JSON.parse(Get(coordURL, body));
+  console.log("lotData = ");
+  console.log(lotData);
+  spotData = lotData.parking_lots.parking_spaces;
+  console.log("spotData = ");
+  console.log(spotData);
+  var w3c = lotData.parking_lots.w3c;
+  console.log(JSON.stringify(w3c));
   return w3c;
 }
 
