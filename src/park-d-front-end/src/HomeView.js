@@ -60,8 +60,6 @@ var selectionToggle = false;
 var selection;
 var parkingLayoutIds = [];
 
-var authorized;
-
 const locationOptions = {
   maximumAge: Infinity,
   timeout: 5000,
@@ -108,9 +106,9 @@ function initMap() {
         return;
       }
       else {
-        if (window[parkingLayoutIds[selection]].type != 0 && !authorized) {
-          getDocEle("direction_guide").textContent = "Not authorized";
-          return;
+        if (window[parkingLayoutIds[selection]].type != 0) {
+          let authorized = confirm("Press OK to confirm that you are authorized to use this space.")
+          if (!authorized) return;
         }
         clickDestination = { coords: event.latLng };
         confirmSpotSelect();
@@ -168,6 +166,9 @@ function setTimeoutTime(response, status) {
 function initPage() {
   authorized = confirm("Confirm that you are authorized to use restricted spaces, or Cancel if you are not.")
   toggleAnalytics(true);
+  console.log("userMode is", userMode);
+  getDocEle("analytics_bg1").style.display = "none";
+
   getDocEle("nav-button").style.display = userMode ? "none" : "block";
   getDocEle("loginView").style.display = userMode ? "block" : "none";
   getDocEle("search_bar_bg").style.display = userMode ? "block" : "none";
@@ -443,7 +444,7 @@ function getDocEle(className) {
 
 function loadAllLots() {
   lotData = JSON.parse(Get(allLotURL, {}))["parking_lots"];
-  for (let i = 3; i < 5; i++) {
+  for (let i = 0; i < lotData.length; i++) {
     body = {};
     body.id = lotData[i].id;
     body.name = lotData[i].name;
@@ -460,22 +461,6 @@ function loadAllLots() {
     });
     addLotListener(lotData[i].name, lotData[i].id);
   }
-  body = {};
-  body.parking_lot_id = lotData[46].id;
-  body.owner = lotData[46].name;
-  console.log(body)
-  let spots = JSON.parse(Get(jsonURL, body))["parking_lots"]["parking_spaces"];
-  window["lot" + lotData[46].name + lotData[46].id] = new google.maps.Circle({
-    strokeColor: "#0000FF",
-    fillColor: "#0000FF",
-    map,
-    center: {
-      lat: spots[0].mapcoords[0][0],
-      lng: spots[0].mapcoords[0][1],
-    },
-    radius: 20,
-  });
-  addLotListener(lotData[46].name, lotData[46].id);
 }
 
 function addLotListener(name, ID) {
