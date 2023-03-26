@@ -84,9 +84,9 @@ function resetData() {
   corners = [];
   pointsClicked = 0;
   document.getElementById("PickLabel").textContent = "Admin View";
-  document.getElementById("AddSpotButton").textContent = "Add Spot";
+  //document.getElementById("AddSpotButton").textContent = "Add Spot";
   document.getElementById("ChangeSpotButton").textContent = "Change Spot Type";
-  document.getElementById("RemoveSpotButton").textContent = "Remove Spot";
+  //document.getElementById("RemoveSpotButton").textContent = "Remove Spot";
 }
 
 function loadLot() {
@@ -129,6 +129,7 @@ function createLot() {
   payload.name = owner;
   payload.url = youtubeURL;
   Post(createLotURL, payload);
+  window.alert("New parking lot created with ID " + lotID + ". Note this number for future access.");
 
   spaceData = [];
   uploadSpots();
@@ -227,7 +228,7 @@ function loadAllSpots(ID, owner) {
       strokeColor: typeToColor[type],
       strokeOpacity: 0.8,
       strokeWeight: 2,
-      fillColor: open ? "#00FF00" : "#FF0000",
+      fillColor: newSpotColor,
       fillOpacity: 0.35,
       editable: true,
       draggable: true,
