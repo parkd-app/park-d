@@ -10,6 +10,8 @@ const postURL = backendURL + "save_coord";
 const createLotURL = backendURL + "create_parking_lot";
 const allLotURL = backendURL + "get_all_parking_lots";
 
+const prevLayoutURL = backendURL + "get_prev_layout"
+
 const updateInterval = 5000;
 
 const colorToType = { "#00FF00": 0, "#0000FF": 1, "#FF0000": 2 };

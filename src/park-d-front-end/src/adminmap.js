@@ -209,7 +209,7 @@ function loadAllSpots(ID, owner) {
   body = {};
   body.parking_lot_id = ID;
   body.owner = owner;
-  spaceData = JSON.parse(Get(jsonURL, body))["parking_lots"]["parking_spaces"]; // TODO make sure this matches Gary's
+  spaceData = JSON.parse(Get(prevLayoutURL, body))["parking_lots"]["parking_spaces"]; // TODO make sure this matches Gary's
   console.log(spaceData);
 
   for (let i = 0; i < spaceData.length; i++) {

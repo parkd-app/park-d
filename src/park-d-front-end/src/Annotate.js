@@ -1,7 +1,7 @@
 // constants moved to constants.js
 
 var localURL = "http://localhost:8000/";
-var coordURL = backendURL + "rt_parking_info";
+// var coordURL = backendURL + "rt_parking_info";
 var w3cURL = backendURL + "w3c";
 // var snapURL = backendURL + "get_parking_snapshot";
 // var localURL = "http://localhost:8000/";
@@ -28,12 +28,12 @@ var spotData = [];
 var activeLot;
 var lotOwner;
 
-function Get(URL, body) {
+function Get(URL, payload) {
   // console.log(body);
   var Httpreq = new XMLHttpRequest(); // a new request
   Httpreq.open("POST", URL, false);
   Httpreq.setRequestHeader("Content-Type", "application/json");
-  Httpreq.send(JSON.stringify(body));
+  Httpreq.send(JSON.stringify(payload));
   console.log(Httpreq.responseText);
   return Httpreq.responseText;
 }
@@ -53,12 +53,12 @@ function GetParam(URL, param) {
     });
 }
 
-function Post(URL, body) {
+function Post(URL, payload) {
   // console.log(body);
   var Httpreq = new XMLHttpRequest(); // a new request
   Httpreq.open("POST", URL, false);
   Httpreq.setRequestHeader("Content-Type", "application/json");
-  Httpreq.send(JSON.stringify(body));
+  Httpreq.send(JSON.stringify(payload));
   // console.log(Httpreq.responseText);
   return Httpreq.responseText;
 }
@@ -96,10 +96,12 @@ function createAnnotation(annotation, currAnnotations) {
     // console.log("ZERO");
   }
   // console.log("new id = " + newId);
+  console.log(annotation);
   annotation.id = newId;
   annotation.lot = activeLot;
   annotation.owner = lotOwner;
   annotation.spotType = 0;
+  annotation.body.purpose = "commenting";
   // newAnnotations.push(annotation);
   activeAnnotations.push(annotation);
   // console.log("activeAnnotations");
@@ -142,7 +144,17 @@ function updateAnnotation(annotation, previous, currAnnotations) {
   // console.log("pushed to deletedAnnotations");
   // newAnnotations.push(annotation);
   // console.log("pushed to newAnnotations");
-  activeAnnotations = currAnnotations;
+  // console.log(activeAnnotations);
+  // activeAnnotations = currAnnotations;
+  // console.log(w3cToSide(annotation));
+  // console.log(w3cToSide(previous));
+  for (i = 0; i < activeAnnotations.length; i++) {
+    if (activeAnnotations[i].id == previous.id) {
+      activeAnnotations[i] = annotation;
+    }
+  }
+  // console.log(activeAnnotations);
+  anno.setAnnotations(activeAnnotations);
   updateCamcoords(annotation, previous);
 }
 
@@ -218,10 +230,10 @@ function setView(newView) {
 }
 
 function loadBirdAnn(lotId) {
-  body = {};
-  body.id = lotId;
-  body.name = lotOwner;
-  lotData = JSON.parse(Get(coordURL, body)).result;
+  payload = {};
+  payload.id = lotId;
+  payload.name = lotOwner;
+  lotData = JSON.parse(Get(coordURL, payload)).result;
   console.log("lotData = ");
   console.log(lotData);
   spotData = lotData.parking_lots.parking_spaces;
@@ -305,14 +317,14 @@ function getSnapshot() {
   // // body.url = "https://www.youtube.com/watch?v=c38K8IsYnB0";
   // body.url =
   //   "https://www.youtube.com/watch?v=pOGKQmIpcm0&ab_channel=ELCOMLoznica";
-  body = {
+  payload = {
     name: "Gary",
   };
   // console.log("getting snapshot");
   // console.log("body = ");
   // console.log(body);
   // var imageURL = JSON.parse(Get(snapBackupURL, body)).url;
-  console.log(body);
+  console.log(payload);
   var imageURL = JSON.parse(Get(snapURL)).url;
   return imageURL;
 }
