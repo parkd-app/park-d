@@ -5,10 +5,15 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Park'd Labelling</title>
-    <link rel="annotorious.min.css" href="styles.css" />
-    <link rel="stylesheet" href="annotorious.min.css">
+    <!-- <link rel="annotorious.min.css" href="styles.css" /> -->
+    <!-- <link rel="stylesheet" href="annotorious.min.css"> -->
+    <!-- CSS stylesheet -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@recogito/annotorious@2.7.10/dist/annotorious.min.css">
+
+    <!-- JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@recogito/annotorious@2.7.10/dist/annotorious.min.js"></script>
     <script src="./constants.js"></script> <!-- Constants must be loaded first -->
-    <script src="annotorious.min.js"></script>
+    <!-- <script src="annotorious.min.js"></script> -->
     <script src="./Annotate.js"></script>
     <script src="./adminmap.js"></script>
     <script src="./intersect.js"></script>
@@ -131,7 +136,8 @@
                 locale: 'auto',
                 drawOnSingleClick: false,
                 crosshair: true,
-                allowEmpty: true,
+                // allowEmpty: false,
+                // disableEditor: false,
                 widgets: [
                     { widget: 'COMMENT' },
                     { widget: 'TAG', vocabulary: ['Default', 'Reserved', 'Accessible'] }
@@ -170,8 +176,8 @@
                 createAnnotation(annotation, anno.getAnnotations());
                 let paths = [
                     { lat: map.getCenter().lat(), lng: map.getCenter().lng() },
-                    { lat: map.getCenter().lat(), lng: map.getCenter().lng() + 0.00015},
-                    { lat: map.getCenter().lat() + 0.0001, lng: map.getCenter().lng() + 0.00015},
+                    { lat: map.getCenter().lat(), lng: map.getCenter().lng() + 0.00015 },
+                    { lat: map.getCenter().lat() + 0.0001, lng: map.getCenter().lng() + 0.00015 },
                     { lat: map.getCenter().lat() + 0.0001, lng: map.getCenter().lng() },
                 ];
                 putSpot(paths, w3cCoords(annotation));
@@ -187,7 +193,7 @@
 
             anno.on('updateAnnotation', function (annotation, previous) {
                 console.log('updated', previous, 'with', annotation);
-                updateAnnotation(annotation, previous, anno.getAnnotations());
+                updateAnnotation(annotation, previous/*, anno.getAnnotations()*/);
             });
 
             anno.on('clickAnnotation', function (annotation, shape) {
@@ -202,7 +208,7 @@
 
             anno.on('mouseEnterAnnotation', function (annotation) {
                 try {
-                    window["spot" + annotation.id].setOptions({fillColor:"#FFFFFF"});
+                    window["spot" + annotation.id].setOptions({ fillColor: "#FFFFFF" });
                 } catch (e) {
                 }
                 // hoverAnn = true;
@@ -211,7 +217,7 @@
 
             anno.on('mouseLeaveAnnotation', function (annotation) {
                 try {
-                    window["spot" + annotation.id].setOptions({fillColor:newSpotColor});
+                    window["spot" + annotation.id].setOptions({ fillColor: newSpotColor });
                 } catch (e) {
                 }
                 // hoverAnn = false;
