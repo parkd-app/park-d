@@ -59,6 +59,8 @@ var selectionToggle = false;
 var selection;
 var parkingLayoutIds = [];
 
+var authorized;
+
 const locationOptions = {
   maximumAge: Infinity,
   timeout: 5000,
@@ -95,7 +97,6 @@ function initMap() {
   google.maps.event.addListener(map, "click", function (event) {
     if (clickChoice == 1) {
       selection = verifySpotSelect(event.latLng);
-      console.log(window[parkingLayoutIds[selection]].status)
       if (selection == -1) {
         getDocEle("direction_guide").textContent = "Invalid Spot";
         return;
@@ -104,6 +105,10 @@ function initMap() {
         return;
       } 
       else {
+        if (window[parkingLayoutIds[selection]].type != 0 && !authorized) {
+          getDocEle("direction_guide").textContent = "Not authorized";
+          return;
+        }
         clickDestination = { coords: event.latLng };
         confirmSpotSelect();
       }
@@ -158,6 +163,7 @@ function setTimeoutTime(response, status) {
 }
 
 function initPage() {
+  authorized = confirm("Confirm that you are authorized to use restricted spaces, or Cancel if you are not.")
   getDocEle("analytics_bg1").style.display = "none";
 
   getDocEle("logout").style.display = userMode ? "none" : "block";
@@ -323,6 +329,8 @@ function currentPositionSuccess(position) {
     routeMarkers.push(
       placeMarker(clickOrigin.coords, "./Images/CarMarker.png")
     );
+    defaultOptions.center = clickOrigin.coords;
+    recenter();
   } else {
     routeMarkers[0].setPosition(clickOrigin.coords);
   }
@@ -440,7 +448,7 @@ function loadAllLots() {
         lat: spots[0].mapcoords[0][0],
         lng: spots[0].mapcoords[0][1],
       },
-      radius: 10,
+      radius: 20,
     });
     addLotListener(lotData[i].name, lotData[i].id);
   }
@@ -457,7 +465,7 @@ function loadAllLots() {
       lat: spots[0].mapcoords[0][0],
       lng: spots[0].mapcoords[0][1],
     },
-    radius: 10,
+    radius: 20,
   });
   addLotListener(lotData[46].name, lotData[46].id);
 }
@@ -520,6 +528,7 @@ function loadAllSpots(ID, owner) {
       clickable: false,
     });
     window["spot" + spotData[i].id].status = open;
+    window["spot" + spotData[i].id].type = type;
     window["spot" + spotData[i].id].setMap(map);
     parkingLayoutIds.push("spot" + spotData[i].id);
   }
