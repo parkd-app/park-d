@@ -11,6 +11,32 @@
   overflow: hidden;
   transform: scale(0.75);
 } */
+
+#map {
+  height: 500px;
+  width: 100%;
+  position: relative;
+  /* background-position: right; */
+  /* left: 50%; */
+  /* top: 150px; */
+}
+
+#button-panel {
+  /* height: 500px; */
+  /* width: 50%; */
+  position: relative;
+  /* background-position: right; */
+  /* left: 50%; */
+  /* top: 150px; */
+}
+
+.row {
+  padding: 0px;
+}
+
+.panel {
+  padding: 10px;
+}
 .background {
   width: 100%;
   height: 100%;
@@ -22,16 +48,12 @@
   overflow: hidden;
 }
 .annotate-window {
-  width: 40%;
-  height: 88.5%;
   background: transparent;
   background-repeat: no-repeat;
   background-position: left;
   background-size: cover;
   opacity: 1;
   position: relative;
-  top: 100px;
-  left: 2%;
   overflow: hidden;
 }
 
@@ -41,17 +63,22 @@
 .header_area .main-menu .navbar-custom {
   background-color: #181818;
   box-shadow: 0px 3px 8px rgba(0,0,0,25%);
+  border-radius: 0;
 }
 
 .header_area .main-menu .navbar .navbar-brand {
-  transform: translateX(-50%);
+  transform: translateX(-50%) translateY(10%);
+  padding: 0px;
   left: 50%;
+  /* padding: 10px; */
+  margin: 0;
   position: absolute;
 }
 
 .header_area .main-menu .navbar .navbar-brand > img {
   padding: 0px;
-  height: 2.2rem;
+  margin: 0;
+  height: 30px;
   width: auto;
   display: inline-block;
 }
@@ -84,6 +111,10 @@
 .header_area .main-menu .navbar .navbar-icon:hover{
   background-color: rgba(255,255,255, 0.3);
   display: inline-block;
+}
+
+.header_area .main-menu .navbar {
+  margin: 0;
 }
 
 .sidebar {
@@ -155,6 +186,10 @@
   justify-content: space-between;
 }
 
+.container {
+  /* margin: 10px; */
+  width: 100%;
+}
 .logo_bg1 {
   width: 202px;
   height: 56px;

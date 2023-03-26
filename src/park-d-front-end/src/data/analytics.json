@@ -1,0 +1,204 @@
+
+{
+    "data": {
+        "id": 1,
+        "location": { 
+            "name": "Pierre Elliott Trudeau High School", 
+            "address": "90 Bur Oak Ave, Markham, ON L6C 2E6" 
+        },
+        "occupancy": [
+            { "hour": "12am", 
+              "occupancy": 
+                {
+                    "std": [true, false, false, false, false, false, false, false, false, false],
+                    "acc": [false, false, false, false],
+                    "res": [false, false, false, false, false, false]
+                }
+            },
+            { "hour": "1am", 
+              "occupancy": 
+                {
+                    "std": [true, false, false, false, false, false, false, false, false, false],
+                    "acc": [true, false, false, false],
+                    "res": [true, false, false, false, false, false]
+                } 
+            },
+            { "hour": "2am", 
+              "occupancy": 
+                {
+                    "std": [true, false, false, false, false, false, false, false, false, false],
+                    "acc": [true, false, false, false],
+                    "res": [true, false, false, false, false, false]
+                }
+            },
+            { "hour": "3am", 
+              "occupancy": 
+                {
+                    "std": [true, false, false, false, false, false, false, false, false, false],
+                    "acc": [true, false, false, false],
+                    "res": [true, false, false, false, false, false]
+                }
+            },
+            { "hour": "4am", 
+              "occupancy": 
+                {
+                    "std": [true, false, false, false, false, false, false, false, false, false],
+                    "acc": [true, false, false, false],
+                    "res": [true, false, false, false, false, false]
+                }
+            },
+            { "hour": "5am", 
+              "occupancy": 
+                {
+                    "std": [true, false, false, false, false, false, false, false, false, true],
+                    "acc": [true, false, false, false],
+                    "res": [true, false, false, false, false, false]
+                }
+            },
+            { "hour": "6am", 
+              "occupancy": 
+                {
+                    "std": [true, false, false, false, false, false, false, false, false, true],
+                    "acc": [true, false, false, false],
+                    "res": [true, false, false, false, false, false]
+                }
+            },
+            { "hour": "7am", 
+              "occupancy": 
+                {
+                    "std": [true, false, false, false, false, false, false, false, true, true],
+                    "acc": [true, false, false, false],
+                    "res": [true, false, false, false, false, false]
+                }
+            },
+            { "hour": "8am", 
+              "occupancy": 
+                {
+                    "std": [true, false, false, false, false, false, false, false, false, false],
+                    "acc": [true, false, false, false],
+                    "res": [true, false, false, false, false, false]
+                }
+            },
+            { "hour": "9am", 
+              "occupancy": 
+                {
+                    "std": [true, false, true, false, false, false, false, false, true, true],
+                    "acc": [true, false, false, false],
+                    "res": [true, false, false, false, false, false]
+                }
+            },
+            { "hour": "10am", 
+              "occupancy": 
+                {
+                    "std": [true, false, true, true, false, false, false, false, true, true],
+                    "acc": [true, false, false, false],
+                    "res": [true, false, false, false, false, false]
+                }
+            },
+            { "hour": "11am", 
+              "occupancy": 
+                {
+                    "std": [true, true, true, true, true, true, false, false, true, true],
+                    "acc": [true, false, false, false],
+                    "res": [true, false, false, false, false, false]
+                }
+            },
+            { "hour": "12pm", 
+            "occupancy": 
+              {
+                  "std": [true, true, true, true, true, true, true, true, true, true],
+                  "acc": [true, false, false, false],
+                  "res": [true, false, false, false, false, false]
+              }
+            },
+            { "hour": "1pm", 
+            "occupancy": 
+                {
+                    "std": [true, true, true, true, true, true, false, true, true, true],
+                    "acc": [true, false, false, false],
+                    "res": [true, false, false, false, false, false]
+                } 
+            },
+            { "hour": "2pm", 
+            "occupancy": 
+                {
+                    "std": [true, true, true, true, true, true, false, false, true, true],
+                    "acc": [true, false, false, false],
+                    "res": [true, false, false, false, false, false]
+                }
+            },
+            { "hour": "3pm", 
+            "occupancy": 
+                {
+                    "std": [true, false, true, true, false, false, false, false, true, true],
+                    "acc": [true, false, false, false],
+                    "res": [true, false, false, false, false, false]
+                }
+            },
+            { "hour": "4pm", 
+            "occupancy": 
+                {
+                    "std": [true, true, true, true, true, false, false, false, true, true],
+                    "acc": [true, false, false, false],
+                    "res": [true, false, false, false, false, false]
+                }
+            },
+            { "hour": "5pm", 
+            "occupancy": 
+                {
+                    "std": [true, false, true, true, false, false, false, false, true, true],
+                    "acc": [true, false, false, false],
+                    "res": [true, false, false, false, false, false]
+                }
+            },
+            { "hour": "6pm", 
+            "occupancy": 
+                {
+                    "std": [true, false, false, false, false, false, false, false, false, false],
+                    "acc": [true, false, false, false],
+                    "res": [true, false, false, false, false, false]
+                }
+            },
+            { "hour": "7pm", 
+            "occupancy": 
+                {
+                    "std": [true, false, false, false, false, false, false, false, false, false],
+                    "acc": [true, false, false, false],
+                    "res": [true, false, false, false, false, false]
+                }
+            },
+            { "hour": "8pm", 
+            "occupancy": 
+                {
+                    "std": [true, false, false, false, false, false, false, false, false, false],
+                    "acc": [true, false, false, false],
+                    "res": [true, false, false, false, false, false]
+                }
+            },
+            { "hour": "9pm", 
+            "occupancy": 
+                {
+                    "std": [true, false, false, false, false, false, false, false, true, true],
+                    "acc": [true, false, false, false],
+                    "res": [true, false, false, false, false, false]
+                }
+            },
+            { "hour": "10pm", 
+            "occupancy": 
+                {
+                    "std": [true, false, false, false, false, false, false, false, true, true],
+                    "acc": [true, false, false, false],
+                    "res": [true, false, false, false, false, false]
+                }
+            },
+            { "hour": "11pm", 
+            "occupancy": 
+                {
+                    "std": [true, false, false, false, false, false, false, false, false, false],
+                    "acc": [true, false, false, false],
+                    "res": [true, false, false, false, false, false]
+                }
+            }
+        ]
+    }
+}

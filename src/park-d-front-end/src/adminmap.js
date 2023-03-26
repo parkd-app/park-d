@@ -48,6 +48,7 @@ var nextID = -1;
 
 var lotID = 1;
 var owner;
+var youtubeURL;
 
 function initMap() {
   map = new google.maps.Map(document.getElementById("map"), defaultOptions);
@@ -129,10 +130,14 @@ function createLot() {
   payload.name = owner;
   payload.url = youtubeURL;
   Post(createLotURL, payload);
-  window.alert("New parking lot created with ID " + lotID + ". Note this number for future access.");
+  window.alert(
+    "New parking lot created with ID " +
+      lotID +
+      ". Note this number for future access."
+  );
 
   spaceData = [];
-  uploadSpots();
+  //uploadSpots();
   nextID = 0;
   numSpots = 0;
 
@@ -209,7 +214,9 @@ function loadAllSpots(ID, owner) {
   body = {};
   body.id = ID;
   body.name = owner;
-  spaceData = JSON.parse(Get(prevLayoutURL, body))["result"]["parking_lots"]["parking_spaces"]; // TODO make sure this matches Gary's
+  spaceData = JSON.parse(Get(prevLayoutURL, body))["result"]["parking_lots"][
+    "parking_spaces"
+  ]; // TODO make sure this matches Gary's
   console.log(spaceData);
 
   for (let i = 0; i < spaceData.length; i++) {
@@ -261,6 +268,7 @@ function uploadSpots() {
   let body = {};
   body.id = lotID;
   body.owner = owner;
+  body.url = youtubeURL;
   let spaces = [];
   for (let i = 0; i < spaceData.length; i++) {
     let spotID = spaceData[i].id;
