@@ -163,10 +163,16 @@ function initPage() {
   getDocEle("search_bar_bg").style.display = userMode ? "block" : "none";
   getDocEle("annotate").style.display = userMode ? "none" : "block";
   getDocEle("adminMap").style.display = userMode ? "none" : "block";
-  document.getElementById("SetupBirdButton").style.display = userMode ? "none" : "block";
-  document.getElementById("SetupSideButton").style.display = userMode ? "none" : "block";
+  document.getElementById("SetupBirdButton").style.display = userMode
+    ? "none"
+    : "block";
+  document.getElementById("SetupSideButton").style.display = userMode
+    ? "none"
+    : "block";
 
-  getDocEle("header-center").style.margin = userMode ? "0 0 0 40%" : "0 0 0 42.5%";
+  getDocEle("header-center").style.margin = userMode
+    ? "0 0 0 40%"
+    : "0 0 0 42.5%";
 }
 
 function pickDone() {
@@ -392,12 +398,12 @@ function updatePosition() {
 function toggleSelection() {
   selectionToggle = !selectionToggle;
   let selectionTogglePos = window.innerWidth <= 750 ? "90vw" : "30vw";
-  getDocEle("chevron_bg").style.right = selectionToggle ? selectionTogglePos : "0px";
-  
+  getDocEle("chevron_bg").style.right = selectionToggle
+    ? selectionTogglePos
+    : "0px";
+
   getDocEle("analytics_bg1").style.right = 0;
-  getDocEle("analytics_bg1").style.display = selectionToggle
-    ? "block"
-    : "none";
+  getDocEle("analytics_bg1").style.display = selectionToggle ? "block" : "none";
   getDocEle("chevron").style.transform = selectionToggle
     ? "scaleX(1)"
     : "scaleX(-1)";
@@ -405,7 +411,9 @@ function toggleSelection() {
 
 function updateChevronPos() {
   let selectionTogglePos = window.innerWidth <= 750 ? "90vw" : "30vw";
-  getDocEle("chevron_bg").style.right = selectionToggle ? selectionTogglePos : "0px";
+  getDocEle("chevron_bg").style.right = selectionToggle
+    ? selectionTogglePos
+    : "0px";
 }
 
 window.onresize = updateChevronPos;
