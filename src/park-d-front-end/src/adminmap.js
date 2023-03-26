@@ -214,6 +214,9 @@ function loadAllSpots(ID, owner) {
   body = {};
   body.id = ID;
   body.name = owner;
+  youtubeURL = JSON.parse(Get(prevLayoutURL, body))["result"]["parking_lots"][
+    "url"
+  ];
   spaceData = JSON.parse(Get(prevLayoutURL, body))["result"]["parking_lots"][
     "parking_spaces"
   ]; // TODO make sure this matches Gary's
