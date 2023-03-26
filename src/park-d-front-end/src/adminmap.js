@@ -133,6 +133,7 @@ function createLot() {
   Post(createLotURL, payload);
 
   spotData = [];
+  uploadSpots();
   nextID = 1;
   numSpots = 0;
 

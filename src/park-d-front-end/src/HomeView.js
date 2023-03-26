@@ -2,7 +2,8 @@
 
 function Get(URL, body) {
   var Httpreq = new XMLHttpRequest(); // a new request
-  Httpreq.open("GET", URL, false);
+  Httpreq.open("POST", URL, false);
+  Httpreq.setRequestHeader("Content-Type", "application/json");
   Httpreq.send(JSON.stringify(body));
   return Httpreq.responseText;
 }
@@ -31,11 +32,14 @@ var clickChoice = 0;
 var routeMarkers = [];
 
 var lotData;
-var spotData;
+var spotData = [];
 var numSpots;
 
 var lotID;
 var lotOwner;
+
+var intervalID;
+var initialized = false;
 
 var selectionToggle = false;
 class ParkingSpot {
@@ -360,15 +364,12 @@ function getDocEle(className) {
 }
 
 function loadAllLots() {
-  lotData = JSON.parse(Get(allLotURL, {}));
-  console.log(lotData);
-  for (let i = 0; i < 1; i++) {
-    // TODO change < 1 to lotData.length
+  lotData = JSON.parse(Get(allLotURL, {}))["parking_lots"];
+  for (let i = 3; i < 5; i++) {
     body = {};
     body.parking_lot_id = lotData[i].id;
     body.owner = lotData[i].name;
-    let spots = JSON.parse(Get(jsonURL, body))["parking_spaces"]; // TODO make sure this matches Gary's
-    console.log(spots);
+    let spots = JSON.parse(Get(jsonURL, body))["parking_lots"]["parking_spaces"];
     window["lot" + lotData[i].name + lotData[i].id] = new google.maps.Circle({
       strokeColor: "#0000FF",
       fillColor: "#0000FF",
@@ -400,12 +401,23 @@ function addLotListener(name, ID) {
 
 // loading all spots from remote
 function loadAllSpots(ID, owner) {
+  if (!initialized) {
+    initialized = true;
+  } else {
+    window["lot" + lotOwner + lotID].setMap(map);
+  }
+  // remove old spaces and restore circle
+  for (let i = 0; i < spotData.length; i++) {
+    window["spot" + spotData[i].id].setMap(null);
+  }
+
   lotID = ID;
   lotOwner = owner;
   body = {};
   body.parking_lot_id = ID;
   body.owner = owner;
-  spotData = JSON.parse(Get(jsonURL, body))["parking_spaces"]; // TODO make sure this matches Gary's
+
+  spotData = JSON.parse(Get(jsonURL, body))["parking_lots"]["parking_spaces"];
   console.log(spotData);
 
   for (let i = 0; i < spotData.length; i++) {
@@ -432,14 +444,16 @@ function loadAllSpots(ID, owner) {
     window["spot" + spotData[i].id].setMap(map);
   }
   numSpots = spotData.length;
-  setInterval(updateSpots, updateInterval);
+  clearInterval(intervalID);
+  intervalID = setInterval(updateSpots, updateInterval);
 }
 
 function updateSpots() {
   body = {};
   body.parking_lot_id = lotID;
   body.owner = lotOwner;
-  var spots = JSON.parse(Get(jsonURL, body))["parking_spaces"];
+  console.log(body);
+  var spots = JSON.parse(Get(jsonURL, body))["parking_lots"]["parking_spaces"];
   for (let i = 0; i < spots.length; i++) {
     let spot = spots[i];
     if (!(spot.status === window["spot" + spot.id].status)) {
