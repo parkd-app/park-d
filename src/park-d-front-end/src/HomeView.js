@@ -382,6 +382,22 @@ function loadAllLots() {
     });
     addLotListener(lotData[i].name, lotData[i].id);
   }
+  body = {};
+  body.parking_lot_id = lotData[46].id;
+  body.owner = lotData[46].name;
+  console.log(body)
+  let spots = JSON.parse(Get(jsonURL, body))["parking_lots"]["parking_spaces"];
+  window["lot" + lotData[46].name + lotData[46].id] = new google.maps.Circle({
+    strokeColor: "#0000FF",
+    fillColor: "#0000FF",
+    map,
+    center: {
+      lat: spots[0].mapcoords[0][0],
+      lng: spots[0].mapcoords[0][1],
+    },
+    radius: 10,
+  });
+  addLotListener(lotData[46].name, lotData[46].id);
 }
 
 function addLotListener(name, ID) {
