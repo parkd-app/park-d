@@ -9,7 +9,7 @@ export const btnLogout = document.querySelector("#btnLogout");
 const monitorAuthState = async () => {
   onAuthStateChanged(auth, (user) => {
     if (!user) {
-      location.replace("../components/login.html");
+      location.replace("../index.html");
     }
   });
 };
