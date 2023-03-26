@@ -8,11 +8,15 @@
     <link rel="annotorious.min.css" href="styles.css" />
     <link rel="stylesheet" href="annotorious.min.css">
     <script src="./constants.js"></script> <!-- Constants must be loaded first -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script src="annotorious.min.js"></script>
     <script src="./Annotate.js"></script>
+    <script src="./Navbar.js"></script>
     <script src="./adminmap.js"></script>
     <script src="./intersect.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="homeView.css" />
     <link rel="stylesheet" href="Annotate.css" />
     <style>
@@ -39,23 +43,46 @@
 
 <body>
     <div class="background">
-        <div class="header">
-            <div class="logo_bg1">
-                <div class="logo_bg2">
-                    <span class="logo_text"></span>
-                    <div class="logo"></div>
-                </div>
-                <div class="old_logo"></div>
-            </div>
-            <a href="HomeView.html">
-                <div class="home_bg1">
-                    <div class="home_bg2">
-                        <div class="home_border"></div>
-                        <span class="home_text">Home</span>
+        <header class="header_area" id="header">
+            <div class="main-menu">
+                <nav class="navbar navbar-expand-lg navbar-custom">
+                    <div class="col-md-1 text-left">
+                        <button class="navbar-icon" onclick="toggleSidebar()">
+                            <i class="fa fa-bars"></i>
+                        </button>
                     </div>
-                </div>
-            </a>
+                        
+                    <a href="#site-banner" class="navbar-brand"><img src="./Images/park-d-logo-large.svg" alt="" /></a>
+                    <div class="col-md-11 text-right">
+                        <button class="nav-button">Logout</button> 
+                    </div>                     
+                </nav>
+            </div>
+        </header>
+        
+        <div class="sidebar" id="sidebar">
+            <div class="side-nav-content">
+                <ul class="nav-list">
+                    <li class="nav-list-item">
+                        <i class="fa fa-home" aria-hidden="true"></i>
+                        <span><a href="#">Home</a></span>
+                    </li>
+                    <li class="nav-list-item">
+                        <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                        <span><a href="#">Edit Parking Lot</a></span>
+                    </li>
+                    <li class="nav-list-item">
+                        <i class="fa fa-question-circle-o" aria-hidden="true"></i>
+                        <span><a href="#">About</a></span>
+                    </li>
+                    <li class="nav-list-item">
+                        <i class="fa fa-phone" aria-hidden="true"></i>
+                        <span><a href="#">Contact</a></span>
+                    </li>
+                </ul>
+            </div>
         </div>
+
         <div class="annotate-window">
             <p>
                 <button class="button" id="current-tool">Polygon</button>
@@ -72,9 +99,10 @@
             </div>
         </div>
     </div>
+
     <div id="button-panel">
-        <div id="PickLabel">Admin View</div>
-        <button type="button" id="RecenterButton" onclick="recenter()">
+        <!-- <div id="PickLabel">Admin View</div> -->
+        <button class="button" type="button" id="RecenterButton" onclick="recenter()">
             Recenter
         </button>
         <div id="LotButtons">
@@ -82,11 +110,11 @@
             <input type="text" id="IDBox" name="IDBox"><br>
             <label id="OwnerLabel" for="OwnerBox">Owner:</label>
             <input type="text" id="OwnerBox" name="OwnerBox"><br>
-            <button type="button" id="LoadLotButton"
+            <button class="button" type="button" id="LoadLotButton"
                 onclick="loadLot(); loadAnnotations(document.getElementById('test_lot'))">
                 Load Lot
             </button>
-            <button type="button" id="NewLotButton" onclick="creatingLot()">
+            <button class="button" type="button" id="NewLotButton" onclick="creatingLot()">
                 Create New Lot
             </button>
         </div>
