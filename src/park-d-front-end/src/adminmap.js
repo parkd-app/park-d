@@ -132,7 +132,7 @@ function createLot() {
   window.alert("New parking lot created with ID " + lotID + ". Note this number for future access.");
 
   spaceData = [];
-  uploadSpots();
+  //uploadSpots();
   nextID = 0;
   numSpots = 0;
 
