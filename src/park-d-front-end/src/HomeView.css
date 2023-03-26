@@ -30,6 +30,7 @@ body {
 
 .header-center {
   width: 100%;
+  margin-left: 40%;
 }
 
 .header a.logo {
@@ -41,7 +42,7 @@ body {
 .header a.viewButton {
   width: 150px;
   height: 50px;
-  margin-top: 10px;
+  margin-top: 5px;
   margin-right: 5px;
   background: rgba(249, 255, 0, 1);
   border: 3px solid rgba(249, 255, 0, 1);
@@ -49,6 +50,8 @@ body {
   border-top-right-radius: 10px;
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
+  display: none;
+  cursor: pointer;
 }
 
 .admin_bg1 {
@@ -68,7 +71,7 @@ body {
 .header a.logout {
   width: 105px;
   height: 50px;
-  margin-top: 10px;
+  margin-top: 5px;
   margin-right: 5px;
   background: rgba(249, 255, 0, 1);
   border: 3px solid rgba(249, 255, 0, 1);
@@ -76,6 +79,8 @@ body {
   border-top-right-radius: 10px;
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
+  display: none;
+  cursor: pointer;
 }
 
 .header-right {
@@ -85,7 +90,7 @@ body {
 .header a.annotate {
   width: 105px;
   height: 50px;
-  margin-top: 10px;
+  margin-top: 5px;
   margin-right: 5px;
   background: rgba(249, 255, 0, 1);
   border: 3px solid rgba(249, 255, 0, 1);
@@ -93,12 +98,14 @@ body {
   border-top-right-radius: 10px;
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
+  display: none;
+  cursor: pointer;
 }
 
 .header a.adminMap {
   width: 100px;
   height: 50px;
-  margin-top: 10px;
+  margin-top: 5px;
   margin-right: 5px;
   background: rgba(249, 255, 0, 1);
   border: 3px solid rgba(249, 255, 0, 1);
@@ -106,6 +113,8 @@ body {
   border-top-right-radius: 10px;
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
+  display: none;
+  cursor: pointer;
 }
 
 .setup-window {
@@ -154,6 +163,7 @@ body {
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
   box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25);
+  display: none;
 }
 
 .reset_button_bg {
