@@ -269,7 +269,7 @@ body {
 
 .analytics_card_bg {
   width: 32%;
-  height: 23vh;
+  height: 100%;
   border-radius: 10px;
   text-align: center;
 }
@@ -306,7 +306,6 @@ body {
 
   .analytics_card_bg {
     width: 100%;
-    height: 11vh;
     margin-bottom: 10px;
   }
 
