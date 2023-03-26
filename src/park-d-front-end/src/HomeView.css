@@ -242,6 +242,7 @@ body {
   box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
   position: absolute;
   top: 62px;
+  overflow: auto;
 }
 
 .location_name {
@@ -285,7 +286,7 @@ body {
   width: 100%;
   color: rgb(255, 255, 255);
   font-family: Montserrat;
-  font-size: 90px;
+  font-size: 80px;
 }
 
 .analytics_card_total {
@@ -296,6 +297,10 @@ body {
 }
 
 @media screen and (max-width: 1450px) {
+  .analytics_bg1 {
+    height: 90vh;
+  }
+
   .analytics_cards_bg {
     width: 90%;
     display: block;

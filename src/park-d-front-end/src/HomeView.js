@@ -186,9 +186,6 @@ function placeMarker(position, icon) {
 function resetData() {
   resetRoute(0);
   recenter();
-  if (selectionToggle) {
-    toggleSelection();
-  }
 }
 
 function updateRoute() {
@@ -395,13 +392,8 @@ function updatePosition() {
 function toggleSelection() {
   selectionToggle = !selectionToggle;
   let selectionTogglePos = window.innerWidth <= 750 ? "90vw" : "30vw";
-  if (userMode) {
-    getDocEle("chevron_bg").style.right = selectionToggle ? "30vw" : "0px";
-  } else {
-    getDocEle("chevron_bg").style.right = selectionToggle
-      ? selectionTogglePos
-      : "0px";
-  }
+  getDocEle("chevron_bg").style.right = selectionToggle ? selectionTogglePos : "0px";
+  
   getDocEle("analytics_bg1").style.right = 0;
   getDocEle("analytics_bg1").style.display = selectionToggle
     ? "block"
@@ -413,13 +405,7 @@ function toggleSelection() {
 
 function updateChevronPos() {
   let selectionTogglePos = window.innerWidth <= 750 ? "90vw" : "30vw";
-  if (userMode) {
-    getDocEle("chevron_bg").style.right = selectionToggle ? "30vw" : "0px";
-  } else {
-    getDocEle("chevron_bg").style.right = selectionToggle
-      ? selectionTogglePos
-      : "0px";
-  }
+  getDocEle("chevron_bg").style.right = selectionToggle ? selectionTogglePos : "0px";
 }
 
 window.onresize = updateChevronPos;
