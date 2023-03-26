@@ -1,4 +1,4 @@
-import pickle
+#import pickle
 
 #coordinates_3 for test
 def saved_coordinates(data):

@@ -6,10 +6,19 @@ import requests
 
 def save_frame_sec(url):
     yt = YouTube(url)
-    thumbnail_url = yt.thumbnail_url
+    path = yt.thumbnail_url
     # Read the thumbnail image from URL using OpenCV
-    im = Image.open(requests.get(thumbnail_url, stream=True).raw)
-    return serve_pil_image(im)
+
+
+    last_slash_index = path.rfind("/")
+    if last_slash_index != -1:
+        new_path = path[:last_slash_index + 1] + "maxresdefault.jpg"
+    else:
+        new_path = path
+    # print(thumbnail_url)
+    # im = Image.open(requests.get(thumbnail_url, stream=True).raw)
+    # #return serve_pil_image(im)
+    return new_path
 
 def serve_pil_image(pil_img):
     img_io = BytesIO()
