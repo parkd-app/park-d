@@ -18,15 +18,6 @@ var saveURL = backURL + "save_coord";
 // var birdURL = "http://localhost:8000/assets/images/lot_bird.png";
 
 var view = "bird";
-var coordURL = "http://127.0.0.1:5000/req_coordinate";
-var imgURL = "http://127.0.0.1:5000/get_parking_snapshot?angle=";
-var sideURL = "http://127.0.0.1:5000/get_parking_snapshot?angle=side";
-var birdURL = "http://127.0.0.1:5000/get_parking_snapshot?angle=bird";
-
-var currW3cBird = [];
-var currW3cSide = [];
-var workingBird = [];
-var workingSide = [];
 
 var activeAnnotations = [];
 // var newAnnotations = [];
