@@ -207,9 +207,9 @@ function removingSpot() {
 // loading all spots from remote
 function loadAllSpots(ID, owner) {
   body = {};
-  body.parking_lot_id = ID;
-  body.owner = owner;
-  spaceData = JSON.parse(Get(prevLayoutURL, body))["parking_lots"]["parking_spaces"]; // TODO make sure this matches Gary's
+  body.id = ID;
+  body.name = owner;
+  spaceData = JSON.parse(Get(prevLayoutURL, body))["result"]["parking_lots"]["parking_spaces"]; // TODO make sure this matches Gary's
   console.log(spaceData);
 
   for (let i = 0; i < spaceData.length; i++) {
