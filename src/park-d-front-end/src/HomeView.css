@@ -80,6 +80,7 @@ body {
   border: 0;
   background-color: transparent;
   border-radius: 7px;
+  display: none;
 }
 
 .header_area .main-menu .navbar .navbar-icon:hover{
