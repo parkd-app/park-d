@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
-
-<head>
+  <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Park'd Labelling</title>
@@ -45,7 +44,7 @@
     <script src="./adminmap.js"></script>
 </head>
 
-<body>
+  <body>
     <div class="background">
         <header class="header_area" id="header">
             <div class="main-menu">
@@ -173,18 +172,18 @@
 
             anno.setDrawingTool("polygon");
 
-            anno.setAuthInfo({
-                id: 'http://www.example.com/yapetej',
-                displayName: 'Jonathan'
-            });
+        anno.setAuthInfo({
+          id: "http://www.example.com/yapetej",
+          displayName: "Jonathan",
+        });
 
-            anno.on('selectAnnotation', function (a, shape) {
-                // console.log('selected');
-            });
+        anno.on("selectAnnotation", function (a, shape) {
+          // console.log('selected');
+        });
 
-            anno.on('cancelSelected', function (a) {
-                // console.log('cancel');
-            });
+        anno.on("cancelSelected", function (a) {
+          // console.log('cancel');
+        });
 
             anno.on('changeSelected', function (selected, previous) {
                 // console.log('changed from', previous, 'to', selected);
@@ -281,7 +280,5 @@
         // }
     </script>
     <script src="./Annotate.js"></script>
-    </div>
-</body>
-
+  </body>
 </html>
