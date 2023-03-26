@@ -23,7 +23,7 @@ var defaultOptions = {
   styles: noPoi,
 };
 
-var userMode = true;
+var userMode = false;
 
 var directionsRenderer;
 var directionsService;
@@ -171,6 +171,7 @@ function initPage() {
   getDocEle("loginView").style.display = userMode ? "block" : "none";
   getDocEle("search_bar_bg").style.display = userMode ? "block" : "none";
   getDocEle("annotate").style.display = userMode ? "none" : "block";
+  getDocEle("navbar-icon").style.display = userMode ? "none" : "block";
   // getDocEle("adminMap").style.display = userMode ? "none" : "block";
   // document.getElementById("SetupBirdButton").style.display = userMode
   //   ? "none"
