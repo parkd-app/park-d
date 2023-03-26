@@ -23,7 +23,8 @@ var defaultOptions = {
   styles: noPoi,
 };
 
-var userMode = false;
+let sessionMode = sessionStorage.getItem("userMode");
+var userMode = (sessionMode === "true");
 
 var directionsRenderer;
 var directionsService;
