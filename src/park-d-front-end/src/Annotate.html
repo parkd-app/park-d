@@ -11,6 +11,7 @@
     <script src="annotorious.min.js"></script>
     <script src="./Annotate.js"></script>
     <script src="./adminmap.js"></script>
+    <script src="./intersect.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="homeView.css" />
     <link rel="stylesheet" href="Annotate.css" />
@@ -123,10 +124,13 @@
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDWaVhLQMYdNjRXmcZga657_etUC-9HBmQ&callback=initMap"></script>
     <script>
         window.onload = function () {
+            var hoverAnn = false;
             anno = Annotorious.init({
                 image: 'test_lot',
                 locale: 'auto',
                 drawOnSingleClick: false,
+                crosshair: true,
+                allowEmpty: true,
                 widgets: [
                     { widget: 'COMMENT' },
                     { widget: 'TAG', vocabulary: ['Default', 'Reserved', 'Accessible'] }
@@ -152,10 +156,25 @@
                 // console.log('changed from', previous, 'to', selected);
             });
 
+            anno.on('startSelection', function (point) {
+                // console.log(point.x, point.y)
+                if (hoverAnn) {
+
+                }
+            });
+
             anno.on('createAnnotation', function (annotation) {
-                //   console.log('created', annotation);
+                // console.log('created', annotation);
                 // writeToJSON(annotation, anno.getAnnotations());
                 createAnnotation(annotation, anno.getAnnotations());
+            });
+
+            anno.on('createSelection', function (selection) {
+                // console.log('created', selection);
+                var intersect = checkIntersection(selection);
+                if (intersect) {
+                    anno.cancelSelected();
+                }
             });
 
             anno.on('updateAnnotation', function (annotation, previous) {
@@ -172,11 +191,13 @@
             });
 
             anno.on('mouseEnterAnnotation', function (annotation) {
-                // console.log('enter', annotation);
+                // hoverAnn = true;
+                // console.log('enter');
             });
 
             anno.on('mouseLeaveAnnotation', function (annotation) {
-                // console.log('leave', annotation);
+                // hoverAnn = false;
+                // console.log('leave');
             });
 
             // anno.loadAnnotations();

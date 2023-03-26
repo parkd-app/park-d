@@ -19,8 +19,8 @@ var saveURL = backURL + "save_coord";
 var view = "bird";
 
 var activeAnnotations = [];
-var newAnnotations = [];
-var deletedAnnotations = [];
+// var newAnnotations = [];
+// var deletedAnnotations = [];
 var lotData = [];
 var spotData = [];
 
@@ -76,10 +76,10 @@ function createAnnotation(annotation, currAnnotations) {
   annotation.lot = 1;
   annotation.owner = lotOwner;
   annotation.spotType = 0;
-  newAnnotations.push(annotation);
+  // newAnnotations.push(annotation);
   activeAnnotations.push(annotation);
-  console.log("activeAnnotations");
-  console.log(activeAnnotations);
+  // console.log("activeAnnotations");
+  // console.log(activeAnnotations);
 
   let newSpot = {};
   newSpot.id = newId;
@@ -101,7 +101,7 @@ function createAnnotation(annotation, currAnnotations) {
 }
 
 function deleteAnnotation(annotation, currAnnotations) {
-  deletedAnnotations.push(annotation);
+  // deletedAnnotations.push(annotation);
   activeAnnotations = currAnnotations;
   var annId = annotation.id;
   var index;
@@ -114,9 +114,9 @@ function deleteAnnotation(annotation, currAnnotations) {
 }
 
 function updateAnnotation(annotation, previous, currAnnotations) {
-  deletedAnnotations.push(previous);
+  // deletedAnnotations.push(previous);
   // console.log("pushed to deletedAnnotations");
-  newAnnotations.push(annotation);
+  // newAnnotations.push(annotation);
   // console.log("pushed to newAnnotations");
   activeAnnotations = currAnnotations;
   updateCamcoords(annotation, previous);
@@ -135,6 +135,37 @@ function updateCamcoords(annotation, previous) {
   // console.log(spotData);
   spotData[index].status = true;
   spotData[index].camcoords = w3cCoords(annotation);
+}
+
+function checkIntersection(selection) {
+  var intExist = false;
+  selectionCoords = w3cToSide(selection);
+  console.log(JSON.stringify(selectionCoords));
+  console.log(activeAnnotations.length);
+  for (index = 0; index < activeAnnotations.length; index++) {
+    annCoords = w3cToSide(activeAnnotations[index]);
+    console.log(JSON.stringify(annCoords));
+    var polygons = {
+      first: [
+        { x: selectionCoords[0][0], y: selectionCoords[0][1] },
+        { x: selectionCoords[1][0], y: selectionCoords[1][1] },
+        { x: selectionCoords[2][0], y: selectionCoords[2][1] },
+        { x: selectionCoords[3][0], y: selectionCoords[3][1] },
+      ],
+      second: [
+        { x: annCoords[0][0], y: annCoords[0][1] },
+        { x: annCoords[1][0], y: annCoords[1][1] },
+        { x: annCoords[2][0], y: annCoords[2][1] },
+        { x: annCoords[3][0], y: annCoords[3][1] },
+      ],
+    };
+    intersectVal = intersect(polygons.first, polygons.second);
+    if (intersectVal != "") {
+      intExist = true;
+      break;
+    }
+  }
+  return intExist;
 }
 
 function getImage(view) {
@@ -164,14 +195,14 @@ function loadBirdAnn(lotId) {
   body.parking_lot_id = lotId;
   body.owner = lotOwner;
   lotData = JSON.parse(Get(coordURL, body));
-  console.log("lotData = ");
-  console.log(lotData);
+  // console.log("lotData = ");
+  // console.log(lotData);
   spotData = lotData.parking_lots.parking_spaces;
-  console.log("spotData = ");
-  console.log(spotData);
+  // console.log("spotData = ");
+  // console.log(spotData);
   var w3c = lotData.parking_lots.w3c;
   activeAnnotations = w3c;
-  console.log(JSON.stringify(w3c));
+  // console.log(JSON.stringify(w3c));
   return w3c;
 }
 
@@ -191,9 +222,9 @@ function saveFormatted(ID, owner) {
   payload.parking_lots.owner = owner;
   payload.parking_lots.parking_spaces = spotData;
   payload.parking_lots.w3c = activeAnnotations;
-  console.log("payload");
-  console.log(payload);
-  console.log(JSON.stringify(payload));
+  // console.log("payload");
+  // console.log(payload);
+  // console.log(JSON.stringify(payload));
   Post(saveURL, payload);
 }
 
