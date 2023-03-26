@@ -2,7 +2,8 @@
 
 function Get(URL, body) {
   var Httpreq = new XMLHttpRequest(); // a new request
-  Httpreq.open("GET", URL, false);
+  Httpreq.open("POST", URL, false);
+  Httpreq.setRequestHeader("Content-Type", "application/json");
   Httpreq.send(JSON.stringify(body));
   return Httpreq.responseText;
 }
@@ -360,15 +361,12 @@ function getDocEle(className) {
 }
 
 function loadAllLots() {
-  lotData = JSON.parse(Get(allLotURL, {}));
-  console.log(lotData);
-  for (let i = 0; i < 1; i++) {
-    // TODO change < 1 to lotData.length
+  lotData = JSON.parse(Get(allLotURL, {}))["parking_lots"];
+  for (let i = 3; i < 5; i++) {
     body = {};
     body.parking_lot_id = lotData[i].id;
     body.owner = lotData[i].name;
-    let spots = JSON.parse(Get(jsonURL, body))["parking_spaces"]; // TODO make sure this matches Gary's
-    console.log(spots);
+    let spots = JSON.parse(Get(jsonURL, body))["parking_lots"]["parking_spaces"];
     window["lot" + lotData[i].name + lotData[i].id] = new google.maps.Circle({
       strokeColor: "#0000FF",
       fillColor: "#0000FF",
@@ -405,7 +403,7 @@ function loadAllSpots(ID, owner) {
   body = {};
   body.parking_lot_id = ID;
   body.owner = owner;
-  spotData = JSON.parse(Get(jsonURL, body))["parking_spaces"]; // TODO make sure this matches Gary's
+  spotData = JSON.parse(Get(jsonURL, body))["parking_lots"]["parking_spaces"];
   console.log(spotData);
 
   for (let i = 0; i < spotData.length; i++) {
@@ -439,7 +437,8 @@ function updateSpots() {
   body = {};
   body.parking_lot_id = lotID;
   body.owner = lotOwner;
-  var spots = JSON.parse(Get(jsonURL, body))["parking_spaces"];
+  console.log(body);
+  var spots = JSON.parse(Get(jsonURL, body))["parking_lots"]["parking_spaces"];
   for (let i = 0; i < spots.length; i++) {
     let spot = spots[i];
     if (!(spot.status === window["spot" + spot.id].status)) {
