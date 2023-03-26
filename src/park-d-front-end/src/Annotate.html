@@ -168,7 +168,7 @@
             });
 
             anno.on('deleteAnnotation', function (annotation) {
-                deleteAnnotation(annotation);
+                deleteAnnotation(annotation, anno.getAnnotations());
             });
 
             anno.on('mouseEnterAnnotation', function (annotation) {

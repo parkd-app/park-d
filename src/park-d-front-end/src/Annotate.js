@@ -100,8 +100,9 @@ function createAnnotation(annotation, currAnnotations) {
   // console.log(spotData);
 }
 
-function deleteAnnotation(annotation) {
+function deleteAnnotation(annotation, currAnnotations) {
   deletedAnnotations.push(annotation);
+  activeAnnotations = currAnnotations;
   var annId = annotation.id;
   var index;
   for (i = 0; i < spotData.length; i++) {
