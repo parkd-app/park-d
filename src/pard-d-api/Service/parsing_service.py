@@ -1,34 +1,7 @@
-import pickle
-def parsing(path, angle):
-    with open(path, 'r') as f:
-        parking_info = f.read()
+import math
+from . import save_coord_service as sd
+from . import firebase_query
 
-    pro = str(parking_info).strip('[')[:-1]
-    val = []
-    ret = []
-    for i in pro.split(','):
-        i = i.strip()
-        if i == 'True':
-            val.append(True)
-        else:
-            val.append(False)
-    # for i, ele in enumerate(val):
-    #     ret.append({
-    #         'id': i + 1,
-    #         'status': ele
-    #     })
-    print(val)
-
-    with open(
-            "C:\\Users\\g7543\\OneDrive\\桌面\\Capstone_project"
-            "\\park-d\\src\\pard-d-api\\static_resources\\coordinates_" + angle, "rb"
-    ) as f:
-        posList = pickle.load(f)
-        print(posList)
-        spaces = posList["parking_spaces"]
-
-    for i, spot in enumerate(spaces):
-        if i < len(val):
-            spot["open"] = val[i]
-
-    return posList["parking_spaces"]
+def  parsing(id, name):
+    return firebase_query.query_by_key(sd.create_unique_key(id, name))
+    #posList["parking_spaces"]
