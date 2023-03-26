@@ -80,15 +80,15 @@ function initMap() {
   try {
     loadAllLots();
 
-  if (!userMode) {
-    disableNavigation();
-    return;
-  }
+    if (!userMode) {
+      disableNavigation();
+      return;
+    }
 
-  locationNavigator = navigator.geolocation;
-  getDocEle("direction_guide").textContent = "Finding location";
-  updatePosition();
-  distMatrixservice = new google.maps.DistanceMatrixService();
+    locationNavigator = navigator.geolocation;
+    getDocEle("direction_guide").textContent = "Finding location";
+    updatePosition();
+    distMatrixservice = new google.maps.DistanceMatrixService();
   } catch (e) {
     console.log(e);
     window.alert("Couldn't load parking lot locations.");
@@ -103,7 +103,7 @@ function initMap() {
       } else if (!window[parkingLayoutIds[selection]].status) {
         getDocEle("direction_guide").textContent = "Spot taken";
         return;
-      } 
+      }
       else {
         if (window[parkingLayoutIds[selection]].type != 0 && !authorized) {
           getDocEle("direction_guide").textContent = "Not authorized";
@@ -164,22 +164,24 @@ function setTimeoutTime(response, status) {
 
 function initPage() {
   authorized = confirm("Confirm that you are authorized to use restricted spaces, or Cancel if you are not.")
+  console.log(userMode);
   getDocEle("analytics_bg1").style.display = "none";
 
-  getDocEle("logout").style.display = userMode ? "none" : "block";
+  getDocEle("nav-button").style.display = userMode ? "none" : "block";
+  getDocEle("loginView").style.display = userMode ? "block" : "none";
   getDocEle("search_bar_bg").style.display = userMode ? "block" : "none";
   getDocEle("annotate").style.display = userMode ? "none" : "block";
-  getDocEle("adminMap").style.display = userMode ? "none" : "block";
-  document.getElementById("SetupBirdButton").style.display = userMode
-    ? "none"
-    : "block";
-  document.getElementById("SetupSideButton").style.display = userMode
-    ? "none"
-    : "block";
+  // getDocEle("adminMap").style.display = userMode ? "none" : "block";
+  // document.getElementById("SetupBirdButton").style.display = userMode
+  //   ? "none"
+  //   : "block";
+  // document.getElementById("SetupSideButton").style.display = userMode
+  //   ? "none"
+  //   : "block";
 
-  getDocEle("header-center").style.margin = userMode
-    ? "0 0 0 40%"
-    : "0 0 0 42.5%";
+  // getDocEle("header-center").style.margin = userMode
+  //   ? "0 0 0 40%"
+  //   : "0 0 0 42.5%";
 }
 
 function pickDone() {

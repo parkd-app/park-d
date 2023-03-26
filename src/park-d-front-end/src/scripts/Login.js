@@ -71,13 +71,9 @@ submit.addEventListener("click", loginEmailPassword);
 const monitorAuthState = async () => {
   onAuthStateChanged(auth, (user) => {
     if (user) {
-      console.log(user);
+      userMode = false;
       location.replace("../HomeView.html");
     }
-    // else {
-    //     location.replace('login.html');
-    //     lblAuthState.innerHTML = "You're not logged in."
-    // }
   });
 };
 
