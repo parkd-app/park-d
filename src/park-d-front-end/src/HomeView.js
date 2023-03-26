@@ -90,6 +90,8 @@ function initMap() {
     updatePosition();
     distMatrixservice = new google.maps.DistanceMatrixService();
   } catch (e) {
+    disableNavigation();
+    toggleAnalytics(false);
     console.log(e);
     window.alert("Couldn't load parking lot locations.");
   }
@@ -164,9 +166,7 @@ function setTimeoutTime(response, status) {
 
 function initPage() {
   authorized = confirm("Confirm that you are authorized to use restricted spaces, or Cancel if you are not.")
-  console.log(userMode);
-  getDocEle("analytics_bg1").style.display = "none";
-
+  toggleAnalytics(true);
   getDocEle("nav-button").style.display = userMode ? "none" : "block";
   getDocEle("loginView").style.display = userMode ? "block" : "none";
   getDocEle("search_bar_bg").style.display = userMode ? "block" : "none";
@@ -386,6 +386,10 @@ function disableNavigation() {
   clickChoice = -1;
   getDocEle("direction_guide").textContent = "Navigation Disabled";
   navDisable = true;
+}
+
+function toggleAnalytics(toggle) {
+  getDocEle("chevron_bg").style.display = toggle ? "block": "none";
 }
 
 function updatePosition() {
