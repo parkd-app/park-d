@@ -31,6 +31,7 @@ import { auth } from "./FirebaseConfig.js";
 
 // export const auth = getAuth(firebaseApp);
 // connectAuthEmulator(auth, "http://localhost:9099");
+sessionStorage.setItem("userMode", true);
 
 const loginEmailPassword = async () => {
   const loginEmail = email.value;
@@ -71,7 +72,7 @@ submit.addEventListener("click", loginEmailPassword);
 const monitorAuthState = async () => {
   onAuthStateChanged(auth, (user) => {
     if (user) {
-      userMode = false;
+      sessionStorage.setItem("userMode", false);
       location.replace("../HomeView.html");
     }
   });

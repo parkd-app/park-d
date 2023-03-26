@@ -23,7 +23,8 @@ var defaultOptions = {
   styles: noPoi,
 };
 
-var userMode = true;
+let sessionMode = sessionStorage.getItem("userMode");
+var userMode = (sessionMode === "true");
 
 var directionsRenderer;
 var directionsService;
@@ -164,6 +165,7 @@ function setTimeoutTime(response, status) {
 
 function initPage() {
   authorized = confirm("Confirm that you are authorized to use restricted spaces, or Cancel if you are not.")
+  console.log("he");
   console.log(userMode);
   getDocEle("analytics_bg1").style.display = "none";
 
