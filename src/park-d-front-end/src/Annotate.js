@@ -1,3 +1,9 @@
+// constants moved to constants.js
+
+var localURL = "http://localhost:8000/";
+var coordURL = backendURL + "rt_parking_info";
+var w3cURL = backendURL + "w3c";
+var snapURL = backendURL + "get_parking_snapshot";
 // var localURL = "http://localhost:8000/";
 var backURL = "https://back-end-new-api.azurewebsites.net/";
 var coordURL = backURL + "rt_parking_info";

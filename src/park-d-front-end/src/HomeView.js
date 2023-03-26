@@ -1,14 +1,4 @@
-// json parsing
-const backendURL = "https://back-end-new-api.azurewebsites.net/";
-//const backendURL = "http://localhost:8000/";
-const jsonURL = backendURL + "rt_parking_info";
-//const jsonURL = backendURL + "parking_lots";
-const lotsURL = backendURL + "get_all_parking_lots";
-//const lotsURL = "http://localhost:8001/parking_lots";
-
-const updateInterval = 5000;
-
-const typeToColor = { 0: "#00FF00", 1: "#0000FF", 2: "#FF0000" };
+// constants moved to constants.js
 
 function Get(URL, body) {
   var Httpreq = new XMLHttpRequest(); // a new request
@@ -370,7 +360,7 @@ function getDocEle(className) {
 }
 
 function loadAllLots() {
-  lotData = JSON.parse(Get(lotsURL, {}));
+  lotData = JSON.parse(Get(allLotURL, {}));
   console.log(lotData);
   for (let i = 0; i < 1; i++) {
     // TODO change < 1 to lotData.length

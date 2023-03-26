@@ -1,19 +1,4 @@
-// json parsing
-const backendURL = "https://back-end-new-api.azurewebsites.net/";
-//var backendURL = "http://localhost:8000/";
-const jsonURL = backendURL + "rt_parking_info";
-//const jsonURL = backendURL + "parking_lots";
-const postURL = backendURL + "save_coord";
-//const postURL = backendURL + "parking_lots";
-const createLotURL = backendURL + "create_parking_lot";
-const allLotURL = backendURL + "get_all_parking_lots";
-
-// green:regular, blue:accessible, red:reserved
-var colorToType = { "#00FF00": 0, "#0000FF": 1, "#FF0000": 2 };
-var typeToColor = { 0: "#00FF00", 1: "#0000FF", 2: "#FF0000" };
-var newSpotColor = "#888888";
-
-var updateInterval = 5000;
+// constants moved to constants.js
 
 function Get(URL, body) {
   console.log(body);
