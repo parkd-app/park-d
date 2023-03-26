@@ -16,6 +16,8 @@
   height: 500px;
   width: 100%;
   position: relative;
+  margin: 10px 0px;
+  /* padding: 10px; */
   /* background-position: right; */
   /* left: 50%; */
   /* top: 150px; */
@@ -400,4 +402,18 @@
   /* top: 300px; */
   right: 2%;
   /* overflow: hidden; */
+}
+
+.words {
+  font-family: Montserrat;
+  font-size: 16px;
+  padding: 3px;
+}
+
+input {
+  font-family: Montserrat;
+}
+
+option {
+  font-family: Montserrat;
 }

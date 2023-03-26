@@ -94,13 +94,13 @@
                 <div class="panel col-md-6">
                     <div id="button-panel">
                         <!-- <div id="PickLabel">Admin View</div> -->
-                        <button class="button" type="button" id="RecenterButton" onclick="recenter()">
+                        <!-- <button class="button" type="button" id="RecenterButton" onclick="recenter()">
                             Recenter
-                        </button>
+                        </button> -->
                         <div id="LotButtons">
-                            <label id="IDLabel" for="IDBox">Lot ID:</label>
+                            <label id="IDLabel" for="IDBox" class="words">Lot ID:</label>
                             <input type="text" id="IDBox" name="IDBox"><br>
-                            <label id="OwnerLabel" for="OwnerBox">Owner:</label>
+                            <label class="words" id="OwnerLabel" for="OwnerBox" class="words">Owner:</label>
                             <input type="text" id="OwnerBox" name="OwnerBox"><br>
                             <button class="button" type="button" id="LoadLotButton"
                                 onclick="loadLot(); loadAnnotations(false, document.getElementById('test_lot'))">
@@ -111,11 +111,11 @@
                             </button>
                         </div>
                         <div id="NewLotButtons" style="display:none">
-                            <label id="NewOwnerLabel" for="NewOwnerBox">Owner:</label>
+                            <label class="words" id="NewOwnerLabel" for="NewOwnerBox">Owner:</label>
                             <input type="text" id="NewOwnerBox" name="NewOwnerBox"><br>
-                            <label id="URLLabel" for="URLBox">YouTube stream URL:</label>
+                            <label class="words" id="URLLabel" for="URLBox">YouTube stream URL:</label>
                             <input type="text" id="URLBox" name="URLBox"><br>
-                            <button type="button" id="CreateLotButton"
+                            <button class="button" type="button" id="CreateLotButton"
                                 onclick="createLot(); loadAnnotations(true, document.getElementById('test_lot'))">
                                 Create Lot
                             </button>
@@ -129,13 +129,13 @@
                                 <option value="#0000FF">Accessible</option>
                                 <option value="#FF0000">Reserved</option>
                             </select>
-                            <button type="button" id="ChangeSpotButton" onclick="changingSpot()">
+                            <button class="button" type="button" id="ChangeSpotButton" onclick="changingSpot()">
                                 Change Spot Type
                             </button>
                             <!-- <button type="button" id="RemoveSpotButton" onclick="removingSpot()">
                                 Remove Spot
                             </button> -->
-                            <button type="button" id="SaveButton" onclick="uploadSpots()">
+                            <button class="button" type="button" id="SaveButton" onclick="uploadSpots()">
                                 Save Changes
                             </button>
                         </div>
