@@ -3,12 +3,13 @@
 var localURL = "http://localhost:8000/";
 var coordURL = backendURL + "rt_parking_info";
 var w3cURL = backendURL + "w3c";
-var snapURL = backendURL + "get_parking_snapshot";
+// var snapURL = backendURL + "get_parking_snapshot";
 // var localURL = "http://localhost:8000/";
 var backURL = "https://back-end-new-api.azurewebsites.net/";
-var coordURL = backURL + "rt_parking_info";
+var coordURL = backURL + "get_prev_layout";
 var w3cURL = backURL + "w3c";
-var snapURL = backURL + "get_parking_snapshot";
+var snapURL = backURL + "get_parking_snapshot?name=Gary";
+var snapBackupURL = backURL + "get_parking_snapshot_backup";
 var saveURL = backURL + "save_coord";
 // var coordBird = "http://localhost:8000/formatted_bird";
 // var coordSide = "http://localhost:8000/formatted_side";
@@ -33,8 +34,23 @@ function Get(URL, body) {
   Httpreq.open("POST", URL, false);
   Httpreq.setRequestHeader("Content-Type", "application/json");
   Httpreq.send(JSON.stringify(body));
-  // console.log(Httpreq.responseText);
+  console.log(Httpreq.responseText);
   return Httpreq.responseText;
+}
+
+function GetParam(URL, param) {
+  const params = {
+    name: param,
+  };
+  const options = {
+    method: "POST",
+    body: JSON.stringify(params),
+  };
+  fetch(URL, options)
+    .then((response) => response.json())
+    .then((response) => {
+      return response.json();
+    });
 }
 
 function Post(URL, body) {
@@ -81,7 +97,7 @@ function createAnnotation(annotation, currAnnotations) {
   }
   // console.log("new id = " + newId);
   annotation.id = newId;
-  annotation.lot = 1;
+  annotation.lot = activeLot;
   annotation.owner = lotOwner;
   annotation.spotType = 0;
   // newAnnotations.push(annotation);
@@ -146,6 +162,9 @@ function updateCamcoords(annotation, previous) {
 }
 
 function checkIntersection(selection) {
+  if (activeAnnotations == null) {
+    return false;
+  }
   var intExist = false;
   selectionCoords = w3cToSide(selection);
   console.log(JSON.stringify(selectionCoords));
@@ -200,11 +219,11 @@ function setView(newView) {
 
 function loadBirdAnn(lotId) {
   body = {};
-  body.parking_lot_id = lotId;
-  body.owner = lotOwner;
-  lotData = JSON.parse(Get(coordURL, body));
-  // console.log("lotData = ");
-  // console.log(lotData);
+  body.id = lotId;
+  body.name = lotOwner;
+  lotData = JSON.parse(Get(coordURL, body)).result;
+  console.log("lotData = ");
+  console.log(lotData);
   spotData = lotData.parking_lots.parking_spaces;
   // console.log("spotData = ");
   // console.log(spotData);
@@ -282,12 +301,19 @@ function w3cToSide(annotation) {
 }
 
 function getSnapshot() {
-  body = {};
-  body.url = "https://www.youtube.com/watch?v=c38K8IsYnB0";
+  // body = {};
+  // // body.url = "https://www.youtube.com/watch?v=c38K8IsYnB0";
+  // body.url =
+  //   "https://www.youtube.com/watch?v=pOGKQmIpcm0&ab_channel=ELCOMLoznica";
+  body = {
+    name: "Gary",
+  };
   // console.log("getting snapshot");
   // console.log("body = ");
   // console.log(body);
-  var imageURL = JSON.parse(Get(snapURL, body)).image;
+  // var imageURL = JSON.parse(Get(snapBackupURL, body)).url;
+  console.log(body);
+  var imageURL = JSON.parse(Get(snapURL)).url;
   return imageURL;
 }
 
