@@ -195,27 +195,6 @@ body {
   margin-left: 40%;
 }
 
-.header a.logo {
-  content: url("Images/park'd_logo.png");
-  display: flex;
-  justify-content: center;
-}
-
-.header a.viewButton {
-  width: 150px;
-  height: 50px;
-  margin-top: 5px;
-  margin-right: 5px;
-  background: rgba(249, 255, 0, 1);
-  border: 3px solid rgba(249, 255, 0, 1);
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
-  display: none;
-  cursor: pointer;
-}
-
 .admin_bg1 {
   width: 105px;
   height: 60px;
@@ -230,53 +209,8 @@ body {
   overflow: hidden;
 }
 
-.header a.logout {
-  width: 105px;
-  height: 50px;
-  margin-top: 5px;
-  margin-right: 5px;
-  background: rgba(249, 255, 0, 1);
-  border: 3px solid rgba(249, 255, 0, 1);
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
-  display: none;
-  cursor: pointer;
-}
-
 .header-right {
   float: right;
-}
-
-.header a.annotate {
-  width: 105px;
-  height: 50px;
-  margin-top: 5px;
-  margin-right: 5px;
-  background: rgba(249, 255, 0, 1);
-  border: 3px solid rgba(249, 255, 0, 1);
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
-  display: none;
-  cursor: pointer;
-}
-
-.header a.adminMap {
-  width: 100px;
-  height: 50px;
-  margin-top: 5px;
-  margin-right: 5px;
-  background: rgba(249, 255, 0, 1);
-  border: 3px solid rgba(249, 255, 0, 1);
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
-  display: none;
-  cursor: pointer;
 }
 
 .setup-window {
