@@ -48,6 +48,9 @@ function Post(URL, body) {
 }
 
 function createAnnotation(annotation, currAnnotations) {
+  if (activeAnnotations == null) {
+    activeAnnotations = [];
+  }
   // console.log(w3cToBird(annotation));
   var maxId = 0;
   let newId = 0;
@@ -109,11 +112,12 @@ function deleteAnnotation(annotation) {
   spotData.splice(index, 1);
 }
 
-function updateAnnotation(annotation, previous) {
+function updateAnnotation(annotation, previous, currAnnotations) {
   deletedAnnotations.push(previous);
   // console.log("pushed to deletedAnnotations");
   newAnnotations.push(annotation);
   // console.log("pushed to newAnnotations");
+  activeAnnotations = currAnnotations;
   updateCamcoords(annotation, previous);
 }
 
@@ -165,6 +169,7 @@ function loadBirdAnn(lotId) {
   console.log("spotData = ");
   console.log(spotData);
   var w3c = lotData.parking_lots.w3c;
+  activeAnnotations = w3c;
   console.log(JSON.stringify(w3c));
   return w3c;
 }
@@ -175,39 +180,6 @@ function getSideURL() {
 
 function getBirdURL() {
   return birdURL;
-}
-
-function savew3c() {
-  for (i = 0; i < deletedAnnotations.length; i++) {
-    fetch(w3cURL + "/" + deletedAnnotations[i].id, {
-      method: "DELETE",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(deletedAnnotations[i]),
-    })
-      .then((response) => response.json())
-      .then((response) => console.log(JSON.stringify(response)));
-  }
-  // console.log("saved deleted annotations");
-  for (i = 0; i < newAnnotations.length; i++) {
-    fetch(w3cURL, {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(newAnnotations[i]),
-    })
-      .then((response) => response.json())
-      .then((response) => console.log(JSON.stringify(response)));
-  }
-  // console.log("saved new annotations");
-  alert("Annotations Saved");
-  // console.log("Saved W3C");
-  // newAnnotations = [];
-  // deletedAnnotations = [];
 }
 
 function saveFormatted(ID, owner) {
@@ -499,4 +471,36 @@ function getSnapshot() {
 //       },
 //     ],
 //   };
+// }
+// function savew3c() {
+//   for (i = 0; i < deletedAnnotations.length; i++) {
+//     fetch(w3cURL + "/" + deletedAnnotations[i].id, {
+//       method: "DELETE",
+//       headers: {
+//         Accept: "application/json",
+//         "Content-Type": "application/json",
+//       },
+//       body: JSON.stringify(deletedAnnotations[i]),
+//     })
+//       .then((response) => response.json())
+//       .then((response) => console.log(JSON.stringify(response)));
+//   }
+//   // console.log("saved deleted annotations");
+//   for (i = 0; i < newAnnotations.length; i++) {
+//     fetch(w3cURL, {
+//       method: "POST",
+//       headers: {
+//         Accept: "application/json",
+//         "Content-Type": "application/json",
+//       },
+//       body: JSON.stringify(newAnnotations[i]),
+//     })
+//       .then((response) => response.json())
+//       .then((response) => console.log(JSON.stringify(response)));
+//   }
+//   // console.log("saved new annotations");
+//   alert("Annotations Saved");
+//   // console.log("Saved W3C");
+//   // newAnnotations = [];
+//   // deletedAnnotations = [];
 // }

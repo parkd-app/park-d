@@ -160,7 +160,7 @@
 
             anno.on('updateAnnotation', function (annotation, previous) {
                 console.log('updated', previous, 'with', annotation);
-                updateAnnotation(annotation, previous);
+                updateAnnotation(annotation, previous, anno.getAnnotations());
             });
 
             anno.on('clickAnnotation', function (annotation, shape) {
