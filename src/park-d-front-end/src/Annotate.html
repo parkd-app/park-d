@@ -57,9 +57,9 @@
         </div>
         <div class="annotate-window">
             <p>
-                <button class="button" id="current-tool">Rectangle</button>
-                <button class="button" id="sidebtn" onclick="show('side')">Load Side View</button>
-                <button class="button" id="birdbtn" onclick="show('bird')">Load Bird View</button>
+                <button class="button" id="current-tool">Polygon</button>
+                <!-- <button class="button" id="sidebtn" onclick="show('side')">Load Side View</button>
+                <button class="button" id="birdbtn" onclick="show('bird')">Load Bird View</button> -->
                 <button class="button" id="birdbtn" onclick="saveAnn()">Save Annotations</button>
             </p>
             <div class="ann_image">
@@ -126,12 +126,14 @@
             anno = Annotorious.init({
                 image: 'test_lot',
                 locale: 'auto',
-                drawOnSingleClick: true,
+                drawOnSingleClick: false,
                 widgets: [
                     { widget: 'COMMENT' },
                     { widget: 'TAG', vocabulary: ['Default', 'Reserved', 'Accessible'] }
                 ]
             });
+
+            anno.setDrawingTool("polygon");
 
             anno.setAuthInfo({
                 id: 'http://www.example.com/yapetej',
@@ -177,8 +179,8 @@
                 // console.log('leave', annotation);
             });
 
-            // anno.loadAnnotations(getBirdAnn());
-            anno.loadAnnotations(loadBirdAnn(1));
+            // anno.loadAnnotations();
+            anno.setAnnotations(loadBirdAnn(1));
 
             var toolToggle = document.getElementById('current-tool');
             toolToggle.addEventListener('click', function () {
@@ -191,20 +193,20 @@
                 }
             });
         }
-        function show(view) {
-            if (view == "side") {
-                document.getElementById('test_lot')
-                    .src = getSideURL();
-                anno.loadAnnotations(getSideAnn());
-                setView("side");
-            } else {
-                document.getElementById('test_lot')
-                    .src = getBirdURL();
-                anno.loadAnnotations(getBirdAnn());
-                setView("bird");
-            }
+        // function show(view) {
+        //     if (view == "side") {
+        //         document.getElementById('test_lot')
+        //             .src = getSideURL();
+        //         anno.loadAnnotations(getSideAnn());
+        //         setView("side");
+        //     } else {
+        //         document.getElementById('test_lot')
+        //             .src = getBirdURL();
+        //         anno.loadAnnotations(getBirdAnn());
+        //         setView("bird");
+        //     }
 
-        }
+        // }
     </script>
     <script src="./Annotate.js"></script>
     </div>

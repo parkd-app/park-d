@@ -4,6 +4,12 @@ var localURL = "http://localhost:8000/";
 var coordURL = backendURL + "rt_parking_info";
 var w3cURL = backendURL + "w3c";
 var snapURL = backendURL + "get_parking_snapshot";
+// var localURL = "http://localhost:8000/";
+var backURL = "https://back-end-new-api.azurewebsites.net/";
+var coordURL = backURL + "rt_parking_info";
+var w3cURL = backURL + "w3c";
+var snapURL = backURL + "get_parking_snapshot";
+var saveURL = backURL + "save_coord";
 // var coordBird = "http://localhost:8000/formatted_bird";
 // var coordSide = "http://localhost:8000/formatted_side";
 // var imgURL = "http://localhost:8000/assets/images/";
@@ -15,32 +21,29 @@ var view = "bird";
 var activeAnnotations = [];
 var newAnnotations = [];
 var deletedAnnotations = [];
-var spotData;
+var spotData = [];
 
 var activeLot = 1;
-var lotOwner = "lot";
+var lotOwner = "Jonathan";
 
-// function Get(URL, ID, owner) {
-//   var body = {};
-//   body.parking_lot_id = ID;
-//   body.owner = owner;
+function Get(URL, body) {
+  // console.log(body);
+  var Httpreq = new XMLHttpRequest(); // a new request
+  Httpreq.open("POST", URL, false);
+  Httpreq.setRequestHeader("Content-Type", "application/json");
+  Httpreq.send(JSON.stringify(body));
+  // console.log(Httpreq.responseText);
+  return Httpreq.responseText;
+}
 
-//   var Httpreq = new XMLHttpRequest(); // a new request
-//   Httpreq.open("GET", URL, false);
-//   Httpreq.send(JSON.stringify(body));
-//   // console.log(Httpreq.responseText);
-//   return Httpreq.responseText;
-// }
-
-function Post(URL, content) {
-  fetch(URL, {
-    method: "POST",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(content),
-  });
+function Post(URL, body) {
+  // console.log(body);
+  var Httpreq = new XMLHttpRequest(); // a new request
+  Httpreq.open("POST", URL, false);
+  Httpreq.setRequestHeader("Content-Type", "application/json");
+  Httpreq.send(JSON.stringify(body));
+  // console.log(Httpreq.responseText);
+  return Httpreq.responseText;
 }
 
 function createAnnotation(annotation, currAnnotations) {
@@ -62,15 +65,17 @@ function createAnnotation(annotation, currAnnotations) {
   } else {
     newId = 0;
     annotation.id = 0;
-    console.log("ZERO");
+    // console.log("ZERO");
   }
-  console.log("new id = " + newId);
+  // console.log("new id = " + newId);
   annotation.id = newId;
   annotation.lot = 1;
   annotation.owner = lotOwner;
   annotation.spotType = 0;
   newAnnotations.push(annotation);
   activeAnnotations.push(annotation);
+  console.log("activeAnnotations");
+  console.log(activeAnnotations);
 
   let newSpot = {};
   newSpot.id = newId;
@@ -79,7 +84,14 @@ function createAnnotation(annotation, currAnnotations) {
   newSpot.camcoords = w3cCoords(annotation);
   newSpot.mapcoords = [];
   newSpot.type = 0;
-  spotData[spotData.length] = newSpot;
+  if (spotData == null) {
+    spotData[0] = newSpot;
+    // console.log(spotData[0]);
+  } else {
+    spotData[spotData.length] = newSpot;
+    // console.log(spotData[spotData.length]);
+  }
+  // console.log("spotData = ");
   // console.log(spotData);
 }
 
@@ -144,13 +156,10 @@ function loadBirdAnn(lotId) {
   body = {};
   body.parking_lot_id = lotId;
   body.owner = lotOwner;
-  spotData = JSON.parse(Post(coordURL, body))["parking_spaces"];
-  console.log(spotData);
-  return w3cURL + "?lot=" + lotId;
-}
-
-function getCoordURL() {
-  return coordURL;
+  spotData = JSON.parse(Get(coordURL, body));
+  var w3c = spotData.parking_lots.w3c;
+  // console.log(JSON.stringify(w3c));
+  return w3c;
 }
 
 function getSideURL() {
@@ -159,21 +168,6 @@ function getSideURL() {
 
 function getBirdURL() {
   return birdURL;
-}
-
-function getImgURL() {
-  return imgURL;
-}
-
-function w3cCoords(annotation) {
-  coordArr = w3cToBird(annotation);
-  // console.log("coordArr = " + coordArr);
-  return [
-    [coordArr[0], coordArr[1]],
-    [coordArr[0] + coordArr[2], coordArr[1]],
-    [coordArr[0], coordArr[1] + coordArr[3]],
-    [coordArr[0] + coordArr[2], coordArr[1] + coordArr[3]],
-  ];
 }
 
 function savew3c() {
@@ -210,27 +204,28 @@ function savew3c() {
 }
 
 function saveFormatted(ID, owner) {
+  // console.log(JSON.stringify(spotData));
   let payload = {};
-  payload.id = ID;
-  payload.owner = owner;
-  payload.parking_spaces = spotData;
-  try {
-    Post(postURL, payload);
-    document.getElementById("SaveButton").textContent = "Save Successful";
-    setTimeout(() => {
-      document.getElementById("SaveButton").textContent = "Save Changes";
-    }, 1000);
-  } catch (e) {
-    document.getElementById("SaveButton").textContent = "Save Failed!";
-    setTimeout(() => {
-      document.getElementById("SaveButton").textContent = "Save Changes";
-    }, 2000);
-  }
+  payload.parking_lots = {};
+  payload.parking_lots.id = ID;
+  payload.parking_lots.owner = owner;
+  payload.parking_lots.parking_spaces = spotData;
+  payload.parking_lots.w3c = activeAnnotations;
+  console.log("payload");
+  console.log(payload);
+  console.log(JSON.stringify(payload));
+  Post(saveURL, payload);
 }
 
 function saveAnn() {
-  savew3c();
+  // savew3c();
   saveFormatted(activeLot, lotOwner);
+}
+
+function w3cCoords(annotation) {
+  coordArr = w3cToSide(annotation);
+  // console.log("coordArr = " + coordArr);
+  return coordArr;
 }
 
 function w3cToBird(annotation) {
@@ -245,15 +240,45 @@ function w3cToBird(annotation) {
   return annArr;
 }
 
+function w3cToSide(annotation) {
+  var annStr = JSON.stringify(annotation.target.selector.value);
+  annStr = annStr.slice(24, annStr.length - 20);
+  annArr = annStr.split(" ");
+  var coordArr = [];
+  for (i = 0; i < annArr.length; i++) {
+    coordArr[i] = annArr[i].split(",");
+    coordArr[i][0] = Math.round(parseFloat(coordArr[i][0]));
+    coordArr[i][1] = Math.round(parseFloat(coordArr[i][1]));
+  }
+  // console.log(coordArr);
+
+  // var coordArr = [
+  //   [annArr[0], annArr[1]],
+  //   [annArr[0] + annArr[2], annArr[1]],
+  //   [annArr[0], annArr[1] + annArr[3]],
+  //   [annArr[0] + annArr[2], annArr[1] + annArr[3]],
+  // ];
+  // console.log(JSON.stringify(coordArr));
+  return coordArr;
+}
+
 function getSnapshot() {
   body = {};
   body.url = "https://www.youtube.com/watch?v=c38K8IsYnB0";
-  console.log("getting snapshot");
-  console.log("body = ");
-  console.log(body);
-  var image = Post(snapURL, body);
-  return image;
+  // console.log("getting snapshot");
+  // console.log("body = ");
+  // console.log(body);
+  var imageURL = JSON.parse(Get(snapURL, body)).image;
+  return imageURL;
 }
+
+// function getImgURL() {
+//   return imgURL;
+// }
+
+// function getCoordURL() {
+//   return coordURL;
+// }
 
 // function Get(URL) {
 //   var Httpreq = new XMLHttpRequest(); // a new request
