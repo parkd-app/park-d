@@ -168,6 +168,13 @@
                 // console.log('created', annotation);
                 // writeToJSON(annotation, anno.getAnnotations());
                 createAnnotation(annotation, anno.getAnnotations());
+                let paths = [
+                    { lat: map.getCenter().lat(), lng: map.getCenter().lng() },
+                    { lat: map.getCenter().lat(), lng: map.getCenter().lng() + 0.00015},
+                    { lat: map.getCenter().lat() + 0.0001, lng: map.getCenter().lng() + 0.00015},
+                    { lat: map.getCenter().lat() + 0.0001, lng: map.getCenter().lng() },
+                ];
+                putSpot(paths, w3cCoords(annotation));
             });
 
             anno.on('createSelection', function (selection) {
@@ -189,14 +196,24 @@
 
             anno.on('deleteAnnotation', function (annotation) {
                 deleteAnnotation(annotation, anno.getAnnotations());
+                window["spot" + annotation.id].setMap(null);
+                window["spot" + annotation.id] = undefined;
             });
 
             anno.on('mouseEnterAnnotation', function (annotation) {
+                try {
+                    window["spot" + annotation.id].setOptions({fillColor:"#FFFFFF"});
+                } catch (e) {
+                }
                 // hoverAnn = true;
                 // console.log('enter');
             });
 
             anno.on('mouseLeaveAnnotation', function (annotation) {
+                try {
+                    window["spot" + annotation.id].setOptions({fillColor:newSpotColor});
+                } catch (e) {
+                }
                 // hoverAnn = false;
                 // console.log('leave');
             });

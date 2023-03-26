@@ -42,7 +42,7 @@ var clickChoice = 0;
 var pointsClicked = 0;
 var corners = [];
 
-var spotData;
+var spaceData;
 var numSpots;
 var nextID = -1;
 
@@ -119,7 +119,6 @@ function createLot() {
   owner = document.getElementById("NewOwnerBox").value;
   youtubeURL = document.getElementById("URLBox").value;
   lots = JSON.parse(Get(allLotURL, {}))["parking_lots"];
-  console.log(lots)
   for (let i = 0; i < lots.length; i++) {
     if (lots[i].name == owner) {
       if (lots[i].id >= lotID) lotID = lots[i].id + 1;
@@ -129,12 +128,11 @@ function createLot() {
   payload.id = lotID;
   payload.name = owner;
   payload.url = youtubeURL;
-  console.log(payload);
   Post(createLotURL, payload);
 
-  spotData = [];
+  spaceData = [];
   uploadSpots();
-  nextID = 1;
+  nextID = 0;
   numSpots = 0;
 
   document.getElementById("NewLotButtons").style.display = "none";
@@ -153,7 +151,7 @@ function addingSpot() {
 }
 
 // admin placing spot
-function putSpot(corners) {
+function putSpot(corners, camcorners) {
   window["spot" + nextID] = new google.maps.Polygon({
     paths: corners,
     strokeColor: document.getElementById("TypeMenu").value,
@@ -171,10 +169,10 @@ function putSpot(corners) {
   let newSpot = {};
   newSpot.id = nextID;
   newSpot.status = true;
-  newSpot.camcoords = [];
+  newSpot.camcoords = camcorners;
   newSpot.type = colorToType[window["spot" + nextID].get("strokeColor")];
-  spotData[numSpots] = newSpot;
-  console.log(spotData);
+  spaceData[numSpots] = newSpot;
+  console.log(spaceData);
   nextID++;
   numSpots++;
 }
@@ -210,16 +208,16 @@ function loadAllSpots(ID, owner) {
   body = {};
   body.parking_lot_id = ID;
   body.owner = owner;
-  spotData = JSON.parse(Get(jsonURL, body))["parking_lots"]["parking_spaces"]; // TODO make sure this matches Gary's
-  console.log(spotData);
+  spaceData = JSON.parse(Get(jsonURL, body))["parking_lots"]["parking_spaces"]; // TODO make sure this matches Gary's
+  console.log(spaceData);
 
-  for (let i = 0; i < spotData.length; i++) {
-    let coords = spotData[i].mapcoords;
-    let open = spotData[i].status;
-    let type = spotData[i].type;
+  for (let i = 0; i < spaceData.length; i++) {
+    let coords = spaceData[i].mapcoords;
+    let open = spaceData[i].status;
+    let type = spaceData[i].type;
 
     // spots are stored here, by ID
-    window["spot" + spotData[i].id] = new google.maps.Polygon({
+    window["spot" + spaceData[i].id] = new google.maps.Polygon({
       paths: [
         { lat: coords[0][0], lng: coords[0][1] },
         { lat: coords[1][0], lng: coords[1][1] },
@@ -235,12 +233,12 @@ function loadAllSpots(ID, owner) {
       draggable: true,
       geodesic: true,
     });
-    window["spot" + spotData[i].id].setMap(map);
-    addSpaceListener(spotData[i].id);
-    if (spotData[i].id > nextID) nextID = spotData[i].id;
+    window["spot" + spaceData[i].id].setMap(map);
+    addSpaceListener(spaceData[i].id);
+    if (spaceData[i].id > nextID) nextID = spaceData[i].id;
   }
   nextID++;
-  numSpots = spotData.length;
+  numSpots = spaceData.length;
 
   setUpButtons();
 }
@@ -263,9 +261,8 @@ function uploadSpots() {
   body.id = lotID;
   body.owner = owner;
   let spaces = [];
-  console.log(spotData.length)
-  for (let i = 0; i < spotData.length; i++) {
-    let spotID = spotData[i].id;
+  for (let i = 0; i < spaceData.length; i++) {
+    let spotID = spaceData[i].id;
     if (window["spot" + spotID] == undefined) continue;
 
     let coords = [];
@@ -274,16 +271,16 @@ function uploadSpots() {
       let coord = path.getAt(j);
       coords.push([coord.lat(), coord.lng()]);
     }
-    spotData[i].status = true;
-    spotData[i].mapcoords = coords;
-    spotData[i].type = colorToType[window["spot" + spotID].get("strokeColor")];
+    spaceData[i].status = true;
+    spaceData[i].mapcoords = coords;
+    spaceData[i].type = colorToType[window["spot" + spotID].get("strokeColor")];
 
-    spaces.push(spotData[i]);
+    spaces.push(spaceData[i]);
   }
   body.parking_spaces = spaces;
+  body.w3c = activeAnnotations;
   let payload = {};
   payload.parking_lots = body;
-  console.log(payload);
   try {
     Post(postURL, payload);
     document.getElementById("SaveButton").textContent = "Save Successful";
