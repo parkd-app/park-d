@@ -82,7 +82,8 @@
             <input type="text" id="IDBox" name="IDBox"><br>
             <label id="OwnerLabel" for="OwnerBox">Owner:</label>
             <input type="text" id="OwnerBox" name="OwnerBox"><br>
-            <button type="button" id="LoadLotButton" onclick="loadLot()">
+            <button type="button" id="LoadLotButton"
+                onclick="loadLot(); loadAnnotations(document.getElementById('test_lot'))">
                 Load Lot
             </button>
             <button type="button" id="NewLotButton" onclick="creatingLot()">
@@ -201,7 +202,7 @@
             });
 
             // anno.loadAnnotations();
-            anno.setAnnotations(loadBirdAnn(1));
+            // anno.setAnnotations(loadBirdAnn(1));
 
             var toolToggle = document.getElementById('current-tool');
             toolToggle.addEventListener('click', function () {

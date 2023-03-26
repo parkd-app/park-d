@@ -24,8 +24,8 @@ var activeAnnotations = [];
 var lotData = [];
 var spotData = [];
 
-var activeLot = 1;
-var lotOwner = "Jonathan";
+var activeLot;
+var lotOwner;
 
 function Get(URL, body) {
   // console.log(body);
@@ -45,6 +45,14 @@ function Post(URL, body) {
   Httpreq.send(JSON.stringify(body));
   // console.log(Httpreq.responseText);
   return Httpreq.responseText;
+}
+
+function loadAnnotations(image) {
+  lotID = parseInt(document.getElementById("IDBox").value);
+  owner = document.getElementById("OwnerBox").value;
+  activeLot = lotID;
+  lotOwner = owner;
+  anno.setAnnotations(loadBirdAnn(activeLot));
 }
 
 function createAnnotation(annotation, currAnnotations) {
