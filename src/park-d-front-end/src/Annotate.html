@@ -18,7 +18,7 @@
     <script src="./Navbar.js"></script>
     <script src="./adminmap.js"></script>
     <script src="./intersect.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css" />
     <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -38,16 +38,17 @@
                                 <i class="fa fa-bars"></i>
                             </button>
                         </div>
-                            
-                        <a href="#site-banner" class="navbar-brand"><img src="./Images/park-d-logo-large.svg" alt="" /></a>
+
+                        <a href="#site-banner" class="navbar-brand"><img src="./Images/park-d-logo-large.svg"
+                                alt="" /></a>
                         <div class="col-md-11 text-right">
-                            <button class="nav-button">Logout</button> 
-                        </div>   
-                    </div>              
+                            <button class="nav-button">Logout</button>
+                        </div>
+                    </div>
                 </nav>
             </div>
         </header>
-        
+
         <div class="sidebar" id="sidebar" style="display: none">
             <div class="side-nav-content">
                 <ul class="nav-list">
@@ -70,7 +71,7 @@
                 </ul>
             </div>
         </div>
-        
+
         <div class="container">
             <div class="row">
                 <div class="panel col-md-6">
@@ -79,13 +80,13 @@
                             <button class="button" id="current-tool">Polygon</button>
                             <!-- <button class="button" id="sidebtn" onclick="show('side')">Load Side View</button>
                             <button class="button" id="birdbtn" onclick="show('bird')">Load Bird View</button> -->
-                            <button class="button" id="birdbtn" onclick="saveAnn()">Save Annotations</button>
+                            <button class="button" id="birdbtn" onclick="uploadSpots()">Save Annotations</button>
                         </p>
                         <div class="ann_image">
                             <img id="test_lot" src="" style="max-width:100%;">
                             <script>
-                                var img = document.getElementById("test_lot");
-                                img.src = getSnapshot();
+                                // var img = document.getElementById("test_lot");
+                                // img.src = getSnapshot();
                             </script>
                         </div>
                     </div>
@@ -102,7 +103,7 @@
                             <label id="OwnerLabel" for="OwnerBox">Owner:</label>
                             <input type="text" id="OwnerBox" name="OwnerBox"><br>
                             <button class="button" type="button" id="LoadLotButton"
-                                onclick="loadLot(); loadAnnotations(document.getElementById('test_lot'))">
+                                onclick="loadLot(); loadAnnotations(false, document.getElementById('test_lot'))">
                                 Load Lot
                             </button>
                             <button class="button" type="button" id="NewLotButton" onclick="creatingLot()">
@@ -114,7 +115,8 @@
                             <input type="text" id="NewOwnerBox" name="NewOwnerBox"><br>
                             <label id="URLLabel" for="URLBox">YouTube stream URL:</label>
                             <input type="text" id="URLBox" name="URLBox"><br>
-                            <button type="button" id="CreateLotButton" onclick="createLot()">
+                            <button type="button" id="CreateLotButton"
+                                onclick="createLot(); loadAnnotations(true, document.getElementById('test_lot'))">
                                 Create Lot
                             </button>
                         </div>
@@ -141,10 +143,10 @@
                     <div id="map"></div>
                 </div>
             </div>
-        </div>    
+        </div>
     </div>
 
-    
+
     <script async defer
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDWaVhLQMYdNjRXmcZga657_etUC-9HBmQ&callback=initMap"></script>
     <script>
@@ -154,7 +156,7 @@
                 image: 'test_lot',
                 locale: 'auto',
                 drawOnSingleClick: false,
-                crosshair: true,
+                crosshair: false,
                 // allowEmpty: false,
                 // disableEditor: false,
                 widgets: [

@@ -11,6 +11,7 @@ var w3cURL = backURL + "w3c";
 var snapURL = backURL + "get_parking_snapshot?name=";
 var snapBackupURL = backURL + "get_parking_snapshot_backup";
 var saveURL = backURL + "save_coord";
+var customStream = "https://www.youtube.com/watch?v=dV94mk7kfAc";
 // var coordBird = "http://localhost:8000/formatted_bird";
 // var coordSide = "http://localhost:8000/formatted_side";
 // var imgURL = "http://localhost:8000/assets/images/";
@@ -72,10 +73,15 @@ function loadAnnotations(newLot, image) {
   } else {
     lotID = parseInt(document.getElementById("IDBox").value);
     owner = document.getElementById("OwnerBox").value;
+    payload = {};
+    payload.id = lotID;
+    payload.name = owner;
+    lotData = JSON.parse(Get(coordURL, payload)).result;
+    lotURL = lotData.parking_lots.url;
   }
-  parkingLot = Get();
   activeLot = lotID;
   lotOwner = owner;
+  image.src = getSnapshot(lotURL);
   anno.setAnnotations(loadBirdAnn(activeLot));
 }
 
@@ -325,20 +331,25 @@ function w3cToSide(annotation) {
   return coordArr;
 }
 
-function getSnapshot() {
+function getSnapshot(link) {
   // body = {};
   // // body.url = "https://www.youtube.com/watch?v=c38K8IsYnB0";
   // body.url =
   //   "https://www.youtube.com/watch?v=pOGKQmIpcm0&ab_channel=ELCOMLoznica";
-  payload = {
-    name: "Jon",
-  };
+  console.log("getting snapshot");
+  console.log(link);
+  if (link.length > 10) {
+    payload = {};
+    payload.url = link;
+    var imageURL = JSON.parse(Get(snapBackupURL, payload)).url;
+  } else {
+    var imageURL = JSON.parse(Get(snapURL + link)).url;
+  }
   // console.log("getting snapshot");
   // console.log("body = ");
   // console.log(body);
   // var imageURL = JSON.parse(Get(snapBackupURL, body)).url;
-  console.log(payload);
-  var imageURL = JSON.parse(Get(snapURL + "Jon")).url;
+  console.log(imageURL);
   return imageURL;
 }
 

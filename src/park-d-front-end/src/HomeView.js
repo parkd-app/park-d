@@ -534,6 +534,7 @@ function loadAllSpots(ID, owner) {
     window["spot" + spotData[i].id].setMap(map);
     parkingLayoutIds.push("spot" + spotData[i].id);
   }
+  reloadAnalytics();
   numSpots = spotData.length;
   clearInterval(intervalID);
   intervalID = setInterval(updateSpots, updateInterval);
@@ -685,4 +686,10 @@ function drawGraph(labels, data, backgroundColours, totalSpots) {
       },
     },
   });
+}
+
+function reloadAnalytics() {
+  // lotID and lotOwner are global variables
+  let theID = lotID;
+  let theOwner = lotOwner; 
 }

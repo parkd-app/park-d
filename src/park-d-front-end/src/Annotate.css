@@ -54,7 +54,7 @@
   background-size: cover;
   opacity: 1;
   position: relative;
-  overflow: hidden;
+  overflow: visible;
 }
 
 .header_area {
@@ -361,6 +361,7 @@
   text-align: left;
 }
 .ann_image {
+  z-index: 0;
   display: flex;
   justify-content: center;
   top: 100px;
@@ -368,6 +369,9 @@
   border-radius: 4px;
   padding: 10px;
   max-width: 1200px;
+}
+.r6o-editor {
+  z-index:999;
 }
 .button {
   background-color: rgba(249, 255, 0, 1); /* Green */
