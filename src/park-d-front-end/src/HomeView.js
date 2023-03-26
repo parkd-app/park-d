@@ -17,7 +17,7 @@ var noPoi = [
 ];
 var defaultOptions = {
   zoom: 15,
-  center: { lat: 43.2617, lng: -79.9228 },
+  center: { lat: 43.889901600142586, lng: -79.31179722822955 },
 
   disableDefaultUI: true,
   styles: noPoi,
@@ -56,6 +56,7 @@ var intervalID;
 var initialized = false;
 
 var selectionToggle = false;
+var selection;
 var parkingLayoutIds = [];
 
 const locationOptions = {
@@ -93,11 +94,16 @@ function initMap() {
 
   google.maps.event.addListener(map, "click", function (event) {
     if (clickChoice == 1) {
-      var selection = verifySpotSelect(event.latLng);
+      selection = verifySpotSelect(event.latLng);
+      console.log(window[parkingLayoutIds[selection]].status)
       if (selection == -1) {
         getDocEle("direction_guide").textContent = "Invalid Spot";
         return;
-      } else {
+      } else if (!window[parkingLayoutIds[selection]].status) {
+        getDocEle("direction_guide").textContent = "Spot taken";
+        return;
+      } 
+      else {
         clickDestination = { coords: event.latLng };
         confirmSpotSelect();
       }
@@ -110,10 +116,14 @@ function initMap() {
 
 function verifySpotSelect(dest) {
   dest = new google.maps.LatLng(dest.lat(), dest.lng());
+  console.log(parkingLayoutIds.length);
   for (let index = 0; index < parkingLayoutIds.length; index++) {
+    console.log(parkingLayoutIds[index]);
     poly = window[parkingLayoutIds[index]];
+    console.log(poly)
     contains = google.maps.geometry.poly.containsLocation(dest, poly);
     if (contains) {
+      console.log(index)
       return index;
     }
   }
@@ -123,6 +133,7 @@ function verifySpotSelect(dest) {
 function confirmSpotSelect() {
   directionsRenderer.setMap(map);
   hasRoute = true;
+  console.log(selection)
   targetSpot = parkingLayoutIds[selection];
   getDocEle("direction_guide").textContent = "Calculating Route";
   getRoute();
@@ -188,6 +199,7 @@ function updateRoute() {
   directionsRenderer.setMap(null);
   directionsRenderer.setMap(map);
   const d = new Date();
+  console.log(targetSpot)
   if (
     google.maps.geometry.spherical.computeDistanceBetween(
       clickOrigin.coords,
@@ -195,7 +207,7 @@ function updateRoute() {
     ) < distanceTol
   ) {
     resetRoute(1);
-  } else if (!window[targetSpot].open) {
+  } else if (!window[targetSpot].status) {
     resetRoute(2);
   } else if (timeoutTime != -1 && d.getTime() / 1000 > timeoutTime) {
     resetRoute(3);
@@ -205,6 +217,7 @@ function updateRoute() {
 }
 
 function resetRoute(resetReason) {
+  console.log("route reset");
   clickChoice = navDisable ? -1 : 1;
   targetSpot = -1;
   hasRoute = false;
@@ -504,9 +517,11 @@ function loadAllSpots(ID, owner) {
       fillColor: open ? "#00FF00" : "#FF0000",
       fillOpacity: 0.35,
       geodesic: true,
+      clickable: false,
     });
-    window["spot" + spotData[i].id].status = true;
+    window["spot" + spotData[i].id].status = open;
     window["spot" + spotData[i].id].setMap(map);
+    parkingLayoutIds.push("spot" + spotData[i].id);
   }
   numSpots = spotData.length;
   clearInterval(intervalID);
