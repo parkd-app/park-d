@@ -74,7 +74,7 @@ function loadAnnotations(newLot, image) {
     lotID = parseInt(document.getElementById("IDBox").value);
     owner = document.getElementById("OwnerBox").value;
     payload = {};
-    payload.id = lotId;
+    payload.id = lotID;
     payload.name = owner;
     lotData = JSON.parse(Get(coordURL, payload)).result;
     lotURL = lotData.parking_lots.url;

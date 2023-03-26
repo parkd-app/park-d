@@ -80,12 +80,12 @@
                             <button class="button" id="current-tool">Polygon</button>
                             <!-- <button class="button" id="sidebtn" onclick="show('side')">Load Side View</button>
                             <button class="button" id="birdbtn" onclick="show('bird')">Load Bird View</button> -->
-                            <button class="button" id="birdbtn" onclick="saveAnn()">Save Annotations</button>
+                            <button class="button" id="birdbtn" onclick="uploadSpots()">Save Annotations</button>
                         </p>
                         <div class="ann_image">
                             <img id="test_lot" src="" style="max-width:100%;">
                             <script>
-                                var img = document.getElementById("test_lot");
+                                // var img = document.getElementById("test_lot");
                                 // img.src = getSnapshot();
                             </script>
                         </div>
@@ -156,7 +156,7 @@
                 image: 'test_lot',
                 locale: 'auto',
                 drawOnSingleClick: false,
-                crosshair: true,
+                crosshair: false,
                 // allowEmpty: false,
                 // disableEditor: false,
                 widgets: [

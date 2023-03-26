@@ -360,6 +360,7 @@
   text-align: left;
 }
 .ann_image {
+  z-index: 0;
   display: flex;
   justify-content: center;
   top: 100px;
