@@ -103,6 +103,7 @@
 .header_area .main-menu .navbar i {
   color: white;
   font-size: 30px;
+  padding: 7px;
 }
 
 .header_area .main-menu .navbar .navbar-icon {
@@ -170,12 +171,12 @@
   line-height: 25px;
 }
 
-.nav-list-item span {
-  width: 170px;
-  text-transform: capitalize;
-}
-
-.nav-list-item a {
+.nav-list-item a{
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  padding: 12px 0px;
+  text-decoration: none;
   text-decoration: none;
   font-size: 17px;
   color: white;

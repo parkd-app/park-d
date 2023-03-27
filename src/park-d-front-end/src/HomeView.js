@@ -165,14 +165,12 @@ function setTimeoutTime(response, status) {
 
 function initPage() {
   authorized = confirm("Confirm that you are authorized to use restricted spaces, or Cancel if you are not.")
-  console.log("he");
-  console.log(userMode);
   getDocEle("analytics_bg1").style.display = "none";
-
   getDocEle("nav-button").style.display = userMode ? "none" : "block";
-  getDocEle("loginView").style.display = userMode ? "block" : "none";
   getDocEle("search_bar_bg").style.display = userMode ? "block" : "none";
-  getDocEle("annotate").style.display = userMode ? "none" : "block";
+  getDocEle('annotate').innerHTML = userMode ?
+    '<i class="fa fa-user-circle" aria-hidden="true"></i><a class="nav-link" href="index.html">Admin View</a>' :
+    '<i class="fa fa-pencil-square-o" aria-hidden="true"></i><a href="Annotate.html">Edit Parking Lot</a>';
   // getDocEle("adminMap").style.display = userMode ? "none" : "block";
   // document.getElementById("SetupBirdButton").style.display = userMode
   //   ? "none"
@@ -693,5 +691,5 @@ function drawGraph(labels, data, backgroundColours, totalSpots) {
 function reloadAnalytics() {
   // lotID and lotOwner are global variables
   let theID = lotID;
-  let theOwner = lotOwner; 
+  let theOwner = lotOwner;
 }

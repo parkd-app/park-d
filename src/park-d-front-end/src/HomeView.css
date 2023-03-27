@@ -73,6 +73,7 @@ body {
 .header_area .main-menu .navbar i {
   color: white;
   font-size: 30px;
+  padding: 7px;
 }
 
 .header_area .main-menu .navbar .navbar-icon {
@@ -140,12 +141,12 @@ body {
   line-height: 25px;
 }
 
-.nav-list-item span {
-  width: 170px;
-  text-transform: capitalize;
-}
-
-.nav-list-item a {
+.nav-list-item a{
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  padding: 12px 0px;
+  text-decoration: none;
   text-decoration: none;
   font-size: 17px;
   color: white;
@@ -153,6 +154,13 @@ body {
   font-weight: Medium;
 }
 
+.nav-list-item .text {
+  margin: auto;
+}
+.nav-list-item a:hover{
+  text-decoration: none;
+  color: white;
+}
 .flex-container {
   display: flex;
   padding: 10px 10px;
@@ -333,7 +341,7 @@ body {
 .analytics_bg1 {
   display: none;
   width: 30vw;
-  height: 91.75vh;
+  height: calc(100vh - 70px);
   background: rgb(255, 255, 255);
   box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
   position: absolute;
@@ -394,7 +402,7 @@ body {
 
 @media screen and (max-width: 1450px) {
   .analytics_bg1 {
-    height: 90vh;
+    height: calc(100vh - 70px);
   }
 
   .analytics_cards_bg {
