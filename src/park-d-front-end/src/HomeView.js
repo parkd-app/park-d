@@ -167,7 +167,6 @@ function initPage() {
   authorized = confirm("Confirm that you are authorized to use restricted spaces, or Cancel if you are not.")
   getDocEle("analytics_bg1").style.display = "none";
   getDocEle("nav-button").style.display = userMode ? "none" : "block";
-  getDocEle("navbar-icon").style.display = userMode ? "none" : "block";
   getDocEle("search_bar_bg").style.display = userMode ? "block" : "none";
   getDocEle('annotate').innerHTML = userMode ?
     '<i class="fa fa-user-circle" aria-hidden="true"></i><a class="nav-link" href="index.html">Admin View</a>' :
