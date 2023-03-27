@@ -677,6 +677,48 @@ function drawGraph(labels, data, backgroundColours, totalSpots) {
 
 function reloadAnalytics() {
   // lotID and lotOwner are global variables
-  let theID = lotID;
-  let theOwner = lotOwner;
+  body = {};
+  body.parking_lot_id = lotID;
+  body.owner = lotOwner;
+
+  spotData = JSON.parse(Get(jsonURL, body))["parking_lots"]["parking_spaces"];
+
+  let resAvail = 0;
+  let accAvail = 0;
+  let stdAvail = 0;
+
+  let resSpots = 0;
+  let accSpots = 0;
+  let stdSpots = 0;
+
+  let totalSpots = spotData.length;
+
+  spotData.forEach(data => {
+    switch (data.type) {
+      case 0: stdSpots++; break;
+      case 1: accSpots++; break;
+      default: resSpots++;
+    }
+
+    if (data.status == true) {
+      switch (data.type) {
+        case 0: stdAvail++; break;
+        case 1: accAvail++; break;
+        default: resAvail++;
+      }
+    }
+  })
+
+  let totalAvail = resAvail + accAvail + stdAvail;
+
+  document.getElementById("res_number").innerHTML = resAvail;
+  document.getElementById("acc_number").innerHTML = accAvail;
+  document.getElementById("std_number").innerHTML = stdAvail;
+
+  document.getElementById("res_total").innerHTML = "out of " + resSpots;
+  document.getElementById("acc_total").innerHTML = "out of " + accSpots;
+  document.getElementById("std_total").innerHTML = "out of " + stdSpots;
+
+  document.getElementById("total_text").innerHTML =
+    "TOTAL AVAILABLE - " + totalAvail + "/" + totalSpots;
 }
