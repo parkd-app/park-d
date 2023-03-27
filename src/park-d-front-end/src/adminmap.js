@@ -60,16 +60,12 @@ function initMap() {
   google.maps.event.addListener(map, "click", function (event) {
     if (clickChoice == 1) {
       pointsClicked++;
-      document.getElementById("PickLabel").textContent =
-        "Select " + (4 - pointsClicked) + " more points";
       corners.push(event.latLng);
 
       if (pointsClicked == 4) {
         pointsClicked = 0;
         putSpot(corners);
         corners = [];
-        document.getElementById("PickLabel").textContent =
-          "Spot added. Keep clicking to add more";
       }
     }
   });
@@ -84,10 +80,7 @@ function resetData() {
   clickChoice = 0;
   corners = [];
   pointsClicked = 0;
-  document.getElementById("PickLabel").textContent = "Admin View";
-  //document.getElementById("AddSpotButton").textContent = "Add Spot";
   document.getElementById("ChangeSpotButton").textContent = "Change Spot Type";
-  //document.getElementById("RemoveSpotButton").textContent = "Remove Spot";
 }
 
 function loadLot() {
@@ -98,7 +91,7 @@ function loadLot() {
   } catch (e) {
     document.getElementById("LoadLotButton").textContent = "Load Failed!";
     setTimeout(() => {
-      document.getElementById("LoadLotButton").textContent = "Load Lot";
+      document.getElementById("LoadLotButton").textContent = "Load Existing Lot";
     }, 2000);
     console.log(e);
   }
@@ -157,7 +150,6 @@ function createLot() {
 function addingSpot() {
   if (clickChoice != 1) {
     clickChoice = 1;
-    document.getElementById("PickLabel").textContent = "Click to add a spot";
     document.getElementById("AddSpotButton").textContent = "Done";
   } else {
     resetData();
@@ -196,8 +188,6 @@ function changingSpot() {
   if (clickChoice != 2) {
     resetData();
     clickChoice = 2;
-    document.getElementById("PickLabel").textContent =
-      "Click a spot to change to current selected type";
     document.getElementById("ChangeSpotButton").textContent = "Done";
   } else {
     resetData();
@@ -209,8 +199,6 @@ function removingSpot() {
   if (clickChoice != 3) {
     resetData();
     clickChoice = 3;
-    document.getElementById("PickLabel").textContent =
-      "Click a spot to remove it";
     document.getElementById("RemoveSpotButton").textContent = "Done";
   } else {
     resetData();
