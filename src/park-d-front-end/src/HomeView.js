@@ -61,7 +61,7 @@ var selection;
 var parkingLayoutIds = [];
 
 const locationOptions = {
-  maximumAge: Infinity,
+  maximumAge: positionUpdateTime,
   timeout: 5000,
   enableHighAccuracy: true,
 };
