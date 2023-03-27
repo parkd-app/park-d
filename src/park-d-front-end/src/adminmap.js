@@ -30,7 +30,7 @@ var noPoi = [
 ];
 var defaultOptions = {
   zoom: 19,
-  center: { lat: 43.8899806, lng: -79.3120005 },
+  center: { lat: 43.26279090319564, lng: -79.9169064541978 },
   mapTypeId: "satellite",
   tilt: 0,
   styles: noPoi,
