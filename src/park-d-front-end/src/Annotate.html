@@ -14,6 +14,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@recogito/annotorious@2.7.10/dist/annotorious.min.js"></script>
     <script src="./constants.js"></script> <!-- Constants must be loaded first -->
     <!-- <script src="annotorious.min.js"></script> -->
+    <script type="module" src="./scripts/HomeViewAuth.js"></script>
     <script src="./Annotate.js"></script>
     <script src="./Navbar.js"></script>
     <script src="./adminmap.js"></script>
@@ -38,12 +39,13 @@
                                 <i class="fa fa-bars"></i>
                             </button>
                         </div>
-                            
-                        <a href="#site-banner" class="navbar-brand"><img src="./Images/park-d-logo-large.svg" alt="" /></a>
+
+                        <a href="#site-banner" class="navbar-brand"><img src="./Images/park-d-logo-large.svg"
+                                alt="" /></a>
                         <div>
-                            <button id="btnLogout" class="nav-button">Logout</button> 
-                        </div>   
-                    </div>              
+                            <button id="btnLogout" class="nav-button">Logout</button>
+                        </div>
+                    </div>
                 </nav>
             </div>
         </header>
@@ -60,8 +62,8 @@
                         <a href="Annotate.html">Edit Parking Lot</a>
                     </li>
                     <li class="nav-list-item">
-                      <i class="fa fa-question-circle-o" aria-hidden="true"></i>
-                      <a class="nav-link" href="#">About</a>
+                        <i class="fa fa-question-circle-o" aria-hidden="true"></i>
+                        <a class="nav-link" href="#">About</a>
                     </li>
                     <li class="nav-list-item">
                         <i class="fa fa-phone" aria-hidden="true"></i>
@@ -69,7 +71,7 @@
                     </li>
                 </ul>
             </div>
-          </div>
+        </div>
 
         <div class="container">
             <div class="row">
@@ -79,7 +81,6 @@
                             <button class="button" id="current-tool">Polygon</button>
                             <!-- <button class="button" id="sidebtn" onclick="show('side')">Load Side View</button>
                             <button class="button" id="birdbtn" onclick="show('bird')">Load Bird View</button> -->
-                            <button class="button" id="birdbtn" onclick="uploadSpots()">Save Annotations</button>
                         </p>
                         <div class="ann_image">
                             <img id="test_lot" src="" style="max-width:100%;">
@@ -103,7 +104,7 @@
                             <input type="text" id="OwnerBox" name="OwnerBox"><br>
                             <button class="button" type="button" id="LoadLotButton"
                                 onclick="loadLot(); loadAnnotations(false, document.getElementById('test_lot'))">
-                                Load Lot
+                                Load Existing Lot
                             </button>
                             <button class="button" type="button" id="NewLotButton" onclick="creatingLot()">
                                 Create New Lot
@@ -114,9 +115,12 @@
                             <input type="text" id="NewOwnerBox" name="NewOwnerBox"><br>
                             <label class="words" id="URLLabel" for="URLBox">YouTube stream URL:</label>
                             <input type="text" id="URLBox" name="URLBox"><br>
+                            <button class="button" type="button" id="LoadingLotButton" onclick="loadingLot();">
+                                Load Existing Lot
+                            </button>
                             <button class="button" type="button" id="CreateLotButton"
                                 onclick="createLot(); loadAnnotations(true, document.getElementById('test_lot'))">
-                                Create Lot
+                                Create New Lot
                             </button>
                         </div>
                         <div id="SpaceButtons" style="display:none">
@@ -136,6 +140,9 @@
                             </button> -->
                             <button class="button" type="button" id="SaveButton" onclick="uploadSpots()">
                                 Save Changes
+                            </button>
+                            <button class="button" type="button" id="RefreshButton" onclick="refresh()">
+                                Load Different Lot
                             </button>
                         </div>
                     </div>
@@ -185,14 +192,9 @@
 
             anno.on('startSelection', function (point) {
                 // console.log(point.x, point.y)
-                // if (hoverAnn) {
-
-                // }
             });
 
             anno.on('createAnnotation', function (annotation) {
-                // console.log('created', annotation);
-                // writeToJSON(annotation, anno.getAnnotations());
                 createAnnotation(annotation, anno.getAnnotations());
                 let paths = [
                     { lat: map.getCenter().lat(), lng: map.getCenter().lng() },
@@ -204,7 +206,6 @@
             });
 
             anno.on('createSelection', function (selection) {
-                // console.log('created', selection);
                 var intersect = checkIntersection(selection);
                 if (intersect) {
                     anno.cancelSelected();
@@ -213,7 +214,7 @@
 
             anno.on('updateAnnotation', function (annotation, previous) {
                 console.log('updated', previous, 'with', annotation);
-                updateAnnotation(annotation, previous/*, anno.getAnnotations()*/);
+                updateAnnotation(annotation, previous);
             });
 
             anno.on('clickAnnotation', function (annotation, shape) {
@@ -221,7 +222,7 @@
             });
 
             anno.on('deleteAnnotation', function (annotation) {
-                deleteAnnotation(annotation, anno.getAnnotations());
+                deleteAnnotation(annotation);
                 window["spot" + annotation.id].setMap(null);
                 window["spot" + annotation.id] = undefined;
             });
@@ -231,8 +232,6 @@
                     window["spot" + annotation.id].setOptions({ fillColor: "#FFFFFF" });
                 } catch (e) {
                 }
-                // hoverAnn = true;
-                // console.log('enter');
             });
 
             anno.on('mouseLeaveAnnotation', function (annotation) {
@@ -240,12 +239,7 @@
                     window["spot" + annotation.id].setOptions({ fillColor: newSpotColor });
                 } catch (e) {
                 }
-                // hoverAnn = false;
-                // console.log('leave');
             });
-
-            // anno.loadAnnotations();
-            // anno.setAnnotations(loadBirdAnn(1));
 
             var toolToggle = document.getElementById('current-tool');
             toolToggle.addEventListener('click', function () {
@@ -258,20 +252,6 @@
                 }
             });
         }
-        // function show(view) {
-        //     if (view == "side") {
-        //         document.getElementById('test_lot')
-        //             .src = getSideURL();
-        //         anno.loadAnnotations(getSideAnn());
-        //         setView("side");
-        //     } else {
-        //         document.getElementById('test_lot')
-        //             .src = getBirdURL();
-        //         anno.loadAnnotations(getBirdAnn());
-        //         setView("bird");
-        //     }
-
-        // }
     </script>
     <script src="./Annotate.js"></script>
     </div>

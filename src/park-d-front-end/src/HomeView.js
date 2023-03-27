@@ -17,7 +17,7 @@ var noPoi = [
 ];
 var defaultOptions = {
   zoom: 15,
-  center: { lat: 43.889901600142586, lng: -79.31179722822955 },
+  center: { lat: 43.26279090319564, lng: -79.9169064541978 },
 
   disableDefaultUI: true,
   styles: noPoi,
@@ -43,7 +43,7 @@ var timeoutTime = -1;
 const positionUpdateTime = 500;
 var routeSteps = null;
 const autoRouteDist = 0.00005; //Might need to tweek numbers to prevent skipping around, but it can't be perfect
-var autoNavMode = false;
+var autoNavMode = true;
 var autoNavComplete = false;
 
 var lotData;
@@ -440,22 +440,26 @@ function getDocEle(className) {
 
 function loadAllLots() {
   lotData = JSON.parse(Get(allLotURL, {}))["parking_lots"];
+  console.log(lotData)
   for (let i = 0; i < lotData.length; i++) {
     body = {};
     body.id = lotData[i].id;
     body.name = lotData[i].name;
+    console.log("body", body)
     let spots = JSON.parse(Get(prevLayoutURL, body))["result"]["parking_lots"]["parking_spaces"];
-    window["lot" + lotData[i].name + lotData[i].id] = new google.maps.Circle({
-      strokeColor: "#0000FF",
-      fillColor: "#0000FF",
-      map,
-      center: {
-        lat: spots[0].mapcoords[0][0],
-        lng: spots[0].mapcoords[0][1],
-      },
-      radius: 20,
-    });
-    addLotListener(lotData[i].name, lotData[i].id);
+    if(spots != undefined) {
+      window["lot" + lotData[i].name + lotData[i].id] = new google.maps.Circle({
+        strokeColor: "#0000FF",
+        fillColor: "#0000FF",
+        map,
+        center: {
+          lat: spots[0].mapcoords[0][0],
+          lng: spots[0].mapcoords[0][1],
+        },
+        radius: 100,
+      });
+      addLotListener(lotData[i].name, lotData[i].id);
+    }
   }
 }
 
@@ -521,6 +525,8 @@ function loadAllSpots(ID, owner) {
     window["spot" + spotData[i].id].setMap(map);
     parkingLayoutIds.push("spot" + spotData[i].id);
   }
+  toggleAnalytics(true);
+  if (!selectionToggle) toggleSelection(true);
   reloadAnalytics();
   numSpots = spotData.length;
   clearInterval(intervalID);
@@ -680,6 +686,44 @@ function reloadAnalytics() {
   body = {};
   body.parking_lot_id = lotID;
   body.owner = lotOwner;
+
+  if (lotOwner === "Jon") {
+    document.getElementById("location_name").innerHTML = "ELCOM Loznica";
+    document.getElementById("location_address").innerHTML = "Šabački put 7, Loznica, Serbia";
+
+    document.getElementById("location_name").style.visibility = "visible";
+    document.getElementById("location_address").style.visibility = "visible";
+
+    document.getElementById("total_text").style.visibility = "visible";
+    getDocEle("status").style.display = "none";
+
+    document.getElementById("analytics_cards_bg").style.visibility = "visible";
+    document.getElementById("analyticsGraph").style.visibility = "visible";
+  }
+  else if (lotOwner === "Gary") {
+    document.getElementById("status").innerHTML =
+      "We are crunching these numbers for you... Come back soon!";
+
+    getDocEle("status").style.display = "block";
+    document.getElementById("total_text").style.visibility = "visible";
+
+    document.getElementById("location_name").innerHTML = "1151-1277 W Center St, Cedar City, UT 84720, United States";
+    document.getElementById("location_address").innerHTML = "1151-1277 W Center St Parking";
+
+    document.getElementById("analytics_cards_bg").style.visibility = "visible";
+    document.getElementById("analyticsGraph").style.visibility = "hidden";
+  }
+  else {
+    document.getElementById("location_name").style.visibility = "hidden";
+    document.getElementById("location_address").style.visibility = "hidden";
+
+    document.getElementById("analytics_cards_bg").style.visibility = "hidden";
+    document.getElementById("analyticsGraph").style.visibility = "hidden";
+
+    document.getElementById("total_text").style.visibility = "hidden";
+    getDocEle("status").style.display = "block";
+    document.getElementById("status").innerHTML = "Analytics not yet setup for this parking space...";
+  }
 
   spotData = JSON.parse(Get(jsonURL, body))["parking_lots"]["parking_spaces"];
 

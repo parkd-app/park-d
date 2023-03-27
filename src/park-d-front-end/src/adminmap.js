@@ -43,8 +43,8 @@ var pointsClicked = 0;
 var corners = [];
 
 var spaceData;
-var numSpots;
-var nextID = -1;
+var numSpots = 0;
+var nextID = 0;
 
 var lotID = 1;
 var owner;
@@ -60,16 +60,12 @@ function initMap() {
   google.maps.event.addListener(map, "click", function (event) {
     if (clickChoice == 1) {
       pointsClicked++;
-      document.getElementById("PickLabel").textContent =
-        "Select " + (4 - pointsClicked) + " more points";
       corners.push(event.latLng);
 
       if (pointsClicked == 4) {
         pointsClicked = 0;
         putSpot(corners);
         corners = [];
-        document.getElementById("PickLabel").textContent =
-          "Spot added. Keep clicking to add more";
       }
     }
   });
@@ -84,10 +80,7 @@ function resetData() {
   clickChoice = 0;
   corners = [];
   pointsClicked = 0;
-  document.getElementById("PickLabel").textContent = "Admin View";
-  //document.getElementById("AddSpotButton").textContent = "Add Spot";
   document.getElementById("ChangeSpotButton").textContent = "Change Spot Type";
-  //document.getElementById("RemoveSpotButton").textContent = "Remove Spot";
 }
 
 function loadLot() {
@@ -98,7 +91,7 @@ function loadLot() {
   } catch (e) {
     document.getElementById("LoadLotButton").textContent = "Load Failed!";
     setTimeout(() => {
-      document.getElementById("LoadLotButton").textContent = "Load Lot";
+      document.getElementById("LoadLotButton").textContent = "Load Existing Lot";
     }, 2000);
     console.log(e);
   }
@@ -115,6 +108,12 @@ function creatingLot() {
   document.getElementById("NewLotButtons").style.display = "block";
 }
 
+function loadingLot() {
+  // show necessary boxes
+  document.getElementById("LotButtons").style.display = "block";
+  document.getElementById("NewLotButtons").style.display = "none";
+}
+
 function createLot() {
   // create a parking lot
   owner = document.getElementById("NewOwnerBox").value;
@@ -129,17 +128,17 @@ function createLot() {
   payload.id = lotID;
   payload.name = owner;
   payload.url = youtubeURL;
+
+  spaceData = [];
   Post(createLotURL, payload);
+  uploadSpots();
   window.alert(
     "New parking lot created with ID " +
       lotID +
       ". Note this number for future access."
   );
 
-  spaceData = [];
   //uploadSpots();
-  nextID = 0;
-  numSpots = 0;
 
   document.getElementById("NewLotButtons").style.display = "none";
   document.getElementById("SpaceButtons").style.display = "block";
@@ -149,7 +148,6 @@ function createLot() {
 function addingSpot() {
   if (clickChoice != 1) {
     clickChoice = 1;
-    document.getElementById("PickLabel").textContent = "Click to add a spot";
     document.getElementById("AddSpotButton").textContent = "Done";
   } else {
     resetData();
@@ -188,8 +186,6 @@ function changingSpot() {
   if (clickChoice != 2) {
     resetData();
     clickChoice = 2;
-    document.getElementById("PickLabel").textContent =
-      "Click a spot to change to current selected type";
     document.getElementById("ChangeSpotButton").textContent = "Done";
   } else {
     resetData();
@@ -201,8 +197,6 @@ function removingSpot() {
   if (clickChoice != 3) {
     resetData();
     clickChoice = 3;
-    document.getElementById("PickLabel").textContent =
-      "Click a spot to remove it";
     document.getElementById("RemoveSpotButton").textContent = "Done";
   } else {
     resetData();
@@ -214,14 +208,22 @@ function loadAllSpots(ID, owner) {
   body = {};
   body.id = ID;
   body.name = owner;
-  youtubeURL = JSON.parse(Get(prevLayoutURL, body))["result"]["parking_lots"][
-    "url"
-  ];
-  spaceData = JSON.parse(Get(prevLayoutURL, body))["result"]["parking_lots"][
-    "parking_spaces"
-  ]; // TODO make sure this matches Gary's
+  let lotData = JSON.parse(Get(prevLayoutURL, body))["result"]["parking_lots"]
+  youtubeURL = lotData["url"];
+  spaceData = lotData["parking_spaces"];
   console.log(spaceData);
-
+  if (spaceData == undefined) {
+    spaceData = [];
+    setUpButtons();
+    return;
+  }
+  if (spaceData[0].mapcoords != undefined) {
+    defaultOptions.center = new google.maps.LatLng(
+      spaceData[0].mapcoords[0][0],
+      spaceData[0].mapcoords[0][1]
+    )
+    recenter();
+  }
   for (let i = 0; i < spaceData.length; i++) {
     let coords = spaceData[i].mapcoords;
     let open = spaceData[i].status;
@@ -305,4 +307,8 @@ function uploadSpots() {
       document.getElementById("SaveButton").textContent = "Save Changes";
     }, 2000);
   }
+}
+
+function refresh() {
+  location.reload();
 }

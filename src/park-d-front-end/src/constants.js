@@ -10,7 +10,9 @@ const postURL = backendURL + "save_coord";
 const createLotURL = backendURL + "create_parking_lot";
 const allLotURL = backendURL + "get_all_parking_lots";
 
-const prevLayoutURL = backendURL + "get_prev_layout"
+const prevLayoutURL = backendURL + "get_prev_layout";
+const snapshotURL = backendURL + "get_parking_snapshot?name=";
+const snapshotBackupURL = backendURL + "get_parking_snapshot_backup";
 
 const updateInterval = 5000;
 
