@@ -17,7 +17,7 @@ var noPoi = [
 ];
 var defaultOptions = {
   zoom: 15,
-  center: { lat: 43.889901600142586, lng: -79.31179722822955 },
+  center: { lat: 43.26279090319564, lng: -79.9169064541978 },
 
   disableDefaultUI: true,
   styles: noPoi,
