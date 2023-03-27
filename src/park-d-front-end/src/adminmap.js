@@ -115,6 +115,12 @@ function creatingLot() {
   document.getElementById("NewLotButtons").style.display = "block";
 }
 
+function loadingLot() {
+  // show necessary boxes
+  document.getElementById("LotButtons").style.display = "block";
+  document.getElementById("NewLotButtons").style.display = "none";
+}
+
 function createLot() {
   // create a parking lot
   owner = document.getElementById("NewOwnerBox").value;
@@ -129,14 +135,16 @@ function createLot() {
   payload.id = lotID;
   payload.name = owner;
   payload.url = youtubeURL;
+
+  spaceData = [];
   Post(createLotURL, payload);
+  uploadSpots();
   window.alert(
     "New parking lot created with ID " +
       lotID +
       ". Note this number for future access."
   );
 
-  spaceData = [];
   //uploadSpots();
   nextID = 0;
   numSpots = 0;

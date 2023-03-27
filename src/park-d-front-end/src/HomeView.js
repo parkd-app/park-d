@@ -440,22 +440,26 @@ function getDocEle(className) {
 
 function loadAllLots() {
   lotData = JSON.parse(Get(allLotURL, {}))["parking_lots"];
+  console.log(lotData)
   for (let i = 0; i < lotData.length; i++) {
     body = {};
     body.id = lotData[i].id;
     body.name = lotData[i].name;
+    console.log("body", body)
     let spots = JSON.parse(Get(prevLayoutURL, body))["result"]["parking_lots"]["parking_spaces"];
-    window["lot" + lotData[i].name + lotData[i].id] = new google.maps.Circle({
-      strokeColor: "#0000FF",
-      fillColor: "#0000FF",
-      map,
-      center: {
-        lat: spots[0].mapcoords[0][0],
-        lng: spots[0].mapcoords[0][1],
-      },
-      radius: 20,
-    });
-    addLotListener(lotData[i].name, lotData[i].id);
+    if(spots != undefined) {
+      window["lot" + lotData[i].name + lotData[i].id] = new google.maps.Circle({
+        strokeColor: "#0000FF",
+        fillColor: "#0000FF",
+        map,
+        center: {
+          lat: spots[0].mapcoords[0][0],
+          lng: spots[0].mapcoords[0][1],
+        },
+        radius: 100,
+      });
+      addLotListener(lotData[i].name, lotData[i].id);
+    }
   }
 }
 

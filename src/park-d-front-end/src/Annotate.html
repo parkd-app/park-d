@@ -80,7 +80,6 @@
                             <button class="button" id="current-tool">Polygon</button>
                             <!-- <button class="button" id="sidebtn" onclick="show('side')">Load Side View</button>
                             <button class="button" id="birdbtn" onclick="show('bird')">Load Bird View</button> -->
-                            <button class="button" id="birdbtn" onclick="uploadSpots()">Save Annotations</button>
                         </p>
                         <div class="ann_image">
                             <img id="test_lot" src="" style="max-width:100%;">
@@ -104,7 +103,7 @@
                             <input type="text" id="OwnerBox" name="OwnerBox"><br>
                             <button class="button" type="button" id="LoadLotButton"
                                 onclick="loadLot(); loadAnnotations(false, document.getElementById('test_lot'))">
-                                Load Lot
+                                Load Existing Lot
                             </button>
                             <button class="button" type="button" id="NewLotButton" onclick="creatingLot()">
                                 Create New Lot
@@ -115,9 +114,13 @@
                             <input type="text" id="NewOwnerBox" name="NewOwnerBox"><br>
                             <label class="words" id="URLLabel" for="URLBox">YouTube stream URL:</label>
                             <input type="text" id="URLBox" name="URLBox"><br>
+                            <button class="button" type="button" id="LoadingLotButton"
+                                onclick="loadingLot();">
+                                Load Existing Lot
+                            </button>
                             <button class="button" type="button" id="CreateLotButton"
                                 onclick="createLot(); loadAnnotations(true, document.getElementById('test_lot'))">
-                                Create Lot
+                                Create New Lot
                             </button>
                         </div>
                         <div id="SpaceButtons" style="display:none">
