@@ -38,12 +38,13 @@
                                 <i class="fa fa-bars"></i>
                             </button>
                         </div>
-                            
-                        <a href="#site-banner" class="navbar-brand"><img src="./Images/park-d-logo-large.svg" alt="" /></a>
+
+                        <a href="#site-banner" class="navbar-brand"><img src="./Images/park-d-logo-large.svg"
+                                alt="" /></a>
                         <div>
-                            <button id="btnLogout" class="nav-button">Logout</button> 
-                        </div>   
-                    </div>              
+                            <button id="btnLogout" class="nav-button">Logout</button>
+                        </div>
+                    </div>
                 </nav>
             </div>
         </header>
@@ -60,8 +61,8 @@
                         <a href="Annotate.html">Edit Parking Lot</a>
                     </li>
                     <li class="nav-list-item">
-                      <i class="fa fa-question-circle-o" aria-hidden="true"></i>
-                      <a class="nav-link" href="#">About</a>
+                        <i class="fa fa-question-circle-o" aria-hidden="true"></i>
+                        <a class="nav-link" href="#">About</a>
                     </li>
                     <li class="nav-list-item">
                         <i class="fa fa-phone" aria-hidden="true"></i>
@@ -69,7 +70,7 @@
                     </li>
                 </ul>
             </div>
-          </div>
+        </div>
 
         <div class="container">
             <div class="row">
@@ -185,14 +186,9 @@
 
             anno.on('startSelection', function (point) {
                 // console.log(point.x, point.y)
-                // if (hoverAnn) {
-
-                // }
             });
 
             anno.on('createAnnotation', function (annotation) {
-                // console.log('created', annotation);
-                // writeToJSON(annotation, anno.getAnnotations());
                 createAnnotation(annotation, anno.getAnnotations());
                 let paths = [
                     { lat: map.getCenter().lat(), lng: map.getCenter().lng() },
@@ -204,7 +200,6 @@
             });
 
             anno.on('createSelection', function (selection) {
-                // console.log('created', selection);
                 var intersect = checkIntersection(selection);
                 if (intersect) {
                     anno.cancelSelected();
@@ -213,7 +208,7 @@
 
             anno.on('updateAnnotation', function (annotation, previous) {
                 console.log('updated', previous, 'with', annotation);
-                updateAnnotation(annotation, previous/*, anno.getAnnotations()*/);
+                updateAnnotation(annotation, previous);
             });
 
             anno.on('clickAnnotation', function (annotation, shape) {
@@ -231,8 +226,6 @@
                     window["spot" + annotation.id].setOptions({ fillColor: "#FFFFFF" });
                 } catch (e) {
                 }
-                // hoverAnn = true;
-                // console.log('enter');
             });
 
             anno.on('mouseLeaveAnnotation', function (annotation) {
@@ -240,12 +233,7 @@
                     window["spot" + annotation.id].setOptions({ fillColor: newSpotColor });
                 } catch (e) {
                 }
-                // hoverAnn = false;
-                // console.log('leave');
             });
-
-            // anno.loadAnnotations();
-            // anno.setAnnotations(loadBirdAnn(1));
 
             var toolToggle = document.getElementById('current-tool');
             toolToggle.addEventListener('click', function () {
@@ -258,20 +246,6 @@
                 }
             });
         }
-        // function show(view) {
-        //     if (view == "side") {
-        //         document.getElementById('test_lot')
-        //             .src = getSideURL();
-        //         anno.loadAnnotations(getSideAnn());
-        //         setView("side");
-        //     } else {
-        //         document.getElementById('test_lot')
-        //             .src = getBirdURL();
-        //         anno.loadAnnotations(getBirdAnn());
-        //         setView("bird");
-        //     }
-
-        // }
     </script>
     <script src="./Annotate.js"></script>
     </div>
