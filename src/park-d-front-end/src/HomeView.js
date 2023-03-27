@@ -525,6 +525,8 @@ function loadAllSpots(ID, owner) {
     window["spot" + spotData[i].id].setMap(map);
     parkingLayoutIds.push("spot" + spotData[i].id);
   }
+  toggleAnalytics(true);
+  if (!selectionToggle) toggleSelection(true);
   reloadAnalytics();
   numSpots = spotData.length;
   clearInterval(intervalID);
@@ -684,6 +686,44 @@ function reloadAnalytics() {
   body = {};
   body.parking_lot_id = lotID;
   body.owner = lotOwner;
+
+  if (lotOwner === "Jon") {
+    document.getElementById("location_name").innerHTML = "ELCOM Loznica";
+    document.getElementById("location_address").innerHTML = "Šabački put 7, Loznica, Serbia";
+
+    document.getElementById("location_name").style.visibility = "visible";
+    document.getElementById("location_address").style.visibility = "visible";
+
+    document.getElementById("total_text").style.visibility = "visible";
+    getDocEle("status").style.display = "none";
+
+    document.getElementById("analytics_cards_bg").style.visibility = "visible";
+    document.getElementById("analyticsGraph").style.visibility = "visible";
+  }
+  else if (lotOwner === "Gary") {
+    document.getElementById("status").innerHTML =
+      "We are crunching these numbers for you... Come back soon!";
+
+    getDocEle("status").style.display = "block";
+    document.getElementById("total_text").style.visibility = "visible";
+
+    document.getElementById("location_name").innerHTML = "1151-1277 W Center St, Cedar City, UT 84720, United States";
+    document.getElementById("location_address").innerHTML = "1151-1277 W Center St Parking";
+
+    document.getElementById("analytics_cards_bg").style.visibility = "visible";
+    document.getElementById("analyticsGraph").style.visibility = "hidden";
+  }
+  else {
+    document.getElementById("location_name").style.visibility = "hidden";
+    document.getElementById("location_address").style.visibility = "hidden";
+
+    document.getElementById("analytics_cards_bg").style.visibility = "hidden";
+    document.getElementById("analyticsGraph").style.visibility = "hidden";
+
+    document.getElementById("total_text").style.visibility = "hidden";
+    getDocEle("status").style.display = "block";
+    document.getElementById("status").innerHTML = "Analytics not yet setup for this parking space...";
+  }
 
   spotData = JSON.parse(Get(jsonURL, body))["parking_lots"]["parking_spaces"];
 
