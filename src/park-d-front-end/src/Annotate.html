@@ -114,8 +114,7 @@
                             <input type="text" id="NewOwnerBox" name="NewOwnerBox"><br>
                             <label class="words" id="URLLabel" for="URLBox">YouTube stream URL:</label>
                             <input type="text" id="URLBox" name="URLBox"><br>
-                            <button class="button" type="button" id="LoadingLotButton"
-                                onclick="loadingLot();">
+                            <button class="button" type="button" id="LoadingLotButton" onclick="loadingLot();">
                                 Load Existing Lot
                             </button>
                             <button class="button" type="button" id="CreateLotButton"
@@ -219,7 +218,7 @@
             });
 
             anno.on('deleteAnnotation', function (annotation) {
-                deleteAnnotation(annotation, anno.getAnnotations());
+                deleteAnnotation(annotation);
                 window["spot" + annotation.id].setMap(null);
                 window["spot" + annotation.id] = undefined;
             });

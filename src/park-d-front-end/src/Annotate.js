@@ -102,8 +102,14 @@ function createAnnotation(annotation, currAnnotations) {
 }
 
 function deleteAnnotation(annotation, currAnnotations) {
-  activeAnnotations = currAnnotations;
   var annId = annotation.id;
+  console.log("annId = " + annId);
+  for (i = 0; i < activeAnnotations.length; i++) {
+    if (activeAnnotations[i].id == annId) {
+      activeAnnotations.splice(i, 1);
+      console.log(activeAnnotations);
+    }
+  }
   var index;
   for (i = 0; i < spotData.length; i++) {
     if (spotData[i].id == annId) {
@@ -111,6 +117,7 @@ function deleteAnnotation(annotation, currAnnotations) {
     }
   }
   spotData.splice(index, 1);
+  anno.setAnnotations(activeAnnotations);
 }
 
 function updateAnnotation(annotation, previous, currAnnotations) {
