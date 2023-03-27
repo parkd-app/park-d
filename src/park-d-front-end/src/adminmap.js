@@ -91,7 +91,8 @@ function loadLot() {
   } catch (e) {
     document.getElementById("LoadLotButton").textContent = "Load Failed!";
     setTimeout(() => {
-      document.getElementById("LoadLotButton").textContent = "Load Existing Lot";
+      document.getElementById("LoadLotButton").textContent =
+        "Load Existing Lot";
     }, 2000);
     console.log(e);
   }
@@ -208,7 +209,7 @@ function loadAllSpots(ID, owner) {
   body = {};
   body.id = ID;
   body.name = owner;
-  let lotData = JSON.parse(Get(prevLayoutURL, body))["result"]["parking_lots"]
+  let lotData = JSON.parse(Get(prevLayoutURL, body))["result"]["parking_lots"];
   youtubeURL = lotData["url"];
   spaceData = lotData["parking_spaces"];
   console.log(spaceData);
@@ -221,7 +222,7 @@ function loadAllSpots(ID, owner) {
     defaultOptions.center = new google.maps.LatLng(
       spaceData[0].mapcoords[0][0],
       spaceData[0].mapcoords[0][1]
-    )
+    );
     recenter();
   }
   for (let i = 0; i < spaceData.length; i++) {
@@ -287,6 +288,7 @@ function uploadSpots() {
     }
     spaceData[i].status = true;
     spaceData[i].mapcoords = coords;
+    spaceData[i].camcoords = getUpdatedAnnotation(i);
     spaceData[i].type = colorToType[window["spot" + spotID].get("strokeColor")];
 
     spaces.push(spaceData[i]);

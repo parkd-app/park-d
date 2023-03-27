@@ -153,6 +153,10 @@ function updateCamcoords(annotation, previous) {
   spotData[index].camcoords = w3cCoords(annotation);
 }
 
+function getUpdatedAnnotation(index) {
+  return spotData[index].camcoords;
+}
+
 function checkIntersection(selection) {
   if (activeAnnotations == null) {
     return false;
