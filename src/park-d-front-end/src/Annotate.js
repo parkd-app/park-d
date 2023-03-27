@@ -41,10 +41,21 @@ function Post(URL, payload) {
 }
 
 function loadAnnotations(newLot, image) {
+  var lotID = 1;
   if (newLot) {
     owner = document.getElementById("NewOwnerBox").value;
     lotURL = document.getElementById("URLBox").value;
-    lotID = 1;
+    lots = JSON.parse(Get(allLotURL, {}))["parking_lots"];
+    for (let i = 0; i < lots.length; i++) {
+      if (lots[i].name == owner) {
+        if (lots[i].id >= lotID) lotID = lots[i].id + 1;
+      }
+    }
+    activeLot = lotID;
+    lotOwner = owner;
+    image.src = getSnapshot(lotURL);
+    // owner = document.getElementById("NewOwnerBox").value;
+    // lotURL = document.getElementById("URLBox").value;
   } else {
     lotID = parseInt(document.getElementById("IDBox").value);
     owner = document.getElementById("OwnerBox").value;
@@ -53,11 +64,11 @@ function loadAnnotations(newLot, image) {
     payload.name = owner;
     lotData = JSON.parse(Get(prevLayoutURL, payload)).result;
     lotURL = lotData.parking_lots.url;
+    activeLot = lotID;
+    lotOwner = owner;
+    image.src = getSnapshot(lotURL);
+    anno.setAnnotations(loadBirdAnn(activeLot));
   }
-  activeLot = lotID;
-  lotOwner = owner;
-  image.src = getSnapshot(lotURL);
-  anno.setAnnotations(loadBirdAnn(activeLot));
 }
 
 function createAnnotation(annotation, currAnnotations) {
