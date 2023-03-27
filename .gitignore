@@ -266,6 +266,9 @@ TSWLatexianTemp*
 ./auto/*
 *.el
 
+*.mp4
+*.mov
+
 # expex forward references with \gathertags
 *-tags.tex
 

@@ -1,47 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Park'd Google Map</title>
-    <style>
-      #map {
-        height: 500px;
-        width: 100%;
-      }
-    </style>
-    <script src="./adminmap.js"></script>
-  </head>
-  <body>
-    <div id="floating-panel">
-      <div id="PickLabel">Editing Spot Layout</div>
-      <button
-        type="button"
-        id="ResetRouteButton"
-        onclick="resetData()"
-        disabled
-      >
-        Reset Route
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>Park'd Google Map</title>
+  <style>
+    #map {
+      height: 500px;
+      width: 100%;
+    }
+  </style>
+  <script src="./constants.js"></script> <!-- Constants must be loaded first -->
+  <script src="./adminmap.js"></script>
+</head>
+
+<body>
+  <div id="floating-panel">
+    <div id="PickLabel">Admin View</div>
+    <button type="button" id="RecenterButton" onclick="recenter()">
+      Recenter
+    </button>
+    <div id = "LotButtons">
+      <label id="IDLabel" for="IDBox">Lot ID:</label>
+      <input type="text" id="IDBox" name="IDBox"><br>
+      <label id="OwnerLabel" for="OwnerBox">Owner:</label>
+      <input type="text" id="OwnerBox" name="OwnerBox"><br>
+      <button type="button" id="LoadLotButton" onclick="loadLot()">
+        Load Lot
       </button>
-      <button type="button" id="RecenterButton" onclick="recenter()">
-        Recenter
+      <button type="button" id="NewLotButton" onclick="creatingLot()">
+        Create New Lot
       </button>
+    </div>
+    <div id = "NewLotButtons" style="display:none">
+      <label id="NewOwnerLabel" for="NewOwnerBox">Owner:</label>
+      <input type="text" id="NewOwnerBox" name="NewOwnerBox"><br>
+      <label id="URLLabel" for="URLBox">YouTube stream URL:</label>
+      <input type="text" id="URLBox" name="URLBox"><br>
+      <button type="button" id="CreateLotButton" onclick="createLot()">
+        Create Lot
+      </button>
+    </div>
+    <div id="SpaceButtons" style="display:block">
       <button type="button" id="AddSpotButton" onclick="addingSpot()">
-        Add Parking Spot
+        Add Spot
+      </button>
+      <select name="Type" id="TypeMenu">
+        <option value="#00FF00">Regular</option>
+        <option value="#0000FF">Accessible</option>
+        <option value="#FF0000">Reserved</option>
+      </select>
+      <button type="button" id="ChangeSpotButton" onclick="changingSpot()">
+        Change Spot Type
+      </button>
+      <button type="button" id="RemoveSpotButton" onclick="removingSpot()">
+        Remove Spot
       </button>
       <button type="button" id="SaveButton" onclick="uploadSpots()">
         Save Changes
       </button>
     </div>
+  </div>
 
-    <h1>Park'd</h1>
-    <div id="map"></div>
+  <h1>Park'd</h1>
+  <div id="map"></div>
 
-    <script
-      async
-      defer
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDWaVhLQMYdNjRXmcZga657_etUC-9HBmQ&callback=initMap"
-    ></script>
-  </body>
+  <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDWaVhLQMYdNjRXmcZga657_etUC-9HBmQ&callback=initMap"></script>
+</body>
+
 </html>

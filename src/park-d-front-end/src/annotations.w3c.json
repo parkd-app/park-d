@@ -1,0 +1,146 @@
+[
+  { 
+    "@context": "http://www.w3.org/ns/anno.jsonld",
+    "type": "Annotation",
+    "body": [{
+      "type": "TextualBody",
+      "value": "Parking Spot 1"
+    }, {
+      "type": "TextualBody",
+      "purpose": "tagging",
+      "value": "Default Spot"
+    }],
+    "target": {
+      "selector": [{
+        "type": "SvgSelector",
+        "value": "<svg><polygon points='44,355 66,398 151,380 94,344'></polygon></svg>"
+      }]
+    }
+  },
+  { 
+    "@context": "http://www.w3.org/ns/anno.jsonld",
+    "type": "Annotation",
+    "body": [{
+      "type": "TextualBody",
+      "value": "Parking Spot 2"
+    }, {
+      "type": "TextualBody",
+      "purpose": "tagging",
+      "value": "Default Spot"
+    }],
+    "target": {
+      "selector": [{
+        "type": "SvgSelector",
+        "value": "<svg><polygon points='157,377 212,359 158,329 107,349'></polygon></svg>"
+      }]
+    }
+  },
+  { 
+    "@context": "http://www.w3.org/ns/anno.jsonld",
+    "type": "Annotation",
+    "body": [{
+      "type": "TextualBody",
+      "value": "Parking Spot 3"
+    }, {
+      "type": "TextualBody",
+      "purpose": "tagging",
+      "value": "Default Spot"
+    }],
+    "target": {
+      "selector": [{
+        "type": "SvgSelector",
+        "value": "<svg><polygon points='91,500 238,670 406,595 227,443'></polygon></svg>"
+      }]
+    }
+  },
+  { 
+    "@context": "http://www.w3.org/ns/anno.jsonld",
+    "type": "Annotation",
+    "body": [{
+      "type": "TextualBody",
+      "value": "Parking Spot 4"
+    }, {
+      "type": "TextualBody",
+      "purpose": "tagging",
+      "value": "Default Spot"
+    }],
+    "target": {
+      "selector": [{
+        "type": "SvgSelector",
+        "value": "<svg><polygon points='275,450 406,584 518,527 349,432'></polygon></svg>"
+      }]
+    }
+  },
+  { 
+    "@context": "http://www.w3.org/ns/anno.jsonld",
+    "type": "Annotation",
+    "body": [{
+      "type": "TextualBody",
+      "value": "Parking Spot 5"
+    }, {
+      "type": "TextualBody",
+      "purpose": "tagging",
+      "value": "Default Spot"
+    }],
+    "target": {
+      "selector": [{
+        "type": "SvgSelector",
+        "value": "<svg><polygon points='522,521 589,478 412,419 403,440'></polygon></svg>"
+      }]
+    }
+  },
+  { 
+    "@context": "http://www.w3.org/ns/anno.jsonld",
+    "type": "Annotation",
+    "body": [{
+      "type": "TextualBody",
+      "value": "Parking Spot 6"
+    }, {
+      "type": "TextualBody",
+      "purpose": "tagging",
+      "value": "Default Spot"
+    }],
+    "target": {
+      "selector": [{
+        "type": "SvgSelector",
+        "value": "<svg><polygon points='609,468 653,435 492,401 468,426'></polygon></svg>"
+      }]
+    }
+  },
+  { 
+    "@context": "http://www.w3.org/ns/anno.jsonld",
+    "type": "Annotation",
+    "body": [{
+      "type": "TextualBody",
+      "value": "Parking Spot 7"
+    }, {
+      "type": "TextualBody",
+      "purpose": "tagging",
+      "value": "Default Spot"
+    }],
+    "target": {
+      "selector": [{
+        "type": "SvgSelector",
+        "value": "<svg><polygon points='300,338 363,333 282,311 259,317'></polygon></svg>"
+      }]
+    }
+  },
+  { 
+    "@context": "http://www.w3.org/ns/anno.jsonld",
+    "type": "Annotation",
+    "body": [{
+      "type": "TextualBody",
+      "value": "Parking Spot 8"
+    }, {
+      "type": "TextualBody",
+      "purpose": "tagging",
+      "value": "Default Spot"
+    }],
+    "target": {
+      "selector": [{
+        "type": "SvgSelector",
+        "value": "<svg><polygon points='379,332 424,321 327,295 302,308'></polygon></svg>"
+      }]
+    }
+  }
+]

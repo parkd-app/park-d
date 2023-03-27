@@ -1,0 +1,420 @@
+/* .annotate-window {
+  display: none;
+  width: 544px;
+  height: 895px;
+  background: rgba(255, 255, 255, 1);
+  opacity: 1;
+  position: absolute;
+  top: 1000;
+  left: 1000;
+  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+  transform: scale(0.75);
+} */
+
+#map {
+  height: 500px;
+  width: 100%;
+  position: relative;
+  margin: 10px 0px;
+  /* padding: 10px; */
+  /* background-position: right; */
+  /* left: 50%; */
+  /* top: 150px; */
+}
+
+#button-panel {
+  /* height: 500px; */
+  /* width: 50%; */
+  position: relative;
+  /* background-position: right; */
+  /* left: 50%; */
+  /* top: 150px; */
+}
+
+.row {
+  padding: 0px;
+}
+
+.panel {
+  padding: 10px;
+}
+.background {
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 1);
+  opacity: 1;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  overflow: hidden;
+}
+.annotate-window {
+  background: transparent;
+  background-repeat: no-repeat;
+  background-position: left;
+  background-size: cover;
+  opacity: 1;
+  position: relative;
+  overflow: visible;
+}
+
+.header_area {
+  z-index: 2;
+}
+.header_area .main-menu .navbar-custom {
+  background-color: #181818;
+  box-shadow: 0px 3px 8px rgba(0,0,0,25%);
+  border-radius: 0;
+  height: 70px;
+}
+
+.header_area .main-menu .navbar .navbar-brand {
+  transform: translateX(-50%) translateY(10%);
+  padding: 0px;
+  left: 50%;
+  /* padding: 10px; */
+  margin: 0;
+  position: absolute;
+}
+
+.header_area .main-menu .navbar .navbar-brand > img {
+  padding: 0px;
+  margin: 0;
+  height: 30px;
+  width: auto;
+  display: inline-block;
+}
+
+.header_area .main-menu .navbar .nav-button{
+  background-color: #FAFF00;
+  padding: 10px 10px;
+  border: 2px solid black;
+  color: black;
+  text-align: center;
+  text-decoration: none;
+  font-family: Montserrat;
+  display: inline-block;
+  font-weight: Medium;
+  font-size: 16px;
+  border-radius: 8px;
+}
+
+.header_area .main-menu .navbar i {
+  color: white;
+  font-size: 30px;
+  padding: 7px;
+}
+
+.header_area .main-menu .navbar .navbar-icon {
+  border: 0;
+  background-color: transparent;
+  border-radius: 7px;
+}
+
+.header_area .main-menu .navbar .navbar-icon:hover{
+  background-color: rgba(255,255,255, 0.3);
+  display: inline-block;
+}
+
+.header_area .main-menu .navbar {
+  margin: 0;
+}
+
+.sidebar {
+  z-index: 1;
+  display: none;
+  position: absolute;
+  left: 0rem;
+  width: 270px;
+  /* border: thick double #32a1ce; */
+  /* border-top: 1px solid white; */
+  padding: 10px 10px;
+  height: calc(100vh - 4rem);
+  box-shadow: 0px 0px 10px rgba(0,0,0,25%);
+  background-color: #2f2f2f;
+}
+
+.side-nav-content {
+  color: white;
+  width: 230px;
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-top: 10px;
+}
+
+.nav-list{
+  list-style: none;
+  height: 100%;
+  padding: 0%;
+  margin-bottom: 0%;
+}
+
+.nav-list-item {
+  display: flex;
+  align-items: center;
+  height: 50px
+}
+
+.nav-list-item:hover {
+  background-color:rgba(255,255,255, 0.3);
+  border-radius: 10px;
+}
+
+.nav-list-item i {
+  font-size: 25px;
+  height: 25px;
+  width: 25px;
+  margin-right:15px;
+  margin-left: 10px;
+  text-align: center;
+  line-height: 25px;
+}
+
+.nav-list-item a{
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  padding: 12px 0px;
+  text-decoration: none;
+  text-decoration: none;
+  font-size: 17px;
+  color: white;
+  font-family: Montserrat;
+  font-weight: Medium;
+}
+
+.flex-container {
+  display: flex;
+  padding: 10px 10px;
+  justify-content: space-between;
+}
+
+.container {
+  /* margin: 10px; */
+  width: 100%;
+}
+.logo_bg1 {
+  width: 202px;
+  height: 56px;
+  background: rgba(0, 0, 0, 0);
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  opacity: 1;
+  position: absolute;
+  top: 16px;
+  left: 655px;
+  overflow: hidden;
+}
+.logo_bg2 {
+  width: 202px;
+  height: 56px;
+  background: rgba(0, 0, 0, 0);
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  opacity: 1;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  overflow: hidden;
+}
+.logo_text {
+  width: 202px;
+  color: rgba(0, 0, 0, 0);
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  font-family: Montserrat;
+  font-weight: Medium;
+  font-size: 50px;
+  opacity: 1;
+  text-align: left;
+}
+.logo {
+  width: 194px;
+  height: 38px;
+  background: url("Images/park'd_logo.png");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  opacity: 1;
+  position: absolute;
+  top: 11px;
+  left: 0px;
+  overflow: hidden;
+}
+.old_logo {
+  width: 264px;
+  height: 93px;
+  background: rgba(255, 255, 255, 0);
+  opacity: 1;
+  position: absolute;
+  top: 22px;
+  left: 40px;
+  overflow: hidden;
+}
+.home_bg1 {
+  width: 90px;
+  height: 60px;
+  background: rgba(0, 0, 0, 0);
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  opacity: 1;
+  position: absolute;
+  top: 12px;
+  left: 20px;
+  overflow: hidden;
+}
+.home_bg2 {
+  width: 90px;
+  height: 60px;
+  background: rgba(0, 0, 0, 0);
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  opacity: 1;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  overflow: hidden;
+}
+.home_border {
+  width: 90px;
+  height: 60px;
+  background: rgba(249, 255, 0, 1);
+  opacity: 1;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  border: 3px solid rgba(249, 255, 0, 0.800000011920929);
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+.home_text {
+  width: auto;
+  color: rgba(31, 31, 31, 1);
+  position: absolute;
+  top: 18px;
+  left: 16px;
+  font-family: Montserrat;
+  font-weight: Medium;
+  font-size: 20px;
+  opacity: 1;
+  text-align: left;
+}
+.drawtool_bg1 {
+  width: 85px;
+  height: 30px;
+  background: rgba(0, 0, 0, 0);
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  opacity: 1;
+  position: absolute;
+  top: 12px;
+  left: 80px;
+  overflow: hidden;
+}
+.drawtool_bg2 {
+  width: 85px;
+  height: 30px;
+  background: rgba(0, 0, 0, 0);
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  opacity: 1;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  overflow: hidden;
+}
+.drawtool_border {
+  width: 85px;
+  height: 30px;
+  background: rgba(249, 255, 0, 1);
+  opacity: 1;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  border: 3px solid rgba(249, 255, 0, 0.800000011920929);
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+.drawtool_text {
+  width: auto;
+  color: rgba(31, 31, 31, 1);
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  font-family: Montserrat;
+  font-weight: Medium;
+  font-size: 13px;
+  opacity: 1;
+  text-align: left;
+}
+.ann_image {
+  z-index: 0;
+  display: flex;
+  justify-content: center;
+  top: 100px;
+  border: 3px solid #939393;
+  border-radius: 4px;
+  padding: 10px;
+  max-width: 1200px;
+}
+.r6o-editor {
+  z-index:999;
+}
+.button {
+  background-color: rgba(249, 255, 0, 1); /* Green */
+  border: 2px solid black;
+  color: black;
+  padding: 10px 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-family: Montserrat;
+  font-weight: Medium;
+  font-size: 16px;
+  border-radius: 8px;
+  min-width: 110px;
+}
+
+.floating-panel{
+  /* width: 40%; */
+  /* height: 88.5%; */
+  /* background: transparent; */
+  /* background-repeat: no-repeat; */
+  background-position: right;
+  /* background-size: cover; */
+  /* opacity: 1; */
+  position: relative;
+  /* top: 300px; */
+  right: 2%;
+  /* overflow: hidden; */
+}
+
+.words {
+  font-family: Montserrat;
+  font-size: 16px;
+  padding: 3px;
+}
+
+input {
+  font-family: Montserrat;
+}
+
+option {
+  font-family: Montserrat;
+}
