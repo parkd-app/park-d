@@ -43,8 +43,8 @@ var pointsClicked = 0;
 var corners = [];
 
 var spaceData;
-var numSpots;
-var nextID = -1;
+var numSpots = 0;
+var nextID = 0;
 
 var lotID = 1;
 var owner;
@@ -139,8 +139,6 @@ function createLot() {
   );
 
   //uploadSpots();
-  nextID = 0;
-  numSpots = 0;
 
   document.getElementById("NewLotButtons").style.display = "none";
   document.getElementById("SpaceButtons").style.display = "block";
@@ -207,16 +205,18 @@ function removingSpot() {
 
 // loading all spots from remote
 function loadAllSpots(ID, owner) {
+  setUpButtons();
   body = {};
   body.id = ID;
   body.name = owner;
-  youtubeURL = JSON.parse(Get(prevLayoutURL, body))["result"]["parking_lots"][
-    "url"
-  ];
-  spaceData = JSON.parse(Get(prevLayoutURL, body))["result"]["parking_lots"][
-    "parking_spaces"
-  ]; // TODO make sure this matches Gary's
+  let lotData = JSON.parse(Get(prevLayoutURL, body))["result"]["parking_lots"]
+  youtubeURL = lotData["url"];
+  spaceData = lotData["parking_spaces"];
   console.log(spaceData);
+  if (spaceData == undefined) {
+    spaceData = [];
+    return;
+  }
 
   for (let i = 0; i < spaceData.length; i++) {
     let coords = spaceData[i].mapcoords;
@@ -246,8 +246,6 @@ function loadAllSpots(ID, owner) {
   }
   nextID++;
   numSpots = spaceData.length;
-
-  setUpButtons();
 }
 
 function addSpaceListener(ID) {
