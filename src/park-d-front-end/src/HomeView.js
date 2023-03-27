@@ -54,6 +54,7 @@ var lotID;
 var lotOwner;
 
 var intervalID;
+var analyticsID;
 var initialized = false;
 
 var selectionToggle = false;
@@ -528,6 +529,8 @@ function loadAllSpots(ID, owner) {
   toggleAnalytics(true);
   if (!selectionToggle) toggleSelection(true);
   reloadAnalytics();
+  clearInterval(analyticsID);
+  analyticsID = setInterval(reloadAnalytics, updateInterval);
   numSpots = spotData.length;
   clearInterval(intervalID);
   intervalID = setInterval(updateSpots, updateInterval);
