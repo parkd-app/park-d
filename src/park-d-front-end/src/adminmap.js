@@ -205,7 +205,6 @@ function removingSpot() {
 
 // loading all spots from remote
 function loadAllSpots(ID, owner) {
-  setUpButtons();
   body = {};
   body.id = ID;
   body.name = owner;
@@ -215,9 +214,16 @@ function loadAllSpots(ID, owner) {
   console.log(spaceData);
   if (spaceData == undefined) {
     spaceData = [];
+    setUpButtons();
     return;
   }
-
+  if (spaceData[0].mapcoords != undefined) {
+    defaultOptions.center = new google.maps.LatLng(
+      spaceData[0].mapcoords[0][0],
+      spaceData[0].mapcoords[0][1]
+    )
+    recenter();
+  }
   for (let i = 0; i < spaceData.length; i++) {
     let coords = spaceData[i].mapcoords;
     let open = spaceData[i].status;
@@ -246,6 +252,8 @@ function loadAllSpots(ID, owner) {
   }
   nextID++;
   numSpots = spaceData.length;
+
+  setUpButtons();
 }
 
 function addSpaceListener(ID) {
@@ -299,4 +307,8 @@ function uploadSpots() {
       document.getElementById("SaveButton").textContent = "Save Changes";
     }, 2000);
   }
+}
+
+function refresh() {
+  location.reload();
 }
