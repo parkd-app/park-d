@@ -1,5 +1,6 @@
 # Automated tests
 
-The folders and files for this folder are as follows:
+For unit testing
+please run:
+pip install pytest first
 
-Describe ...
