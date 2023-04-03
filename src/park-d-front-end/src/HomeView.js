@@ -54,7 +54,7 @@ var lotID;
 var lotOwner;
 
 var intervalID;
-var analyticsID;
+var analyticsID; // used to get regular intervals before fetching new data
 var initialized = false;
 
 var selectionToggle = false;
@@ -91,7 +91,7 @@ function initMap() {
     distMatrixservice = new google.maps.DistanceMatrixService();
   } catch (e) {
     disableNavigation();
-    toggleAnalytics(false);
+    toggleAnalytics(false); // if no data is present, do not show analytics
     console.log(e);
     window.alert("Couldn't load parking lot locations.");
   }
@@ -526,9 +526,11 @@ function loadAllSpots(ID, owner) {
     window["spot" + spotData[i].id].setMap(map);
     parkingLayoutIds.push("spot" + spotData[i].id);
   }
-  toggleAnalytics(true);
+  toggleAnalytics(true); // toggleAnalytics will display the analytics sidebar
   if (!selectionToggle) toggleSelection(true);
-  reloadAnalytics();
+  reloadAnalytics(); // upon selecting a different parking, analytics will be reloaded with fresh data
+  
+  // periodically, check for live data
   clearInterval(analyticsID);
   analyticsID = setInterval(reloadAnalytics, updateInterval);
   numSpots = spotData.length;
@@ -580,6 +582,7 @@ function analytics(data) {
       "We are crunching these numbers for you... Come back soon!";
   } else {
     occupancy.forEach((f) => {
+      // filtering and calculating occupancies and availabilities
       resSpots = f.occupancy.res.length;
       accSpots = f.occupancy.acc.length;
       stdSpots = f.occupancy.std.length;
@@ -592,6 +595,7 @@ function analytics(data) {
 
       totalAvail = resAvail + accAvail + stdAvail;
 
+      // if no live data is present, show the historical data for the hour
       if (f.hour === time) {
         document.getElementById("res_number").innerHTML = resAvail;
         document.getElementById("acc_number").innerHTML = accAvail;
@@ -614,6 +618,7 @@ function analytics(data) {
       backgroundColours.push(generateColour(ratio));
     });
 
+    // drawing graph for historical information
     drawGraph(hours, occupied, backgroundColours, totalSpots);
   }
 }
@@ -690,6 +695,10 @@ function reloadAnalytics() {
   body.parking_lot_id = lotID;
   body.owner = lotOwner;
 
+  // For demoing purposes, we had named parking spaces after the team members that were "admins"
+  // for a particular spot
+
+  // Set which elements to be displayed and hidden based on analytics subscription
   if (lotOwner === "Jon") {
     document.getElementById("location_name").innerHTML = "ELCOM Loznica";
     document.getElementById("location_address").innerHTML = "Šabački put 7, Loznica, Serbia";
@@ -728,6 +737,7 @@ function reloadAnalytics() {
     document.getElementById("status").innerHTML = "Analytics not yet setup for this parking space...";
   }
 
+  // fetch live data
   spotData = JSON.parse(Get(jsonURL, body))["parking_lots"]["parking_spaces"];
 
   let resAvail = 0;
@@ -740,6 +750,7 @@ function reloadAnalytics() {
 
   let totalSpots = spotData.length;
 
+  // filter through the data for occupied spots and available spots
   spotData.forEach(data => {
     switch (data.type) {
       case 0: stdSpots++; break;
@@ -758,6 +769,7 @@ function reloadAnalytics() {
 
   let totalAvail = resAvail + accAvail + stdAvail;
 
+  // update this information on the analytics cards
   document.getElementById("res_number").innerHTML = resAvail;
   document.getElementById("acc_number").innerHTML = accAvail;
   document.getElementById("std_number").innerHTML = stdAvail;
