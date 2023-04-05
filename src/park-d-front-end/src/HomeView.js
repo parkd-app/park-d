@@ -16,22 +16,23 @@ var noPoi = [
   },
 ];
 var defaultOptions = {
+  //map options
   zoom: 15,
-  center: { lat: 43.26279090319564, lng: -79.9169064541978 },
+  center: { lat: 43.26279090319564, lng: -79.9169064541978 }, //McMaster University
 
   disableDefaultUI: true,
   styles: noPoi,
 };
 
 let sessionMode = sessionStorage.getItem("userMode");
-var userMode = (sessionMode === "true");
+var userMode = sessionMode === "true";
 
-var directionsRenderer;
+var directionsRenderer; //for directions API
 var directionsService;
-var clickOrigin;
-var clickDestination;
-var clickChoice = 0;
-var routeMarkers = [];
+var clickOrigin; //current location
+var clickDestination; //target location
+var clickChoice = 0; //routing phase number, -1:navigation disabled,0:finding location,1:await selection,2:route found
+var routeMarkers = []; //map markers array
 var locationNavigator;
 var navDisable = false;
 var hasRoute = false;
@@ -41,7 +42,7 @@ var distMatrixservice;
 const timeoutTol = 60;
 var timeoutTime = -1;
 const positionUpdateTime = 500;
-var routeSteps = null;
+var routeSteps = null; //next map location
 const autoRouteDist = 0.00005; //Might need to tweek numbers to prevent skipping around, but it can't be perfect
 var autoNavMode = true;
 var autoNavComplete = false;
@@ -62,14 +63,17 @@ var selection;
 var parkingLayoutIds = [];
 
 const locationOptions = {
+  //options for tracking location
   maximumAge: positionUpdateTime,
   timeout: 5000,
   enableHighAccuracy: true,
 };
 
 function initMap() {
+  //setup page and map
   initPage();
 
+  //setup routes API
   directionsRenderer = new google.maps.DirectionsRenderer({
     suppressMarkers: true,
   });
@@ -81,6 +85,7 @@ function initMap() {
     loadAllLots();
 
     if (!userMode) {
+      //disable navigation for admins
       disableNavigation();
       return;
     }
@@ -97,6 +102,7 @@ function initMap() {
   }
 
   google.maps.event.addListener(map, "click", function (event) {
+    //click for spot selection
     if (clickChoice == 1) {
       selection = verifySpotSelect(event.latLng);
       if (selection == -1) {
@@ -105,16 +111,18 @@ function initMap() {
       } else if (!window[parkingLayoutIds[selection]].status) {
         getDocEle("direction_guide").textContent = "Spot taken";
         return;
-      }
-      else {
+      } else {
         if (window[parkingLayoutIds[selection]].type != 0) {
-          let authorized = confirm("Press OK to confirm that you are authorized to use this space.")
+          let authorized = confirm(
+            "Press OK to confirm that you are authorized to use this space."
+          );
           if (!authorized) return;
         }
         clickDestination = { coords: event.latLng };
         confirmSpotSelect();
       }
     } else if (clickChoice == 2) {
+      //old part for moving on click
       // window[targetSpot].open = false;
       // followPositionSuccess(event.latLng, 1);
     }
@@ -122,15 +130,16 @@ function initMap() {
 }
 
 function verifySpotSelect(dest) {
+  //check if coordinates map to a parking spot
   dest = new google.maps.LatLng(dest.lat(), dest.lng());
   console.log(parkingLayoutIds.length);
   for (let index = 0; index < parkingLayoutIds.length; index++) {
     console.log(parkingLayoutIds[index]);
     poly = window[parkingLayoutIds[index]];
-    console.log(poly)
+    console.log(poly);
     contains = google.maps.geometry.poly.containsLocation(dest, poly);
     if (contains) {
-      console.log(index)
+      console.log(index);
       return index;
     }
   }
@@ -138,9 +147,10 @@ function verifySpotSelect(dest) {
 }
 
 function confirmSpotSelect() {
+  //start route to target spot
   directionsRenderer.setMap(map);
   hasRoute = true;
-  console.log(selection)
+  console.log(selection);
   targetSpot = parkingLayoutIds[selection];
   getDocEle("direction_guide").textContent = "Calculating Route";
   getRoute();
@@ -148,6 +158,7 @@ function confirmSpotSelect() {
 }
 
 function setTimeoutTime(response, status) {
+  //timeout for navigation
   if (!hasRoute) {
     return;
   }
@@ -165,12 +176,13 @@ function setTimeoutTime(response, status) {
 }
 
 function initPage() {
+  //setup widgets for user/admin mode
   getDocEle("analytics_bg1").style.display = "none";
   getDocEle("nav-button").style.display = userMode ? "none" : "block";
   getDocEle("search_bar_bg").style.display = userMode ? "block" : "none";
-  getDocEle('annotate').innerHTML = userMode ?
-    '<i class="fa fa-user-circle" aria-hidden="true"></i><a class="nav-link" href="index.html">Admin View</a>' :
-    '<i class="fa fa-pencil-square-o" aria-hidden="true"></i><a href="Annotate.html">Edit Parking Lot</a>';
+  getDocEle("annotate").innerHTML = userMode
+    ? '<i class="fa fa-user-circle" aria-hidden="true"></i><a class="nav-link" href="index.html">Admin View</a>'
+    : '<i class="fa fa-pencil-square-o" aria-hidden="true"></i><a href="Annotate.html">Edit Parking Lot</a>';
   // getDocEle("adminMap").style.display = userMode ? "none" : "block";
   // document.getElementById("SetupBirdButton").style.display = userMode
   //   ? "none"
@@ -185,11 +197,13 @@ function initPage() {
 }
 
 function pickDone() {
+  //change to route found phase
   clickChoice = 2;
   getDocEle("direction_guide").textContent = "Route Calculated";
 }
 
 function placeMarker(position, icon) {
+  //place map marker on coordinates
   marker = new google.maps.Marker({
     position: position,
     map: map,
@@ -199,15 +213,17 @@ function placeMarker(position, icon) {
 }
 
 function resetData() {
+  //clear route and recenter map
   resetRoute(0);
   recenter();
 }
 
 function updateRoute() {
+  //checking for arrival, spot taken, timeout
   directionsRenderer.setMap(null);
   directionsRenderer.setMap(map);
   const d = new Date();
-  console.log(targetSpot)
+  console.log(targetSpot);
   if (
     google.maps.geometry.spherical.computeDistanceBetween(
       clickOrigin.coords,
@@ -225,6 +241,7 @@ function updateRoute() {
 }
 
 function resetRoute(resetReason) {
+  //reset all navigation data
   console.log("route reset");
   clickChoice = navDisable ? -1 : 1;
   targetSpot = -1;
@@ -254,11 +271,13 @@ function resetRoute(resetReason) {
 }
 
 function recenter() {
+  //recenter map to defaults
   map.setCenter(defaultOptions.center);
   map.setZoom(defaultOptions.zoom);
 }
 
 function clearMarkers(markers) {
+  //remove all map markers
   for (let index = 0; index < markers.length; index++) {
     markers[index].setMap(null);
     markers[index] = null;
@@ -266,6 +285,7 @@ function clearMarkers(markers) {
 }
 
 function getRoute() {
+  //API call to calculate route
   directionsService
     .route({
       origin: clickOrigin.coords,
@@ -277,6 +297,7 @@ function getRoute() {
 
       routeSteps = response.routes[0].legs[0].steps;
       if (!autoNavMode || routeSteps.length == 1) {
+        //set routeSteps to next point in the route
         routeSteps = clickDestination;
       } else {
         routeSteps = {
@@ -288,6 +309,7 @@ function getRoute() {
       }
 
       if (routeMarkers.length == 0) {
+        //move or palce car marker
         routeMarkers.push(
           placeMarker(
             response.routes[0].legs[0].start_location,
@@ -299,6 +321,7 @@ function getRoute() {
       }
 
       if (routeMarkers.length == 1) {
+        //place spot marker
         routeMarkers.push(
           placeMarker(
             response.routes[0].legs[0].end_location,
@@ -308,6 +331,7 @@ function getRoute() {
       }
 
       distMatrixservice.getDistanceMatrix(
+        //find distance between location and spot
         {
           origins: [response.routes[0].legs[0].start_location],
           destinations: [response.routes[0].legs[0].end_location],
@@ -319,7 +343,9 @@ function getRoute() {
 }
 
 function currentPositionSuccess(position) {
+  //callback when getting location without a route succeeds
   if (!autoNavMode || (autoNavMode && !autoNavComplete)) {
+    //update position
     clickOrigin = {
       coords: new google.maps.LatLng(
         position.coords.latitude,
@@ -328,6 +354,7 @@ function currentPositionSuccess(position) {
     };
   }
   if (routeMarkers.length == 0) {
+    //move or palce car marker
     routeMarkers.push(
       placeMarker(clickOrigin.coords, "./Images/CarMarker.png")
     );
@@ -344,16 +371,19 @@ function currentPositionSuccess(position) {
 }
 
 function currentPositionFailure() {
+  //callback when getting location without a route fails
   disableNavigation();
 }
 
 function followPositionSuccess(position, fromClick = 0) {
+  //callback when getting location with a route succeeds
   if (!hasRoute) {
     return;
   }
   if (fromClick == 0) {
-    //from watcher
+    //from callback
     if (autoNavMode) {
+      //move a set distance towards the next step
       dirLat = routeSteps.coords.lat() - clickOrigin.coords.lat();
       dirLng = routeSteps.coords.lng() - clickOrigin.coords.lng();
       mag = Math.sqrt(Math.pow(dirLat, 2) + Math.pow(dirLng, 2));
@@ -363,6 +393,7 @@ function followPositionSuccess(position, fromClick = 0) {
       dirLng = clickOrigin.coords.lng() + dirLng * autoRouteDist;
       clickOrigin = { coords: new google.maps.LatLng(dirLat, dirLng) };
     } else {
+      //use current location
       clickOrigin = {
         coords: new google.maps.LatLng(
           position.coords.latitude,
@@ -371,6 +402,7 @@ function followPositionSuccess(position, fromClick = 0) {
       };
     }
   } else {
+    //from clicking on map
     clickOrigin = {
       coords: new google.maps.LatLng(position.lat(), position.lng()),
     };
@@ -379,30 +411,36 @@ function followPositionSuccess(position, fromClick = 0) {
 }
 
 function followPositionFailure() {
+  //callback when getting location with a route fails
   disableNavigation();
 }
 
 function disableNavigation() {
+  //setup navigation disable states
   clickChoice = -1;
   getDocEle("direction_guide").textContent = "Navigation Disabled";
   navDisable = true;
 }
 
 function toggleAnalytics(toggle) {
+  //show/hide chevron button
   getDocEle("chevron_bg").style.display = toggle ? "block" : "none";
 }
 
 function updatePosition() {
+  //get current location
   if (navDisable) {
     return;
   }
   if (!hasRoute) {
+    //track location
     locationNavigator.getCurrentPosition(
       currentPositionSuccess,
       currentPositionFailure,
       locationOptions
     );
   } else {
+    //track location and update route
     locationNavigator.getCurrentPosition(
       followPositionSuccess,
       followPositionFailure,
@@ -413,6 +451,7 @@ function updatePosition() {
 }
 
 function toggleSelection() {
+  //hide/show analytics
   selectionToggle = !selectionToggle;
   let selectionTogglePos = window.innerWidth <= 750 ? "90vw" : "30vw";
   getDocEle("chevron_bg").style.right = selectionToggle
@@ -427,6 +466,7 @@ function toggleSelection() {
 }
 
 function updateChevronPos() {
+  //move chevron with window size
   let selectionTogglePos = window.innerWidth <= 750 ? "90vw" : "30vw";
   getDocEle("chevron_bg").style.right = selectionToggle
     ? selectionTogglePos
@@ -436,19 +476,22 @@ function updateChevronPos() {
 window.onresize = updateChevronPos;
 
 function getDocEle(className) {
+  //fetch document element by class
   return document.getElementsByClassName(className)[0];
 }
 
 function loadAllLots() {
   lotData = JSON.parse(Get(allLotURL, {}))["parking_lots"];
-  console.log(lotData)
+  console.log(lotData);
   for (let i = 0; i < lotData.length; i++) {
     body = {};
     body.id = lotData[i].id;
     body.name = lotData[i].name;
-    console.log("body", body)
-    let spots = JSON.parse(Get(prevLayoutURL, body))["result"]["parking_lots"]["parking_spaces"];
-    if(spots != undefined) {
+    console.log("body", body);
+    let spots = JSON.parse(Get(prevLayoutURL, body))["result"]["parking_lots"][
+      "parking_spaces"
+    ];
+    if (spots != undefined) {
       window["lot" + lotData[i].name + lotData[i].id] = new google.maps.Circle({
         strokeColor: "#0000FF",
         fillColor: "#0000FF",
@@ -529,7 +572,7 @@ function loadAllSpots(ID, owner) {
   toggleAnalytics(true); // toggleAnalytics will display the analytics sidebar
   if (!selectionToggle) toggleSelection(true);
   reloadAnalytics(); // upon selecting a different parking, analytics will be reloaded with fresh data
-  
+
   // periodically, check for live data
   clearInterval(analyticsID);
   analyticsID = setInterval(reloadAnalytics, updateInterval);
@@ -543,7 +586,9 @@ function updateSpots() {
   body.id = lotID;
   body.name = lotOwner;
   console.log(body);
-  var spots = JSON.parse(Get(prevLayoutURL, body))["result"]["parking_lots"]["parking_spaces"];
+  var spots = JSON.parse(Get(prevLayoutURL, body))["result"]["parking_lots"][
+    "parking_spaces"
+  ];
   for (let i = 0; i < spots.length; i++) {
     let spot = spots[i];
     if (!(spot.status === window["spot" + spot.id].status)) {
@@ -701,7 +746,8 @@ function reloadAnalytics() {
   // Set which elements to be displayed and hidden based on analytics subscription
   if (lotOwner === "Jon") {
     document.getElementById("location_name").innerHTML = "ELCOM Loznica";
-    document.getElementById("location_address").innerHTML = "Šabački put 7, Loznica, Serbia";
+    document.getElementById("location_address").innerHTML =
+      "Šabački put 7, Loznica, Serbia";
 
     document.getElementById("location_name").style.visibility = "visible";
     document.getElementById("location_address").style.visibility = "visible";
@@ -711,21 +757,21 @@ function reloadAnalytics() {
 
     document.getElementById("analytics_cards_bg").style.visibility = "visible";
     document.getElementById("analyticsGraph").style.visibility = "visible";
-  }
-  else if (lotOwner === "Gary") {
+  } else if (lotOwner === "Gary") {
     document.getElementById("status").innerHTML =
       "We are crunching these numbers for you... Come back soon!";
 
     getDocEle("status").style.display = "block";
     document.getElementById("total_text").style.visibility = "visible";
 
-    document.getElementById("location_name").innerHTML = "1151-1277 W Center St, Cedar City, UT 84720, United States";
-    document.getElementById("location_address").innerHTML = "1151-1277 W Center St Parking";
+    document.getElementById("location_name").innerHTML =
+      "1151-1277 W Center St, Cedar City, UT 84720, United States";
+    document.getElementById("location_address").innerHTML =
+      "1151-1277 W Center St Parking";
 
     document.getElementById("analytics_cards_bg").style.visibility = "visible";
     document.getElementById("analyticsGraph").style.visibility = "hidden";
-  }
-  else {
+  } else {
     document.getElementById("location_name").style.visibility = "hidden";
     document.getElementById("location_address").style.visibility = "hidden";
 
@@ -734,7 +780,8 @@ function reloadAnalytics() {
 
     document.getElementById("total_text").style.visibility = "hidden";
     getDocEle("status").style.display = "block";
-    document.getElementById("status").innerHTML = "Analytics not yet setup for this parking space...";
+    document.getElementById("status").innerHTML =
+      "Analytics not yet setup for this parking space...";
   }
 
   // fetch live data
@@ -751,21 +798,31 @@ function reloadAnalytics() {
   let totalSpots = spotData.length;
 
   // filter through the data for occupied spots and available spots
-  spotData.forEach(data => {
+  spotData.forEach((data) => {
     switch (data.type) {
-      case 0: stdSpots++; break;
-      case 1: accSpots++; break;
-      default: resSpots++;
+      case 0:
+        stdSpots++;
+        break;
+      case 1:
+        accSpots++;
+        break;
+      default:
+        resSpots++;
     }
 
     if (data.status == true) {
       switch (data.type) {
-        case 0: stdAvail++; break;
-        case 1: accAvail++; break;
-        default: resAvail++;
+        case 0:
+          stdAvail++;
+          break;
+        case 1:
+          accAvail++;
+          break;
+        default:
+          resAvail++;
       }
     }
-  })
+  });
 
   let totalAvail = resAvail + accAvail + stdAvail;
 
