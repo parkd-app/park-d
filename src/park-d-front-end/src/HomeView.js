@@ -169,9 +169,9 @@ function initPage() {
   getDocEle("analytics_bg1").style.display = "none";
   getDocEle("nav-button").style.display = userMode ? "none" : "block";
   getDocEle("search_bar_bg").style.display = userMode ? "block" : "none";
-  getDocEle("annotate").innerHTML = userMode
-    ? '<i class="fa fa-user-circle" aria-hidden="true"></i><a class="nav-link" href="index.html">Admin View</a>'
-    : '<i class="fa fa-pencil-square-o" aria-hidden="true"></i><a href="Annotate.html">Edit Parking Lot</a>';
+  getDocEle('annotate').innerHTML = userMode ?
+    '<i class="fa fa-user-circle" aria-hidden="true"></i><a id="admin" class="nav-link" href="index.html">Admin View</a>' :
+    '<i class="fa fa-pencil-square-o" aria-hidden="true"></i><a id="edit" href="Annotate.html">Edit Parking Lot</a>';
   // getDocEle("adminMap").style.display = userMode ? "none" : "block";
   // document.getElementById("SetupBirdButton").style.display = userMode
   //   ? "none"
