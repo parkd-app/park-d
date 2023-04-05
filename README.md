@@ -47,3 +47,7 @@ We used the following technologies for this project:
 <a href="https://github.com/parkd-app/park-d/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=parkd-app/park-d" />
 </a>
+
+---
+
+[![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](CodeOfConduct.md)
