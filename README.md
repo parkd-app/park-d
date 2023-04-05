@@ -51,3 +51,4 @@ We used the following technologies for this project:
 ---
 
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](CodeOfConduct.md)
+[![License](https://img.shields.io/badge/license-GPL%20v3.0-brightgreen.svg)](LICENSE)
