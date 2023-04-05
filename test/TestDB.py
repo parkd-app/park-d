@@ -101,9 +101,7 @@ class TestUploadingData(unittest.TestCase):
     def test_query_by_key_string(self):
       self.assertEqual(firebase_query.query_by_key("parking_lot_layout"), TestObject)
     def test_query_by_key_object(self):
-      self.assertEqual(firebase_query.query_by_key("parking_info"),TestUrl)
-
-
+      self.assertEqual(firebase_query.query_by_key("parking_info"), TestUrl)
     def test_create_key(selfs):
       self.assertEqual(save_coord_service.create_unique_key("Gary",1), Gary + "_parking_1_info")
 
