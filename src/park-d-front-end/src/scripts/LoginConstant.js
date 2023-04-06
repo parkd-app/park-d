@@ -24,6 +24,10 @@ export const showLoginError = (error) => {
     lblLoginErrorMessage.innerHTML = `Wrong password. Try again.`;
   } else if (error.code == AuthErrorCodes.INVALID_EMAIL) {
     lblLoginErrorMessage.innerHTML = `Invalid email. Try again.`;
+  } else if (error.code == AuthErrorCodes.USER_DELETED) {
+    lblLoginErrorMessage.innerHTML = `User does not exist. Try again.`;
+  } else if (error.code == AuthErrorCodes.INTERNAL_ERROR) {
+    lblLoginErrorMessage.innerHTML = `Internal error. Input a correct username and password and try again.`;
   } else {
     lblLoginErrorMessage.innerHTML = `Error: ${error.message}`;
   }

@@ -17,8 +17,9 @@ var noPoi = [
   },
 ];
 var defaultOptions = {
+  //map options
   zoom: 15,
-  center: { lat: 43.26279090319564, lng: -79.9169064541978 },
+  center: { lat: 43.26279090319564, lng: -79.9169064541978 }, //McMaster University
 
   disableDefaultUI: true,
   styles: noPoi,
@@ -27,12 +28,12 @@ var defaultOptions = {
 let sessionMode = sessionStorage.getItem("userMode");
 var userMode = sessionMode === "true";
 
-var directionsRenderer;
+var directionsRenderer; //for directions API
 var directionsService;
-var clickOrigin;
-var clickDestination;
-var clickChoice = 0;
-var routeMarkers = [];
+var clickOrigin; //current location
+var clickDestination; //target location
+var clickChoice = 0; //routing phase number, -1:navigation disabled,0:finding location,1:await selection,2:route found
+var routeMarkers = []; //map markers array
 var locationNavigator;
 var navDisable = false;
 var hasRoute = false;
@@ -42,7 +43,7 @@ var distMatrixservice;
 const timeoutTol = 60;
 var timeoutTime = -1;
 const positionUpdateTime = 500;
-var routeSteps = null;
+var routeSteps = null; //next map location
 const autoRouteDist = 0.00005; //Might need to tweek numbers to prevent skipping around, but it can't be perfect
 var autoNavMode = false;
 var autoNavComplete = false;
@@ -56,21 +57,24 @@ var lotOwner;
 
 var intervalID;
 var analyticsID;
-var initialized = false; // flag for first load
+var initialized = false;
 
 var selectionToggle = false;
 var selection;
 var parkingLayoutIds = [];
 
 const locationOptions = {
+  //options for tracking location
   maximumAge: positionUpdateTime,
   timeout: 5000,
   enableHighAccuracy: true,
 };
 
 function initMap() {
+  //setup page and map
   initPage();
 
+  //setup routes API
   directionsRenderer = new google.maps.DirectionsRenderer({
     suppressMarkers: true,
   });
@@ -82,6 +86,7 @@ function initMap() {
     loadAllLots();
 
     if (!userMode) {
+      //disable navigation for admins
       disableNavigation();
       return;
     }
@@ -92,12 +97,13 @@ function initMap() {
     distMatrixservice = new google.maps.DistanceMatrixService();
   } catch (e) {
     disableNavigation();
-    toggleAnalytics(false);
+    toggleAnalytics(false); // if no data is present, do not show analytics
     console.log(e);
     window.alert("Couldn't load parking lot locations.");
   }
 
   google.maps.event.addListener(map, "click", function (event) {
+    //click for spot selection
     if (clickChoice == 1) {
       selection = verifySpotSelect(event.latLng);
       if (selection == -1) {
@@ -117,6 +123,7 @@ function initMap() {
         confirmSpotSelect();
       }
     } else if (clickChoice == 2) {
+      //old part for moving on click
       // window[targetSpot].open = false;
       // followPositionSuccess(event.latLng, 1);
     }
@@ -124,6 +131,7 @@ function initMap() {
 }
 
 function verifySpotSelect(dest) {
+  //check if coordinates map to a parking spot
   dest = new google.maps.LatLng(dest.lat(), dest.lng());
   console.log(parkingLayoutIds.length);
   for (let index = 0; index < parkingLayoutIds.length; index++) {
@@ -140,6 +148,7 @@ function verifySpotSelect(dest) {
 }
 
 function confirmSpotSelect() {
+  //start route to target spot
   directionsRenderer.setMap(map);
   hasRoute = true;
   console.log(selection);
@@ -150,6 +159,7 @@ function confirmSpotSelect() {
 }
 
 function setTimeoutTime(response, status) {
+  //timeout for navigation
   if (!hasRoute) {
     return;
   }
@@ -167,6 +177,7 @@ function setTimeoutTime(response, status) {
 }
 
 function initPage() {
+  //setup widgets for user/admin mode
   getDocEle("analytics_bg1").style.display = "none";
   getDocEle("nav-button").style.display = userMode ? "none" : "block";
   getDocEle("search_bar_bg").style.display = userMode ? "block" : "none";
@@ -187,11 +198,13 @@ function initPage() {
 }
 
 function pickDone() {
+  //change to route found phase
   clickChoice = 2;
   getDocEle("direction_guide").textContent = "Route Calculated";
 }
 
 function placeMarker(position, icon) {
+  //place map marker on coordinates
   marker = new google.maps.Marker({
     position: position,
     map: map,
@@ -201,11 +214,13 @@ function placeMarker(position, icon) {
 }
 
 function resetData() {
+  //clear route and recenter map
   resetRoute(0);
   recenter();
 }
 
 function updateRoute() {
+  //checking for arrival, spot taken, timeout
   directionsRenderer.setMap(null);
   directionsRenderer.setMap(map);
   const d = new Date();
@@ -227,6 +242,7 @@ function updateRoute() {
 }
 
 function resetRoute(resetReason) {
+  //reset all navigation data
   console.log("route reset");
   clickChoice = navDisable ? -1 : 1;
   targetSpot = -1;
@@ -256,11 +272,13 @@ function resetRoute(resetReason) {
 }
 
 function recenter() {
+  //recenter map to defaults
   map.setCenter(defaultOptions.center);
   map.setZoom(defaultOptions.zoom);
 }
 
 function clearMarkers(markers) {
+  //remove all map markers
   for (let index = 0; index < markers.length; index++) {
     markers[index].setMap(null);
     markers[index] = null;
@@ -268,6 +286,7 @@ function clearMarkers(markers) {
 }
 
 function getRoute() {
+  //API call to calculate route
   directionsService
     .route({
       origin: clickOrigin.coords,
@@ -279,6 +298,7 @@ function getRoute() {
 
       routeSteps = response.routes[0].legs[0].steps;
       if (!autoNavMode || routeSteps.length == 1) {
+        //set routeSteps to next point in the route
         routeSteps = clickDestination;
       } else {
         routeSteps = {
@@ -290,6 +310,7 @@ function getRoute() {
       }
 
       if (routeMarkers.length == 0) {
+        //move or palce car marker
         routeMarkers.push(
           placeMarker(
             response.routes[0].legs[0].start_location,
@@ -301,6 +322,7 @@ function getRoute() {
       }
 
       if (routeMarkers.length == 1) {
+        //place spot marker
         routeMarkers.push(
           placeMarker(
             response.routes[0].legs[0].end_location,
@@ -310,6 +332,7 @@ function getRoute() {
       }
 
       distMatrixservice.getDistanceMatrix(
+        //find distance between location and spot
         {
           origins: [response.routes[0].legs[0].start_location],
           destinations: [response.routes[0].legs[0].end_location],
@@ -321,7 +344,9 @@ function getRoute() {
 }
 
 function currentPositionSuccess(position) {
+  //callback when getting location without a route succeeds
   if (!autoNavMode || (autoNavMode && !autoNavComplete)) {
+    //update position
     clickOrigin = {
       coords: new google.maps.LatLng(
         position.coords.latitude,
@@ -330,6 +355,7 @@ function currentPositionSuccess(position) {
     };
   }
   if (routeMarkers.length == 0) {
+    //move or palce car marker
     routeMarkers.push(
       placeMarker(clickOrigin.coords, "./Images/CarMarker.png")
     );
@@ -346,16 +372,19 @@ function currentPositionSuccess(position) {
 }
 
 function currentPositionFailure() {
+  //callback when getting location without a route fails
   disableNavigation();
 }
 
 function followPositionSuccess(position, fromClick = 0) {
+  //callback when getting location with a route succeeds
   if (!hasRoute) {
     return;
   }
   if (fromClick == 0) {
-    //from watcher
+    //from callback
     if (autoNavMode) {
+      //move a set distance towards the next step
       dirLat = routeSteps.coords.lat() - clickOrigin.coords.lat();
       dirLng = routeSteps.coords.lng() - clickOrigin.coords.lng();
       mag = Math.sqrt(Math.pow(dirLat, 2) + Math.pow(dirLng, 2));
@@ -365,6 +394,7 @@ function followPositionSuccess(position, fromClick = 0) {
       dirLng = clickOrigin.coords.lng() + dirLng * autoRouteDist;
       clickOrigin = { coords: new google.maps.LatLng(dirLat, dirLng) };
     } else {
+      //use current location
       clickOrigin = {
         coords: new google.maps.LatLng(
           position.coords.latitude,
@@ -373,6 +403,7 @@ function followPositionSuccess(position, fromClick = 0) {
       };
     }
   } else {
+    //from clicking on map
     clickOrigin = {
       coords: new google.maps.LatLng(position.lat(), position.lng()),
     };
@@ -381,30 +412,36 @@ function followPositionSuccess(position, fromClick = 0) {
 }
 
 function followPositionFailure() {
+  //callback when getting location with a route fails
   disableNavigation();
 }
 
 function disableNavigation() {
+  //setup navigation disable states
   clickChoice = -1;
   getDocEle("direction_guide").textContent = "Navigation Disabled";
   navDisable = true;
 }
 
 function toggleAnalytics(toggle) {
+  //show/hide chevron button
   getDocEle("chevron_bg").style.display = toggle ? "block" : "none";
 }
 
 function updatePosition() {
+  //get current location
   if (navDisable) {
     return;
   }
   if (!hasRoute) {
+    //track location
     locationNavigator.getCurrentPosition(
       currentPositionSuccess,
       currentPositionFailure,
       locationOptions
     );
   } else {
+    //track location and update route
     locationNavigator.getCurrentPosition(
       followPositionSuccess,
       followPositionFailure,
@@ -415,6 +452,7 @@ function updatePosition() {
 }
 
 function toggleSelection() {
+  //hide/show analytics
   selectionToggle = !selectionToggle;
   let selectionTogglePos = window.innerWidth <= 750 ? "90vw" : "30vw";
   getDocEle("chevron_bg").style.right = selectionToggle
@@ -429,6 +467,7 @@ function toggleSelection() {
 }
 
 function updateChevronPos() {
+  //move chevron with window size
   let selectionTogglePos = window.innerWidth <= 750 ? "90vw" : "30vw";
   getDocEle("chevron_bg").style.right = selectionToggle
     ? selectionTogglePos
@@ -438,6 +477,7 @@ function updateChevronPos() {
 window.onresize = updateChevronPos;
 
 function getDocEle(className) {
+  //fetch document element by class
   return document.getElementsByClassName(className)[0];
 }
 
@@ -530,9 +570,11 @@ function loadAllSpots(ID, owner) {
     window["spot" + spotData[i].id].setMap(map);
     parkingLayoutIds.push("spot" + spotData[i].id);
   }
-  toggleAnalytics(true);
+  toggleAnalytics(true); // toggleAnalytics will display the analytics sidebar
   if (!selectionToggle) toggleSelection(true);
-  reloadAnalytics();
+  reloadAnalytics(); // upon selecting a different parking, analytics will be reloaded with fresh data
+
+  // periodically, check for live data
   clearInterval(analyticsID);
   analyticsID = setInterval(reloadAnalytics, updateInterval);
   numSpots = spotData.length;
@@ -587,6 +629,7 @@ function analytics(data) {
       "We are crunching these numbers for you... Come back soon!";
   } else {
     occupancy.forEach((f) => {
+      // filtering and calculating occupancies and availabilities
       resSpots = f.occupancy.res.length;
       accSpots = f.occupancy.acc.length;
       stdSpots = f.occupancy.std.length;
@@ -599,6 +642,7 @@ function analytics(data) {
 
       totalAvail = resAvail + accAvail + stdAvail;
 
+      // if no live data is present, show the historical data for the hour
       if (f.hour === time) {
         document.getElementById("res_number").innerHTML = resAvail;
         document.getElementById("acc_number").innerHTML = accAvail;
@@ -621,6 +665,7 @@ function analytics(data) {
       backgroundColours.push(generateColour(ratio));
     });
 
+    // drawing graph for historical information
     drawGraph(hours, occupied, backgroundColours, totalSpots);
   }
 }
@@ -697,6 +742,10 @@ function reloadAnalytics() {
   body.parking_lot_id = lotID;
   body.owner = lotOwner;
 
+  // For demoing purposes, we had named parking spaces after the team members that were "admins"
+  // for a particular spot
+
+  // Set which elements to be displayed and hidden based on analytics subscription
   if (lotOwner === "Jon") {
     document.getElementById("location_name").innerHTML = "ELCOM Loznica";
     document.getElementById("location_address").innerHTML =
@@ -737,6 +786,7 @@ function reloadAnalytics() {
       "Analytics not yet setup for this parking space...";
   }
 
+  // fetch live data
   spotData = JSON.parse(Get(jsonURL, body))["parking_lots"]["parking_spaces"];
 
   let resAvail = 0;
@@ -749,7 +799,7 @@ function reloadAnalytics() {
 
   let totalSpots = spotData.length;
 
-  spotData.forEach((data) => {
+  spotData.forEach(data => {
     switch (data.type) {
       case 0:
         stdSpots++;
@@ -777,6 +827,7 @@ function reloadAnalytics() {
 
   let totalAvail = resAvail + accAvail + stdAvail;
 
+  // update this information on the analytics cards
   document.getElementById("res_number").innerHTML = resAvail;
   document.getElementById("acc_number").innerHTML = accAvail;
   document.getElementById("std_number").innerHTML = stdAvail;
