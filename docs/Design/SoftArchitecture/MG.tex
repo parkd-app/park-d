@@ -8,6 +8,7 @@
 \usepackage{graphicx}
 \usepackage{float}
 \usepackage{hyperref}
+\usepackage{soul}
 \hypersetup{ colorlinks, citecolor=blue, filecolor=black, linkcolor=red,
     urlcolor=blue }
 
@@ -42,6 +43,8 @@
 & {\bf Notes}\\
 \midrule
 Jan 18, 2023 & 1.0 & Revision 0\\
+\midrule
+\color{red}{Apr 3, 2023} & \color{red}{1.1} & \color{red}{Revision 1}\\
 \bottomrule
 \end{tabularx}
 
@@ -156,18 +159,27 @@ require changing the one module that hides the associated decision. The approach
 adapted here is called design for change.
 
 \begin{description}
+\color{red}{
 \item[\refstepcounter{acnum} \actheacnum \label{ac1}:] 
 The type of vehicle information, such as the vehicle's length and width. This
 may change to simply require the vehicle class, such as SUV or Utility vehicle,
-using which the system would retrieve the dimensions.
-
+using which the system would retrieve the dimensions.\\
+\textbf{As of Revision 1, vehicle-related information is not used at all. In future revisions, this information will be collected and used to implement parking violation detection (single vehicle occupying multiple spots).}
+}
+\color{black}
 \item[\refstepcounter{acnum} \actheacnum \label{ac2}:] The source of the video
 footage (from a camera feed website or from a group member's device with a
 camera)
 
-\item[\refstepcounter{acnum} \actheacnum \label{ac3}:] The implementation of
-machine learning model is subject to change to(from using a Mask RNN to a
-Gaussian blur model depends on the angle of the footage and weather conditions)
+
+\item[\refstepcounter{acnum} \actheacnum \label{ac3}:]{\color{red} The
+implementation of machine learning model is subject to change(Different
+generations of YOLO model may be used)\\
+\textbf{As of Revision 1, YOLOV3 was eventually used in the project due to its
+robustness that able to identify parking spots in any different footage angles.
+In future revisions, different generations of YOLO architecture may be used to
+provide even more accurate results }}
+
 
 \item[\refstepcounter{acnum} \actheacnum \label{ac4}:] The layout of the parking
 spaces and if they reflect the exact layout of the parking lot, or just
@@ -194,10 +206,14 @@ will potentially need to be modified. Hence, it is not intended that these
 decisions will be changed.
 
 \begin{description}
-\item[\refstepcounter{ucnum} \uctheucnum \label{ucIO}:] The type of information
-that is requested from the user to be provided to the website in order to set
-tailored parking preferences (user ID, password and vehicle information).
-
+\color{red}{
+\item[\refstepcounter{ucnum} \uctheucnum \label{ucIO}:] 
+The type of information that is requested from the user to be provided to the
+website in order to set tailored parking preferences (user ID, password and
+vehicle information).\\
+\textbf{As of Revision 1, vehicle information is not gathered from users. In future revisions, this information will be collected and used to implement parking violation detection (single vehicle occupying multiple spots).}
+}
+\color{black}
 \item[\refstepcounter{ucnum} \uctheucnum \label{ucIO}:] Parking data will
 continue to be generated from a remote back-end and relayed to the front-end.
 
@@ -207,6 +223,15 @@ parking lot.
 
 \item[\refstepcounter{ucnum} \uctheucnum \label{ucData}:] The organization and
 interfaces of the modules involved in representing a parking layout.
+
+\item[\refstepcounter{ucnum} \uctheucnum \label{ucData}:] The parking status and
+layout data will be stored in an agreed upon structure in json files.
+
+\item[\refstepcounter{ucnum} \uctheucnum \label{ucIO}:] The Navigation Module
+will give users directions to their selected parking spot.
+
+\item[\refstepcounter{ucnum} \uctheucnum \label{ucIO}:] The Machine Learning
+Module will detect cars and determine if labelled parking spots are occupied.
 \end{description}
 
 \section{Module Hierarchy} \label{SecMH}
@@ -221,7 +246,7 @@ actually be implemented.
 \end{description}
 
 \begin{description}
-\item [\refstepcounter{mnum} \mthemnum \label{mCameraCapture}:] Camera Capture
+\item [\refstepcounter{mnum} \mthemnum \label{mCameraCapture}:] Video Capture
 Module
 \end{description}
 
@@ -285,6 +310,13 @@ Handler Module
 \item [\refstepcounter{mnum} \mthemnum \label{mView}:] View Module
 \end{description}
 
+\color{red} {
+\begin{description}
+\item [\refstepcounter{mnum} \mthemnum \label{mDb}:]Database Module
+\end{description}
+}
+
+\color{black}
 \begin{table}[h!]
 \centering
 \begin{tabular}{p{0.3\textwidth} p{0.6\textwidth}}
@@ -292,10 +324,12 @@ Handler Module
 \textbf{Level 1} & \textbf{Level 2}\\
 \midrule
 
-{Hardware-Hiding Module} & Camera capture module \\
+{Hardware-Hiding Module} & None \\
 \midrule
 
-\multirow{7}{0.3\textwidth}{Behaviour-Hiding Module} & Admin console module\\
+\multirow{7}{0.3\textwidth}{Behaviour-Hiding Module} 
+& Video capture module\\
+& Admin console module\\
 & Admin module\\
 & Parking lot layout module\\
 & Parking layout element module\\
@@ -305,6 +339,7 @@ Handler Module
 & User action handler module\\
 & Vehicle module\\
 & View module\\
+& \color{red} {Database module}\\
 \midrule
 
 \multirow{3}{0.3\textwidth}{Software Decision Module} & Navigation module\\
@@ -350,15 +385,13 @@ to be implemented.
 \item[Implemented By:] OS
 \end{description}
 
-\subsubsection{Camera Capture Module (\mref{mCameraCapture})}
 
-\begin{description}
-\item[Secrets:] The latest photo or video clip that was captured
-\item[Services:] Captures a photo or video clip from the camera
-\item[Implemented By:] Park'd
-\end{description}
 
 \subsection{Behaviour-Hiding Module}
+
+
+
+
 
 \begin{description}
 \item[Secrets:]The contents of the required behaviours.
@@ -369,6 +402,20 @@ to be implemented.
   module will need to change if there are changes in the SRS.
 \item[Implemented By:] --
 \end{description}
+
+\color{red}
+\subsubsection{Video Capture Module (\mref{mCameraCapture})}
+\begin{description}
+\item[Secrets:] The latest photo or video clip that was captured
+\item[Services:] Captures a photo or video clip from a YouTube live stream
+\item[Implemented By:] Park'd
+\item[Comments:]The Camera capture module is changed to a video capture module
+due to the input source is changed to YouTube live stream, thus no hardware is
+required for our project and this module is moved under the Behaviour-hiding
+module category.
+\end{description}
+
+\color{black}
 
 \subsubsection{Admin Console Module (\mref{mAdminConsole})}
 \begin{description}
@@ -442,14 +489,17 @@ distribute them to the corresponding module that provides related service.
 \item[Implemented By:] Park'd
 \end{description}
 
-\subsubsection{Vehicle Module (\mref{mVehicle})}
+\color{red}{ \subsubsection{Vehicle Module (\mref{mVehicle})}
 \begin{description}
 \item[Secrets:] Holds information that uniquely identifies a user's vehicle.
 \item[Services:] Provides a Vehicle object that can be stored in the database
 and later retrieved for making decisions about which parking spaces to show.
 \item[Implemented By:] Park'd
 \item[Type of Module:] Abstract Data Type
+\item[This module will be implemented in future revisions.]
 \end{description}
+}
+\color{black}
 
 \subsubsection{View Module (\mref{mView})}
 \begin{description}
@@ -459,6 +509,18 @@ and later retrieved for making decisions about which parking spaces to show.
 \item[Type of Module:] Abstract Object
 \end{description}
 
+
+\color{red}
+\subsubsection{Database Module (\mref{mDb})}
+\begin{description}
+\item[Secrets:] Holds the data of the parking lots
+\item[Services:] Provide parking lot layout information and availability
+information to user, as well as annotation information for the machine learning
+model through a set of database queries.
+\item[Implemented By:] Park'd
+\end{description}
+
+\color{black}
 \subsection{Software Decision Module}
 
 \begin{description}
@@ -490,16 +552,16 @@ point to a target parking spot.
 
 \subsubsection{Machine Learning Model Module (\mref{mMachineLearningModel})}
 \begin{description}
-    \item[Secrets:] Calculating the intersection over union between the bounding
-  boxes of the parking spots and the bounding boxes of the vehicle.It produces
-  true if the value is above a set threshold \emph{not} described in the SRS.
+    \item[Secrets:]{\color{red} Determine if the mid point of the bounding boxes
+    of a detected vehicle predicted by machine learning model is inside the
+    bounding boxes of the parking spots}
 \item[Services:] Provides users with the real time parking-lot availability
 information 
 \item[Implemented By:] Park'd
 \end{description}
-
+\color{red}
 \section{Traceability Matrix} \label{SecTM}
-
+\color{black}
 This section shows two traceability matrices: between the modules and the
 requirements and between the modules and the anticipated changes.
 
@@ -511,20 +573,21 @@ requirements and between the modules and the anticipated changes.
 \toprule
 \textbf{Req.} & \textbf{Modules}\\
 \midrule
-FR1 & \mref{mAuthentication}, \mref{mNavigation}\\
-FR2 & \mref{mAuthentication}, \mref{mNavigation}\\
+FR1 & \mref{mAuthentication}, \mref{mNavigation}, \mref{mDb}\\
+FR2 & \mref{mAuthentication}, \mref{mNavigation}, \mref{mDb}\\
 FR3 & \mref{mCameraCapture}, \mref{mMachineLearningModel}\\
 FR4 & \mref{mAdminConsole}, \mref{mAdmin}, \mref{mParkingLotLayout},
 \mref{mParkingLayoutElem}, \mref{mParkingSpot}, \mref{mAuthentication},
-\mref{mMachineLearningModel}\\
+\mref{mMachineLearningModel},\mref{mDb}\\
 FR5 & \mref{mAdminConsole}, \mref{mAdmin}, \mref{mParkingLotLayout},
-\mref{mParkingLayoutElem}, \mref{mParkingSpot}, \mref{mAuthentication}\\
-FR6 & \mref{mNavigation}, \mref{mUserActionHandler}\\
-FR7 & \mref{mAdminConsole}\\
-FR8 & \mref{mParkingLayoutElem}, \mref{mParkingSpot},
+\mref{mParkingLayoutElem}, \mref{mDb},\mref{mParkingSpot},
+\mref{mAuthentication}\\
+FR6 & \mref{mNavigation}, \mref{mDb}, \mref{mUserActionHandler}\\
+FR7 & \mref{mAdminConsole}, \mref{mDb}\\
+FR8 & \mref{mParkingLayoutElem}, \mref{mDb},\mref{mParkingSpot},
 \mref{mUserActionHandler}\\
 FR9 & \mref{mParkingLotLayout}\\
-FR10 & \mref{mParkingLayoutElem}, \mref{mParkingSpot},
+FR10 & \mref{mParkingLayoutElem}, \mref{mDb},\mref{mParkingSpot},
 \mref{mUserActionHandler}\\
 FR11 & \mref{mNavigation}\\
 FR12 & \mref{mParkingLotLayout}, \mref{mUserActionHandler}\\
@@ -548,11 +611,35 @@ FR28 & \mref{mAdmin}, \mref{mAuthentication}\\
 FR29 & \mref{mAuthentication}, \mref{mParkingStats}\\
 FR30 & \mref{mAdmin}, \mref{mAuthentication}\\
 FR31 & \mref{mAdmin}, \mref{mAuthentication}\\
+FR32 & \mref{mAdmin}, \mref{mAuthentication}, \mref{mView} \\
 \bottomrule
 \end{tabular}
 \caption{Trace Between Requirements and Modules}
 \label{TblRT}
 \end{table}
+
+\newpage
+\begin{table}[H]
+\centering
+\begin{tabular}{p{0.2\textwidth} p{0.6\textwidth}}
+\toprule
+\textbf{Req.} & \textbf{Modules}\\
+\midrule
+FR33 & \mref{mAdmin}, \mref{mAuthentication}, \mref{mView},
+\mref{mMachineLearningModel}, \mref{mDb}\\
+FR34 & \mref{mAdmin}, \mref{mAuthentication}, \mref{mMachineLearningModel},
+\mref{mDb}\\
+FR35 & \mref{mAdmin}, \mref{mAuthentication}, \mref{mMachineLearningModel},
+\mref{mDb}\\
+FR36 & \mref{mDb}\\
+FR37 & \mref{mDb}\\
+
+\bottomrule
+\end{tabular}
+\caption{Trace Between Requirements and Modules}
+\label{TblRT}
+\end{table}
+
 
 \begin{table}[H]
 \centering
@@ -572,9 +659,9 @@ FR31 & \mref{mAdmin}, \mref{mAuthentication}\\
 \caption{Trace Between Anticipated Changes and Modules}
 \label{TblACT}
 \end{table}
-
+\color{red}
 \section{Use Hierarchy Between Modules} \label{SecUse}
-
+\color{black}
 In this section, the uses hierarchy between modules is provided.
 \cite{Parnas1978} said of two programs A and B that A {\em uses} B if correct
 execution of B may be necessary for A to complete the task described in its
@@ -588,7 +675,7 @@ they use modules from the lower levels.
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.7\textwidth]{UsesDiagram.png}
+\includegraphics[width=0.9\textwidth]{UsesDiagram.pdf}
 \caption{Use hierarchy among modules}
 \label{FigUH}
 \end{figure}

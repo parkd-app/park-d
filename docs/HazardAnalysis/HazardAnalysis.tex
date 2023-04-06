@@ -19,7 +19,7 @@
 \usepackage{enumitem}
 
 \hypersetup{ colorlinks=true,       % false: boxed links; true: colored links
-    linkcolor=red,          %
+    linkcolor=red,          % color of internal links (change box color with
     citecolor=green,        % color of links to bibliography
     filecolor=magenta,      % color of file links
     urlcolor=cyan           % color of external links
@@ -50,6 +50,9 @@
 \textbf{Date} & \textbf{Developer(s)} & \textbf{Change}\\
 \midrule
 Oct 13 2022 & Albert, Almen, David, Gary, Jonathan, Kabishan & Revision 0\\
+\midrule
+\color{red}{Apr 3 2023} & \color{red}{Albert, Almen, David, Gary, Jonathan,
+Kabishan} & \color{red}{Revision 1}\\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -73,8 +76,10 @@ condition in the system together with a condition in the environment that has
 the potential to cause harm or damage = loss (From Nancy Leveson's work).
 
 \section{Scope and Purpose of Hazard Analysis}
-The scope of the document is to identify the causes, effects, solutions, and new
-requirements for possible hazards within the system boundaries.
+
+\textcolor{red}{The scope of the system encompassed by this hazard analysis of the Park'd application. Hazards imposed by outer environment and society are beyond the scope of this document.}
+
+\textcolor{red}{This document identifies hazards including security, feature authorization, user authentication, input correctness, and error handling as well as discusses the plans for hazard mitigation, and safety and security requirements that arise from the analysis of these hazards.}
 
 \section{System Boundaries and Components}
 The system boundary and components consists of the following:
@@ -91,7 +96,7 @@ The system boundary and components consists of the following:
         system components)
         \begin{itemize}
             \item A system responsible for the communication of the different
-            components of the application.(Communicating through HTTP call or
+            components of the application. (Communicating through HTTP call or
             RPC call)
             \item A system responsible for recovery when a communication failure
             occurs.
@@ -147,19 +152,20 @@ Functions & Failure Modes & Effects of Failure & Causes of Failure & Recommended
 Actions & SR & Ref.\\
 \hline
 Navigation & No driving instructions provided & Driver cannot navigate to
-desired parking space & Path finding algorithm ran out of memory to compute the
-driving instructions & Inform the driver that driving instructions could not be
-found and to try again later to avoid driver frustration &
-\hyperref[isr13]{SR.13} & H1-1\\\cline{2-7} & Impossible driving instructions
-provided & Driver cannot navigate to desired parking space & Path finding
-algorithm provided directions that are blocked by obstacles & Allow driver to
-report the obstacle and request another route &  \hyperref[isr4]{SR.4} &
-H1-2\\\cline{2-7} & Lengthy driving instructions provided & Driver travels a
-distance that exceeds the minimum distance required to reach the parking space &
-Path finding algorithm could not find an optimal path in the requested amount of
-time & Inform the driver that driving instructions with least travel could not
-be found and to try again later to avoid driver frustration &
-\hyperref[isr13]{SR.13} & H1-3\\
+desired parking space & \textcolor{red}{\begin{enumerate}[a., leftmargin=0.5cm,
+noitemsep,nolistsep] \item User location access lost \item Map lost connection
+to remote service \item Specified destination is unreachable \end{enumerate}} &
+Inform the driver that driving instructions could not be found and to try again
+later to avoid driver frustration & \hyperref[isr13]{SR.13} & H1-1\\\cline{2-7}
+& Impossible driving instructions provided & Driver cannot navigate to desired
+parking space & Path finding algorithm provided directions that are blocked by
+obstacles & Add functionality to allow driver to report the obstacle and request
+another route &  \hyperref[isr4]{SR.4} & H1-2\\\cline{2-7} & Lengthy driving
+instructions provided & Driver travels a distance that exceeds the minimum
+distance required to reach the parking space & Path finding algorithm could not
+find an optimal path in the requested amount of time & Inform the driver that
+driving instructions with least travel could not be found and to try again later
+to avoid driver frustration & \hyperref[isr13]{SR.13} & H1-3\\
 \hline
 Spot detection & System classifies reserved or accessibility parking spaces as
 normal parking spaces & Driver unknowingly parks in a parking space that is not
@@ -167,9 +173,11 @@ available to them & \begin{enumerate}[a., leftmargin=0.5cm, noitemsep,
 nolistsep]\item Painted indicator for reserved or accessibility parking has
 faded or obscured by nearby vehicles or shadows \item Some spaces are converted
 to reserved spaces \end{enumerate} & Allow parking lot managers to edit the
-parking lot layout to fix the errors &  \begin{enumerate}[a., leftmargin=0.5cm,
-noitemsep, nolistsep]\item \hyperref[asr2]{SR.2}, \hyperref[asr3]{SR.3},
-\hyperref[isr4]{SR.4} \item \hyperref[asr2]{SR.2}, \hyperref[asr3]{SR.3},
+parking lot layout to fix the errors. \textcolor{red}{Warn users to verify that
+they are allowed to use the spot before parking.} &  \begin{enumerate}[a.,
+leftmargin=0.5cm, noitemsep, nolistsep]\item \hyperref[asr2]{SR.2},
+\hyperref[asr3]{SR.3}, \hyperref[isr4]{SR.4}, \hyperref[isr10]{SR.10} \item
+\hyperref[asr2]{SR.2}, \hyperref[asr3]{SR.3},
 \hyperref[isr4]{SR.4}\end{enumerate}& H2-1\\\cline{2-7} & System unable to
 detect any parking space & User cannot park at any parking space in the parking
 lot & Weather conditions, such as snow, have hidden the parking space boundaries
@@ -209,13 +217,15 @@ manual corrections to the constructed map & \hyperref[asr2]{SR.2},
 associated with the database & Gaps exist in the displayed map on a valid
 parking space & Space database error; Parking space is recognized but not made
 accessible in the database & Raise an error if the system fails to associate a
-key with a given parking space & \hyperref[isr10]{SR.10} & H4-2\\\cline{2-7} &
-Paths leading to parking spaces are not mapped & Driver cannot navigate to
-desired parking space & \begin{enumerate}[a., leftmargin=0.5cm, noitemsep,
-nolistsep] \item No driving instructions provided \item Driving instructions are
-impossible to follow \end{enumerate} & Driving paths through the parking lot
-should already be stored for any potential space & \begin{enumerate}[a.,
-leftmargin=0.5cm, noitemsep, nolistsep]\item \hyperref[isr12]{SR.12} \item
+key with a given parking space. \textcolor{red}{Ensure database entries always
+contain data for both the camera view and the map view.} &
+\hyperref[isr10]{SR.10} & H4-2\\\cline{2-7} & Paths leading to parking spaces
+are not mapped & Driver cannot navigate to desired parking space &
+\begin{enumerate}[a., leftmargin=0.5cm, noitemsep, nolistsep] \item No driving
+instructions provided \item Driving instructions are impossible to follow
+\end{enumerate} & Driving paths through the parking lot should already be stored
+for any potential space & \begin{enumerate}[a., leftmargin=0.5cm, noitemsep,
+nolistsep]\item \hyperref[isr12]{SR.12} \item
 \hyperref[isr12]{SR.12}\end{enumerate}& H4-3\\
 \hline
 \end{tabular}
@@ -230,12 +240,13 @@ Actions & SR & Ref.\\
 \hline
 Viewing Parking Lot & System displays wrong parking lot layout & Driver does not
 see accurate information about the layout of the parking lot & Fault in Parking
-Lot Mapping algorithm & Allow driver to manually mark layout mistakes as
-feedback to the system & \hyperref[isr4]{SR.4} & H5-1\\\cline{2-7} & System
-displays wrong parking spot information & Driver does not see accurate
-information about the status of parking spots & Fault in Parking Spot Detection
-algorithm & Allow driver to manually mark parking spot status as feedback to the
-system & \hyperref[isr4]{SR.4} & H5-2\\
+Lot Mapping algorithm & Add functionality to allow driver to manually mark
+layout mistakes as feedback to the system & \hyperref[isr4]{SR.4} &
+H5-1\\\cline{2-7} & System displays wrong parking spot information & Driver does
+not see accurate information about the status of parking spots & Fault in
+Parking Spot Detection algorithm & Add functionality to allow driver to report
+incorrect parking spot status as feedback to the system & \hyperref[isr4]{SR.4}
+& H5-2\\
 \hline
 Editing Parking Lot Layout & System does not save the changes made to the layout
 & Parking lot manager is not able to apply changes they made to the parking lot
@@ -247,7 +258,7 @@ H6-1\\\cline{2-7} & System does not display tools to edit the layout of the
 parking lot & Parking lot manager is not able to edit the layout of the parking
 lot & System not displaying user interface for editing & Allow parking lot
 manager to restart or refresh the editing view/interface &
-\hyperref[isr5]{SR.5}, \hyperref[isr6]{SR.6}, \hyperref[isr11]{SR.11} & H6-2\\
+\hyperref[isr5]{SR.5}, \hyperref[isr6]{SR.6}, \hyperref[isr11]{SR.11} & H-2\\
 \hline
 \end{tabular}
 \caption{Failure Mode and Effect Analysis Table, Part 3} \label{TblFMEA3}
@@ -270,12 +281,13 @@ analysis are written in \textcolor{red}{red}.
     \textcolor{red}{\item Only the parking lot owner(s) shall have the option to
     edit the parking space layout} \label{asr2} \\
     \textcolor{red}{\textbf{Fit Criterion:} The administrative console is the
-    only view that has the option to edit the parking space}
-    \textcolor{red}{\item Only the parking space manager(s) of a parking lot are
-    allowed to have access to the administrative console for their parking lot}
-    \label{asr3}\\
+    only view that has the option to edit the parking space. Normal users are
+    not given the credentials to log in to this console.} \textcolor{red}{\item
+    Only the parking space manager(s) of a parking lot are allowed to have
+    access to the administrative console for their parking lot} \label{asr3}\\
     \textcolor{red}{\textbf{Fit Criterion:} The administrative console of a
-    parking lot can only edit and view analytics of the parking lot}
+    parking lot can only edit and view analytics of the parking lot. Normal
+    users are not given the credentials to log in to this console.}
 \end{enumerate}
 
 \subsubsection{Integrity Requirements}
@@ -293,14 +305,14 @@ analysis are written in \textcolor{red}{red}.
     \label{isr8} \textcolor{red}{\item The system should only allow a parking
     spot to have 1 special property} \label{isr9}\\
     \textcolor{red}{\textbf{Fit Criterion:} A parking space is either labeled as
-    accessibility, electric vehicle, or reserved} \textcolor{red}{\item Parking
-    lot managers must be prompted when there is a failed attempt to add a
-    parking spot to the database} \label{isr10} \textcolor{red}{\item Parking
-    lot owners should be able to prompt the upload of their parking lot layout
-    to the database and server} \label{isr11} \textcolor{red}{\item Correct
-    paths should be stored to all parking spaces} \label{isr12}
-    \textcolor{red}{\item Users are informed when an error occurs when the
-    system is determining the navigation path} \label{isr13}
+    normal, accessible, or reserved} \textcolor{red}{\item Parking lot managers
+    must be prompted when there is a failed attempt to add a parking spot to the
+    database} \label{isr10} \textcolor{red}{\item Parking lot owners should be
+    able to prompt the upload of their parking lot layout to the database and
+    server} \label{isr11} \textcolor{red}{\item Correct paths should be stored
+    to all parking spaces} \label{isr12} \textcolor{red}{\item Users are
+    informed when an error occurs when the system is determining the navigation
+    path} \label{isr13}
 \end{enumerate}
 
 \subsubsection{Privacy Requirements}
@@ -317,8 +329,11 @@ analysis are written in \textcolor{red}{red}.
 \noindent \emph{N/A}
 
 \section{Roadmap}
-From the new safety and security requirements discovered, they are all
-reasonable and can be implemented within the project time frame. SR1-13 are
-expected to be implemented by Revision 1.
+\textcolor{red}{Of the new requirements listed on this document, SR1-SR3 and SR8-SR14 were all successfully implemented in Revision 1. SR4, SR5, SR6, and SR7 are all slated for a future revision, after the Capstone Expo. Of these, SR5 is considered the highest priority, to prevent lost progress. These requirements are related to contingencies regarding unreliable connections, and are considered of lower priority relative to others which are related to main functionality.}
+%From the new safety and security requirements discovered, they are all
+%reasonable and can be implemented within the project time frame. SR1-13 are
+%expected to be implemented by Revision 1.
+
+
 
 \end{document}
