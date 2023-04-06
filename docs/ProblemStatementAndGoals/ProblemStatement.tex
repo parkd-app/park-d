@@ -7,6 +7,7 @@
 \usepackage{hyperref}
 \usepackage{tabularx}
 \usepackage{indentfirst}
+\usepackage{soul}
 
 \title{Problem Statement and Goals\\\progname}
 
@@ -30,7 +31,12 @@
 \textbf{Date} & \textbf{Developer(s)} & \textbf{Change}\\
 \midrule
 Sep 22, 2022 & Albert, Almen, David, Gary, Jonathan, Kabishan & Revision 0\\
+\midrule
+\color{red}
+Apr 4, 2023 & \textcolor{red}{Albert, Almen, David, Gary, Jonathan, Kabishan} &
+\textcolor{red}{Revision 1}\\
 \bottomrule
+\color{black}
 \end{tabularx}
 \end{table}
 
@@ -63,7 +69,8 @@ Included in this section are high level inputs and outputs to characterize the
 \begin{itemize}
     \item Parking lot cameras or sensors
     \item Parking lot location
-    \item Parking spot preference (handicapped, reserved)
+    \item Parking spot preference (\textcolor{red}{standard, }handicapped,
+    reserved)
     \item User spot selection
 \end{itemize}
 
@@ -89,6 +96,7 @@ Parking lot owners/managers need to give permission to setup cameras or sensors
 on their property. They also don't want customers to waste their time in parking
 lots when they can be shopping. With fewer drivers wandering around, collisions
 and arguments are less likely to occur.
+
 \subsection{Environment}
 The system is used in a vehicle by a driver or passenger, so it must comply with
 laws relating to device usage by drivers.
@@ -143,12 +151,13 @@ they do not have the right to use, such as Reserved and Accessible spots. On the
 other hand, we want to highlight the special spots for those who can use them
 and/or have set a preference for a special parking spot. \\
 \hline
-Hands free interaction & Users can interact with the system in a hands-free
-manner and the system will give information to the user in a way that minimizes
-distraction. & Since it is illegal for drivers to touch their phone while
+\textcolor{red}{\st{Hands free interaction}} & \textcolor{red}{\st{Users can
+interact with the system in a hands-free manner and the system will give
+information to the user in a way that minimizes distraction.}} &
+\textcolor{red}{\st{Since it is illegal for drivers to touch their phone while
 driving, the system needs to be usable in other hands-free means. It is
 extremely important for users to be safe and not distracted while using our
-system in their vehicles.\\
+system in their vehicles.}}\\
 \bottomrule
 \end{tabularx}
 \caption{Goals continued} \label{TblGoals} 
@@ -165,10 +174,9 @@ system in their vehicles.\\
 \toprule
 \textbf{Goals} & \textbf{Description} & \textbf{Importance}\\
 \midrule
-Immediate Spots & Prioritize giving drivers spots closest to their location.
-\wdy{And/or closest to the main entrance?} & Parking lots can be large with
-confusing layouts and spots should be prioritized by ease of access by vehicle
-and by foot. \\
+Immediate Spots & Prioritize giving drivers spots closest to their location. &
+Parking lots can be large with confusing layouts and spots should be prioritized
+by ease of access by vehicle and by foot. \\
 \hline
 Vandalism analysis & Appraise the risk of vandalism to a vehicle by analyzing
 body language, and detect when it is taking place. & Parking lots are publicly
@@ -212,6 +220,13 @@ Furthermore, analyze groups which appear to be preparing to leave the parking
 lot. & In the event that a parking lot becomes full, providing an estimate of
 when a spot may become available can be helpful to the end user. The common
 chore of following a exiting group back to their vehicle could be automated. \\
+\hline
+\textcolor{red}{Hands free interaction} & \textcolor{red}{Users can interact
+with the system in a hands-free manner and the system will give information to
+the user in a way that minimizes distraction.} & \textcolor{red}{Since it is
+illegal for drivers to touch their phone while driving, the system needs to be
+usable in other hands-free means. It is extremely important for users to be safe
+and not distracted while using our system in their vehicles.}\\
 \bottomrule
 \end{tabularx}
 \caption{Stretch Goals continued} \label{TblStretchGoals2}
