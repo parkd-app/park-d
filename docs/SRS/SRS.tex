@@ -15,6 +15,11 @@
 \usepackage{float}
 \usepackage{multirow}
 \usepackage{comment}
+\usepackage{cancel}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{blindtext}
+\usepackage{soul}
 
 \usepackage{biblatex} 
 \addbibresource{SRS_ref.bib}
@@ -55,7 +60,10 @@
 Oct 3, 2022 & Albert, Almen, David, Gary, Jonathan, Kabishan & Revision 0\\
 \midrule
 Nov 2, 2022 & Almen, David & Adding Security Requirements outlined in the Hazard
-Analysis \\
+Analysis\\
+\midrule
+\color{red}{Apr 1, 2022} & \color{red}{Albert, Almen, David, Gary, Jonathan,
+Kabishan} & \color{red}{Revision 1}\\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -125,7 +133,7 @@ reduce the amount of collisions, traffic, and arguments that may occur.
 
 
 \subsubsection{The Hands-On Users of the Product}
-The hands-on users of the product can be defined into two group, Ontario
+The hands-on users of the product can be defined into two groups, Ontario
 licensed drivers and the parking lot owners/managers. Firstly, Ontario licensed
 drivers would be the main users of the application as they are the ones actively
 using the application to find empty parking spaces and being navigated to them.
@@ -165,19 +173,29 @@ V8 engine. \\
 \textbf{Fit Criterion:} The system should run on both system with no errors 
 
 \subsubsection{Implementation Environment of the Current System}
+\textcolor{red}{
 \begin{itemize}
-    \item Back-end service will be implemented  using \term{Python} 3.7 with
-    Flask framework.
-    \item Machine learning model will be trained and tested using ]term{Python}
-    3.7 with the Tensorflow and OpenCV libaries.
-    \item Front-end web page will be implemented using HTML,CSS and JavaScript
-    with React.js framework.
-    \item MySQL will be used as the database and SQLAlchemy ORM will be used for
-    accessing data for our application.
-    \item The \term{ML} model will be deployed on Microsoft Azure cloud service.
+    \item \st{Back-end service will be implemented  using Python 3.7 with Flask
+    framework.}
+    \item \st{Machine learning model will be trained and tested using Python 3.7
+    with the Tensorflow and OpenCV libaries.}
+    \item \st{Front-end web page will be implemented using HTML,CSS and
+    JavaScript}.% with React.js framework.
+    \item \st{The database will be hosted on Firebase.} %MySQL will be used as
+    the database and SQLAlchemy ORM will be used for accessing data for our
+    application.
+    \item \st{The ML model will be deployed on our own server.} %Microsoft Azure
+    cloud service.
 \end{itemize}
-We will be hosting our back-end service and deploy our machine learning models
-on Azure where they provide free access for \term{McMaster} students. 
+}
+\begin{itemize}
+    \item The system should be accessible from a browser on a desktop or mobile
+    device.
+    \item The system should be used by individuals at their computer or in a
+    vehicle.
+\end{itemize}
+%We will be hosting our back-end service and deploy our machine learning models
+%on Azure where they provide free access for \term{McMaster} students. 
 \subsubsection{Partner or Collaborative Applications}
 \begin{itemize}
     \item Parking lot surveillance system.
@@ -230,17 +248,28 @@ on Azure where they provide free access for \term{McMaster} students.
     \newterm{Driver} & A person using the application that has a drivers'
     license\\
     \hline
+    \newterm{Admin} & A parking lot administrator using the application to
+    manage parking lots\\
+    \hline
     \newterm{Python} & A high level programming language that will be used to
     train and test our Machine Learning models and our backend\\
     \hline
     \newterm{ML} & Machine Learning\\
     \hline
     \newterm{McMaster} & A university located in Hamilton, Ontario\\
+    \hline
+    \newterm{BE} & \textcolor{red}{Business event, a specific activity that must
+    be supported}\\
+    \hline
+    \newterm{FR} & \textcolor{red}{Functional requirement, a specification of
+    behaviours the system must have}\\
     \bottomrule
     \end{tabular}
 \end{table}
 
 \subsection{Relevant Facts and Assumptions}
+In this section is important background information that was taken into account
+for the requirements specification.
 \subsubsection{Facts}
 \begin{itemize}
     \item Parking spaces are denoted by white or yellow lines.
@@ -251,6 +280,11 @@ on Azure where they provide free access for \term{McMaster} students.
     by-laws}.
     \item Video surveillance footage should only be used for the purpose that
     surveillance is being undertaken, or for purposes that are permitted by law.
+    \item \textcolor{red}{Ontario's distracted driving laws can be found
+    \href{https://www.ontario.ca/page/distracted-driving}{here}. They do not
+    permit the operation of a mobile device unless pulled over out of traffic.
+    If viewing the device while driving, the device must be securely mounted to
+    the dashboard.}
 \end{itemize}
 \subsubsection{Assumptions}
 \begin{itemize}
@@ -259,19 +293,27 @@ on Azure where they provide free access for \term{McMaster} students.
     \item Drivers abide to all road rules and traffic laws
     \item The cameras will be at a high enough location to get a good view over
     the parking lot.
-    \item All reserved parking are denoted by the same signs and symbols
+    \item All reserved parking are denoted by the same signs and symbols.
+    \item \textcolor{red}{Admins have access to a mouse for annotating their
+    parking lots.}
 \end{itemize}
 
 \newpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Functional Requirements
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Functional Requirements}
-
+In this section are the functional requirements for Park'd, and related
+information including the context diagram, work partitioning, and use cases.
 \subsection{The Scope of the Work and the Product}
-\subsubsection{The Context of the Work}
+The scope encompasses the range of functionality and usage scenarios the product
+is designed to cover. \subsubsection{\color{red} The Context of the Work}
+
+
 \begin{figure}[ht]
-    \includegraphics[scale=0.6]{context.jpg}
-    \caption{Context diagram}
+    \begin{center}
+        \caption{Context diagram}
+        \includegraphics[scale=1.0]{Context_diagram.pdf}
+    \end{center}
 \end{figure}
 
 \newpage
@@ -323,7 +365,8 @@ on Azure where they provide free access for \term{McMaster} students.
     2 & Use cameras in the parking lot and an AI to recognize open/special
     spots. List these spots to the user.\\
     \hline
-    3 & Toggle seeing special spots in the list of available spots.\\
+    3 & \textcolor{red}{Use special spots such as accessible and reserved
+    types.}\\ %Toggle seeing special spots in the list of available spots.\\
     \hline
     4 & Choose a spot in the list of available spots and get directions to it.\\
     \hline
@@ -340,20 +383,22 @@ on Azure where they provide free access for \term{McMaster} students.
     \hline
     9 & Quit traversing to the current spot and return to the map.\\
     \hline
-    10 & Collect statistical data about the parking lot from cameras over time.
+    \textcolor{red}{10} & \textcolor{red}{View/create/modify parking lots}.\\
+    \hline
+    11 & Collect statistical data about the parking lot from cameras over time.
     The owner can use this data to make business decisions.\\
     \hline
-    11 & Allows the owner to add/remove/modify spots in the layout.\\
+    12 & Allows the owner to add/remove/modify spots in the layout.\\
     \hline
     \end{tabular}
 \end{table}
 
 \newpage
-\subsubsection{Individual Product Use Cases}
 
+\subsubsection{\textcolor{red}{Individual Product Use Cases}}
 \begin{figure}[H]
     \centering
-    \includegraphics[width=12cm, height=13cm]{use_case.jpg}
+    \includegraphics[width=13cm, height=13cm]{use_case.pdf}
     \caption{Use case diagram that displays the main functionalities of the application.}
 \end{figure}
 
@@ -370,11 +415,21 @@ on Azure where they provide free access for \term{McMaster} students.
 \end{enumerate}
 \refstepcounter{funcreqnum}
 \begin{enumerate}[{FR}\thefuncreqnum.] 
-    \item The system must present the driver with a map of their surroundings.\\
+    \item The system must present the driver with a map of their surroundings,
+    \textcolor{red}{if they have allowed location access}.\\
     \textbf{Rationale:} Upon start-up, the system presenting the map of the
     driver's surroundings will help the driver orient themselves in their
     current location.
 \end{enumerate}
+\color{red}{
+\refstepcounter{funcreqnum}
+\begin{enumerate}[{FR}\thefuncreqnum.] 
+    \item The system shall disable the navigation component if the driver
+    doesn't provide permission.\\
+    \textbf{Rationale:} Not all drivers wish to provide permission or use the
+    navigation component.
+\end{enumerate}
+}
 \end{enumerate}
 
 \refstepcounter{businesseventnum}
@@ -390,28 +445,42 @@ on Azure where they provide free access for \term{McMaster} students.
 \end{enumerate}
 \refstepcounter{funcreqnum}
 \begin{enumerate}[{FR}\thefuncreqnum.] 
-    \item The system shall recognize special parking spots.\\
+    \item The system shall \textcolor{red}{allow admins to mark special parking
+    spots.}\\ %recognize special parking spots.
     \textbf{Formal Specification: } \[\forall SP | SP \in P  \bullet Detect(SP)
     = true\]\\
+    \textcolor{red}{Where SP: special spot, P: parking spot}\\
     \textbf{Rationale:} The system needs to know about these spots so that they
-    appear to only those who need them.
+    \textcolor{red}{are only selected by those who need them}.%appear to only
+    those who need them.
 \end{enumerate}
 \refstepcounter{funcreqnum}
 \begin{enumerate}[{FR}\thefuncreqnum.] 
-    \item The system shall determine the physical location of parking spots.
-    \label{poc2}\\
-    \textbf{Rationale:} Drivers will be directed to their spot, so their
-    destination has to be determined by the camera location.
+    \item The system shall \textcolor{red}{allow admins to mark the physical
+    location of parking spots}. \label{poc2}\\ %determine the physical location
+    of parking spots. \textbf{Rationale:} Drivers will be directed to their
+    spot, so their destination has to be determined by the camera location.
 \end{enumerate}
 \refstepcounter{funcreqnum}
 \begin{enumerate}[{FR}\thefuncreqnum.] 
-    \item The system must prompt the driver to provide the parking lot that they
-    wish to navigate to.
+    \item The system must \color{red}{display all available parking lots and
+    allow} the driver to provide the parking lot that they wish to navigate
+    to.\\
+    \textbf{Formal Specification: }  \\Available spot = \[\forall S | S \in A
+    \bullet x < x1 \land  x < x3 \land x > x2 \land x > x4 \land y < y1 \land  y
+    < y3 \land y > y2 \land y > y4 = true\]\\
+    Where T = (x,y) be a pair of coordinates indicates the mid point of the
+    detected vehicle.\\
+    S = [(x1,y1), (x2,y2), (x3,y3), (x4,y4)] be an array of 4 tuples with each
+    tuple represent the coordinates of a parking space annotation from top left
+    corner to bottom right corner in counter-clock wise direction\\
+    And A be a set of S\\
+   
 \end{enumerate}
 \refstepcounter{funcreqnum}
 \begin{enumerate}[{FR}\thefuncreqnum.] 
     \item The system must display the available parking spaces of the specified
-    destination.
+    destination parking lot.
 \end{enumerate}
 \end{enumerate}
 
@@ -420,21 +489,23 @@ on Azure where they provide free access for \term{McMaster} students.
 \item The driver wishes to filter the available parking spots.
 \refstepcounter{funcreqnum}
 \begin{enumerate}[{FR}\thefuncreqnum.] 
-    \item The system shall allow the driver to select between viewing available
-    normal, accessibility and reserved parking spaces.\\
+    \item The system shall allow the driver to select between using available
+    normal, accessibility and reserved parking spaces, \textcolor{red}{with
+    confirmation of authorization for the latter two}.\\
     \textbf{Rationale:} The driver should be able to view and select between all
-    possible types of parking spaces. For example, a wheelchair bound driver
-    would only need to see accessible parking spaces, whereas, an able-bodied
-    driver would only need to see normal parking spaces to avoid parking in an
-    accessible or reserved parking space.
+    possible types of parking spaces if they are authorized. For example, a
+    driver with a wheelchair would need to see accessible parking spaces,
+    whereas, an able-bodied driver would only need to use normal parking spaces
+    to avoid parking in an accessible or reserved parking space.
 \end{enumerate}
 \refstepcounter{funcreqnum}
 \begin{enumerate}[{FR}\thefuncreqnum.] 
-    \item The system by default must display only normal, non-reserved parking
-    spaces.\\
-    \textbf{Rationale:} Most drivers will not be authorized to use disabled
+    \item The system by default must \textcolor{red}{only allow selections for
+    normal, non-reserved parking spaces, if authorization is not
+    confirmed.}\\%display only normal, non-reserved parking spaces.\\
+    \textbf{Rationale:} Most drivers will not be authorized to use accessible
     parking spaces or reserved parking spaces, such as those for public transit
-    vehicles. Without any other input, the system should display only the spaces
+    vehicles. Without any other input, the system should allow only the spaces
     that the most drivers can use.
 \end{enumerate}
 \end{enumerate}
@@ -458,41 +529,53 @@ on Azure where they provide free access for \term{McMaster} students.
     parking space they selected from their current position.
 \end{enumerate}
 
+\color{red}{
 \refstepcounter{funcreqnum}
-\begin{enumerate}[{FR}\thefuncreqnum.] 
-    \item The system shall provide a default recommendation if the driver does
-    not wish to select a specific parking space. \label{poc3}\\
-    \textbf{Rationale:} Providing the input to select a specific parking space
-    may be difficult on small displays because of the relative size difference
-    between a parking lot and a space.
-\end{enumerate}
+    \begin{enumerate}[{FR}\thefuncreqnum.] 
+        \item The system shall provide a default recommendation if the driver
+        does not wish or is not able to select a specific parking space.
+        \label{poc3}\\
+        \textbf{Rationale:} Providing the input to select a specific parking
+        space may be difficult on small displays because of the relative size
+        difference between a parking lot and a space.\\
+        \textbf{Will be implemented in a future revision.}
+    \end{enumerate}
+}
 
+\color{red}{
 \refstepcounter{funcreqnum}
 \begin{enumerate}[{FR}\thefuncreqnum.] 
     \item The system shall display navigation directions to the default
     recommended parking space if the driver makes no space selection within
-    $\hyperlink{default_delay}{DEFAULT\_DELAY}$ seconds.
+    $\hyperlink{default_delay}{DEFAULT\_DELAY}$ seconds.\\
+    \textbf{Will be implemented in a future revision.}
 \end{enumerate}
+}
+
 \end{enumerate}
 
 \refstepcounter{businesseventnum}
 \begin{enumerate}[{BE}\thebusinesseventnum.] 
 \item The driver wishes to select an invalid parking spot.
-\refstepcounter{funcreqnum}
-\begin{enumerate}[{FR}\thefuncreqnum.] 
-    \item The system shall notify the driver if they attempt to select an
-    unavailable parking space.\\
-    \textbf{Rationale:} The driver should be informed that they cannot park in a
-    spot that is already occupied by another vehicle.
-\end{enumerate}
+
+    \refstepcounter{funcreqnum}
+    \begin{enumerate}[{FR}\thefuncreqnum.] 
+    \color{red}
+        \item The system shall not allow the driver to select an invalid spot
+        such as spots that are already occupied.\\
+        \textbf{Rationale:} The driver should not be able to select an invalid
+        spot.
+    \end{enumerate}
+
 \refstepcounter{funcreqnum}
 \begin{enumerate}[{FR}\thefuncreqnum.] 
     \item The system shall notify the driver if they attempt to select a
-    reserved or disabled parking space, if they have not filtered for those
-    spaces.\\
+    reserved or disabled parking space, if they have confirmed authorization for
+    those spaces.\\
     \textbf{Rationale:} The driver should be informed that they cannot park in a
     spot that requires other authorization.
 \end{enumerate}
+
 \end{enumerate}
 
 \refstepcounter{businesseventnum}
@@ -503,16 +586,75 @@ on Azure where they provide free access for \term{McMaster} students.
     \item The system shall provide real time directions to the driver to the
     selected parking space.
 \end{enumerate}
+
+\color{red}{
+\refstepcounter{funcreqnum}
+    \begin{enumerate}[{FR}\thefuncreqnum.] 
+        \item The system shall recommend a new available parking space to the
+        driver upon the initial selected parking space being taken.\\
+        \textbf{Will be implemented in a future revision.}
+    \end{enumerate}
+}
+
+\color{red}{
 \refstepcounter{funcreqnum}
 \begin{enumerate}[{FR}\thefuncreqnum.] 
-    \item The system shall recommend a new available parking space to the driver
-    upon the initial selected parking space being taken.
+    \item The system shall provide the option to safely select a new parking
+    space upon the initial selected parking space being taken.\\
+    \textbf{Will be implemented in a future revision.}
 \end{enumerate}
+}
+
+\color{red}{
 \refstepcounter{funcreqnum}
 \begin{enumerate}[{FR}\thefuncreqnum.] 
-    \item The system shall provide the option to select a new parking space upon
-    the initial selected parking space being taken.
+    \item The system shall terminate the route and inform the driver if the
+    chosen space has been taken before they arrive.\\
+    \textbf{Rationale:} The driver must choose a new space when theirs is taken.
 \end{enumerate}
+}
+
+\color{red}{
+\refstepcounter{funcreqnum}
+\begin{enumerate}[{FR}\thefuncreqnum.] 
+    \item The system shall terminate the route if the driver doesn't arrive
+    within a time estimate plus
+    $\hyperlink{timeout_tolerance}{TIMEOUT\_TOLERANCE}$ seconds.\\
+    \textbf{Formal Specification: }
+    \[\texttt{T} \geq \texttt{TimeOutTolerance} \Rightarrow Ter\] \\
+    \[\texttt{T} \leq \texttt{TimeOutTolerance} \Rightarrow Wor\] 
+    
+    Where TimeOutTolerance: the maximum time that system do not terminate when
+    user's hasn't arrive to the Destination\\
+    Where Ter is the termination state\\
+    Where Wor is the working state\\
+    Where T is the time has elapsed after user start navigation\\
+    \textbf{Rationale:} The driver may take too long to reach the space or not
+    go at all.
+\end{enumerate}
+}
+
+\color{red}{
+\refstepcounter{funcreqnum}
+\begin{enumerate}[{FR}\thefuncreqnum.] 
+    \item The system shall track the driver's location within
+    $\hyperlink{distance_tolerance}{DISTANCE\_TOLERANCE}$ meters.\\
+    \textbf{Rationale:} Location data isn't perfect so there must be a
+    tolerance.
+\end{enumerate}
+}
+
+\color{red}{
+\refstepcounter{funcreqnum}
+\begin{enumerate}[{FR}\thefuncreqnum.] 
+    \item The system shall provide a time estimate to the selected space within
+    $\hyperlink{driving_estimate_tolerance}{DRIVING\_ESTIMATE\_TOLERANCE}$
+    seconds.\\
+    \textbf{Rationale:} Drivers should take driving time in to consideration
+    when finding a spot.
+\end{enumerate}
+}
+
 \end{enumerate}
 
 \refstepcounter{businesseventnum}
@@ -532,30 +674,38 @@ on Azure where they provide free access for \term{McMaster} students.
     status of the parking space should be updated, such that future drivers do
     not pick the same parking space.
 \end{enumerate}
+\color{red} {
 \refstepcounter{funcreqnum}
 \begin{enumerate}[{FR}\thefuncreqnum.] 
     \item The system shall non-intrusively prompt the driver for feedback
     regarding their experience after parking.\\
     \textbf{Rationale:} Driver feedback will be important to improve our
     system's experience, as well as to alert us of any issues they have
-    encountered.
+    encountered.\\
+    \textbf{Will be implemented in a future revision.}
 \end{enumerate}
+}
 \end{enumerate}
 
 \refstepcounter{businesseventnum}
 \begin{enumerate}[{BE}\thebusinesseventnum.] 
-\item The driver wishes to change the settings of the application.
+\color{red} {
+\item The driver wishes to change the settings of the application. } \color{red}
+{
 \refstepcounter{funcreqnum}
 \begin{enumerate}[{FR}\thefuncreqnum.] 
     \item The system shall provide a means of viewing and modifying the
-    settings.
+    settings.\\
+    \textbf{Will be implemented in a future revision.}
 \end{enumerate}
-
+} \color{red} {
 \refstepcounter{funcreqnum}
 \begin{enumerate}[{FR}\thefuncreqnum.] 
     \item The system's settings menu shall include volume and sound adjustment,
-    unit identification, vehicle details, and notification preferences.
+    unit identification, vehicle details, and notification preferences.\\
+    \textbf{Will be implemented in a future revision.}
 \end{enumerate}
+}
 \end{enumerate}
 
 \refstepcounter{businesseventnum}
@@ -592,13 +742,30 @@ parking lot.
     parking lot owner/manager to view the availability of all parking spaces in
     their lot.
 \end{enumerate}
-\refstepcounter{funcreqnum}
-\begin{enumerate}[{FR}\thefuncreqnum.] 
-    \item The system shall track analytics on how many spaces are
-    available/unavailable and categorize them in terms of their type.
-\end{enumerate}
 \end{enumerate}
 
+\color{red} {
+    \refstepcounter{businesseventnum}
+    \begin{enumerate}[{BE}\thebusinesseventnum.] 
+    \item The parking lot owner/manager or driver wishes to view the analytics
+    of their desired parking lot.
+    
+    \refstepcounter{funcreqnum}
+    \begin{enumerate}[{FR}\thefuncreqnum.] 
+        \item The system shall display live analytics on how many spaces are
+        available/unavailable and categorize them in terms of their type
+        (standard, accessible, reserved).
+    \end{enumerate}
+
+    \refstepcounter{funcreqnum}
+    \begin{enumerate}[{FR}\thefuncreqnum.] 
+        \item The system shall display twenty-four hours of averaged historical
+        parking lot occupancy information.
+    \end{enumerate}
+    \end{enumerate}
+}
+
+\color{black}
 \refstepcounter{businesseventnum}
 \begin{enumerate}[{BE}\thebusinesseventnum.] 
 \item The parking lot owner/manager wishes to edit their parking lot layout.
@@ -614,10 +781,10 @@ parking lot.
 \end{enumerate}
 \end{enumerate}
 
-\newpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Non-functional Requirements
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Non-functional Requirements}
+This section specifies the non-functional requirements for Park'd.
 \subsection{Look and Feel Requirements}
 \subsubsection{Appearance Requirements}
 \begin{enumerate}[{LF}1.] 
@@ -627,26 +794,28 @@ parking lot.
     \textbf{Park'd} developers agree on its necessity.
 \end{enumerate}
 
+\color{red}
 \subsubsection{Style Requirements}
 \begin{enumerate}[resume*]  
-    \item The driver must interpret the design as modern and reminiscent of
-    other navigation apps.\\
-    \textbf{Fit Criterion:} 80\% of testers indicate a visual similarity with
-    Google Maps, Apple Maps, or Waze.
+    \item All user interface elements must conform to the park-d branding
+    guidelines\\
+    \textbf{Fit Criterion:} All the user interface elements presented in our
+    website should have consistent use of the organization's logo, font, and
+    yellow black color scheme.
 \end{enumerate}
 
+\color{black}
 \subsection{Usability and Humanity Requirements}
 \subsubsection{Ease of Use Requirements}
 \begin{enumerate}[{UH}1.] 
     \item Operations from the working screen take no more than
     $\hyperlink{max_taps}{MAX\_TAPS}$ taps to complete.\\
-    \textbf{Fit Criterion:} This requirement is stated with quantifiable terms
-    and does not need a fit criterion to validate it. 
-    \item Drivers must find the user interface familiar coming from navigation
-    apps such as Google Maps.\\
-    \textbf{Fit Criterion:} 80\% of testers indicate that the interface is
-    similar to Google Maps.
+    \color{red}
+    \item For each function feature in the software, novice users are able to
+    identify and complete each of them with no more than
+    $\hyperlink{max_time_complete}{MAX\_COMPLETE\_TIME}$ minute \\
 \end{enumerate}
+\color{black}
 
 \subsubsection{Personalization and Internationalization Requirements}
 \noindent \emph{N/A}
@@ -672,10 +841,10 @@ parking lot.
 \subsection{Performance Requirements}
 \subsubsection{Speed and Latency Requirements}
 \begin{enumerate}[{PE}1.] 
+\color{red}{
     \item The system must maintain a minimum of
     $\hyperlink{min_framerate}{MIN\_FRAMERATE}$ during normal operation.\\
-    \textbf{Fit Criterion:} This requirement is stated with quantifiable terms
-    and does not need a fit criterion to validate it. 
+}
 \end{enumerate}
 
 \subsubsection{Safety-Critical Requirements}
@@ -696,31 +865,43 @@ parking lot.
 \noindent \emph{N/A}
 
 \subsubsection{Reliability and Availability Requirements}
-\noindent \emph{N/A}
+\color{red}{
+\begin{enumerate}[resume*] 
+    \item The system shall be responsive, that is, it should respond to the
+    user's command within $\hyperlink{default_delay}{DEFAULT\_DELAY}$/4
+    seconds.\\
+    \textbf{Fit Criterion:} We require for the maximum delay to be
+    $\hyperlink{default_delay}{DEFAULT\_DELAY}$/4 because, based on user
+    validation testing, users began to voice their frustration after
+    $\hyperlink{default_delay}{DEFAULT\_DELAY}$/4 seconds. 
+\end{enumerate}
+}
+\color{black}
+
 
 \subsubsection{Robustness or Fault-Tolerance Requirements}
 \begin{enumerate}[resume*] 
+\color{red}{
     \item In the event of lost connection to the system back-end, the most
     recent recommended parking spot will remain on the display.\\
-    \textbf{Fit Criterion:} This requirement is stated with quantifiable terms
-    and does not need a fit criterion to validate it. 
+    }
 \end{enumerate}
 
 \subsubsection{Capacity Requirements}
 \begin{enumerate}[resume*] 
+\color{red}{
     \item The system back-end must support
     $\hyperlink{concurrent_users}{CONCURRENT\_USERS}$ using the system at the
     same time.\\
-    \textbf{Fit Criterion:} This requirement is stated with quantifiable terms
-    and does not need a fit criterion to validate it. 
+    }
 \end{enumerate}
 
 \subsubsection{Scalability or Extensibility Requirements}
 \begin{enumerate}[resume*] 
-    \item The system shall support $\hyperlink{parking_lots}{PARKING\_LOTS}$
-    parking areas within six months.\\
-    \textbf{Fit Criterion:} This requirement is stated with quantifiable terms
-    and does not need a fit criterion to validate it. 
+    \color{red}{\item The system shall provide administrators the ability to add
+    any number of parking areas ($\hyperlink{parking_lots}{PARKING\_LOTS}$ and
+    above) without having to remove previous parking areas.\\}
+    \color{black}
 \end{enumerate}
 
 \subsubsection{Longevity Requirements}
@@ -750,12 +931,18 @@ parking lot.
 
 \subsection{Maintainability and Support Requirements}
 \subsubsection{Maintenance Requirements}
+\color{red}
 \begin{enumerate}[{MA}1.] 
-    \item The system's software and hardware down time shall not affect each
-    other.\\
-    \textbf{Fit Criterion:} The software and hardware components are operable
-    without the other.
+    \item Critical issues will be addressed immediately with a target resolution
+    time. Issues will be tracked and prioritized based on severity and impact on
+    system functionality. \\
+    \textbf{Fit Criterion:} The software issues and bugs should be resolved in
+    less than 24 hours after errors or bugs being located. A dedicated team
+    member will be responsible for identifying, prioritizing, and addressing
+    maintenance issues and these issues will be recorded with their severity in
+    a internal document.
 \end{enumerate}
+\color{black}
 
 \subsubsection{Supportability Requirements}
 \begin{enumerate}[resume*] 
@@ -777,8 +964,11 @@ parking lot.
     \textbf{Fit Criterion:} The data is password protected.
     \item Only the parking lot owner(s) shall have the option to edit the
     parking space layout \label{asr2} \\
-    \textbf{Fit Criterion:} The administrative console is the only view that has
-    the option to edit the parking space
+    \color{red}{\textbf{Fit Criterion:} Upon logging in as a standard user,
+    there should not be a button to edit the layout of any parking area. For an
+    administrator, there should only be a button to edit the layout of the
+    parking lot that they own.}
+    \color{black}
     \item Only the parking space manager(s) of a parking lot are allowed to have
     access to the administrative console for their parking lot \label{asr3}\\
     \textbf{Fit Criterion:} The administrative console of a parking lot can only
@@ -789,13 +979,19 @@ parking lot.
 \begin{enumerate}[resume*] 
     \item The system shall prevent inaccurate data from being stored.\\
     \textbf{Fit Criterion:} Stress test the system with accurate and inaccurate
-    data and measure the data's accuracy.
+    data and measure the data's accuracy.\\
+    \textbf{\textcolor{red}{Will be implemented in a future revision.}}
     \item Unsaved parking layout information should be stored locally if the
-    information cannot be uploaded to the server \label{isr5}
-    \item Unsaved parking layout information should attempt to upload to the
-    server every $\hyperlink{attempt_upload_time}{ATTEMPT\_UPLOAD\_TIME}$
-    seconds \label{isr6}
-    \item Parking layouts will be automatically backed up daily \label{isr7}
+    information cannot be uploaded to the server \label{isr5}\\
+    \textbf{\textcolor{red}{Will be implemented in a future revision.}}
+    \item{\color{red} Unsaved parking layout information should attempt to
+    upload to the server every
+    $\hyperlink{attempt_upload_time}{ATTEMPT\_UPLOAD\_TIME}$ seconds
+    \label{isr6}\\
+    \textbf{Will be implemented in a future revision.}}
+    \item{\color{red}Parking layouts will be automatically backed up daily
+    \label{isr7}\\
+    \textbf{Will be implemented in a future revision.}}
     \item No parking space should be stored in a different format in the
     database from other parking spaces \label{isr8}
     \item The system should only allow a parking spot to have
@@ -864,15 +1060,15 @@ proof of concept plan can be found within the
 {Development Plan}. This is to allow time for debugging and polish. These
 requirements are fundamental to the basic function of the system.
 \begin{itemize}
-    \item \hyperref[poc1]{BE2FR3}: The system must have access to useable
+    \item \hyperref[poc1]{BE2FR4}: The system must have access to useable
     parking area footage.
-    \item \hyperref[poc2]{BE2FR5}: The system must be able to process footage to
+    \item \hyperref[poc2]{BE2FR6}: The system must be able to process footage to
     construct a valid parking space.
-    \item \hyperref[poc3]{BE4FR12}: The system will be demonstrated with a
+    \item \hyperref[poc3]{BE4FR13}: The system will be demonstrated with a
     single parking space.
-    \item \hyperref[poc4]{BE7FR19}: The system must recognize and relay to the
+    \item \hyperref[poc4]{BE7FR24}: The system must recognize and relay to the
     driver when they have arrived to the space.
-    \item \hyperref[poc5]{BE7FR20}: The system must mark the space as full once
+    \item \hyperref[poc5]{BE7FR25}: The system must mark the space as full once
     a vehicle has entered it.
     \item \hyperref[pocnf1]{LF1}: The user interface should not need to be
     simplified over time.
@@ -898,60 +1094,73 @@ will need to be fulfilled at least one week prior to the Revision 1
 demonstrations, on March 20-31.
 
 \subsection{Requirements Unlikely to Change}
-Non-functional requirements relating to the user experience are unlikely to
-change because they do not rely on any specific software or hardware
-limitations. Instead, they specify how we will make some design decisions on the
-front-end to benefit drivers and administrators. 
+\textcolor{red}{\st{Non-functional requirements relating to the user experience
+are unlikely to change because they do not rely on any specific software or
+hardware limitations. Instead, they specify how we will make some design
+decisions on the front-end to benefit drivers and administrators. }}
 
-Requirements relating to the law such as parking in disabled parking spaces are
-unlikely to change because these laws are well established and unlikely to
-change. It would be irresponsible to release an application that recommends
-breaking the law and risking a ticket or a tow.
+\textcolor{red}{\st{Requirements relating to the law such as parking in disabled
+parking spaces are unlikely to change because these laws are well established
+and unlikely to change. It would be irresponsible to release an application that
+recommends breaking the law and risking a ticket or a tow.}}
+
+\textcolor{red}{All requirements except for FR20, FR26, AND MA1 are unlikely to
+change.\\
+FR20: The system might be changed to automatically redirect the user to another
+spot if it is close enough to the original spot selected.\\
+FR26: Rather than prompting the user for feedback, the system may include
+another method for users voluntarily offer feedback as it may become annoying
+for the users to get a prompt after every session.\\
+MA1: As the system scales and expands in the future, the maintenance procedure
+may have to change to support more features and users.}
+
 
 \newpage
 \section{Traceability Between Functional and Non-Functional Requirements}
+Traceability between functional and non-functional requirements is shown by a
+series of traceability matrices mapping functional requirements to
+non-functional requirements.
 \label{traceabilityMatrixSection}
 \subsection{Traceability Between Test Cases and Requirements}
 \begin{landscape}
 \begin{table}[htbp]
 \caption{Traceability Matrix for Functional and Non-Functional Requirements -
-Part 1} \label{traceMatrix1}
+Part 1} \label{traceMatrix1} \scalebox{0.8}{
 \begin{tabularx}{\textwidth}{cc|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}
 \cline{3-16}
-& & \multicolumn{14}{ c|}{Non-Functional Requirements} \\ \cline{3-16} & & LF1
-& LF2 & UH1 & UH2 & UH3 & UH4 & PE1 & PE2 & PE3 & PE4 & PE5 & PE6 & OE1 & OE2
-\\ \cline{1-16} \multicolumn{1}{ |c| }{\multirow{31}{*}{Functional Requirements}
-} & \multicolumn{1}{|c| } {FR1}   &X&X&X&X& &X&X&X&X& &X& &X& \\ \cline{2-16}
+& & \multicolumn{14}{ c|}{Non-Functional Requirements} \\ \cline{3-16} & & LF1 &
+LF2 & UH1 & UH2 & UH3 & UH4 & PE1 & PE2 & PE3 & PE4 & PE5 & PE6 & OE1 & OE2 \\
+\cline{1-16} \multicolumn{1}{ |c| }{\multirow{31}{*}{Functional Requirements} }
+& \multicolumn{1}{|c| } {FR1}   &X&X&X&X& &X&X&X&X& &X& &X& \\ \cline{2-16}
 \multicolumn{1}{|c| }{} 	                  & \multicolumn{1}{|c| }{FR2}
-&X&X&X&X& &X&X&X&X& & & &X& \\ \cline{2-16} \multicolumn{1}{|c| }{}
-& \multicolumn{1}{|c| } {FR3}   & & & & & & & &X&X& & & & & \\ \cline{2-16}
+&X&X&X&X& &X&X&X&X& & & &X& \\ \cline{2-16} \multicolumn{1}{|c| }{} &
+\multicolumn{1}{|c| } {FR3}   & & & & & & & &X&X& & & & & \\ \cline{2-16}
 \multicolumn{1}{|c| }{}                        & \multicolumn{1}{ |c| } {FR4}  &
-& & & & & & & & &X& & & & \\ \cline{2-16} \multicolumn{1}{|c| }{}
-& \multicolumn{1}{ |c| } {FR5}  & & & & & & & &X&X&X& & & & \\ \cline{2-16}
+& & & & & & & & &X& & & & \\ \cline{2-16} \multicolumn{1}{|c| }{} &
+\multicolumn{1}{ |c| } {FR5}  & & & & & & & &X&X&X& & & & \\ \cline{2-16}
 \multicolumn{1}{|c| }{}                        & \multicolumn{1}{ |c| } {FR6}
-&X&X&X&X&X&X&X& & & & & &X& \\ \cline{2-16} \multicolumn{1}{|c| }{}
-& \multicolumn{1}{ |c| } {FR7}  &X&X& &X&X&X&X&X&X&X& & & & \\ \cline{2-16}
+&X&X&X&X&X&X&X& & & & & &X& \\ \cline{2-16} \multicolumn{1}{|c| }{} &
+\multicolumn{1}{ |c| } {FR7}  &X&X& &X&X&X&X&X&X&X& & & & \\ \cline{2-16}
 \multicolumn{1}{|c| }{}                        & \multicolumn{1}{ |c| } {FR8}
-&X&X&X&X&X&X&X& & & & & &X& \\ \cline{2-16} \multicolumn{1}{|c| }{}
-& \multicolumn{1}{ |c| } {FR9}  & & & & &X& &X& & & & & & & \\ \cline{2-16}
+&X&X&X&X&X&X&X& & & & & &X& \\ \cline{2-16} \multicolumn{1}{|c| }{} &
+\multicolumn{1}{ |c| } {FR9}  & & & & &X& &X& & & & & & & \\ \cline{2-16}
 \multicolumn{1}{|c| }{}                        & \multicolumn{1}{ |c| } {FR10} &
-& & & &X& &X&X&X&X& & &X& \\ \cline{2-16} \multicolumn{1}{|c| }{}
-& \multicolumn{1}{ |c| } {FR11} &X&X& &X&X&X&X&X&X&X& & &X& \\ \cline{2-16}
+& & & &X& &X&X&X&X& & &X& \\ \cline{2-16} \multicolumn{1}{|c| }{} &
+\multicolumn{1}{ |c| } {FR11} &X&X& &X&X&X&X&X&X&X& & &X& \\ \cline{2-16}
 \multicolumn{1}{|c| }{}                        & \multicolumn{1}{ |c| } {FR12} &
-& & & & & &X&X&X&X& & &X& \\ \cline{2-16} \multicolumn{1}{|c| }{}
-& \multicolumn{1}{ |c| } {FR13} & & & & &X& &X&X&X&X& & &X& \\ \cline{2-16}
+& & & & & &X&X&X&X& & &X& \\ \cline{2-16} \multicolumn{1}{|c| }{} &
+\multicolumn{1}{ |c| } {FR13} & & & & &X& &X&X&X&X& & &X& \\ \cline{2-16}
 \multicolumn{1}{|c| }{}                        & \multicolumn{1}{ |c| } {FR14}
-&X&X& &X& &X&X&X&X& & & &X& \\ \cline{2-16} \multicolumn{1}{|c| }{}
-& \multicolumn{1}{ |c| } {FR15} &X&X& &X& &X&X&X&X& & & &X& \\ \cline{2-16}
+&X&X& &X& &X&X&X&X& & & &X& \\ \cline{2-16} \multicolumn{1}{|c| }{} &
+\multicolumn{1}{ |c| } {FR15} &X&X& &X& &X&X&X&X& & & &X& \\ \cline{2-16}
 \multicolumn{1}{|c| }{}                        & \multicolumn{1}{ |c| } {FR16} &
-& & & &X& &X&X&X&X&X& &X& \\ \cline{2-16} \multicolumn{1}{|c| }{}
-& \multicolumn{1}{ |c| } {FR17} & & & & &X& &X&X&X& & & &X& \\ \cline{2-16}
+& & & &X& &X&X&X&X&X& &X& \\ \cline{2-16} \multicolumn{1}{|c| }{} &
+\multicolumn{1}{ |c| } {FR17} & & & & &X& &X&X&X& & & &X& \\ \cline{2-16}
 \multicolumn{1}{|c| }{}                        & \multicolumn{1}{ |c| } {FR18}
-&X&X& &X&X&X&X&X&X&X& & &X& \\ \cline{2-16} \multicolumn{1}{|c| }{}
-& \multicolumn{1}{ |c| } {FR19} &X&X& &X&X&X&X&X&X& & & &X& \\ \cline{2-16}
+&X&X& &X&X&X&X&X&X&X& & &X& \\ \cline{2-16} \multicolumn{1}{|c| }{} &
+\multicolumn{1}{ |c| } {FR19} &X&X& &X&X&X&X&X&X& & & &X& \\ \cline{2-16}
 \multicolumn{1}{|c| }{}                        & \multicolumn{1}{ |c| } {FR20} &
-& & & & & &X& & & & & & & \\ \cline{2-16} \multicolumn{1}{|c| }{}
-&   
+& & & & & &X& & & & & & & \\ \cline{2-16} \multicolumn{1}{|c| }{} &   
 \multicolumn{1}{ |c| } {FR21} &X&X& &X&X&X&X& & & & & &X& \\ \cline{2-16}
 \multicolumn{1}{|c| }{}                        &   
 \multicolumn{1}{ |c| } {FR22} &X&X& &X& &X&X& & & & & &X& \\ \cline{2-16}
@@ -972,41 +1181,53 @@ Part 1} \label{traceMatrix1}
 \multicolumn{1}{|c| }{}                        &   
 \multicolumn{1}{ |c| } {FR30} & & & & & & &X& & & & & & & \\ \cline{2-16}
 \multicolumn{1}{|c| }{}                        &   
-\multicolumn{1}{ |c| } {FR31} & & & & & & &X& & & & & & & \\ \cline{1-16}
+\multicolumn{1}{ |c| } {FR31} & & & & & & &X& & & & & & & \\ \cline{2-16}
+\multicolumn{1}{|c| }{}                        &    
+\multicolumn{1}{ |c| } {FR32} & &X&X&X& & &X& & & & & &X& \\ \cline{2-16}
+\multicolumn{1}{|c| }{}                        &   
+\multicolumn{1}{ |c| } {FR33} & & &X&X& & &X&X&X& & & & & \\ \cline{2-16}
+\multicolumn{1}{|c| }{}                        &   
+\multicolumn{1}{ |c| } {FR34} & &X& & & & &X& & & & & & & \\ \cline{2-16}
+\multicolumn{1}{|c| }{}                        &   
+\multicolumn{1}{ |c| } {FR35} & & &X&X& & & &X& & &X& &X& \\ \cline{2-16}
+\multicolumn{1}{|c| }{}                        &   
+\multicolumn{1}{ |c| } {FR36} & & & & & & &X&X&X& & & &X& \\ \cline{2-16}
+\multicolumn{1}{|c| }{}                        &   
+\multicolumn{1}{ |c| } {FR37} & & &X&X& & &X& & & & & &X& \\ \cline{1-16}
 \end{tabularx}
+}
 \end{table}
 \newpage
 \begin{table}[htbp]
 \caption{Traceability Matrix for Functional and Non-Functional Requirements -
-Part 2} \label{traceMatrix1}
+Part 2} \label{traceMatrix1} \scalebox{0.8}{
 \begin{tabularx}{\textwidth}{cc|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}
 \cline{3-16}
-& & \multicolumn{14}{ c|}{Non-Functional Requirements} \\ \cline{3-16} & & MA1
-& MA2 & SR1 & SR2 & SR3 & SR4 & SR5 & SR6 & SR7 & SR8 & SR9 & SR10 & SR11 & SR12
+& & \multicolumn{14}{ c|}{Non-Functional Requirements} \\ \cline{3-16} & & MA1 &
+MA2 & SR1 & SR2 & SR3 & SR4 & SR5 & SR6 & SR7 & SR8 & SR9 & SR10 & SR11 & SR12
 \\ \cline{1-16} \multicolumn{1}{ |c| }{\multirow{31}{*}{Functional Requirements}
 } & \multicolumn{1}{|c| } {FR1}   &&&&&&&&&&&&&& \\ \cline{2-16}
 \multicolumn{1}{|c| }{} 	                  & \multicolumn{1}{|c| }{FR2}
 &&X&&&&&&&&&&&& \\ \cline{2-16} \multicolumn{1}{|c| }{}                        &
 \multicolumn{1}{|c| } {FR3}   &&&X&&&X&&&&X&&&&X \\ \cline{2-16}
 \multicolumn{1}{|c| }{}                        & \multicolumn{1}{ |c| } {FR4}
-&X&&X&&&X&&&&X&X&&& \\ \cline{2-16} \multicolumn{1}{|c| }{}
-& \multicolumn{1}{ |c| } {FR5}  &&X&X&&&&&&&&&&&X \\ \cline{2-16}
-\multicolumn{1}{|c| }{}                        & \multicolumn{1}{ |c| } {FR6}
-&X&&&&&&&&&&&&& \\ \cline{2-16} \multicolumn{1}{|c| }{}                        &
-\multicolumn{1}{ |c| } {FR7}  &&&&&&&&&&&&&& \\ \cline{2-16} \multicolumn{1}{|c|
-}{}                        & \multicolumn{1}{ |c| } {FR8}  &X&&&&&&&&&&&&& \\
+&X&&X&&&X&&&&X&X&&& \\ \cline{2-16} \multicolumn{1}{|c| }{} & \multicolumn{1}{
+|c| } {FR5}  &&X&X&&&&&&&&&&&X \\ \cline{2-16} \multicolumn{1}{|c| }{}
+& \multicolumn{1}{ |c| } {FR6} &X&&&&&&&&&&&&& \\ \cline{2-16}
+\multicolumn{1}{|c| }{}                        & \multicolumn{1}{ |c| } {FR7}
+&&&&&&&&&&&&&& \\ \cline{2-16} \multicolumn{1}{|c| }{}                        &
+\multicolumn{1}{ |c| } {FR8}  &X&&&&&&&&&&&&& \\
 \cline{2-16} \multicolumn{1}{|c| }{}                        & \multicolumn{1}{
-|c| } {FR9}  &X&&X&&&&&&&&X&&& \\ \cline{2-16} \multicolumn{1}{|c| }{}
-& \multicolumn{1}{ |c| } {FR10} &X&&&&&&&&&&&&& \\ \cline{2-16}
+|c| } {FR9}  &X&&X&&&&&&&&X&&& \\ \cline{2-16} \multicolumn{1}{|c| }{} &
+\multicolumn{1}{ |c| } {FR10} &X&&&&&&&&&&&&& \\ \cline{2-16}
 \multicolumn{1}{|c| }{}                        & \multicolumn{1}{ |c| } {FR11}
-&X&&&&&&&&&&&&&X \\ \cline{2-16} \multicolumn{1}{|c| }{}
-& \multicolumn{1}{ |c| } {FR12} &X&&&&&&&&&&&&& \\ \cline{2-16}
-\multicolumn{1}{|c| }{}                        & \multicolumn{1}{ |c| } {FR13}
-&X&&&&&&&&&&&&&X \\ \cline{2-16} \multicolumn{1}{|c| }{}
-& \multicolumn{1}{ |c| } {FR14} &&&&&&X&&&&&&&& \\ \cline{2-16}
-\multicolumn{1}{|c| }{}                        & \multicolumn{1}{ |c| } {FR15}
-&&&&&&X&&&&&&&& \\ \cline{2-16} \multicolumn{1}{|c| }{}                        &
-\multicolumn{1}{ |c| } {FR16} &X&&&&&&&&&&&&&X \\ \cline{2-16}
+&X&&&&&&&&&&&&&X \\ \cline{2-16} \multicolumn{1}{|c| }{} & \multicolumn{1}{ |c|
+} {FR12} &X&&&&&&&&&&&&& \\ \cline{2-16} \multicolumn{1}{|c| }{}
+& \multicolumn{1}{ |c| } {FR13} &X&&&&&&&&&&&&&X \\ \cline{2-16}
+\multicolumn{1}{|c| }{} & \multicolumn{1}{ |c| } {FR14} &&&&&&X&&&&&&&& \\
+\cline{2-16} \multicolumn{1}{|c| }{}                        & \multicolumn{1}{
+|c| } {FR15} &&&&&&X&&&&&&&& \\ \cline{2-16} \multicolumn{1}{|c| }{}
+& \multicolumn{1}{ |c| } {FR16} &X&&&&&&&&&&&&&X \\ \cline{2-16}
 \multicolumn{1}{|c| }{}                        & \multicolumn{1}{ |c| } {FR17}
 &&X&&&&&&&&&&&&\\ \cline{2-16} \multicolumn{1}{|c| }{}                        &
 \multicolumn{1}{ |c| } {FR18} &&X&&&&&&&&&&&& \\ \cline{2-16}
@@ -1034,62 +1255,77 @@ Part 2} \label{traceMatrix1}
 \multicolumn{1}{|c| }{}                        &   
 \multicolumn{1}{ |c| } {FR30} &&&X&X&X&X&X&X&X&&&X&X& \\ \cline{2-16}
 \multicolumn{1}{|c| }{}                        &   
-\multicolumn{1}{ |c| } {FR31} &&&&X&X&X&X&X&X&&&X&X& \\ \cline{1-16}
+\multicolumn{1}{ |c| } {FR31} &&&&X&X&X&X&X&X&&&X&X& \\ \cline{2-16}
+\multicolumn{1}{|c| }{}                        &    
+\multicolumn{1}{ |c| } {FR32} &&X&&&&&X&&&&X&&& \\ \cline{2-16}
+\multicolumn{1}{|c| }{}                        &   
+\multicolumn{1}{ |c| } {FR33} &X&&&X&&&&&&&&X&& \\ \cline{2-16}
+\multicolumn{1}{|c| }{}                        &   
+\multicolumn{1}{ |c| } {FR34} &&&&&X&&&&&&X&&X& \\ \cline{2-16}
+\multicolumn{1}{|c| }{}                        &   
+\multicolumn{1}{ |c| } {FR35} &&&X&&&&&&&&&X&& \\ \cline{2-16}
+\multicolumn{1}{|c| }{}                        &   
+\multicolumn{1}{ |c| } {FR36} &&X&&X&&X&&&&X&&&& \\ \cline{2-16}
+\multicolumn{1}{|c| }{}                        &   
+\multicolumn{1}{ |c| } {FR37} &X&&&X&&&&&&&&X&& \\ \cline{1-16}
 \end{tabularx}
+}
 \end{table}
 
 \newpage
 \begin{table}[htbp]
 \caption{Traceability Matrix for Functional and Non-Functional Requirements -
-Part 3} \label{traceMatrix1}
+Part 3} \label{traceMatrix1} \scalebox{0.8}{
 \begin{tabularx}{\textwidth}{cc|c|c|c|c|c|}
 \cline{3-6}
 & & \multicolumn{4}{ c|}{Non-Functional Requirements} \\ \cline{3-6} & & SR13  &
 SR14 & LR1 & HS1\\ \cline{1-6} \multicolumn{1}{ |c|
 }{\multirow{31}{*}{Functional Requirements} } & \multicolumn{1}{|c| } {FR1}
 &&X&& \\ \cline{2-6} \multicolumn{1}{|c| }{} 	                  &
-\multicolumn{1}{|c| }{FR2}    &&X&&X \\ \cline{2-6} \multicolumn{1}{|c| }{}
-& \multicolumn{1}{|c| } {FR3}   &&&& \\ \cline{2-6} \multicolumn{1}{|c| }{}
-& \multicolumn{1}{ |c| } {FR4}  &&&& \\ \cline{2-6} \multicolumn{1}{|c| }{}
-& \multicolumn{1}{ |c| } {FR5}  &&&& \\ \cline{2-6} \multicolumn{1}{|c| }{}
-& \multicolumn{1}{ |c| } {FR6}  &&X&X& \\ \cline{2-6} \multicolumn{1}{|c| }{}
-& \multicolumn{1}{ |c| } {FR7}  &&&&X \\ \cline{2-6} \multicolumn{1}{|c| }{}
-& \multicolumn{1}{ |c| } {FR8}  &&&& \\ \cline{2-6} \multicolumn{1}{|c| }{}
-& \multicolumn{1}{ |c| } {FR9}  &&&& \\ \cline{2-6} \multicolumn{1}{|c| }{}
-& \multicolumn{1}{ |c| } {FR10} &&&X& \\ \cline{2-6} \multicolumn{1}{|c| }{}
-& \multicolumn{1}{ |c| } {FR11} &X&&X&X \\ \cline{2-6} \multicolumn{1}{|c| }{}
-& \multicolumn{1}{ |c| } {FR12} &&&X&X \\ \cline{2-6} \multicolumn{1}{|c| }{}
-& \multicolumn{1}{ |c| } {FR13} &X&&X&X \\ \cline{2-6} \multicolumn{1}{|c| }{}
-& \multicolumn{1}{ |c| } {FR14} &&&& \\ \cline{2-6} \multicolumn{1}{|c| }{}
-& \multicolumn{1}{ |c| } {FR15} &&&& \\ \cline{2-6} \multicolumn{1}{|c| }{}
-& \multicolumn{1}{ |c| } {FR16} &X&X&& \\ \cline{2-6} \multicolumn{1}{|c| }{}
-& \multicolumn{1}{ |c| } {FR17} &&&&\\ \cline{2-6} \multicolumn{1}{|c| }{}
-& \multicolumn{1}{ |c| } {FR18} &&&& \\ \cline{2-6} \multicolumn{1}{|c| }{}
-& \multicolumn{1}{ |c| } {FR19} &&&& \\ \cline{2-6} \multicolumn{1}{|c| }{}
-& \multicolumn{1}{ |c| } {FR20} &&&& \\ \cline{2-6} \multicolumn{1}{|c| }{}
+\multicolumn{1}{|c| }{FR2}    &&X&&X \\ \cline{2-6} \multicolumn{1}{|c| }{} &
+\multicolumn{1}{|c| } {FR3}   &&&& \\ \cline{2-6} \multicolumn{1}{|c| }{} &
+\multicolumn{1}{ |c| } {FR4}  &&&& \\ \cline{2-6} \multicolumn{1}{|c| }{} &
+\multicolumn{1}{ |c| } {FR5}  &&&& \\ \cline{2-6} \multicolumn{1}{|c| }{} &
+\multicolumn{1}{ |c| } {FR6}  &&X&X& \\ \cline{2-6} \multicolumn{1}{|c| }{} &
+\multicolumn{1}{ |c| } {FR7}  &&&&X \\ \cline{2-6} \multicolumn{1}{|c| }{} &
+\multicolumn{1}{ |c| } {FR8}  &&&& \\ \cline{2-6} \multicolumn{1}{|c| }{} &
+\multicolumn{1}{ |c| } {FR9}  &&&& \\ \cline{2-6} \multicolumn{1}{|c| }{} &
+\multicolumn{1}{ |c| } {FR10} &&&X& \\ \cline{2-6} \multicolumn{1}{|c| }{} &
+\multicolumn{1}{ |c| } {FR11} &X&&X&X \\ \cline{2-6} \multicolumn{1}{|c| }{} &
+\multicolumn{1}{ |c| } {FR12} &&&X&X \\ \cline{2-6} \multicolumn{1}{|c| }{} &
+\multicolumn{1}{ |c| } {FR13} &X&&X&X \\ \cline{2-6} \multicolumn{1}{|c| }{} &
+\multicolumn{1}{ |c| } {FR14} &&&& \\ \cline{2-6} \multicolumn{1}{|c| }{} &
+\multicolumn{1}{ |c| } {FR15} &&&& \\ \cline{2-6} \multicolumn{1}{|c| }{} &
+\multicolumn{1}{ |c| } {FR16} &X&X&& \\ \cline{2-6} \multicolumn{1}{|c| }{} &
+\multicolumn{1}{ |c| } {FR17} &&&&\\ \cline{2-6} \multicolumn{1}{|c| }{} &
+\multicolumn{1}{ |c| } {FR18} &&&& \\ \cline{2-6} \multicolumn{1}{|c| }{} &
+\multicolumn{1}{ |c| } {FR19} &&&& \\ \cline{2-6} \multicolumn{1}{|c| }{} &
+\multicolumn{1}{ |c| } {FR20} &&&& \\ \cline{2-6} \multicolumn{1}{|c| }{} &   
+\multicolumn{1}{ |c| } {FR21} &&&X&X \\ \cline{2-6} \multicolumn{1}{|c| }{} &   
+\multicolumn{1}{ |c| } {FR22} &&X&& \\ \cline{2-6} \multicolumn{1}{|c| }{} &   
+\multicolumn{1}{ |c| } {FR23} &&X&X&X \\ \cline{2-6} \multicolumn{1}{|c| }{} &   
+\multicolumn{1}{ |c| } {FR24} &&&X& \\ \cline{2-6} \multicolumn{1}{|c| }{} &   
+\multicolumn{1}{ |c| } {FR25} &&X&X&X \\ \cline{2-6} \multicolumn{1}{|c| }{} &   
+\multicolumn{1}{ |c| } {FR26} &&X&&X \\ \cline{2-6} \multicolumn{1}{|c| }{} &   
+\multicolumn{1}{ |c| } {FR27} &&&X& \\ \cline{2-6} \multicolumn{1}{|c| }{} &   
+\multicolumn{1}{ |c| } {FR28} &&X&&X \\ \cline{2-6} \multicolumn{1}{|c| }{} &   
+\multicolumn{1}{ |c| } {FR29} &&X&& \\ \cline{2-6} \multicolumn{1}{|c| }{} &   
+\multicolumn{1}{ |c| } {FR30} &&X&& \\ \cline{2-6} \multicolumn{1}{|c| }{} &   
+\multicolumn{1}{ |c| } {FR31} &&X&& \\ \cline{2-6} \multicolumn{1}{|c| }{}
+&    
+\multicolumn{1}{ |c| } {FR32} &&&X& \\ \cline{2-6} \multicolumn{1}{|c| }{}
 &   
-\multicolumn{1}{ |c| } {FR21} &&&X&X \\ \cline{2-6} \multicolumn{1}{|c| }{}
+\multicolumn{1}{ |c| } {FR33} &X&&& \\ \cline{2-6} \multicolumn{1}{|c| }{}
 &   
-\multicolumn{1}{ |c| } {FR22} &&X&& \\ \cline{2-6} \multicolumn{1}{|c| }{}
+\multicolumn{1}{ |c| } {FR34} &&X&X& \\ \cline{2-6} \multicolumn{1}{|c| }{}
 &   
-\multicolumn{1}{ |c| } {FR23} &&X&X&X \\ \cline{2-6} \multicolumn{1}{|c| }{}
+\multicolumn{1}{ |c| } {FR35} &&&X&X \\ \cline{2-6} \multicolumn{1}{|c| }{}
 &   
-\multicolumn{1}{ |c| } {FR24} &&&X& \\ \cline{2-6} \multicolumn{1}{|c| }{}
+\multicolumn{1}{ |c| } {FR36} &X&X&& \\ \cline{2-6} \multicolumn{1}{|c| }{}
 &   
-\multicolumn{1}{ |c| } {FR25} &&X&X&X \\ \cline{2-6} \multicolumn{1}{|c| }{}
-&   
-\multicolumn{1}{ |c| } {FR26} &&&& \\ \cline{2-6} \multicolumn{1}{|c| }{}
-&   
-\multicolumn{1}{ |c| } {FR27} &&&& \\ \cline{2-6} \multicolumn{1}{|c| }{}
-&   
-\multicolumn{1}{ |c| } {FR28} &&&& \\ \cline{2-6} \multicolumn{1}{|c| }{}
-&   
-\multicolumn{1}{ |c| } {FR29} &&X&& \\ \cline{2-6} \multicolumn{1}{|c| }{}
-&   
-\multicolumn{1}{ |c| } {FR30} &&X&& \\ \cline{2-6} \multicolumn{1}{|c| }{}
-&   
-\multicolumn{1}{ |c| } {FR31} &&X&& \\ \cline{1-6}
+\multicolumn{1}{ |c| } {FR37} &&&X& \\ \cline{1-6}
 \end{tabularx}
+}
 \end{table}
 \end{landscape}
 
@@ -1097,12 +1333,20 @@ SR14 & LR1 & HS1\\ \cline{1-6} \multicolumn{1}{ |c|
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Project Issues
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Project Issues}
+Some threats or potential issues that may arise during development are listed
+here.
 \subsection{Open Issues}
 \begin{enumerate}
     \item There are many laws regarding the use of smartphones when operating a
-    vehicle. We must make sure that our application complies with any laws that
-    may apply as well as allow drivers to interact with our application in a way
-    that puts safety and the law first.
+    vehicle. \textcolor{red}{Distracted driving laws in Ontario can be found}
+    \href{https://www.ontario.ca/page/distracted-driving}{here}. We must make
+    sure that our application complies with any laws that may apply as well as
+    allow drivers to interact with our application in a way that puts safety and
+    the law first. \textcolor{red}{In Ontario, this means the driver cannot
+    interact with their mobile device by touch unless safely stopped out of
+    traffic. When viewing their device, it must be securely mounted. This means
+    our app must not prompt the driver for inputs while driving, such that usage
+    cannot continue unless that input is provided.}
     
     \item We plan to use the Global Positioning System location of the driver's
     phone to track them around the parking lot. This will help us guide them to
@@ -1135,6 +1379,7 @@ SR14 & LR1 & HS1\\ \cline{1-6} \multicolumn{1}{ |c|
 \end{enumerate}
 
 \subsection{New Problems}
+These are problems that may be caused by Park'd itself.
 \subsubsection{Effects on the Current Environment}
 The Park'd app should relieve traffic around parking lots as less people would
 be driving around a parking lot looking for empty spots. This should allow more
@@ -1151,6 +1396,8 @@ app in their car. Users getting distracted when using our application could
 cause accidents which would be unacceptable. We have to make sure that safety is
 our number one priority when developing the app. Users should be able to use the
 app hands-free and without distractions when they are operating a vehicle.
+\textcolor{red}{As per previously stated Ontario law, there should be no need
+for continuous input while the user is driving.}
 
 \subsubsection{Limitations in the Anticipated Implementation Environment That May Inhibit the New Product}
 
@@ -1165,6 +1412,18 @@ N/A
 The different tasks and schedule to successfully develop our application is
 outlined in the Gantt chart provided.
 
+\newpage
+\begin{landscape}
+    \begin{figure}[ht]
+    \begin{center}
+        \caption{Gantt Chart}
+        \includegraphics[width=22cm]{Gantt Chart.pdf}
+    \end{center}
+\end{figure}
+\end{landscape}
+
+
+\newpage
 \subsection{Migration to the New Product}
 
 \subsubsection{Requirements for Migration to the New Product}
@@ -1218,17 +1477,18 @@ N/A
 \end{enumerate}
 
 \subsection{User Documentation and Training}
-
+This section specifies what users may need to do to prepare to use the
+application, and what resources will be made available.
 \subsubsection{User Documentation Requirements}
 The following is a list of documentation that will be available to the user:
 \begin{enumerate}
     \item User manual \\
-    The User manual explains every feature of the application and how to use it
-    to find a parking spot. This can be organized by the business events
-    outlined in Section 3.2. 
-    \item Installation manual \\
-    The Installation manual explains how the user can install the application
-    onto their device in easy-to-follow steps.
+    The User manual in the About page explains the user-facing features of the
+    application and how to use it to find a parking spot. %This can be organized
+    by the business events outlined in Section 3.2. 
+    %\item Installation manual \\
+    %The Installation manual explains how the user can install the application
+    %onto their device in easy-to-follow steps.
 \end{enumerate}
 These documents will be updated and modified as the team sees fit throughout the
 development process. 
@@ -1244,6 +1504,7 @@ N/A
 
 \newpage
 \section{Appendix}
+Any additional information is located here.
 \label{appendix}
 \subsection{Symbolic Parameters}
 The definition of the requirements will likely call for SYMBOLIC\_CONSTANTS.
@@ -1252,13 +1513,17 @@ $\hypertarget{concurrent_users}{CONCURRENT\_USERS}$ = 10 \\
 $\hypertarget{default_delay}{DEFAULT\_DELAY}$ = 10 \\
 $\hypertarget{min_framerate}{MIN\_FRAMERATE}$ = 15 \\
 $\hypertarget{max_taps}{MAX\_TAPS}$ = 2 \\
+$\hypertarget{max_time_complete}{MAX\_TIME_COMPLETE}$ = 1 \\
 $\hypertarget{parking_lots}{PARKING\_LOTS}$ = 2 \\
-$\hypertarget{supportability_satisfaction}{SUPPORTABILITY\_SATISFACTION}$ = 80\%
-\\
+$\hypertarget{supportability_satisfaction}{SUPPORTABILITY\_SATISFACTION}$ =
+80\%\\
 $\hypertarget{attempt_upload_time}{ATTEMPT\_UPLOAD\_TIME}$ = 30 \\
 $\hypertarget{max_special_property}{MAXIMUM\_SPECIAL\_PROPERTY}$ = 1 \\
-
+$\hypertarget{timeout_tolerance}{TIMEOUT\_TOLERANCE}$ = 60 \\
+$\hypertarget{distance_tolerance}{DISTANCE\_TOLERANCE}$ = 5 \\
+$\hypertarget{driving_estimate_tolerance}{DRIVING\_ESTIMATE\_TOLERANCE}$ = 60 \\
 \subsection{Reflection}
+The SRS reflection details areas of improvement and learning for team members.
 \label{reflection}
 \subsubsection{Presentation Skills}
 One of the skills that our team will collectively need to acquire is our
@@ -1340,7 +1605,7 @@ something we are proud of and that is well thought out. \\[.1in]
 \noindent \textbf{Learning Approaches}
 \begin{enumerate}
     \item Start sooner rather than later. More often than not, the amount of
-    work that needs to be done is often overlooked until we actually start
+    work that needs to be done is often overlooked until we actuall y start
     working on it. In times where we may think that the task would be easy and
     start later would be the times where we would be rushing at the end to
     complete it the most. By starting early, we would know exactly what needs to

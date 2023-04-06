@@ -8,6 +8,7 @@ var lotURL;
 var activeLot;
 var lotOwner;
 
+//GET request
 function Get(URL, payload) {
   var Httpreq = new XMLHttpRequest(); // a new request
   Httpreq.open("POST", URL, false);
@@ -17,6 +18,7 @@ function Get(URL, payload) {
   return Httpreq.responseText;
 }
 
+//GET request
 function GetParam(URL, param) {
   const params = {
     name: param,
@@ -32,6 +34,7 @@ function GetParam(URL, param) {
     });
 }
 
+//POST request
 function Post(URL, payload) {
   var Httpreq = new XMLHttpRequest(); // a new request
   Httpreq.open("POST", URL, false);
@@ -40,6 +43,7 @@ function Post(URL, payload) {
   return Httpreq.responseText;
 }
 
+//load annotations for lot newLot and load the camera view image
 function loadAnnotations(newLot, image) {
   var lotID = 1;
   if (newLot) {
@@ -71,6 +75,7 @@ function loadAnnotations(newLot, image) {
   }
 }
 
+//create camera annotation
 function createAnnotation(annotation, currAnnotations) {
   if (activeAnnotations == null) {
     activeAnnotations = [];
@@ -112,6 +117,7 @@ function createAnnotation(annotation, currAnnotations) {
   }
 }
 
+//delete camera annotation
 function deleteAnnotation(annotation, currAnnotations) {
   var annId = annotation.id;
   console.log("annId = " + annId);
@@ -131,6 +137,7 @@ function deleteAnnotation(annotation, currAnnotations) {
   anno.setAnnotations(activeAnnotations);
 }
 
+//update existing camera annotation
 function updateAnnotation(annotation, previous, currAnnotations) {
   for (i = 0; i < activeAnnotations.length; i++) {
     if (activeAnnotations[i].id == previous.id) {
@@ -141,6 +148,7 @@ function updateAnnotation(annotation, previous, currAnnotations) {
   updateCamcoords(annotation, previous);
 }
 
+//udpate coordinates of existing camera annotation coordinates
 function updateCamcoords(annotation, previous) {
   annId = annotation.id;
   var index;
@@ -153,10 +161,12 @@ function updateCamcoords(annotation, previous) {
   spotData[index].camcoords = w3cCoords(annotation);
 }
 
+//get annotation coordinates of specific annotation
 function getUpdatedAnnotation(index) {
   return spotData[index].camcoords;
 }
 
+//check if new annotation intersects with existing annotation (don't allow overlaps)
 function checkIntersection(selection) {
   if (activeAnnotations == null) {
     return false;
@@ -194,6 +204,7 @@ function checkIntersection(selection) {
   return intExist;
 }
 
+//load annotations of specific lot id
 function loadBirdAnn(lotId) {
   payload = {};
   payload.id = lotId;
@@ -214,11 +225,13 @@ function getBirdURL() {
   return birdURL;
 }
 
+//get the coordinates of an annotation
 function w3cCoords(annotation) {
   coordArr = w3cToSide(annotation);
   return coordArr;
 }
 
+//convert the W3C format of annotations to simple format that model can parse
 function w3cToSide(annotation) {
   var annStr = JSON.stringify(annotation.target.selector.value);
   annStr = annStr.slice(24, annStr.length - 20);
@@ -232,6 +245,7 @@ function w3cToSide(annotation) {
   return coordArr;
 }
 
+//get the image for the camera view
 function getSnapshot(link) {
   if (lotOwner == "Gary") {
     var imageURL = JSON.parse(Get(snapshotURL + "Gary")).url;

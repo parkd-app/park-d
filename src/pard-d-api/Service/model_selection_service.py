@@ -1,5 +1,6 @@
 #import pickle
 
+SUCCESS = 200
 #coordinates_3 for test
 def saved_coordinates(data):
     if data['identifier'] == 'side':
@@ -48,7 +49,7 @@ def saved_coordinates(data):
                 "\\park-d\\src\\park_d_model_service\\Bird_view model\\carParkPos2", "wb"
         ) as f:
             pickle.dump(posList, f)
-    return 200
+    return SUCCESS
 
 
 

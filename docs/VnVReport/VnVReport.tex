@@ -8,6 +8,7 @@
 \usepackage{float}
 \usepackage{multirow}
 \usepackage{graphicx}
+\usepackage{soul}
 
 \hypersetup{ colorlinks, citecolor=black, filecolor=black, linkcolor=red,
     urlcolor=blue }
@@ -28,13 +29,21 @@
 
 \section{Revision History}
 
-\begin{tabularx}{\textwidth}{p{3cm}p{2cm}X} \toprule {\bf Date} & {\bf Version}
-& {\bf Notes}\\
+\begin{table}[hp]
+\caption{Revision History} \label{TblRevisionHistory}
+\begin{tabularx}{\textwidth}{lll}
+\toprule
+\textbf{Date} & \textbf{Developer(s)} & \textbf{Change}\\
 \midrule
-Mar 2, 2023 & 1.0 & Revision 0\\
+March 2, 2023 & Albert, Almen, David, Gary, Jonathan, Kabishan & Revision 0\\
+\midrule
+\color{red}{April 3, 2023} & \color{red}{Albert, Almen, David, Gary, Jonathan,
+Kabishan} & \color{red}{Revision 1}\\
 \bottomrule
 \end{tabularx}
+\end{table}
 
+\color{black}
 ~\newpage
 
 \section{Symbols, Abbreviations and Acronyms}
@@ -52,8 +61,6 @@ Mar 2, 2023 & 1.0 & Revision 0\\
   M & Modules \\
   HTTP Request & A message sent by a client to initiate an action on the server
   through Hypertext Transfer Protocol\\
-  $\hypertarget{default_delay}{DEFAULT\_DELAY}$ & Time until parking directions
-  to the default recommended parking space is shown (e.g. 10)\\
   \bottomrule
 \end{tabular}\\
 
@@ -79,7 +86,11 @@ of failing a test case because the feature is not yet implemented, we have opted
 to mention \textcolor{blue}{Not Tested}. These features will be ready in either
 Revision 1 or another revision, and can be tested then. However, if a feature
 was implemented and it satisfies the test case conditions, it will be denoted
-with \textcolor{OliveGreen}{PASS} and \textcolor{Red}{FAIL} otherwise.
+with \textcolor{OliveGreen}{PASS} and \textcolor{Red}{FAIL} otherwise.\\
+
+\color{red}{NOTE: For all location detection related test cases, we acknowledge that  location information from users is only as accurate as 5 metres. While this may seem like a huge error while walking or biking, this does not make much of a difference when driving a car, and results in similar driving instructions and navigation.}
+
+\color{black}
 
 \newpage
 
@@ -92,20 +103,27 @@ with \textcolor{OliveGreen}{PASS} and \textcolor{Red}{FAIL} otherwise.
 \textbf{Actual Value} & \textbf{Result} \\
 \hline
 BE1-FR1-T1 & Driver launches the application & System prompts driver to allow
-location access & No prompt is given & \textcolor{blue}{Not Tested} \\
+location access & \textcolor{red}{\st{No prompt is given} A prompt is given} &
+\textcolor{red}{\st{Not Tested} PASS} \\
 \hline
-BE1-FR2-T1 & Driver launches the application & System displays a map of the
-driver's surroundings & System displays a map, but centred on a default point &
-\textcolor{blue}{Not Tested} \\ 
+BE1-FR2-T1 & Driver launches the application \textcolor{red}{and allows location
+access} & System displays a map of the driver's surroundings & System displays a
+map and is centered on the user's location \textcolor{red}{\st{, but centred on
+a default point}} & \textcolor{red}{\st{Not Tested} PASS} \\
 \hline
-BE2-FR3-T1 & N/A & System uses parking lot camera footage to survey status &
+\textcolor{red}{BE1-FR3-T1} & \textcolor{red}{Driver launches the application
+and disables location access} & \textcolor{red}{System displays a map of the
+default surroundings} & \textcolor{red}{System displays a map and is centered on
+the default location}  & \textcolor{red}{PASS} \\ 
+\hline
+BE2-FR4-T1 & N/A & System uses parking lot camera footage to survey status &
 System uses parking lot camera footage to survey status &
 \textcolor{OliveGreen}{PASS} \\
 \hline
-BE2-FR4-T1 & N/A & System recognizes and displays special parking spots & System
-does not display special parking spots & \textcolor{blue}{Not Tested} \\
+BE2-FR5-T1 & N/A & System recognizes and displays special parking spots & System
+does not display special parking spots & \textcolor{OliveGreen}{PASS} \\
 \hline
-BE2-FR5-T1 & N/A & System must allow parking spot locations to be determined &
+BE2-FR6-T1 & N/A & System must allow parking spot locations to be determined &
 System allows admins to determine parking spot locations &
 \textcolor{OliveGreen}{PASS} \\
 \hline
@@ -115,22 +133,22 @@ System allows admins to determine parking spot locations &
 \begin{center}
 \begin{tabular}{|p{0.10\linewidth}|p{0.15\linewidth}|p{0.30\linewidth}|p{0.30\linewidth}|c|} 
 \hline
-BE2-FR6-T1 & N/A & System prompts the driver for the lot they wish to navigate
+BE2-FR7-T1 & N/A & System prompts the driver for the lot they wish to navigate
 to & System displays available spaces arranged by lot &
 \textcolor{OliveGreen}{PASS} \\
 \hline
-BE2-FR7-T1 & Driver views a lot & System displays all available spaces in the
+BE2-FR8-T1 & Driver views a lot & System displays all available spaces in the
 lot & System displays all available spaces in the lot &
 \textcolor{OliveGreen}{PASS} \\ 
 \hline
-BE3-FR8-T1 & Driver filters by normal, accessible, and reserved spaces & System
+BE3-FR9-T1 & Driver filters by normal, accessible, and reserved spaces & System
 displays or hides the relevant spaces & System does not distinguish such spaces
-& \textcolor{blue}{Not Tested} \\
+& \textcolor{red}{\st{Not Tested} FAIL} \\
 \hline
-BE3-FR9-T1 & N/A & System must display only normal spaces by default & System
+BE3-FR10-T1 & N/A & System must display only normal spaces by default & System
 displays only spaces marked by the admin & \textcolor{OliveGreen}{PASS} \\
 \hline
-BE3-FR10-T1 & Driver selects a parking space & System recognizes the selection &
+BE3-FR11-T1 & Driver selects a parking space & System recognizes the selection &
 System recognizes the selection & \textcolor{OliveGreen}{PASS} \\
 \hline
 \end{tabular}
@@ -139,31 +157,31 @@ System recognizes the selection & \textcolor{OliveGreen}{PASS} \\
 \begin{center}
 \begin{tabular}{|p{0.10\linewidth}|p{0.15\linewidth}|p{0.30\linewidth}|p{0.30\linewidth}|c|} 
 \hline
-BE4-FR11-T1 & Driver selects an available parking space & Driver must be shown
+BE4-FR12-T1 & Driver selects an available parking space & Driver must be shown
 directions from their location to the desired parking space & Driver is shown
 directions from their location to the desired parking space &
 \textcolor{OliveGreen}{PASS} \\
 \hline
-BE4-FR12-T1 & Driver selects the default parking space recommendation & Driver
+BE4-FR13-T1 & Driver selects the default parking space recommendation & Driver
 must be given directions to reach the recommended parking space & Driver is
 neither provided a recommendation nor provided directions to the parking space &
-\textcolor{blue}{Not Tested} \\ 
+\textcolor{red}{\st{Not Tested} FAIL} \\ 
 \hline
-BE4-FR13-T1 & N/A & The system must display directions to the default
+BE4-FR14-T1 & N/A & The system must display directions to the default
 recommended parking space after $\hyperlink{default_delay}{DEFAULT\_DELAY}$
 seconds & The system does not display navigation directions to the recommended
-space & \textcolor{blue}{Not Tested} \\
+space & \textcolor{red}{\st{Not Tested} FAIL} \\
 \hline
-BE5-FR14-T1 & Driver selects an unavailable parking space & System must inform
+BE5-FR15-T1 & Driver selects an unavailable parking space & System must inform
 the driver that they cannot park in a spot that is already occupied by another
 vehicle & System does not notify the driver of a spot's occupancy &
-\textcolor{blue}{Not Tested} \\
+\textcolor{red}{\st{Not Tested} FAIL} \\
 \hline
-BE5-FR15-T1 & Driver selects a reserved or accessibility parking space & System
+BE5-FR16-T1 & Driver selects a reserved or accessibility parking space & System
 must inform the driver that they have tried to select a parking space that does
 not meet their needs & When the driver does not require reserved or
 accessibility parking, the system does not inform the driver when they select
-such a space & \textcolor{blue}{Not Tested} \\
+such a space & \textcolor{red}{\st{Not Tested} FAIL} \\
 \hline
 \end{tabular}
 \end{center}
@@ -171,31 +189,31 @@ such a space & \textcolor{blue}{Not Tested} \\
 \begin{center}
 \begin{tabular}{|p{0.10\linewidth}|p{0.15\linewidth}|p{0.30\linewidth}|p{0.30\linewidth}|c|} 
 \hline
-BE6-FR16-T1 & Driver’s geographical location & As the driver commutes, the
+BE6-FR17-T1 & Driver’s geographical location & As the driver commutes, the
 directions must be updated such that the parking space remains stationary and
 the driver’s location is dynamic & Directions are not updated because
 geographical data collection from the driver's device is not yet implemented &
-\textcolor{blue}{Not Tested} \\ 
+\textcolor{red}{\st{Not Tested} PASS} \\ 
 \hline
-BE6-FR17-T1 & N/A & If the initial parking space selected by the driver is no
+BE6-FR18-T1 & N/A & If the initial parking space selected by the driver is no
 longer available, the system must show another recommendation to the driver &
 Driver is not shown another parking recommendation if their initial choice
-becomes unavailable & \textcolor{blue}{Not Tested} \\ 
+becomes unavailable & \textcolor{red}{\st{Not Tested} FAIL} \\ 
 \hline
-BE6-FR18-T1 & N/A & Once the initial parking space is no longer available, the
+BE6-FR19-T1 & N/A & Once the initial parking space is no longer available, the
 system must allow the driver pick another space from those that are available &
 Driver is able to select another parking space, but this is not due to the
-unavailability of the previous space & \textcolor{blue}{Not Tested} \\ 
+unavailability of the previous space & \textcolor{red}{\st{Not Tested} FAIL} \\ 
 \hline
-BE7-FR19-T1 & Driver’s geographical location & The system must inform the driver
-when they have reached their parking spot & Since the system is not yet
-configured to know when the driver has reached their location, no notification
-will be sent to the user & \textcolor{blue}{Not Tested} \\ 
+\textcolor{red}{BE6-FR20-T1} & \textcolor{red}{Driver routes to a parking spot
+that will be taken by someone else} & \textcolor{red}{System terminates the
+route and informs the driver} & \textcolor{red}{System returns to parking spot
+selection}  & \textcolor{red}{PASS} \\ 
 \hline
-BE7-FR20-T1 & Driver’s geographical location & The parking space must change
-from available to unavailable & Parking space does change from available to
-unavailable, but this is due to constant machine learning surveillance, and not
-geographical information & \textcolor{blue}{Not Tested} \\ 
+\textcolor{red}{BE6-FR21-T1} & \textcolor{red}{Driver routes to a parking spot
+and takes too long} & \textcolor{red}{System terminates the route and informs
+the driver} & \textcolor{red}{System returns to parking spot selection}  &
+\textcolor{red}{PASS} \\ 
 \hline
 \end{tabular}
 \end{center}
@@ -203,27 +221,57 @@ geographical information & \textcolor{blue}{Not Tested} \\
 \begin{center}
 \begin{tabular}{|p{0.10\linewidth}|p{0.30\linewidth}|p{0.15\linewidth}|p{0.30\linewidth}|c|} 
 \hline
-BE7-FR21-T1 & Driver reaches their destination & A survey for user feedback and
-dissatisfaction is presented & No survey is presented & \textcolor{blue}{Not
-Tested} \\ 
+\textcolor{red}{BE6-FR22-T1} & \textcolor{red}{Driver has a estimation of their
+location on the map} & \textcolor{red}{System has a marker on the map
+representing the user's location} & \textcolor{red}{System has a marker on the
+map representing the user's location within an acceptable tolerance}  &
+\textcolor{red}{PASS} \\ 
 \hline
-BE8-FR22-T1 & Driver changes settings & The system changes accordingly to match
-the new settings & No changes occur & \textcolor{blue}{Not Tested} \\ 
+\textcolor{red}{BE6-FR23-T1} & \textcolor{red}{Driver has a estimation of their
+driving time} & \textcolor{red}{System displays a driving time estimation} &
+\textcolor{red}{System displays a driving time estimation within an acceptable
+tolerance}  & \textcolor{red}{PASS} \\ 
 \hline
-BE8-FR23-T1 & Driver opens the settings page & System settings such as volume
-and sound adjustment, unit identification, vehicle details, and notification
-preferences are shown & Only unit identification is shown &
-\textcolor{red}{FAIL} \\ 
+BE7-FR24-T1 & Driver’s geographical location & The system must inform the driver
+when they have reached their parking spot & Since the system is not yet
+configured to know when the driver has reached their location, no notification
+will be sent to the user & \textcolor{red}{\st{Not Tested} PASS} \\ 
 \hline
-BE9-FR24-T1 & Driver cancels their current route & The parking spot selection
+BE7-FR25-T1 & Driver’s geographical location & The parking space must change
+from available to unavailable & Parking space does change from available to
+unavailable, but this is due to constant machine learning surveillance, and not
+geographical information & \textcolor{red}{\st{Not Tested} PASS} \\ 
+\hline
+\end{tabular}
+\end{center}
+
+\begin{center}
+\begin{tabular}{|p{0.10\linewidth}|p{0.30\linewidth}|p{0.15\linewidth}|p{0.30\linewidth}|c|} 
+\hline
+BE7-FR26-T1 & Driver reaches their destination & A survey for user feedback and
+dissatisfaction is presented & No survey is presented & \textcolor{red}{\st{Not
+Tested} FAIL} \\ 
+\hline
+\textcolor{red}{\st{BE8-FR27-T1}} & \textcolor{red}{\st{Driver changes
+settings}} & \textcolor{red}{\st{The system changes accordingly to match the new
+settings}} & \textcolor{red}{\st{No changes occur}} & \textcolor{red}{\st{Not
+Tested}} \\ 
+\hline
+\textcolor{red}{\st{BE8-FR28-T1}} & \textcolor{red}{\st{Driver opens the
+settings page}} & \textcolor{red}{\st{System settings such as volume and sound
+adjustment, unit identification, vehicle details, and notification preferences
+are shown}} & \textcolor{red}{\st{Only unit identification is shown}} &
+\textcolor{red}{\st{FAIL}} \\ 
+\hline
+BE9-FR29-T1 & Driver cancels their current route & The parking spot selection
 and path are removed & The system removes the path and returns to the spot
 selection page & \textcolor{OliveGreen}{PASS} \\ 
 \hline
-BE9-FR25-T1 & Driver cancels their current route & The system returns to the
+BE9-FR30-T1 & Driver cancels their current route & The system returns to the
 spot selection page & The system removes the path and returns to the spot
 selection page & \textcolor{OliveGreen}{PASS} \\ 
 \hline
-BE10-FR26-T1 & Admin logs in to the system & The system requests user
+BE10-FR31-T1 & Admin logs in to the system & The system requests user
 credentials & The systems asks for a username and password &
 \textcolor{OliveGreen}{PASS} \\ 
 \hline
@@ -233,23 +281,28 @@ credentials & The systems asks for a username and password &
 \begin{center}
 \begin{tabular}{|p{0.10\linewidth}|p{0.15\linewidth}|p{0.30\linewidth}|p{0.30\linewidth}|c|} 
 \hline
-BE10-FR27-T1 & Admin enters the wrong credentials & The system does not accept
+BE10-FR32-T1 & Admin enters the wrong credentials & The system does not accept
 the credentials & The systems specifies the given credentials does not match any
 admin user & \textcolor{OliveGreen}{PASS} \\ 
 \hline
-BE10-FR28-T1 & Admin accesses occupancy map & A map over the parking lot showing
+BE10-FR33-T1 & Admin accesses occupancy map & A map over the parking lot showing
 which spots are occupied or not & A map showing the occupancy and controls for
 changing the layout & \textcolor{OliveGreen}{PASS} \\ 
 \hline
-BE10-FR29-T1 & Admin accesses parking lot analytics & Analytics shows trends in
-the parking lot over a period of time & Analytics shows trends in a predefined
-period & \textcolor{red}{FAIL} \\ 
+BE11-FR34-T1 & Driver or admin selects a parking space & Analytics shows live
+occupancy of the parking lot over a period of time & Analytics shows occupancy
+of the parking lot at the given moment & \textcolor{red}{PASS} \\ 
 \hline
-BE11-FR30-T1 & Admin changes the parking layout & Layout changes are saved &
-Layout changes are not saved & \textcolor{red}{FAIL} \\ 
+\textcolor{red}{BE11-FR35-T1} & \textcolor{red}{Driver or admin selects a
+parking space} & \textcolor{red}{Analytics should show twenty four hours of data
+for a parking space} & \textcolor{red}{Analytics shows twenty four hours of data
+for a parking space} & \textcolor{red}{PASS} \\ 
 \hline
-BE11-FR31-T1 & Admin changes a parking spot & Parking spot changes are saved &
-Parking spot changes are not saved & \textcolor{red}{FAIL} \\ 
+BE12-FR36-T1 & Admin changes the parking layout & Layout changes are saved &
+Layout changes are saved & \textcolor{OliveGreen}{PASS} \\ 
+\hline
+BE12-FR37-T1 & Admin changes a parking spot & Parking spot changes are saved &
+Parking spot changes are saved & \textcolor{OliveGreen}{PASS} \\ 
 \hline
 \end{tabular}
 \end{center}
@@ -270,15 +323,32 @@ possibly can through buttons and other interfaces & All interface elements are
 deemed necessary & All interface elements are deemed necessary &
 \textcolor{OliveGreen}{PASS}\\
 \hline 
-NFR-LF1-T2 & Users surveyed on visual similarity to existing navigation apps
-after given $\hyperlink{exploration_time}{EXPLORATION\_TIME}$ to navigate and
-use the app & At least 80\% of testers indicate that the app is visually similar
-to existing apps & N/A & \textcolor{Blue}{Not Tested}\\
+NFR-LF1-T2 & \color{red}{It is important to survey users on visual similarity to
+existing navigation apps after giving them
+$\hyperlink{exploration_time}{EXPLORATION\_TIME}$ (especially for navigating and
+using the app) because it allows us to gauge how well our product compares to
+leading and well-reputed technologies in the market.} & At least 80\% of testers
+indicate that the app is visually similar to existing apps & N/A &
+\textcolor{OliveGreen}{PASS}\\
 \hline 
 \end{tabular}
 \end{center}
 
+\newpage
 \subsection{Usability}
+\textcolor{red}{Usability testing was done in part by having test users answer
+the Usability Survey Questions shown in the
+\href{https://github.com/parkd-app/park-d/blob/main/docs/VnVPlan/VnVPlan.pdf}{Verification
+and Validation plan}. Responses were positive regarding the user-facing portion
+of the application, which is what the questions were focused on. Learnability
+was good overall owing to the simple interface.\\
+The administrator console user interface was still in development at this time
+and users provided valuable feedback on important improvements to their
+experience. There was a disconnect between annotating the camera view and the
+map view which made it difficult to keep track of which two rectangles
+represented the same parking spot. The act of placing a spot on the map view was
+awkward, as it required four clicks at each corner. Improvements made from this
+feedback are detailed in \hyperref[sec:changes]{Changes due to Testing}.}
 \begin{center}
 \begin{tabular}{|p{0.10\linewidth}|p{0.35\linewidth}|p{0.20\linewidth}|p{0.20\linewidth}|c|} 
 \hline
@@ -293,7 +363,8 @@ $\hyperlink{max_taps}{MAX\_TAPS}$ & \textcolor{OliveGreen}{PASS}\\
 NFR-UH2-T1 & Users surveyed on the interface's similarity to existing navigation
 apps after given $\hyperlink{exploration_time}{EXPLORATION\_TIME}$ to navigate
 and use the app & At least 80\% of testers indicate that the interface is
-similar to existing apps & N/A & \textcolor{Blue}{Not Tested}\\
+similar to existing apps & 80\% of testers indicate that the interface is
+similar to existing apps & \textcolor{red}{\st{Not Tested} PASS}\\
 \hline
 \end{tabular}
 \end{center}
@@ -302,7 +373,8 @@ similar to existing apps & N/A & \textcolor{Blue}{Not Tested}\\
 \hline
 NFR-UH3-T1 & Users given $\hyperlink{exploration_time}{EXPLORATION\_TIME}$ to
 find and navigate to an available spot & At least 80\% of testers successfully
-find and navigate to an available spot & N/A & \textcolor{Blue}{Not Tested}\\
+find and navigate to an available spot & 80\% of testers successfully find and
+navigate to an available spot & \textcolor{red}{\st{Not Tested} PASS}\\
 \hline 
 NFR-UH4-T1 & Developers go through all graphical assets used in the application
 and verify that each conform to any regulations set out by the Ontario Ministry
@@ -352,8 +424,8 @@ provided to each individual user & \textcolor{OliveGreen}{PASS}\\
 \hline 
 NFR-PE6-T1 & User is able to see at least 2 parking lot layouts in 6 months from
 the launch of the application and is launched in a vehicle & At least 2 parking
-lot layout in 6 months and is launched in a vehicle & N/A & \textcolor{Blue}{Not
-Tested}\\
+lot layout in 6 months and is launched in a vehicle & 2 parking lot layout in 6
+months and is launched in a vehicle & \textcolor{red}{\st{Not Tested} PASS}\\
 \hline 
 \end{tabular}
 \end{center}
@@ -368,19 +440,21 @@ Tested}\\
 NFR-OE1-T1 & User inputs an address, selects a parking space, and follows the
 directions given by the parking space & Accurate directions to the designated
 address is given to the user and the user is able to successfully drive and
-locate the parking space & N/A & \textcolor{Blue}{Not Tested} \\
+locate the parking space & Accurate directions to the designated address is
+given to the user and the user is able to successfully drive and locate the
+parking space & \textcolor{red}{\st{Not Tested} PASS} \\
 \hline 
-NFR-OE2-T1 & N/A & New update is given every month & N/A & \textcolor{Blue}{Not
-Tested} \\
+NFR-OE2-T1 & N/A & New update is given every month & Application was updated
+every month & \textcolor{red}{\st{Not Tested} PASS} \\
 \hline 
 NFR-MA1-T1 & Developer takes the camera offline & The application prompts the
 User that the camera is offline and that the application is still functional &
-N/A & \textcolor{Blue}{Not Tested}\\
+No such prompt appears & \textcolor{red}{\st{Not Tested} PASS}\\
 \hline 
 NFR-MA2-T1 & Users are given the instructions on the help section of the
 application and fills a survey indicating the satisfaction with the information
 given & 80\% of the results should be satisfied with the instructs and contacts
-given & N/A & \textcolor{Blue}{Not Tested} \\
+given & No help section & \textcolor{red}{\st{Not Tested} FAIL} \\
 \hline 
 \end{tabular}
 \end{center}
@@ -424,7 +498,8 @@ not shown &  Edit function is not shown & \textcolor{OliveGreen}{PASS}\\
 \hline
 NFR-SR3-T1 & Admin logs in to the admin console and searches for a parking lot
 that they do not own & Edit functionality disabled and analytics are not
-displayed. & N/A & \textcolor{Blue}{Not Tested}\\
+displayed. & Admin cannot edit other people's parking lots &
+\textcolor{red}{\st{Not Tested} PASS}\\
 \hline
 \end{tabular}
 
@@ -436,12 +511,14 @@ displayed. & N/A & \textcolor{Blue}{Not Tested}\\
 NFR-SR4-T1 & Developers log into the database on the server and changes the
 status of an empty parking lot entry in the database to full and refresh the
 databse & The database reverts the status of the parking lot entry to the
-correct one, indiciating it is empty & N/A & \textcolor{Blue}{Not Tested}\\
+correct one, indiciating it is empty & Status of parking spot reverts to its
+actual status & \textcolor{red}{\st{Not Tested} PASS}\\
 \hline
 NFR-SR5-T1 & Admin logs in to the admin console, edits and saves the parking lot
 layout, and disconnects the system from the internet & Parking lot layout layout
 is cached as a JSON file and a prompt is indicating that the unsaved layout is
-cached and the location. & N/A & \textcolor{Blue}{Not Tested} \\
+cached and the location. & No prompt about unsaved layouts &
+\textcolor{red}{\st{Not Tested} FAIL} \\
 \hline
 \end{tabular}
 
@@ -465,8 +542,8 @@ JSON format is consistent with each parking lots & \textcolor{OliveGreen}{PASS}
 \\ 
 \hline
 NFR-SR9-T1 & User logs in and check the availability of certain parking lots &
-Each spot should have at max 1 special property & No properties are shown &
-\textcolor{blue}{Not Tested} \\ 
+Each spot should have at max 1 special property & Each spot can have at most 1
+special property & \textcolor{red}{\st{Not Tested} PASS} \\ 
 \hline
 \end{tabular}
 \end{center}
@@ -475,12 +552,12 @@ Each spot should have at max 1 special property & No properties are shown &
 \begin{tabular}{|p{0.10\linewidth}|p{0.15\linewidth}|p{0.30\linewidth}|p{0.30\linewidth}|c|} 
 \hline
 NFR-SR10-T1 & User attempt to add a parking spot to the database when it reaches
-maximum capacity & A window should be prompted indicates the action is illegal
-& No prompt are shown & \textcolor{blue}{Not Tested} \\ 
+maximum capacity & A window should be prompted indicates the action is illegal &
+No prompt are shown & \textcolor{red}{\st{Not Tested} FAIL} \\ 
 \hline
 NFR-SR11-T1 & User attempt to add parking lot and save the layout to database &
-A window should be prompted indicates the action succeed  & No prompt are shown
-& \textcolor{red}{FAIL} \\ 
+A window should be prompted indicates the action succeed  & User is prompted
+that the action was successful & \textcolor{red}{\st{FAIL} PASS} \\ 
 \hline
 NFR-SR12-T1 & User request navigation from current location to destination & The
 correct navigation path should be shown & Paths are shown on the main page &
@@ -498,9 +575,9 @@ permitted & The navigation failed with a prompt message indicates the reason &
 \begin{center}
 \begin{tabular}{|p{0.10\linewidth}|p{0.15\linewidth}|p{0.30\linewidth}|p{0.30\linewidth}|c|} 
 \hline
-NFR-SR14-T1 & User request navigation for a destination & A window should be
-prompted asked for access for location data & Window is not shown &
-\textcolor{blue}{Not Tested} \\ 
+NFR-SR14-T1 & User request navigation for a destination & \color{red}{User}
+should be prompted for access for location data & User is prompted for allowing
+the use of their location data & \textcolor{red}{\st{Not Tested} PASS} \\ 
 \hline
 \end{tabular}
 \end{center}
@@ -549,47 +626,106 @@ provide any other functionality, such as navigation, therefore, this solution
 can only be used to evaluate our parking detection algorithm.
 
 \newpage
+\color{red}
 \section{Unit Testing}
-
+The detail plans regarding the following tests are outlined in the
+\hyperlink{https://github.com/parkd-app/park-d/blob/main/docs/VnVPlan/VnVPlan.pdf}{VnV
+plan} document
 \begin{center}
-\begin{tabular}{|p{0.10\linewidth}|p{0.15\linewidth}|p{0.30\linewidth}|p{0.30\linewidth}|c|} 
+\begin{tabular}{|p{0.15\linewidth}|p{0.30\linewidth}|p{0.25\linewidth}|p{0.30\linewidth}|c|} 
 \hline
 \textbf{Tested Module} & \textbf{User Action} & \textbf{Expected Value} &
 \textbf{Actual Value} & \textbf{Result} \\
 \hline
-Gaussian model bird view & Input values of video frames &  The module should
-output result object with timestamp and boolean array in their field indicating
-the availability of parking lots (3 free and 4 occupied) & The time stamp and
-boolean array values matches the availability shown in each video frame: result:
-\{'timestamp': 16278900565, 'availability': [True, True, False, False, True]\} &
+Database module Test 6.2.1.1 & User saved json object includes the annotation
+coordinate under the ”CamCoords” key. &  Response body object with annotation &
+The response body object contains the previously saved CamCoords data &
 \textcolor{Green}{PASS} \\
 \hline
-Gaussian model side view & Input values of video frames &  The module should
-output result object with timestamp and boolean array in their field indicating
-the availability of parking lots (3 free and 6 occupied)& The time stamp and
-boolean array values matches the availability shown in each video frame:
-\{'timestamp': 16278900723, 'availability': [True, True, False, False, True,
-False, False]\}& \textcolor{Green}{PASS} \\
+Database module Test 6.2.1.2 & User saved json object includes the annotation
+coordinate under the ”MapCoords” key. &  Response body object with annotation &
+The response body object contains the previously saved MapCoords data &
+\textcolor{Green}{PASS} \\
 \hline
-Data mapper & Querying parking lot layout info with parking lot id &  Return the
-JSON value of saved parking lots & JSON values are correctly parsed and returned
-& \textcolor{Green}{PASS} \\
+Database module Test 6.2.1.3 & User entered the Youtube link. &  Response body
+object with annotation & The response body object contains the previously saved
+Youtube link data. & \textcolor{Green}{PASS} \\
+\hline
+Database module Test 6.2.1.4 & User request to view a particular parking. & The
+current\_input key should be set to the Youtube URL of the parking lot user wish
+to view & The string URL under the current input key is set to be Youtube URL
+for the corresponding parking lot & \textcolor{Green}{PASS} \\
+\hline
+Database module Test 6.2.1.5 & User request to view a particular parking. & The
+current\_coordinate key should be set to the annotation values of the parking
+lot user wish to view & The annotation values under the current\_coordinate key
+is set to be the data for the corresponding parking lot &
+\textcolor{Green}{PASS} \\
+\hline
+Parking stats Module Test 6.2.2.1 & User append the analytic 1 hour data to the
+database & The up to date analytic data with a testing parking lot &The returned
+analytic data include the recently appended data of the parking lot &
+\textcolor{Green}{PASS} \\
+\hline
+\end{tabular}
+
+\newpage
+\begin{center}
+\begin{tabular}{|p{0.15\linewidth}|p{0.30\linewidth}|p{0.25\linewidth}|p{0.30\linewidth}|c|} 
+\hline
+\textbf{Tested Module} & \textbf{User Action} & \textbf{Expected Value} &
+\textbf{Actual Value} & \textbf{Result} \\
+\hline
+View Module - Test 6.2.3.1 & User enters a valid email and password for the
+parking lot & Redirection to Administrative Console & Redirection to
+Administrative Console & \textcolor{Green}{PASS} \\
+\hline
+View Module - Test 6.2.3.2 & User enters an invalid email and password for the
+parking lot & Error message pops up & An error message "Invalid email. Try
+again." pops up & \textcolor{Green}{PASS} \\
+\hline
+View Module - Test 6.2.3.3 & User enters a non-existent email and password for
+the parking lot & Error message pops up & An error message "User does not exist.
+Try again." pops up & \textcolor{Green}{PASS} \\
+\hline
+View Module - Test 6.2.3.4 & User does not enter an input & Error message pops
+up & An error message "Internal error. Input a correct username and password and
+try again." pops up & \textcolor{Green}{PASS} \\
+\hline
+View Module - Test 6.2.3.5 & User does not enter an input & Error message pops
+up & An error message "Wrong password. Try again." pops up &
+\textcolor{Green}{PASS} \\
+\hline
+View Module - Test 6.2.3.6 & User clicks button to user mode & Redirection to
+User Mode & Redirection to User Mode & \textcolor{Green}{PASS} \\
+\hline
+View Module - Test 6.2.3.7 & Admin clicks the button to open the sidebar &
+Sidebar opens with all the admin features & Sidebar opens with all the admin
+features & \textcolor{Green}{PASS} \\
+\hline
+View Module - Test 6.2.3.8 & Admin clicks the logout button & Admin is logged
+out and is redirected to the login page & Admin is logged out and is redirected
+to the login page & \textcolor{Green}{PASS} \\
 \hline
 \end{tabular}
 \end{center}
+\end{center}
 
+\color{black}
+\newpage
 \section{Changes Due to Testing}
+\label{sec:changes}
+\color{red}{All of the these changes were made due to user validation testing, where one of our group members had their parent use our product for surveying their parking lot. A wide variety of changes were implemented in Revision 1, but in future revisions, we will tackle NFR-PE4-T1 and NFR-SR11-T1.}
+
 \begin{enumerate}
-    \item BE8-FR23-T1\\
-    Add more preference options for volume adjustment, vehicle details, and
-    notification preferences.
-    \item BE10-FR29-T1\\
-    Add dropdown menu beside Analytics to allow Admins to see trends over a
-    specified period of time.
-    \item BE10-FR30-T1\\
+    \item BE11-FR35-T1\\
+    The user mentioned that it would easier to view trends in occupancy and
+    availability, so we added dropdown menu beside Analytics to allow Admins to
+    see trends over a specified period of time.
+    \item BE10-FR33-T1\\
     Add back-end service to allow the front-end to modify coordinates of boxes
     that define the parking lot layout.
-    \item BE10-FR31-T1\\
+    \item BE10-FR33-T1\\
     Add back-end service to allow the front-end to modify the status of spots in
     the parking lot.
     \item NFR-PE4-T1\\
@@ -601,9 +737,23 @@ JSON value of saved parking lots & JSON values are correctly parsed and returned
     \item NFR-SR7-T1\\
     Add back-end service to regularly back up the parking lot layout data daily.
     \item NFR-SR11-T1\\
-    Add pop up modal or message to indicate to the user that the action was
+    The user wanted more responsiveness from the system. For example, getting
+    validation if their action was performed correctly. As such, we added a
+    pop-up modal or message to indicate to the user that the action was
     successful.
 \end{enumerate}
+\subsection{Changes from usability testing}
+Since there were no instructions for the user-facing portion of Park'd, those
+were added in an About page.\\
+The administrator console saw large updates based on user feedback. The camera
+view and map view were moved side by side. When placing a box for a parking
+space in the camera view, a corresponding box is now automatically placed in the
+map view, rather than having the user place both manually. Deletion is now done
+from the camera view, affecting both boxes automatically. In addition, when
+mousing over a box in the camera view, the corresponding box in the map view is
+now highlighted.
+
+\color{black}
 
 \section{Automated Testing}
 
@@ -651,22 +801,24 @@ M6 & M7 & M8 & M9 & M10 & M11 & M12 & M13  \\
 \multicolumn{1}{|c| } {BE1-FR1-T1}   &&&&&&&&X&X&&&& \\ \cline{2-15}
 \multicolumn{1}{|c| }{} 	                  & \multicolumn{1}{|c| }{BE1-FR2-T1}
 &&&&&&&&X&X&&&& \\ \cline{2-15} \multicolumn{1}{|c| }{}                        &
-\multicolumn{1}{|c| } {BE2-FR3-T1}   &&X&&&&&&&&&X&&\\ \cline{2-15}
+\multicolumn{1}{|c| }{BE1-FR3-T1}
+&&&&&&&&X&X&&&& \\ \cline{2-15} \multicolumn{1}{|c| }{}                        &
+\multicolumn{1}{|c| } {BE2-FR4-T1}   &&X&&&&&&&&&X&&\\ \cline{2-15}
 \multicolumn{1}{|c| }{}                        & \multicolumn{1}{ |c| }
-{BE2-FR4-T1}  &&&X&X&X&X&X&X&&&X&& \\ \cline{2-15} \multicolumn{1}{|c| }{} &
-\multicolumn{1}{ |c| } {BE2-FR5-T1}  &&&X&X&X&X&X&X&&&&&\\ \cline{2-15}
+{BE2-FR5-T1}  &&&X&X&X&X&X&X&&&X&& \\ \cline{2-15} \multicolumn{1}{|c| }{} &
+\multicolumn{1}{ |c| } {BE2-FR6-T1}  &&&X&X&X&X&X&X&&&&&\\ \cline{2-15}
 \multicolumn{1}{|c| }{}                        & \multicolumn{1}{ |c| }
-{BE2-FR6-T1}  &&&&&&&&&&X&&&X \\ \cline{2-15} \multicolumn{1}{|c| }{} &
-\multicolumn{1}{ |c| } {BE2-FR7-T1}  &&&X&&&&&&&&&& \\ \cline{2-15}
+{BE2-FR7-T1}  &&&&&&&&&&X&&&X \\ \cline{2-15} \multicolumn{1}{|c| }{} &
+\multicolumn{1}{ |c| } {BE2-FR8-T1}  &&&X&&&&&&&&&& \\ \cline{2-15}
 \multicolumn{1}{|c| }{}                        & \multicolumn{1}{ |c| }
-{BE3-FR8-T1}  &&&&&&X&X&&&&&&X \\ \cline{2-15} \multicolumn{1}{|c| }{} &
-\multicolumn{1}{ |c| } {BE3-FR9-T1}  &&&&&X&&&&&&&&\\ \cline{2-15}
+{BE3-FR9-T1}  &&&&&&X&X&&&&&&X \\ \cline{2-15} \multicolumn{1}{|c| }{} &
+\multicolumn{1}{ |c| } {BE3-FR10-T1}  &&&&&X&&&&&&&&\\ \cline{2-15}
 \multicolumn{1}{|c| }{}                        & \multicolumn{1}{ |c| }
-{BE4-FR10-T1} &&&&&&X&X&&&&&&X \\ \cline{2-15} \multicolumn{1}{|c| }{} &
-\multicolumn{1}{ |c| } {BE4-FR11-T1} &&&&&&&&&X&&&& \\ \cline{2-15}
+{BE4-FR11-T1} &&&&&&X&X&&&&&&X \\ \cline{2-15} \multicolumn{1}{|c| }{} &
+\multicolumn{1}{ |c| } {BE4-FR12-T1} &&&&&&&&&X&&&& \\ \cline{2-15}
 \multicolumn{1}{|c| }{}                        & \multicolumn{1}{ |c| }
-{BE4-FR12-T1} &&&&&X&&&&&&&&X \\ \cline{2-15} \multicolumn{1}{|c| }{} &
-\multicolumn{1}{ |c| } {BE4-FR13-T1} &&&&&&&&&X&&&& \\ \cline{1-15}
+{BE4-FR13-T1} &&&&&X&&&&&&&&X \\ \cline{2-15} \multicolumn{1}{|c| }{} &
+\multicolumn{1}{ |c| } {BE4-FR14-T1} &&&&&&&&&X&&&& \\ \cline{1-15}
 \end{tabularx}
 \end{table}
 
@@ -679,24 +831,32 @@ M6 & M7 & M8 & M9 & M10 & M11 & M12 & M13  \\
 & & \multicolumn{13}{ c|}{Modules} \\ \cline{3-15} & & M1  & M2 & M3 & M4 & M5 &
 M6 & M7 & M8 & M9 & M10 & M11 & M12 & M13  \\
 \cline{1-15} \multicolumn{1}{ |c| }{\multirow{13}{*}{Test Cases} } &
-\multicolumn{1}{|c| } {BE5-FR14-T1}   &&&&&&&X&&&&&&X \\ \cline{2-15}
-\multicolumn{1}{|c| }{} 	                  & \multicolumn{1}{|c| }{BE5-FR15-T1}
+\multicolumn{1}{|c| } {BE5-FR15-T1}   &&&&&&&X&&&&&&X \\ \cline{2-15}
+\multicolumn{1}{|c| }{} 	                  & \multicolumn{1}{|c| }{BE5-FR16-T1}
 &&&&&&&X&&&&&&X \\ \cline{2-15} \multicolumn{1}{|c| }{}                        &
-\multicolumn{1}{|c| } {BE6-FR16-T1}   &&&&&&&&&X&&&&\\ \cline{2-15}
+\multicolumn{1}{|c| } {BE6-FR17-T1}   &&&&&&&&&X&&&&\\ \cline{2-15}
 \multicolumn{1}{|c| }{}                        & \multicolumn{1}{ |c| }
-{BE6-FR17-T1}  &&&&&X&&X&&&&X&& \\ \cline{2-15} \multicolumn{1}{|c| }{} &
-\multicolumn{1}{ |c| } {BE6-FR18-T1}  &&&&&&&&&&&&&X\\ \cline{2-15}
+{BE6-FR18-T1}  &&&&&X&&X&&&&X&& \\ \cline{2-15} \multicolumn{1}{|c| }{} &
+\multicolumn{1}{ |c| } {BE6-FR19-T1}  &&&&&&&&&&&&&X\\ \cline{2-15}
 \multicolumn{1}{|c| }{}                        & \multicolumn{1}{ |c| }
-{BE7-FR19-T1}  &&&&&&&&&X&&&& \\ \cline{2-15} \multicolumn{1}{|c| }{} &
-\multicolumn{1}{ |c| } {BE7-FR20-T1}  &&&&&&&X&&&&X&& \\ \cline{2-15}
+{BE7-FR20-T1}  &&&&&&&&&X&&&& \\ \cline{2-15} \multicolumn{1}{|c| }{} &
+\multicolumn{1}{ |c| }
+{BE7-FR21-T1}  &&&&&&&&&X&&&& \\ \cline{2-15} \multicolumn{1}{|c| }{} &
+\multicolumn{1}{ |c| }
+{BE7-FR22-T1}  &&&&&&&&&X&&&& \\ \cline{2-15} \multicolumn{1}{|c| }{} &
+\multicolumn{1}{ |c| }
+{BE7-FR23-T1}  &&&&&&&&&X&&&& \\ \cline{2-15} \multicolumn{1}{|c| }{} &
+\multicolumn{1}{ |c| }
+{BE7-FR24-T1}  &&&&&&&&&X&&&& \\ \cline{2-15} \multicolumn{1}{|c| }{} &
+\multicolumn{1}{ |c| } {BE7-FR25-T1}  &&&&&&&X&&&&X&& \\ \cline{2-15}
 \multicolumn{1}{|c| }{}                        & \multicolumn{1}{ |c| }
-{BE7-FR21-T1}  &&&&&&&&&&&&&X \\ \cline{2-15} \multicolumn{1}{|c| }{} &
-\multicolumn{1}{ |c| } {BE8-FR22-T1}  &&&&&&&&&&&&&X\\ \cline{2-15}
+{BE7-FR26-T1}  &&&&&&&&&&&&&X \\ \cline{2-15} \multicolumn{1}{|c| }{} &
+\multicolumn{1}{ |c| } {BE8-FR27-T1}  &&&&&&&&&&&&&X\\ \cline{2-15}
 \multicolumn{1}{|c| }{}                        & \multicolumn{1}{ |c| }
-{BE8-FR23-T1} &&&&&&&&&&&&&X \\ \cline{2-15} \multicolumn{1}{|c| }{} &
-\multicolumn{1}{ |c| } {BE9-FR24-T1} &&&&&&&&&X&&&&X \\ \cline{2-15}
+{BE8-FR28-T1} &&&&&&&&&&&&&X \\ \cline{2-15} \multicolumn{1}{|c| }{} &
+\multicolumn{1}{ |c| } {BE9-FR29-T1} &&&&&&&&&X&&&&X \\ \cline{2-15}
 \multicolumn{1}{|c| }{}                        & \multicolumn{1}{ |c| }
-{BE9-FR25-T1} &&&&&&&&&X&&&& \\ \cline{1-15}
+{BE9-FR30-T1} &&&&&&&&&X&&&& \\ \cline{1-15}
 \end{tabularx}
 \end{table}
 
@@ -709,13 +869,13 @@ M6 & M7 & M8 & M9 & M10 & M11 & M12 & M13  \\
 & & \multicolumn{13}{ c|}{Modules} \\ \cline{3-15} & & M1  & M2 & M3 & M4 & M5 &
 M6 & M7 & M8 & M9 & M10 & M11 & M12 & M13  \\
 \cline{1-15} \multicolumn{1}{ |c| }{\multirow{6}{*}{Test Cases} } &
-\multicolumn{1}{|c| } {BE10-FR26-T1}   &&&X&&&&&X&&&&& \\ \cline{2-15}
-\multicolumn{1}{|c| }{} & \multicolumn{1}{|c| }{BE10-FR27-T1}    &&&X&&&&&X&&&&&
-\\ \cline{2-15} \multicolumn{1}{|c| }{} & \multicolumn{1}{|c| } {BE10-FR28-T1}
+\multicolumn{1}{|c| } {BE10-FR31-T1}   &&&X&&&&&X&&&&& \\ \cline{2-15}
+\multicolumn{1}{|c| }{} & \multicolumn{1}{|c| }{BE10-FR32-T1}    &&&X&&&&&X&&&&&
+\\ \cline{2-15} \multicolumn{1}{|c| }{} & \multicolumn{1}{|c| } {BE10-FR33-T1}
 &&&&X&&&&X&&&&& \\ \cline{2-15} \multicolumn{1}{|c| }{}     & \multicolumn{1}{
-|c| } {BE10-FR29-T1}  &&&&&&&&X&&X&&& \\ \cline{2-15} \multicolumn{1}{|c| }{} &
-\multicolumn{1}{ |c| } {BE11-FR30-T1} &&&&X&&&&X&&&&& \\ \cline{2-15}
-\multicolumn{1}{|c| }{} & \multicolumn{1}{ |c| } {BE11-FR31-T1}  &&&&X&&&&X&&&&&
+|c| } {BE11-FR34-T1}  &&&&&&&&X&&X&&& \\ \cline{2-15} \multicolumn{1}{|c| }{} &
+\multicolumn{1}{ |c| } {BE11-FR36-T1} &&&&X&&&&X&&&&& \\ \cline{2-15}
+\multicolumn{1}{|c| }{} & \multicolumn{1}{ |c| } {BE11-FR37-T1}  &&&&X&&&&X&&&&&
 \\ \cline{1-15}
 \end{tabularx}
 \end{table}
@@ -729,7 +889,16 @@ with \href{https://istanbul.js.org/}{Istanbul}. We reached 100\% and 90\%
 respectively.
 
 \newpage{}
-\section*{Appendix --- Reflection}
+\section{Appendix}
+
+\subsection{Symbolic Parameters}
+\textcolor{red}{ \noindent $\hypertarget{max_taps}{MAX\_TAPS}$ = 2 \\
+$\hypertarget{min_framerate}{MIN\_FRAMERATE}$ = 15\\
+$\hypertarget{default_delay}{DEFAULT\_DELAY}$ = 10\\
+$\hypertarget{exploration_time}{EXPLORATION\_TIME}$ = 5 minutes \\
+}
+
+\subsection{Reflection}
 
 The information in this section will be used to evaluate the team members on the
 graduate attribute of Reflection.  Please answer the following question:
@@ -755,7 +924,14 @@ The main differences are as follows:
     implement a given feature or function. However, given the large number of
     requirements, and the possibility of unexpected issues such as code
     incompatibility, this is not always the case. Ultimately, designers can only
-    guess at what will be feasible to implement by the next deadline.\\
+    guess at what will be feasible to implement by the next deadline.
+    \color{red}{In our future careers as engineers, we should couple our
+    anticipation of changes with the use of Gantt charts to provide slack time,
+    in case a change that requires five days ends up requiring two weeks. We are
+    also better equipped to anticipate changes because now we know to do prior
+    research of the technologies used, which will inform our estimates of work
+    effort.}\\
+    \color{black}
     Therefore, there should always be some leeway in which requirements are
     tested and which ones are left for later. By highlighting which requirements
     are of high priority, and by only using such a classification sparingly, we

@@ -4,12 +4,12 @@ from pytube import YouTube
 from PIL import Image
 import requests
 
+
+#Return the thumbnail link of the youtube link
 def save_frame_sec(url):
     yt = YouTube(url)
     path = yt.thumbnail_url
     # Read the thumbnail image from URL using OpenCV
-
-
     last_slash_index = path.rfind("/")
     if last_slash_index != -1:
         new_path = path[:last_slash_index + 1] + "maxresdefault.jpg"
@@ -20,6 +20,7 @@ def save_frame_sec(url):
     # #return serve_pil_image(im)
     return new_path
 
+#Save the image as Byte format 
 def serve_pil_image(pil_img):
     img_io = BytesIO()
     pil_img.save(img_io, 'JPEG', quality=70)
