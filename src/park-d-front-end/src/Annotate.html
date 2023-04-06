@@ -1,260 +1,329 @@
 <!DOCTYPE html>
 <html>
-
-<head>
+  <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Park'd Labelling</title>
     <!-- <link rel="annotorious.min.css" href="styles.css" /> -->
     <!-- <link rel="stylesheet" href="annotorious.min.css"> -->
     <!-- CSS stylesheet -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@recogito/annotorious@2.7.10/dist/annotorious.min.css">
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@recogito/annotorious@2.7.10/dist/annotorious.min.css"
+    />
 
     <!-- JS -->
     <script src="https://cdn.jsdelivr.net/npm/@recogito/annotorious@2.7.10/dist/annotorious.min.js"></script>
-    <script src="./constants.js"></script> <!-- Constants must be loaded first -->
+    <script src="./constants.js"></script>
+    <!-- Constants must be loaded first -->
     <!-- <script src="annotorious.min.js"></script> -->
     <script type="module" src="./scripts/HomeViewAuth.js"></script>
     <script src="./Annotate.js"></script>
     <script src="./Navbar.js"></script>
     <script src="./adminmap.js"></script>
     <script src="./intersect.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css" />
-    <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Montserrat&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Montserrat&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
     <link rel="stylesheet" href="homeView.css" />
     <link rel="stylesheet" href="Annotate.css" />
     <script src="./adminmap.js"></script>
-</head>
+  </head>
 
-<body>
+  <body>
     <div class="background">
-        <header class="header_area" id="header">
-            <div class="main-menu">
-                <nav class="navbar navbar-expand-lg navbar-custom">
-                    <div class="flex-container">
-                        <div>
-                            <button class="navbar-icon" onclick="toggleSidebar()">
-                                <i class="fa fa-bars"></i>
-                            </button>
-                        </div>
+      <header class="header_area" id="header">
+        <div class="main-menu">
+          <nav class="navbar navbar-expand-lg navbar-custom">
+            <div class="flex-container">
+              <div>
+                <button class="navbar-icon" onclick="toggleSidebar()">
+                  <i class="fa fa-bars"></i>
+                </button>
+              </div>
 
-                        <a href="#site-banner" class="navbar-brand"><img src="./Images/park-d-logo-large.svg"
-                                alt="" /></a>
-                        <div>
-                            <button id="btnLogout" class="nav-button">Logout</button>
-                        </div>
-                    </div>
-                </nav>
+              <a href="#site-banner" class="navbar-brand"
+                ><img src="./Images/park-d-logo-large.svg" alt=""
+              /></a>
+              <div>
+                <button id="btnLogout" class="nav-button">Logout</button>
+              </div>
             </div>
-        </header>
-
-        <div class="sidebar" id="sidebar" style="display: none">
-            <div class="side-nav-content">
-                <ul class="nav-list">
-                    <li class="nav-list-item">
-                        <i class="fa fa-home" aria-hidden="true"></i>
-                        <a class="nav-link" href="HomeView.html">Home</a>
-                    </li>
-                    <li class="nav-list-item annotate">
-                        <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                        <a href="Annotate.html">Edit Parking Lot</a>
-                    </li>
-                    <li class="nav-list-item">
-                        <i class="fa fa-question-circle-o" aria-hidden="true"></i>
-                        <a class="nav-link" href="#">About</a>
-                    </li>
-                    <li class="nav-list-item">
-                        <i class="fa fa-phone" aria-hidden="true"></i>
-                        <a class="nav-link" href="#">Contact</a>
-                    </li>
-                </ul>
-            </div>
+          </nav>
         </div>
+      </header>
 
-        <div class="container">
-            <div class="row">
-                <div class="panel col-md-6">
-                    <div class="annotate-window">
-                        <p>
-                            <button class="button" id="current-tool">Polygon</button>
-                            <!-- <button class="button" id="sidebtn" onclick="show('side')">Load Side View</button>
+      <div class="sidebar" id="sidebar" style="display: none">
+        <div class="side-nav-content">
+          <ul class="nav-list">
+            <li class="nav-list-item">
+              <i class="fa fa-home" aria-hidden="true"></i>
+              <a class="nav-link" href="HomeView.html">Home</a>
+            </li>
+            <li class="nav-list-item annotate">
+              <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+              <a href="Annotate.html">Edit Parking Lot</a>
+            </li>
+            <li class="nav-list-item">
+              <i class="fa fa-question-circle-o" aria-hidden="true"></i>
+              <a class="nav-link" href="#">About</a>
+            </li>
+            <li class="nav-list-item">
+              <i class="fa fa-phone" aria-hidden="true"></i>
+              <a class="nav-link" href="#">Contact</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="container">
+        <div class="row">
+          <div class="panel col-md-6">
+            <div class="annotate-window">
+              <p>
+                <button class="button" id="current-tool">Polygon</button>
+                <!-- <button class="button" id="sidebtn" onclick="show('side')">Load Side View</button>
                             <button class="button" id="birdbtn" onclick="show('bird')">Load Bird View</button> -->
-                        </p>
-                        <div class="ann_image">
-                            <img id="test_lot" src="" style="max-width:100%;">
-                            <script>
-                                // var img = document.getElementById("test_lot");
-                                // img.src = getSnapshot();
-                            </script>
-                        </div>
-                    </div>
-                </div>
-                <div class="panel col-md-6">
-                    <div id="button-panel">
-                        <!-- <div id="PickLabel">Admin View</div> -->
-                        <!-- <button class="button" type="button" id="RecenterButton" onclick="recenter()">
+              </p>
+              <div class="ann_image">
+                <img id="test_lot" src="" style="max-width: 100%" />
+                <script>
+                  // var img = document.getElementById("test_lot");
+                  // img.src = getSnapshot();
+                </script>
+              </div>
+            </div>
+          </div>
+          <div class="panel col-md-6">
+            <div id="button-panel">
+              <!-- <div id="PickLabel">Admin View</div> -->
+              <!-- <button class="button" type="button" id="RecenterButton" onclick="recenter()">
                             Recenter
                         </button> -->
-                        <div id="LotButtons">
-                            <label id="IDLabel" for="IDBox" class="words">Lot ID:</label>
-                            <input type="text" id="IDBox" name="IDBox"><br>
-                            <label class="words" id="OwnerLabel" for="OwnerBox" class="words">Owner:</label>
-                            <input type="text" id="OwnerBox" name="OwnerBox"><br>
-                            <button class="button" type="button" id="LoadLotButton"
-                                onclick="loadLot(); loadAnnotations(false, document.getElementById('test_lot'))">
-                                Load Existing Lot
-                            </button>
-                            <button class="button" type="button" id="NewLotButton" onclick="creatingLot()">
-                                Create New Lot
-                            </button>
-                        </div>
-                        <div id="NewLotButtons" style="display:none">
-                            <label class="words" id="NewOwnerLabel" for="NewOwnerBox">Owner:</label>
-                            <input type="text" id="NewOwnerBox" name="NewOwnerBox"><br>
-                            <label class="words" id="URLLabel" for="URLBox">YouTube stream URL:</label>
-                            <input type="text" id="URLBox" name="URLBox"><br>
-                            <button class="button" type="button" id="LoadingLotButton" onclick="loadingLot();">
-                                Load Existing Lot
-                            </button>
-                            <button class="button" type="button" id="CreateLotButton"
-                                onclick="createLot(); loadAnnotations(true, document.getElementById('test_lot'))">
-                                Create New Lot
-                            </button>
-                        </div>
-                        <div id="SpaceButtons" style="display:none">
-                            <!-- <button type="button" id="AddSpotButton" onclick="addingSpot()">
+              <div id="LotButtons">
+                <label id="IDLabel" for="IDBox" class="words">Lot ID:</label>
+                <input type="text" id="IDBox" name="IDBox" /><br />
+                <label
+                  class="words"
+                  id="OwnerLabel"
+                  for="OwnerBox"
+                  class="words"
+                  >Owner:</label
+                >
+                <input type="text" id="OwnerBox" name="OwnerBox" /><br />
+                <button
+                  class="button"
+                  type="button"
+                  id="LoadLotButton"
+                  onclick="loadLot(); loadAnnotations(false, document.getElementById('test_lot'))"
+                >
+                  Load Existing Lot
+                </button>
+                <button
+                  class="button"
+                  type="button"
+                  id="NewLotButton"
+                  onclick="creatingLot()"
+                >
+                  Create New Lot
+                </button>
+              </div>
+              <div id="NewLotButtons" style="display: none">
+                <label class="words" id="NewOwnerLabel" for="NewOwnerBox"
+                  >Owner:</label
+                >
+                <input type="text" id="NewOwnerBox" name="NewOwnerBox" /><br />
+                <label class="words" id="URLLabel" for="URLBox"
+                  >YouTube stream URL:</label
+                >
+                <input type="text" id="URLBox" name="URLBox" /><br />
+                <button
+                  class="button"
+                  type="button"
+                  id="LoadingLotButton"
+                  onclick="loadingLot();"
+                >
+                  Load Existing Lot
+                </button>
+                <button
+                  class="button"
+                  type="button"
+                  id="CreateLotButton"
+                  onclick="createLot(); loadAnnotations(true, document.getElementById('test_lot'))"
+                >
+                  Create New Lot
+                </button>
+              </div>
+              <div id="SpaceButtons" style="display: none">
+                <!-- <button type="button" id="AddSpotButton" onclick="addingSpot()">
                                 Add Spot
                             </button> -->
-                            <select name="Type" id="TypeMenu">
-                                <option value="#00FF00">Regular</option>
-                                <option value="#0000FF">Accessible</option>
-                                <option value="#FF0000">Reserved</option>
-                            </select>
-                            <button class="button" type="button" id="ChangeSpotButton" onclick="changingSpot()">
-                                Change Spot Type
-                            </button>
-                            <!-- <button type="button" id="RemoveSpotButton" onclick="removingSpot()">
+                <select name="Type" id="TypeMenu">
+                  <option value="#00FF00">Regular</option>
+                  <option value="#0000FF">Accessible</option>
+                  <option value="#FF0000">Reserved</option>
+                </select>
+                <button
+                  class="button"
+                  type="button"
+                  id="ChangeSpotButton"
+                  onclick="changingSpot()"
+                >
+                  Change Spot Type
+                </button>
+                <!-- <button type="button" id="RemoveSpotButton" onclick="removingSpot()">
                                 Remove Spot
                             </button> -->
-                            <button class="button" type="button" id="SaveButton" onclick="uploadSpots()">
-                                Save Changes
-                            </button>
-                            <button class="button" type="button" id="RefreshButton" onclick="refresh()">
-                                Load Different Lot
-                            </button>
-                        </div>
-                    </div>
-                    <div id="map"></div>
-                </div>
+                <button
+                  class="button"
+                  type="button"
+                  id="SaveButton"
+                  onclick="uploadSpots()"
+                >
+                  Save Changes
+                </button>
+                <button
+                  class="button"
+                  type="button"
+                  id="RefreshButton"
+                  onclick="refresh()"
+                >
+                  Load Different Lot
+                </button>
+              </div>
             </div>
+            <div id="map"></div>
+          </div>
         </div>
+      </div>
     </div>
 
-
-    <script async defer
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDWaVhLQMYdNjRXmcZga657_etUC-9HBmQ&callback=initMap"></script>
+    <script
+      async
+      defer
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDWaVhLQMYdNjRXmcZga657_etUC-9HBmQ&callback=initMap"
+    ></script>
     <script>
-        window.onload = function () {
-            var hoverAnn = false;
-            anno = Annotorious.init({
-                image: 'test_lot',
-                locale: 'auto',
-                drawOnSingleClick: false,
-                crosshair: false,
-                // allowEmpty: false,
-                // disableEditor: false,
-                widgets: [
-                    { widget: 'COMMENT' },
-                    { widget: 'TAG', vocabulary: ['Default', 'Reserved', 'Accessible'] }
-                ]
-            });
+      window.onload = function () {
+        var hoverAnn = false;
+        anno = Annotorious.init({
+          image: "test_lot",
+          locale: "auto",
+          drawOnSingleClick: false,
+          crosshair: false,
+          // allowEmpty: false,
+          // disableEditor: false,
+          widgets: [
+            { widget: "COMMENT" },
+            {
+              widget: "TAG",
+              vocabulary: ["Default", "Reserved", "Accessible"],
+            },
+          ],
+        });
 
+        anno.setDrawingTool("polygon");
+
+        anno.setAuthInfo({
+          id: "http://www.example.com/yapetej",
+          displayName: "Jonathan",
+        });
+
+        anno.on("selectAnnotation", function (a, shape) {
+          // console.log('selected');
+        });
+
+        anno.on("cancelSelected", function (a) {
+          // console.log('cancel');
+        });
+
+        anno.on("changeSelected", function (selected, previous) {
+          // console.log('changed from', previous, 'to', selected);
+        });
+
+        anno.on("startSelection", function (point) {
+          // console.log(point.x, point.y)
+        });
+
+        anno.on("createAnnotation", function (annotation) {
+          createAnnotation(annotation, anno.getAnnotations());
+          let paths = [
+            { lat: map.getCenter().lat(), lng: map.getCenter().lng() },
+            {
+              lat: map.getCenter().lat(),
+              lng: map.getCenter().lng() + 0.00015,
+            },
+            {
+              lat: map.getCenter().lat() + 0.0001,
+              lng: map.getCenter().lng() + 0.00015,
+            },
+            { lat: map.getCenter().lat() + 0.0001, lng: map.getCenter().lng() },
+          ];
+          putSpot(paths, w3cCoords(annotation));
+        });
+
+        anno.on("createSelection", function (selection) {
+          var intersect = checkIntersection(selection);
+          if (intersect) {
+            anno.cancelSelected();
+          }
+        });
+
+        anno.on("updateAnnotation", function (annotation, previous) {
+          console.log("updated", previous, "with", annotation);
+          updateAnnotation(annotation, previous);
+        });
+
+        anno.on("clickAnnotation", function (annotation, shape) {
+          console.log("clicked", annotation);
+        });
+
+        anno.on("deleteAnnotation", function (annotation) {
+          deleteAnnotation(annotation);
+          window["spot" + annotation.id].setMap(null);
+          window["spot" + annotation.id] = undefined;
+        });
+
+        anno.on("mouseEnterAnnotation", function (annotation) {
+          try {
+            window["spot" + annotation.id].setOptions({ fillColor: "#FFFFFF" });
+          } catch (e) {}
+        });
+
+        anno.on("mouseLeaveAnnotation", function (annotation) {
+          try {
+            window["spot" + annotation.id].setOptions({
+              fillColor: newSpotColor,
+            });
+          } catch (e) {}
+        });
+
+        var toolToggle = document.getElementById("current-tool");
+        toolToggle.addEventListener("click", function () {
+          if (toolToggle.innerHTML == "Rectangle") {
+            toolToggle.innerHTML = "Polygon";
             anno.setDrawingTool("polygon");
-
-            anno.setAuthInfo({
-                id: 'http://www.example.com/yapetej',
-                displayName: 'Jonathan'
-            });
-
-            anno.on('selectAnnotation', function (a, shape) {
-                // console.log('selected');
-            });
-
-            anno.on('cancelSelected', function (a) {
-                // console.log('cancel');
-            });
-
-            anno.on('changeSelected', function (selected, previous) {
-                // console.log('changed from', previous, 'to', selected);
-            });
-
-            anno.on('startSelection', function (point) {
-                // console.log(point.x, point.y)
-            });
-
-            anno.on('createAnnotation', function (annotation) {
-                createAnnotation(annotation, anno.getAnnotations());
-                let paths = [
-                    { lat: map.getCenter().lat(), lng: map.getCenter().lng() },
-                    { lat: map.getCenter().lat(), lng: map.getCenter().lng() + 0.00015 },
-                    { lat: map.getCenter().lat() + 0.0001, lng: map.getCenter().lng() + 0.00015 },
-                    { lat: map.getCenter().lat() + 0.0001, lng: map.getCenter().lng() },
-                ];
-                putSpot(paths, w3cCoords(annotation));
-            });
-
-            anno.on('createSelection', function (selection) {
-                var intersect = checkIntersection(selection);
-                if (intersect) {
-                    anno.cancelSelected();
-                }
-            });
-
-            anno.on('updateAnnotation', function (annotation, previous) {
-                console.log('updated', previous, 'with', annotation);
-                updateAnnotation(annotation, previous);
-            });
-
-            anno.on('clickAnnotation', function (annotation, shape) {
-                console.log('clicked', annotation);
-            });
-
-            anno.on('deleteAnnotation', function (annotation) {
-                deleteAnnotation(annotation);
-                window["spot" + annotation.id].setMap(null);
-                window["spot" + annotation.id] = undefined;
-            });
-
-            anno.on('mouseEnterAnnotation', function (annotation) {
-                try {
-                    window["spot" + annotation.id].setOptions({ fillColor: "#FFFFFF" });
-                } catch (e) {
-                }
-            });
-
-            anno.on('mouseLeaveAnnotation', function (annotation) {
-                try {
-                    window["spot" + annotation.id].setOptions({ fillColor: newSpotColor });
-                } catch (e) {
-                }
-            });
-
-            var toolToggle = document.getElementById('current-tool');
-            toolToggle.addEventListener('click', function () {
-                if (toolToggle.innerHTML == 'Rectangle') {
-                    toolToggle.innerHTML = 'Polygon';
-                    anno.setDrawingTool('polygon');
-                } else {
-                    toolToggle.innerHTML = 'Rectangle';
-                    anno.setDrawingTool('rect');
-                }
-            });
-        }
+          } else {
+            toolToggle.innerHTML = "Rectangle";
+            anno.setDrawingTool("rect");
+          }
+        });
+      };
     </script>
     <script src="./Annotate.js"></script>
-    </div>
-</body>
-
+  </body>
 </html>

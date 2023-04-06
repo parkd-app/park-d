@@ -24,7 +24,7 @@ var defaultOptions = {
 };
 
 let sessionMode = sessionStorage.getItem("userMode");
-var userMode = (sessionMode === "true");
+var userMode = sessionMode === "true";
 
 var directionsRenderer;
 var directionsService;
@@ -105,10 +105,11 @@ function initMap() {
       } else if (!window[parkingLayoutIds[selection]].status) {
         getDocEle("direction_guide").textContent = "Spot taken";
         return;
-      }
-      else {
+      } else {
         if (window[parkingLayoutIds[selection]].type != 0) {
-          let authorized = confirm("Press OK to confirm that you are authorized to use this space.")
+          let authorized = confirm(
+            "Press OK to confirm that you are authorized to use this space."
+          );
           if (!authorized) return;
         }
         clickDestination = { coords: event.latLng };
@@ -127,10 +128,10 @@ function verifySpotSelect(dest) {
   for (let index = 0; index < parkingLayoutIds.length; index++) {
     console.log(parkingLayoutIds[index]);
     poly = window[parkingLayoutIds[index]];
-    console.log(poly)
+    console.log(poly);
     contains = google.maps.geometry.poly.containsLocation(dest, poly);
     if (contains) {
-      console.log(index)
+      console.log(index);
       return index;
     }
   }
@@ -140,7 +141,7 @@ function verifySpotSelect(dest) {
 function confirmSpotSelect() {
   directionsRenderer.setMap(map);
   hasRoute = true;
-  console.log(selection)
+  console.log(selection);
   targetSpot = parkingLayoutIds[selection];
   getDocEle("direction_guide").textContent = "Calculating Route";
   getRoute();
@@ -168,9 +169,9 @@ function initPage() {
   getDocEle("analytics_bg1").style.display = "none";
   getDocEle("nav-button").style.display = userMode ? "none" : "block";
   getDocEle("search_bar_bg").style.display = userMode ? "block" : "none";
-  getDocEle('annotate').innerHTML = userMode ?
-    '<i class="fa fa-user-circle" aria-hidden="true"></i><a class="nav-link" href="index.html">Admin View</a>' :
-    '<i class="fa fa-pencil-square-o" aria-hidden="true"></i><a href="Annotate.html">Edit Parking Lot</a>';
+  getDocEle("annotate").innerHTML = userMode
+    ? '<i class="fa fa-user-circle" aria-hidden="true"></i><a class="nav-link" href="index.html">Admin View</a>'
+    : '<i class="fa fa-pencil-square-o" aria-hidden="true"></i><a href="Annotate.html">Edit Parking Lot</a>';
   // getDocEle("adminMap").style.display = userMode ? "none" : "block";
   // document.getElementById("SetupBirdButton").style.display = userMode
   //   ? "none"
@@ -207,7 +208,7 @@ function updateRoute() {
   directionsRenderer.setMap(null);
   directionsRenderer.setMap(map);
   const d = new Date();
-  console.log(targetSpot)
+  console.log(targetSpot);
   if (
     google.maps.geometry.spherical.computeDistanceBetween(
       clickOrigin.coords,
@@ -441,14 +442,16 @@ function getDocEle(className) {
 
 function loadAllLots() {
   lotData = JSON.parse(Get(allLotURL, {}))["parking_lots"];
-  console.log(lotData)
+  console.log(lotData);
   for (let i = 0; i < lotData.length; i++) {
     body = {};
     body.id = lotData[i].id;
     body.name = lotData[i].name;
-    console.log("body", body)
-    let spots = JSON.parse(Get(prevLayoutURL, body))["result"]["parking_lots"]["parking_spaces"];
-    if(spots != undefined) {
+    console.log("body", body);
+    let spots = JSON.parse(Get(prevLayoutURL, body))["result"]["parking_lots"][
+      "parking_spaces"
+    ];
+    if (spots != undefined) {
       window["lot" + lotData[i].name + lotData[i].id] = new google.maps.Circle({
         strokeColor: "#0000FF",
         fillColor: "#0000FF",
@@ -541,7 +544,9 @@ function updateSpots() {
   body.id = lotID;
   body.name = lotOwner;
   console.log(body);
-  var spots = JSON.parse(Get(prevLayoutURL, body))["result"]["parking_lots"]["parking_spaces"];
+  var spots = JSON.parse(Get(prevLayoutURL, body))["result"]["parking_lots"][
+    "parking_spaces"
+  ];
   for (let i = 0; i < spots.length; i++) {
     let spot = spots[i];
     if (!(spot.status === window["spot" + spot.id].status)) {
@@ -692,7 +697,8 @@ function reloadAnalytics() {
 
   if (lotOwner === "Jon") {
     document.getElementById("location_name").innerHTML = "ELCOM Loznica";
-    document.getElementById("location_address").innerHTML = "Šabački put 7, Loznica, Serbia";
+    document.getElementById("location_address").innerHTML =
+      "Šabački put 7, Loznica, Serbia";
 
     document.getElementById("location_name").style.visibility = "visible";
     document.getElementById("location_address").style.visibility = "visible";
@@ -702,21 +708,21 @@ function reloadAnalytics() {
 
     document.getElementById("analytics_cards_bg").style.visibility = "visible";
     document.getElementById("analyticsGraph").style.visibility = "visible";
-  }
-  else if (lotOwner === "Gary") {
+  } else if (lotOwner === "Gary") {
     document.getElementById("status").innerHTML =
       "We are crunching these numbers for you... Come back soon!";
 
     getDocEle("status").style.display = "block";
     document.getElementById("total_text").style.visibility = "visible";
 
-    document.getElementById("location_name").innerHTML = "1151-1277 W Center St, Cedar City, UT 84720, United States";
-    document.getElementById("location_address").innerHTML = "1151-1277 W Center St Parking";
+    document.getElementById("location_name").innerHTML =
+      "1151-1277 W Center St, Cedar City, UT 84720, United States";
+    document.getElementById("location_address").innerHTML =
+      "1151-1277 W Center St Parking";
 
     document.getElementById("analytics_cards_bg").style.visibility = "visible";
     document.getElementById("analyticsGraph").style.visibility = "hidden";
-  }
-  else {
+  } else {
     document.getElementById("location_name").style.visibility = "hidden";
     document.getElementById("location_address").style.visibility = "hidden";
 
@@ -725,7 +731,8 @@ function reloadAnalytics() {
 
     document.getElementById("total_text").style.visibility = "hidden";
     getDocEle("status").style.display = "block";
-    document.getElementById("status").innerHTML = "Analytics not yet setup for this parking space...";
+    document.getElementById("status").innerHTML =
+      "Analytics not yet setup for this parking space...";
   }
 
   spotData = JSON.parse(Get(jsonURL, body))["parking_lots"]["parking_spaces"];
@@ -740,21 +747,31 @@ function reloadAnalytics() {
 
   let totalSpots = spotData.length;
 
-  spotData.forEach(data => {
+  spotData.forEach((data) => {
     switch (data.type) {
-      case 0: stdSpots++; break;
-      case 1: accSpots++; break;
-      default: resSpots++;
+      case 0:
+        stdSpots++;
+        break;
+      case 1:
+        accSpots++;
+        break;
+      default:
+        resSpots++;
     }
 
     if (data.status == true) {
       switch (data.type) {
-        case 0: stdAvail++; break;
-        case 1: accAvail++; break;
-        default: resAvail++;
+        case 0:
+          stdAvail++;
+          break;
+        case 1:
+          accAvail++;
+          break;
+        default:
+          resAvail++;
       }
     }
-  })
+  });
 
   let totalAvail = resAvail + accAvail + stdAvail;
 
