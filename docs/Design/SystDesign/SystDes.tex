@@ -42,6 +42,8 @@
 & {\bf Notes}\\
 \midrule
 Jan 18, 2023 & 1.0 & Revision 0\\
+\midrule
+\color{red}{Apr 3, 2023} & \color{red}{1.1} & \color{red}{Revision 1}\\
 \bottomrule
 \end{tabularx}
 
@@ -86,7 +88,6 @@ Software Requirements Specification}.\\
 This System Design document provides an overview of the design of the Park'd
 system. A detailed specification and guide of the system modules can be found in
 the
-
 \href{https://github.com/parkd-app/park-d/blob/main/docs/Design/SoftDetailedDes/MIS.pdf}{Module
 Interface Specification} and
 \href{https://github.com/parkd-app/park-d/blob/main/docs/Design/SoftArchitecture/MG.pdf}{Module
@@ -94,12 +95,14 @@ Guide} documents, respectively.
 
 \section{Purpose}
 
-The purpose of our system is provide a way for users to identify available
-parking spaces and reserve said spaces prior to arriving at the parking space,
+The purpose of our system is provide a way for users to \textcolor{red}{quickly
+and conveniently} identify available parking spaces,
+%reserve said spaces prior to arriving at the parking space,
 thereby reducing frustration. The system also provides instructions for the user
 to navigate to their desired parking space. In addition, the administrator for
 the parking space has the ability to modify certain elements of the parking
-space, such as the layout and which parking spaces are reserved.
+space, such as the layout and which parking spaces are marked as reserved or
+accessible.
 
 The purpose of this design documentation is to identify the overall system
 components of our project, their behaviours, and how they will work with one
@@ -113,10 +116,10 @@ The system is meant to direct drivers to open parking spots. The driver will
 provide their location and a layout of their parking lot is displayed. Drivers
 will select an open spot and follow directions to it.
 
-\begin{figure}[ht]
+\begin{figure}[H]
     \begin{center}
-        \includegraphics[scale=0.5]{ContextDiagram.png}
-        \caption{Context Diagram}
+        \caption{Context diagram}
+        \includegraphics[scale=1.0]{Context_diagram.pdf}
     \end{center}
 \end{figure}
 
@@ -124,7 +127,7 @@ will select an open spot and follow directions to it.
 
 \section{Project Overview}
 
-The following section is to outline the normal behavior of Park'd and undesired
+The following section is to outline the normal behaviour of Park'd and undesired
 event handling.
 
 \subsection{Normal Behaviour}
@@ -156,15 +159,18 @@ function if back-end features do not work correctly.
 
 
 \newpage
+\color{red}
 \subsection{Component Diagram}
 The following is a component diagram of the Park'd system.
 
-\begin{figure}[ht]
-    \includegraphics[scale=0.55]{component.jpg}
+\begin{figure}[H]
+\begin{center}
+    \includegraphics[scale=0.75]{component_diagram.pdf}
     \caption{Component Diagram}
+\end{center}
 \end{figure}
 
-
+\color{black}
 \newpage
 \subsection{Connection Between Requirements and Design} \label{SecConnection}
 The following table is to document decisions that are made between the
@@ -182,11 +188,13 @@ requirements and the design.
     \hline
     A sign-up function will be considered in future revisions as currently,
     there are privacy and security concerns regarding sensitive information
-    being leaked out & FR1, FR2\\
+    being leaked out. \textcolor{red}{This feature has been implemented for
+    admins using Firebase Authentication.} & \textcolor{red}{FR31-FR37}\\%FR1,
+    FR2\\
     \hline
     Admin console is created to allow parking lot administrator to recreate the
     parking lot layout and thus provide information for users later when they
-    are looking for parking spaces & FR5, FR6, FR7\\
+    are looking for parking spaces & FR5, FR6, FR7, \textcolor{red}{FR31-FR37}\\
     \hline
     Mapping API is used to display routing information as clearly as possible to
     the user & FR11, FR13\\
@@ -224,16 +232,14 @@ login to an account on the system and prompts them to provide the appropriate
 information to do so (Figure \ref{fig:login}).
 
 With the User View, users are able to see parking lots nearby and their
-availability, select/search for a parking lot, select a parking spot to navigate
-to, as well as change settings and preferences (Figure \ref{fig:youarehere},
-Figure \ref{fig:description}, Figure \ref{fig:pickspot}, Figure
-\ref{fig:settings}).
+availability, select a parking lot, select a parking spot to navigate to, as
+well as look at the parking lot analytics (Figure \ref{fig:youarehere}, Figure
+\ref{fig:description}).
 
 Lastly, for the Admin View, admins are also able to see the analytics of their
 parking lot including how many available parking spaces there are, the division
 of parking spaces based on specialty spaces, as well as make edits to the
-parking lots they own (Figure \ref{fig:analytics}, Figure \ref{fig:edit}). The
-Admin View also includes settings similar to that of the User View.
+parking lots they own (Figure \ref{fig:analytics}, Figure \ref{fig:edit}).
 
 \section{Design of Hardware}
 
@@ -270,15 +276,15 @@ Demonstration can be found in Figure \ref{fig:timeline} below.
 
 \begin{figure}[hp!]
 \begin{center}
-    \fbox{\includegraphics[scale=0.3]{Login Screen.png}}
+    \fbox{\includegraphics[scale=0.3]{Login Screen.pdf}}
     \caption{Login Screen}
     \label{fig:login}
-    \end{center}
+\end{center}
 \end{figure}
 
 \begin{figure}[hp!]
 \begin{center}
-    \fbox{\includegraphics[scale=0.3]{Analytics.png}}
+    \fbox{\includegraphics[scale=0.3]{Analytics.pdf}}
     \caption{Admin View - Analytics Screen}
     \label{fig:analytics}
     \end{center}
@@ -286,7 +292,7 @@ Demonstration can be found in Figure \ref{fig:timeline} below.
 
 \begin{figure}[hp!]
 \begin{center}
-    \fbox{\includegraphics[scale=0.3]{Edit.png}}
+    \fbox{\includegraphics[scale=0.3]{Edit.pdf}}
     \caption{Admin View - Edit Screen}
     \label{fig:edit}
     \end{center}
@@ -294,7 +300,7 @@ Demonstration can be found in Figure \ref{fig:timeline} below.
 
 \begin{figure}[hp!]
 \begin{center}
-    \fbox{\includegraphics[scale=0.3]{You Are Here.png}}
+    \fbox{\includegraphics[scale=0.3]{You Are Here.pdf}}
     \caption{User View - You Are Here}
     \label{fig:youarehere}
     \end{center}
@@ -302,27 +308,19 @@ Demonstration can be found in Figure \ref{fig:timeline} below.
 
 \begin{figure}[hp!]
 \begin{center}
-    \fbox{\includegraphics[scale=0.3]{Description.png}}
-    \caption{User View - Description Screen}
+    \fbox{\includegraphics[scale=0.3]{Analytics-user.pdf}}
+    \caption{User View - Analytics Screen}
     \label{fig:description}
     \end{center}
 \end{figure}
 
-\begin{figure}[hp!]
-\begin{center}
-    \fbox{\includegraphics[scale=0.3]{Pick Your Spot.png}}
-    \caption{User View - Pick Your Spot Screen}
-    \label{fig:pickspot}
-    \end{center}
-\end{figure}
+% \begin{figure}[hp!] \begin{center} \fbox{\includegraphics[scale=0.3]{Pick Your
+% Spot.png}} \caption{User View - Pick Your Spot Screen} \label{fig:pickspot}
+% \end{center} \end{figure}
 
-\begin{figure}[hp!]
-\begin{center}
-    \fbox{\includegraphics[scale=0.3]{Menu - General.png}}
-    \caption{User View - General Settings Screen}
-    \label{fig:settings}
-    \end{center}
-\end{figure}
+% \begin{figure}[hp!] \begin{center} \fbox{\includegraphics[scale=0.3]{Menu -
+% General.png}} \caption{User View - General Settings Screen}
+% \label{fig:settings} \end{center} \end{figure}
 
 \newpage 
 \section{Mechanical Hardware}
@@ -413,3 +411,4 @@ questions:
 \end{enumerate}
 
 \end{document}
+\usepackage{pdfpages}
