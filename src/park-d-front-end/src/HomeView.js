@@ -1,5 +1,6 @@
 // constants moved to constants.js
 
+// Sends POST to URL with body, expects a responseText from URL backend
 function Get(URL, body) {
   var Httpreq = new XMLHttpRequest(); // a new request
   Httpreq.open("POST", URL, false);
@@ -47,15 +48,15 @@ const autoRouteDist = 0.00005; //Might need to tweek numbers to prevent skipping
 var autoNavMode = false;
 var autoNavComplete = false;
 
-var lotData;
-var spotData = [];
-var numSpots;
+var lotData; // all parking lots stored in the backedn
+var spotData = []; // spots for the most recently loaded lot
+var numSpots; // number of spots in most recently loaded lot
 
 var lotID;
 var lotOwner;
 
 var intervalID;
-var analyticsID; // used to get regular intervals before fetching new data
+var analyticsID;
 var initialized = false;
 
 var selectionToggle = false;
@@ -529,7 +530,7 @@ function loadAllSpots(ID, owner) {
   } else {
     window["lot" + lotOwner + lotID].setMap(map);
   }
-  // remove old spaces and restore circle
+  // remove old spaces and restore icon for unloaded lot
   for (let i = 0; i < spotData.length; i++) {
     window["spot" + spotData[i].id].setMap(null);
   }
@@ -581,6 +582,7 @@ function loadAllSpots(ID, owner) {
   intervalID = setInterval(updateSpots, updateInterval);
 }
 
+// update the status of loaded spots after every updateInterval
 function updateSpots() {
   body = {};
   body.id = lotID;
@@ -593,7 +595,7 @@ function updateSpots() {
     let spot = spots[i];
     if (!(spot.status === window["spot" + spot.id].status)) {
       window["spot" + spot.id].setOptions({
-        fillColor: spot.status ? "#00FF00" : "#FF0000",
+        fillColor: spot.status ? "#00FF00" : "#FF0000", // change colour of spot
       });
       window["spot" + spot.id].status = spot.status;
     }
@@ -797,7 +799,6 @@ function reloadAnalytics() {
 
   let totalSpots = spotData.length;
 
-  // filter through the data for occupied spots and available spots
   spotData.forEach((data) => {
     switch (data.type) {
       case 0:

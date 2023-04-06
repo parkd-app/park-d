@@ -1,5 +1,6 @@
 // constants moved to constants.js
 
+// Get from URL with body, expects a responseText from URL backend
 function Get(URL, body) {
   console.log(body);
   var Httpreq = new XMLHttpRequest(); // a new request
@@ -10,6 +11,7 @@ function Get(URL, body) {
   return Httpreq.responseText;
 }
 
+// Sends POST to URL with content
 function Post(URL, content) {
   fetch(URL, {
     method: "POST",
@@ -38,13 +40,11 @@ var defaultOptions = {
 var mapBounds;
 
 var clickChoice = 0;
-
-var pointsClicked = 0;
-var corners = [];
+var corners = []; // coordinates of corners of spot on Google Maps
 
 var spaceData;
 var numSpots = 0;
-var nextID = 0;
+var nextID = 0; // ID of next spot that is added
 
 var lotID = 1;
 var owner;
@@ -53,22 +53,6 @@ var youtubeURL;
 function initMap() {
   map = new google.maps.Map(document.getElementById("map"), defaultOptions);
   mapBounds = new google.maps.LatLngBounds();
-
-  // load and put spots
-  //loadAllSpots();
-
-  google.maps.event.addListener(map, "click", function (event) {
-    if (clickChoice == 1) {
-      pointsClicked++;
-      corners.push(event.latLng);
-
-      if (pointsClicked == 4) {
-        pointsClicked = 0;
-        putSpot(corners);
-        corners = [];
-      }
-    }
-  });
 }
 
 function recenter() {
@@ -79,7 +63,6 @@ function recenter() {
 function resetData() {
   clickChoice = 0;
   corners = [];
-  pointsClicked = 0;
   document.getElementById("ChangeSpotButton").textContent = "Change Spot Type";
 }
 
@@ -122,7 +105,7 @@ function createLot() {
   lots = JSON.parse(Get(allLotURL, {}))["parking_lots"];
   for (let i = 0; i < lots.length; i++) {
     if (lots[i].name == owner) {
-      if (lots[i].id >= lotID) lotID = lots[i].id + 1;
+      if (lots[i].id >= lotID) lotID = lots[i].id + 1; // determine highest ID
     }
   }
   payload = {};
@@ -132,30 +115,18 @@ function createLot() {
 
   spaceData = [];
   Post(createLotURL, payload);
-  uploadSpots();
+  uploadSpots(); // to populate the database
   window.alert(
     "New parking lot created with ID " +
       lotID +
       ". Note this number for future access."
   );
 
-  //uploadSpots();
-
   document.getElementById("NewLotButtons").style.display = "none";
   document.getElementById("SpaceButtons").style.display = "block";
 }
 
-// initiating placing spot from ui
-function addingSpot() {
-  if (clickChoice != 1) {
-    clickChoice = 1;
-    document.getElementById("AddSpotButton").textContent = "Done";
-  } else {
-    resetData();
-  }
-}
-
-// admin placing spot
+// places new spot on Google Maps view
 function putSpot(corners, camcorners) {
   window["spot" + nextID] = new google.maps.Polygon({
     paths: corners,
@@ -169,7 +140,7 @@ function putSpot(corners, camcorners) {
     geodesic: true,
   });
   window["spot" + nextID].setMap(map);
-  addSpaceListener(nextID);
+  addSpaceListener(nextID); // for clicking spot to change type
 
   let newSpot = {};
   newSpot.id = nextID;
@@ -193,17 +164,6 @@ function changingSpot() {
   }
 }
 
-function removingSpot() {
-  // remove the spot
-  if (clickChoice != 3) {
-    resetData();
-    clickChoice = 3;
-    document.getElementById("RemoveSpotButton").textContent = "Done";
-  } else {
-    resetData();
-  }
-}
-
 // loading all spots from remote
 function loadAllSpots(ID, owner) {
   body = {};
@@ -219,7 +179,7 @@ function loadAllSpots(ID, owner) {
     return;
   }
   if (spaceData[0].mapcoords != undefined) {
-    defaultOptions.center = new google.maps.LatLng(
+    defaultOptions.center = new google.maps.LatLng( // move map centre to the lot
       spaceData[0].mapcoords[0][0],
       spaceData[0].mapcoords[0][1]
     );
@@ -227,7 +187,6 @@ function loadAllSpots(ID, owner) {
   }
   for (let i = 0; i < spaceData.length; i++) {
     let coords = spaceData[i].mapcoords;
-    let open = spaceData[i].status;
     let type = spaceData[i].type;
 
     // spots are stored here, by ID
@@ -257,19 +216,18 @@ function loadAllSpots(ID, owner) {
   setUpButtons();
 }
 
+// to listen for click events on a spot to change its type
 function addSpaceListener(ID) {
   google.maps.event.addListener(window["spot" + ID], "click", function (event) {
     if (clickChoice == 2) {
       window["spot" + ID].setOptions({
         strokeColor: document.getElementById("TypeMenu").value,
       });
-    } else if (clickChoice == 3) {
-      window["spot" + ID].setMap(null);
-      window["spot" + ID] = undefined;
     }
   });
 }
 
+// upload spots to backend
 function uploadSpots() {
   let body = {};
   body.id = lotID;
@@ -278,7 +236,7 @@ function uploadSpots() {
   let spaces = [];
   for (let i = 0; i < spaceData.length; i++) {
     let spotID = spaceData[i].id;
-    if (window["spot" + spotID] == undefined) continue;
+    if (window["spot" + spotID] == undefined) continue; // ignore deleted spaces
 
     let coords = [];
     let path = window["spot" + spotID].getPath();
