@@ -1,2 +1,1 @@
-Instructions for installing your software.  You should also include uninstall
-instructions.
+Our application is fully online. Please navigate to https://park-d.netlify.app/ to use our application!
