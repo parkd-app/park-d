@@ -6,16 +6,7 @@ import {
 
 export const btnLogout = document.querySelector("#btnLogout");
 
-// const monitorAuthState = async () => {
-//   onAuthStateChanged(auth, (user) => {
-// //     if (!user) {
-// //       location.replace("../index.html");
-// //     }
-// //   });
-// // };
-
-// monitorAuthState();
-
+// Logout functionality
 const logout = async () => {
   await signOut(auth);
   location.replace("../index.html");
