@@ -20,7 +20,8 @@ app = Flask(__name__)
 app.logger.setLevel(logging.INFO)
 app.config["CORS_HEADERS"] = "Content-Type"
 
-
+#########################################################################
+#PLEASE REFER TO API.PDF FOR THE USAGE OF ALL THE FOLLOWING APIS
 @app.before_first_request
 def setup_logging():
     if not app.debug:
@@ -39,7 +40,8 @@ def setup_logging():
             app.logger.propagate = False
             app.logger.handler_set = True
         return app.logger
-#david
+
+#save the annotation for both camera view and map view
 @app.route("/save_coord", methods=['POST'])
 def save_coord():
     data = request.json
@@ -52,12 +54,14 @@ def index():
    print('Request for index page received')
    return render_template('index.html')
 
+# Reloading the layout from pre-annoated parking lots
 @app.route("/get_prev_layout", methods=['POST'])
 def get_layout():
     data = request.json
     ret = save_coord_service.get_existing_layout(data['id'], data['name'])
     return response_handler.handle_response({'result': ret})
 
+#This API provides the real time information of parking lots
 @app.route("/rt_parking_info", methods=['POST'])
 @cross_origin()
 def requires_parking_spot():  # put application's code here
@@ -78,7 +82,7 @@ def requires_parking_spot():  # put application's code here
     coordinate_input_service.set_current_coordinates(id, name)
     return response_handler.handle_response(parsing_service.parsing(id,name))
 
-#jon_saving
+#Request saving coordinates
 @app.route("/req_coordinate", methods=["POST"])
 def requires_coordinate():
     data = request.json
@@ -98,7 +102,7 @@ def close_model():
     ret = slow_initiate_service.closemodel("bird")
     return {"result": ret}
 
-#jon
+#This API returns the thumbnail link for a youtube steream which is used for annotation purposes
 @app.route("/get_parking_snapshot", methods=['POST'])
 def get_snapshot():
     name = request.args.get("name")
@@ -114,7 +118,7 @@ def get_snapshot():
     response.headers.add('Access-Control-Allow-Origin', '*')
     return send_file(frame, mimetype='image/jpeg')
 
-
+#This API creates a Parking lot object and store the information to DB
 @app.route("/create_parking_lot", methods=["POST"])
 def create_parking_lots():
     data = request.json
@@ -124,19 +128,16 @@ def create_parking_lots():
     coordinate_input_service.set_parking_url(id,name,url)
     coordinate_input_service.add_parking_lots_to_list(id, name)
     return response_handler.handle_response({"result:": True})
+
+#This API returns the information for all parking lots for front end rendering parking lot
 @app.route("/get_all_parking_lots", methods=['POST'])
 def get_parking_lots_for_render():
     lot_key = "created_parking_lots"
     ret = db.query_by_key(lot_key)
     return response_handler.handle_response(ret)
-
 @app.route("/get_analytics", methods=['POST'])
 def get_analytics():
     return {"ret": True}
-
-
-
-
 
 if __name__ == "__main__":
     app.run()

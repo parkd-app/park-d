@@ -5,7 +5,7 @@ import os
 from firebase_admin import credentials
 from firebase_admin import db, storage
 
-
+#Initially starting the DB
 def start_db():
     current_dir = os.getcwd()
     parent_dir = os.path.dirname(current_dir)
@@ -15,24 +15,27 @@ def start_db():
         'databaseURL': 'https://park-d-dev-default-rtdb.firebaseio.com/',
         'storageBucket': 'park-d-dev.appspot.com'})
 
+#A query method to query db based on key
 def query_by_key(key):
     ref = db.reference()
     query = ref.order_by_key().equal_to(key)
 
     return query.get()[key]
 
-
+#A DB query method to update the db under a key
 def set_by_key(key, value):
     ref = db.reference('/')
     ret = ref.update({key:value})
     return  ret
 
+# A DB query that download pre-stored files from firebase storage
 def down_load_snapshot(name):
     bucket = storage.bucket()
     image_blob = bucket.blob("Rev1_" + name + ".jpg")
     image_bytes = image_blob.download_as_bytes()
     return image_bytes
 
+# A DB query that download pre-stored links from firebase storage
 def get_down_load_link(name):
     bucket = storage.bucket()
     image_blob = bucket.blob("Rev1_" + name + ".jpg")

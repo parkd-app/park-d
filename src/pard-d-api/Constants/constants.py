@@ -15,22 +15,22 @@ PARKING_INFO_PATH_BIRD = (
 )
 
 VIDEO_PATH_BIRD = (
-    "C:\\Users\\g7543\\OneDrive\\桌面\\" "new training footage\\train2_bird.mp4"
+    "C:\\Users\\g7543\\OneDrive\\" "new training footage\\train2_bird.mp4"
 )
 
 VIDEO_PATH_SIDE = (
-    "C:\\Users\\g7543\\OneDrive\\桌面\\" "new training footage\\train1_side.mov"
+    "C:\\Users\\g7543\\OneDrive\\" "new training footage\\train1_side.mov"
 )
 
 
 IMAGE_PATH = (
-    "C:\\Users\\g7543\\OneDrive\\桌面\\Capstone_project\\"
+    "C:\\Users\\g7543\\OneDrive\\Capstone_project\\"
     "park-d\\src\\park_d_model_service\\gaussian_model\\"
     "parking_lot_model_v1\\images"
 )
 
 model_side_path = (
-    "C:\\Users\\g7543\\OneDrive\\桌面\\Cpastone_final\\"
+    "C:\\Users\\g7543\\OneDrive\\Cpastone_final\\"
     "park-d\\src\\park_d_model_service\\gaussian_model\\"
     "parking_lot_model_v1\\main.py"
 )

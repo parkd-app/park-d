@@ -1,6 +1,6 @@
 import socket
 
-
+# POC DEMO code
 def start(model):
     client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     if model == "side":
