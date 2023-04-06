@@ -20,6 +20,7 @@
 \usepackage{caption}
 \usepackage{fullpage}
 \usepackage{makecell}
+\usepackage{soul}
 
 \hypersetup{ bookmarks=true,     % show bookmarks bar?
 colorlinks=true,       % false: boxed links; true: colored links
@@ -55,6 +56,8 @@ urlcolor=cyan          % color of external links
 & {\bf Notes}\\
 \midrule
 Jan 18, 2023 & 1.0 & Revision 0\\
+\midrule
+\color{red}{Apr 3, 2023} & \color{red}{1.1} & \color{red}{Revision 1}\\
 \bottomrule
 \end{tabularx}
 
@@ -138,8 +141,8 @@ Seq & Seq & an ordered collection of elements\\
 exists & $\exists$ & true if there exists an element that satisfies a property,
 false otherwise\\
 for all & $\forall$ & true if all elements satisfy a property, false otherwise\\
-implies & $\Rightarrow$ & true if the left operator is true then output the
-right operator, false otherwise\\
+implies & $\Rightarrow$ & false if the left is true and right is false,
+otherwise true\\
 in & $\in$ & true if a an element is in a Seq\\
 and & $\land$ & true if both operators are true, false otherwise\\
 subset & $\subseteq$ & true if a set contains another, false otherwise\\
@@ -159,7 +162,7 @@ described by giving their type signature followed by their specification.
 \section{Module Decomposition}
 
 The following table is taken directly from the
-\href{https://github.com/parkd-app/park-d/blob/main/docs/Design/SoftArchitecture/MG.pdf}{Module
+\href{https://github.com/parkd-app/park-d/blob/main/docs/Design/MG/MG.pdf}{Module
 Guide} document for this project.
 
 \begin{table}[h!]
@@ -168,11 +171,11 @@ Guide} document for this project.
 \toprule
 \textbf{Level 1} & \textbf{Level 2}\\
 \midrule
-
-{Hardware-Hiding Module} & Camera capture module \\
+Hardware Hiding Modules & None\\
 \midrule
-
-\multirow{7}{0.3\textwidth}{Behaviour-Hiding Module} & Admin console module\\
+\multirow{7}{0.3\textwidth}{Behaviour-Hiding Module} 
+& Video capture module\\
+& Admin console module\\
 & Admin module\\
 & Parking lot layout module\\
 & Parking layout element module\\
@@ -182,6 +185,7 @@ Guide} document for this project.
 & User action handler module\\
 & Vehicle module\\
 & View module\\
+& Database module\\
 \midrule
 
 \multirow{3}{0.3\textwidth}{Software Decision Module} & Navigation module\\
@@ -204,6 +208,7 @@ AuthT
 
 \subsection{Uses}
 \hyperref[user:Module]{UserT}
+\hyperref[DB:Module]{DataBaseT}
 
 \subsection{Syntax}
 
@@ -229,22 +234,24 @@ authenticateUser & String, String & UserT & MissingUserException \\
 None
 
 \subsubsection{Environment Variables}
-\textit{users}: Seq of UserT 
+\text{users: Seq of UserT}
 
 \subsubsection{Assumptions}
 None
 
 \subsubsection{Access Routine Semantics}
 
-\noindent authenticateUser(\textit{id}, \textit{pass}):
+\noindent authenticateUser(\text{id}, \text{pass}):
 \begin{itemize}
-\item output: $out := \exists (i : \mathbb{N} | i < |users| \land
-users[i].getUserId() = \\ id \land users[i].getPassword() = pass)) \Rightarrow
-users[i]$
+\item output: $\text{out} := \exists (\text{i} : \mathbb{N} | i < |\text{users}|
+\land \text{users}[i].\text{getUserId}() = \\ \text{id} \land
+\text{users}[i].\text{getPassword}() = \text{pass})) \Rightarrow
+\text{users}[i]$
 
-\item exception: $exc := \neg \exists (i : \mathbb{N} | i < |users| \land
-users[i].getUserId() = \\ id \land users[i].getPassword() = pass)) \Rightarrow
-MissingUserException$
+\item exception: $\text{exc} := \neg \exists (\text{i} : \mathbb{N} | i <
+|\text{users}| \land \text{users}[i].\text{getUserId}() = \\ id \land
+\text{users}[i].\text{getPassword}() = \text{pass})) \Rightarrow
+\text{MissingUserException}$
 \end{itemize}
 
 \newpage
@@ -283,9 +290,9 @@ getVehicle & ~ & VehicleT & ~ \\
 \subsection{Semantics}
 
 \subsubsection{State Variables}
-\textit{userId}: String \\
-\textit{password}: String \\
-\textit{vehicle}: VehicleT
+\text{userId}: String \\
+\text{password}: String \\
+\text{vehicle}: VehicleT
 
 \subsubsection{Environment Variables}
 None
@@ -295,30 +302,30 @@ None
 
 \subsubsection{Access Routine Semantics}
 
-\noindent new UserT(\textit{id}, \textit{pass}, \textit{veh}):
+\noindent new UserT(\text{id}, \text{pass}, \text{veh}):
 \begin{itemize}
-\item transition: \textit{userId}, \textit{password}, \textit{vehicle} :=
-\textit{id}, \textit{pass}, \textit{veh} 
-\item output: \textit{out} := self
-\item exception: exc := $((|id| = 0) \vee (|pass| = 0) \vee (veh = \epsilon)
-\Rightarrow \text{UserCreationException})$
+\item transition: \text{userId}, \text{password}, \text{vehicle} := \text{id},
+\text{pass}, \text{veh} 
+\item output: \text{out} := self
+\item exception: exc := $((|\text{id}| = 0) \vee (|\text{pass}| = 0) \vee
+(\text{veh} = \epsilon) \Rightarrow \text{UserCreationException})$
 \end{itemize}
 
 \noindent getUserId():
 \begin{itemize} 
-\item output: \textit{out} := \textit{userId} 
+\item output: \text{out} := \text{userId} 
 \item exception: none
 \end{itemize}
 
 \noindent getPassword():
 \begin{itemize} 
-\item output: \textit{out} := \textit{password} 
+\item output: \text{out} := \text{password} 
 \item exception: none
 \end{itemize}
 
 \noindent getVehicle():
 \begin{itemize} 
-\item output: \textit{out} := \textit{vehicle} 
+\item output: \text{out} := \text{vehicle} 
 \item exception: none
 \end{itemize}
 
@@ -356,8 +363,8 @@ getWidth & ~ & $\mathbb{R}$ & ~ \\
 \subsection{Semantics}
 
 \subsubsection{State Variables}
-\textit{length}: $\mathbb{R}$ \\
-\textit{width}: $\mathbb{R}$
+\text{length}: $\mathbb{R}$ \\
+\text{width}: $\mathbb{R}$
 
 \subsubsection{Environment Variables}
 None
@@ -367,23 +374,23 @@ None
 
 \subsubsection{Access Routine Semantics}
 
-\noindent new VehicleT(\textit{len, wid}):
+\noindent new VehicleT(\text{len}, \text{wid}):
 \begin{itemize}
-\item transition: \textit{length}, \textit{width} := \textit{len}, \textit{wid} 
-\item output: \textit{out} := self
-\item exception: exc := $((len \leq 0) \vee (wid \leq 0) \Rightarrow
-\text{VehicleCreationException})$
+\item transition: \text{length}, \text{width} := \text{len}, \text{wid} 
+\item output: \text{out} := self
+\item exception: exc := $((\text{len} \leq 0) \vee (\text{wid} \leq 0)
+\Rightarrow \text{VehicleCreationException})$
 \end{itemize}
 
 \noindent getLength():
 \begin{itemize} 
-\item output: \textit{out} := \textit{length} 
+\item output: \text{out} := \text{length} 
 \item exception: none
 \end{itemize}
 
 \noindent getWidth():
 \begin{itemize} 
-\item output: \textit{out} := \textit{width} 
+\item output: \text{out} := \text{width} 
 \item exception: none
 \end{itemize}
 
@@ -422,7 +429,7 @@ authenticateAdmin & String, String & AdminT & MissingAdminException \\
 None
 
 \subsubsection{Environment Variables}
-\textit{admins}: Seq of AdminT 
+\text{admins}: Seq of AdminT 
 
 \subsubsection{State Invariant}
 None
@@ -432,14 +439,16 @@ None
 
 \subsubsection{Access Routine Semantics}
 
-\noindent authenticateAdmin($id, pass$):
+\noindent authenticateAdmin($\text{id}, \text{pass}$):
 \begin{itemize}
-\item output: $out := \exists (i : \mathbb{N} | i < |admins| \land
-admins[i].getAdminId() = id \land \\ admins[i].getPassword() = pass))
-\Rightarrow admins[i]$
-\item exception: $exc := \neg \exists (i : \mathbb{N} | i < |admins| \land
-admins[i].getAdminId() = id \land \\ admins[i].getPassword() = pass))
-\Rightarrow MissingAdminException$
+\item output: $\text{out} := \exists (\text{i} : \mathbb{N} | i <
+|\text{admins}| \land \text{admins}[i].\text{getAdminId}() = id \land \\
+\text{admins}[i].\text{getPassword}() = \text{pass})) \Rightarrow
+\text{admins}[i]$
+\item exception: $\text{exc} := \neg \exists (\text{i} : \mathbb{N} | i <
+|\text{admins}| \land \text{admins}[i].\text{getAdminId}() = \text{id} \land \\
+\text{admins}[i].\text{getPassword}() = \text{pass})) \Rightarrow
+\text{MissingAdminException}$
 \end{itemize}
 
 \newpage
@@ -480,9 +489,9 @@ changeLayout & String, ParkingLayoutElemT & ~ & LayoutNotFoundException \\
 \subsection{Semantics}
 
 \subsubsection{State Variables}
-$adminId$: String \\
-$password$: String \\
-$layouts$: seq of ParkingLotLayoutT
+adminId: String \\
+password: String \\
+layouts: seq of ParkingLotLayoutT
 
 \subsubsection{Environment Variables}
 None
@@ -495,42 +504,46 @@ None
 
 \subsubsection{Access Routine Semantics}
 
-\noindent new AdminT($id, pass$):
+\noindent new AdminT($\text{id}, \text{pass}$):
 \begin{itemize}
-\item transition: $adminId, password, layouts :=  id, pass, \langle \rangle$
-\item output: $out := self$
-\item exception: $exc := ((|id| = 0) \vee (|pass| = 0) \Rightarrow
-AdminCreationException)$
+\item transition: $\text{adminId, password, layouts} :=  \text{id, pass},
+\langle \rangle$
+\item output: $\text{out} := \text{self}$
+\item exception: $\text{exc} := ((|\text{id}| = 0) \vee (|\text{pass}| = 0)
+\Rightarrow \text{AdminCreationException})$
 \end{itemize}
 
 \noindent getAdminId():
 \begin{itemize} 
-\item output: $out := adminId$
+\item output: $\text{out} := \text{adminId}$
 \item exception: none
 \end{itemize}
 
 \noindent getPassword():
 \begin{itemize} 
-\item output: $out := password$
+\item output: $\text{out} := \text{password}$
 \item exception: none
 \end{itemize}
 
-\noindent getLayout($layoutId$):
+\noindent getLayout($\text{layoutId}$):
 \begin{itemize} 
-\item output: $out := \exists (i:\mathbb{N}|i < n : layout[i].getLayoutId() =
-layoutId) \Rightarrow layout[i]$
-\item exception: $exc := \neg \exists (i:\mathbb{N}|i < n :
-layout[i].getLayoutId() = layoutId) \Rightarrow \\ LayoutNotFoundException$
+\item output: $\text{out} := \exists (i:\mathbb{N}|i < n :
+\text{layout}[i].\text{getLayoutId}() = \text{layoutId}) \Rightarrow
+\text{layout}[i]$
+\item exception: $\text{exc} := \neg \exists (i:\mathbb{N}|i < n :
+\text{layout}[i].\text{getLayoutId}() = \text{layoutId}) \Rightarrow \\
+\text{LayoutNotFoundException}$
 \end{itemize}
 
-\noindent changeLayout($layoutId, newSpot$):
+\noindent changeLayout($\text{layoutId, newSpot}$):
 \begin{itemize} 
-\item transition: $layout := \langle i:\mathbb{N} | i < n :
-layout[i].getLayoutSpotId() = spotId \Rightarrow \\
-layout[i].changeElem(newSpot.getElemId(), newSpot) | true \Rightarrow layout[i]
-\rangle$
-\item exception: $exc := \neg \exists (i:\mathbb{N}|i < n :
-layout[i].getLayoutId() = layoutId) \Rightarrow \\ LayoutNotFoundException$
+\item transition: $\text{layout} := \langle i:\mathbb{N} | i < n :
+\text{layout}[i].\text{getLayoutSpotId}() = \text{spotId} \Rightarrow \\
+\text{layout}[i].\text{changeElem}(\text{newSpot}.\text{get\text{elemId}}(),
+\text{newSpot}) | true \Rightarrow \text{layout}[i] \rangle$
+\item exception: $\text{exc} := \neg \exists (i:\mathbb{N}|i < n :
+\text{layout}[i].\text{getLayoutId}() = layoutId) \Rightarrow \\
+LayoutNotFoundException$
 \end{itemize}
 
 \newpage
@@ -560,7 +573,7 @@ ParkingLotLayoutT = ?
 \hline
 new ParkingLotLayoutT & String, $\mathbb{N}$ & ParkingLotLayoutT &
 LayoutCreationException \\
-setAllRoads & ~ & ~ & ~ \\
+\textcolor{red}{\st{setAllRoads}} & ~ & ~ & ~ \\
 getLayoutId & ~ & String & ~ \\
 getSize & ~ & $\mathbb{N}$ & ~ \\
 changeElem & \begin{tabular}{@{}lc@{}}String, \\ ParkingLayoutElemT\end{tabular}
@@ -593,57 +606,59 @@ None
 \noindent new ParkingLotLayoutT($id, size$):
 \begin{itemize}
 \item transition: $layoutId, n, layout :=  id, size, \langle \rangle$
-\item output: $out := self$
+\item output: $\text{out} := \text{self}$
 \item exception: exc := $((|id| = 0) \Rightarrow AdminCreationException)$
 \end{itemize}
 
-\noindent setAllRoads():
+\noindent \textcolor{red}{\st{setAllRoads()}}:
 \begin{itemize} 
 \item output: $layout := i:\mathbb{N} | i < n^2 : layout || \langle new
 ParkingLayoutElem("road_" + i, "road) \rangle $
 \item exception: none
 \end{itemize}
 
-\noindent getLayoutId():
+\noindent \text{getLayoutId}():
 \begin{itemize} 
-\item output: $out := layoutId$
+\item output: $\text{out} := layoutId$
 \item exception: none
 \end{itemize}
 
 \noindent getSize():
 \begin{itemize} 
-\item output: $out := n$
+\item output: $\text{out} := n$
 \item exception: none
 \end{itemize}
 
-\noindent changeElem($elemId, newElem$):
+\noindent \text{changeElem}($\text{elemId}, newElem$):
 \begin{itemize} 
 \item transition: $layout := \langle i:\mathbb{N} | i < n :
-layout[i].getElemId() = elemId \Rightarrow newElem | true \Rightarrow layout[i]
-\rangle$
+\text{layout}[i].\text{get\text{elemId}}() = \text{elemId} \Rightarrow newElem |
+true \Rightarrow layout[i] \rangle$
 \item exception: none
 \end{itemize}
 
 \noindent getLayout():
 \begin{itemize} 
-\item output: $out := layout$
+\item output: $\text{out} := layout$
 \item exception: none
 \end{itemize}
 
-\noindent getElem($elemId$):
+\noindent getElem($\text{elemId}$):
 \begin{itemize} 
-\item output: $out := \exists (i:\mathbb{N}|i < n : layout[i].getLayoutId() =
-elemId) \Rightarrow layout[i]$
-\item exception: $exc := \neg \exists (i:\mathbb{N}|i < n :
-layout[i].getLayoutId() = elemId) \Rightarrow \\ ElemNotFoundException$
+\item output: $\text{out} := \exists (i:\mathbb{N}|i < n :
+\text{layout}[i].\text{getLayoutId}() = \text{elemId}) \Rightarrow layout[i]$
+\item exception: $\text{exc} := \neg \exists (i:\mathbb{N}|i < n :
+\text{layout}[i].\text{getLayoutId}() = \text{elemId}) \Rightarrow \\
+\text{ElemNotFoundException}$
 \end{itemize}
 
-\noindent getElemIndex($elemId$):
+\noindent getElemIndex($\text{elemId}$):
 \begin{itemize} 
-\item output: $out := \exists (i:\mathbb{N}|i < n : layout[i].getLayoutId() =
-elemId) \Rightarrow i$
-\item exception: $exc := \neg \exists (i:\mathbb{N}|i < n :
-layout[i].getLayoutId() = elemId) \Rightarrow \\ ElemNotFoundException$
+\item output: $\text{out} := \exists (i:\mathbb{N}|i < n :
+\text{layout}[i].\text{getLayoutId}() = \text{elemId}) \Rightarrow i$
+\item exception: $\text{exc} := \neg \exists (i:\mathbb{N}|i < n :
+\text{layout}[i].\text{getLayoutId}() = \text{elemId}) \Rightarrow \\
+\text{ElemNotFoundException}$
 \end{itemize}
 
 \newpage
@@ -672,44 +687,44 @@ ParkingElemT = ?
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
 new ParkingElemT & String, String & ParkingElemT & ~ \\
-getElemId & ~ & String & ~ \\
-getType & ~ & String & ~ \\
+get\text{elemId} & ~ & String & ~ \\
+\textcolor{red}{\st{getType}} & ~ & String & ~ \\
 \hline
 \end{tabular}
 
 \subsection{Semantics}
 
 \subsubsection{State Variables}
-$elemId$: String \\
-$type$: String
+$\text{elemId}$: String \\
+\textcolor{red}{\st{$type$: String}}
 
 \subsubsection{Environment Variables}
 None
 
 \subsubsection{State Invariant}
-$type \in \{"spot", "road", "obstacle"\}$.
+\textcolor{red}{\st{$type \in \{"spot", "road", "obstacle"\}$.}}
 
 \subsubsection{Assumptions}
 None
 
 \subsubsection{Access Routine Semantics}
 
-\noindent new ParkingElem($id, s, x, y$):
+\noindent new ParkingElem($\text{id, s, x, y}$):
 \begin{itemize}
-\item transition: $elemId, type :=  id, s$
-\item output: $out := self$
+\item transition: $\text{elemId}, type :=  \text{id, s}$
+\item output: $\text{out} := \text{self}$
 \item exception: exc := None
 \end{itemize}
 
-\noindent getElemId():
+\noindent \text{get\text{elemId}}():
 \begin{itemize} 
-\item output: $out := elemId$
+\item output: $\text{out} := \text{elemId}$
 \item exception: none
 \end{itemize}
 
-\noindent getType():
+\noindent \textcolor{red}{\st{getType():}}
 \begin{itemize} 
-\item output: $out := type$
+\item output: $\text{out} := \text{type}$
 \item exception: none
 \end{itemize}
 
@@ -755,10 +770,10 @@ getAllProp & ~ & Seq of $\mathbb{B}$ & ~\\
 \subsection{Semantics}
 
 \subsubsection{State Variables}
-$enabled$: $\mathbb{B}$\\
-$occupied$: $\mathbb{B}$\\
-$reserved$: $\mathbb{B}$\\
-$handicapped$: $\mathbb{B}$\\
+enabled: $\mathbb{B}$\\
+occupied: $\mathbb{B}$\\
+reserved: $\mathbb{B}$\\
+handicapped: $\mathbb{B}$\\
 
 \subsubsection{Environment Variables}
 None
@@ -771,73 +786,75 @@ None
 
 \subsubsection{Access Routine Semantics}
 
-\noindent new ParkingSpot($id$):
+\noindent new ParkingSpot($\text{id}$):
 \begin{itemize}
-\item transition: $spotId, type, enabled, reserved, handicapped, occupied :=
-id, "spot", \\
-true, false, false, false$
-\item output: $out := self$
+\item transition: \text{spotId}, \textcolor{red}{\st{type,}} enabled, reserved,
+handicapped, occupied := id, \textcolor{red}{\st{"spot",}} \\
+true, false, false, false
+\item output: $\text{out} := \text{self}$
 \item exception: exc := None
 \end{itemize}
 
-\noindent setEnabled($e$):
+\noindent setEnabled(e):
 \begin{itemize} 
-\item transition: $enabled := e$
+\item transition: enabled := e
 \item exception: none
 \end{itemize}
 
-\noindent setOccupied($o$):
+\noindent setOccupied(o):
 \begin{itemize} 
-\item transition: $occupied := o$
+\item transition: occupied := o
 \item exception: none
 \end{itemize}
 
-\noindent setReserved($r$):
+\noindent setReserved(r):
 \begin{itemize} 
-\item transition: $reserved := r$
+\item transition: reserved := r
 \item exception: none
 \end{itemize}
 
-\noindent setHandicapped($h$):
+\noindent setHandicapped(h):
 \begin{itemize} 
-\item transition: $handicapped := h$
+\item transition: handicapped := h
 \item exception: none
 \end{itemize}
 
-\noindent setAllProp($p$):
+\noindent setAllProp(p):
 \begin{itemize} 
-\item transition: $enabled, occupied, reserved, handicapped := p[0], p[1], p[2],
-p[3]$
-\item exception: $exc := |p| \neq 4 \Rightarrow InvalidParamException$
+\item transition: enabled, occupied, reserved, handicapped := \text{p}[0],
+\text{p}[1], \text{p}[2], \text{p}[3]
+\item exception: $\text{exc} := |\text{p}| \neq 4 \Rightarrow
+\text{InvalidParamException}$
 \end{itemize}
 
 \noindent getEnabled():
 \begin{itemize} 
-\item output: $out := enabled$
+\item output: \text{out} := enabled
 \item exception: none
 \end{itemize}
 
 \noindent getOccupied():
 \begin{itemize} 
-\item output: $out := occupied$
+\item output: \text{out} := occupied
 \item exception: none
 \end{itemize}
 
 \noindent getReserved():
 \begin{itemize} 
-\item output: $out := reserved$
+\item output: \text{out} := reserved
 \item exception: none
 \end{itemize}
 
 \noindent getHandicapped():
 \begin{itemize} 
-\item output: $out := handicapped$
+\item output: \text{out} := handicapped
 \item exception: none
 \end{itemize}
 
 \noindent getAllProp():
 \begin{itemize} 
-\item output: $out := \langle enabled, occupied, reserved, handicapped \rangle$
+\item output: $\text{out} := \langle \text{enabled, occupied, reserved,
+handicapped} \rangle$
 \item exception: none
 \end{itemize}
 
@@ -888,12 +905,14 @@ None
 
 \subsubsection{Access Routine Semantics}
 
-\noindent getStat($l, p$):
+\noindent getStat(l, p):
 \begin{itemize} 
-\item output: $out := +(\forall (e : ParkingSpotT | e \in l.getLayout() :
-e.getType() = "spot" \land e.getAllProp() = p \Rightarrow 1 | true \Rightarrow
-0))$
-\item exception: $exc := |p| \neq 4 \Rightarrow InvalidParamException$
+\item output: $\text{out} := +(\forall (\text{e} : \text{ParkingSpotT} |
+\text{e} \in \text{l}.\text{getLayout}() : $\textcolor{red}{\st{e.getType() =
+"spot" $\land$}}$ \text{e}.\text{getAllProp}() = \text{p} \Rightarrow \text{1} |
+true \Rightarrow 0))$
+\item exception: $\text{exc} := |\text{p}| \neq 4 \Rightarrow
+\text{InvalidParamException}$
 \end{itemize}
 
 \newpage
@@ -922,7 +941,8 @@ NavigationT = ?
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-findPath & ParkingLotLayoutT, String, String & Seq of String & NoPathException\\
+findPath & \textcolor{red}{ParkingLotLayoutT, String} & Seq of String &
+NoPathException\\
 \hline
 \end{tabular}
 
@@ -932,7 +952,7 @@ findPath & ParkingLotLayoutT, String, String & Seq of String & NoPathException\\
 None
 
 \subsubsection{Environment Variables}
-None
+loc : String
 
 \subsubsection{State Invariant}
 None
@@ -942,24 +962,29 @@ None
 
 \subsubsection{Access Routine Semantics}
 
-\noindent findPath($L, startId, stopId$):
+\textcolor{red}{ \noindent findPath(L, stopId):
 \begin{itemize}
-\item output: $out := \langle s : \text{String} \rangle$ that satisfies the
-following:
+\item output: $\text{out} := \langle s : \text{String} \rangle$ that satisfies
+the following:
 \begin{itemize}
-\item $out[0] = startId$.
-\item $out[|out| - 1] = stopId$.
-\item $out \subseteq \langle \forall (e : ParkingLayoutElemT | e \in
-L.getLayout() : e.getElemId) \rangle$.
-\item $\forall (i : \mathbb{N} | i < |out| - 2 : L.getElem(out[i]).getType() =
-"Road")$.
-\item $L.getElem(out[|out| - 1]).getType() = "Spot"$.
-\item $\forall (i : \mathbb{N} | i < |out| - 1 : l.getElemIndex(out[i]) -
-l.getElemIndex(out[i + 1]) \in \{1, -1, l.getSize(), -l.getSize()\})$.
+\item $\text{out}[0] = \text{loc}$.
+\item $\text{out}[|\text{out}| - 1] = \text{stopId}$.
+\item $\text{out} \subseteq \langle \forall (\text{e} :
+\text{ParkingLayoutElemT} | \text{e} \in \text{L}.\text{getLayout}() :
+\text{e}.\text{get}(\text{elemId}) \rangle$.
+\item \st{$\forall (\text{i} : \mathbb{N} | i < |out| - 2 :
+L.getElem(out[i]).getType() = "Road")$.}
+\item \st{$\text{L}.\text{getElem}(\text{out}[|\text{out}| -
+1]).\text{getType}() = \text{"Spot"}$.}
+\item $\forall (\text{i} : \mathbb{N} | i < |\text{out}| - 1 :
+\text{l}.\text{getElemIndex}(\text{out}[i]) -
+\text{l}.\text{getElemIndex}(\text{out}[i + 1]) \in \{1, -1,
+\text{l}.\text{getSize}(), -\text{l}.\text{getSize}()\})$.
 \end{itemize}
-\item exception: exc := No $out$ can satisfy the requirements $\Rightarrow
-NoPathException$
+\item exception: exc := No $\text{out}$ can satisfy the requirements
+$\Rightarrow \text{NoPathException}$
 \end{itemize}
+}
 
 \newpage
 
@@ -970,7 +995,8 @@ NoPathException$
 ModelT
 
 \subsection{Uses}
-\hyperref[cameraCapture:Module]{CameraCaptureT}
+\hyperref[VideoCapture:Module]{VideoCaptureT}
+
 
 \subsection{Syntax}
 
@@ -1009,33 +1035,33 @@ None
 
 \subsubsection{Access Routine Semantics}
 
-\noindent setModel($pickleAdd$):
+\noindent setModel(pickleAdd):
 \begin{itemize}
-\item transition: $modelAddress, model := pickleAdd, load(pickleAdd)$
-\item exception:  $exc := \neg \exists (address : String | \neg address.exist())
-\Rightarrow \\ InvalidAddressException$
+\item transition: modelAddress, model := pickleAdd, load(pickleAdd)
+\item exception:  $\text{exc} := \neg \exists (\text{address} : \text{String} |
+\neg \text{address}.\text{exist}()) \Rightarrow \\
+\text{InvalidAddressException}$
 \end{itemize}
 
-\noindent setInput($inputURL, inputTypes$):
+\noindent setInput(inputURL, inputTypes):
 \begin{itemize}
-\item transition: $ InputURL, Inputtype := inputURL,inputTypes$
+\item transition: InputURL, Inputtype := inputURL,inputTypes
 \item exception: none
 \end{itemize}
 
 \noindent getResult():
 \begin{itemize}
-    \item output: $out := model.predict()$
+    \item output: $\text{out} := \text{model}.\text{predict}()$
     \item exception: none
 \end{itemize}
 
 \newpage
 
-\section{MIS of Camera Capture Module}
-\label{cameraCapture:Module}
+\section{MIS of DataBase Module} 
+\label{DB:Module}
 
 \subsection{Module}
-
-CameraCaptureT
+DbT
 
 \subsection{Uses}
 None
@@ -1046,7 +1072,62 @@ None
 None
 
 \subsubsection{Exported Types}
-CameraCaptureT = ?
+DbT = ?
+
+\subsubsection{Exported Access Programs}
+
+\begin{tabular}{p{4cm} p{4cm} p{2cm} p{4cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+query\_by\_key & String & String &  \\
+set\_by\_key & String, String & $\mathbb{B}$\\
+\hline
+\end{tabular}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+None
+
+\subsubsection{Environment Variables}
+None
+
+\subsubsection{Assumptions}
+None
+
+\subsubsection{Access Routine Semantics}
+
+\noindent query\_by\_key(\text{key}):
+\begin{itemize}
+\item output: $\text{out} := \text{DbT}[\text{key}]$
+\end{itemize}
+
+\noindent set\_by\_key(\text{key}, \text{value}):
+\begin{itemize}
+\item output: $\text{out} := \text{DbT}[\text{key}] := \text{value}$
+
+\end{itemize}
+
+\newpage
+\color{red}
+\section{MIS of Video Capture Module}
+\label{VideoCapture:Module}
+
+\subsection{Module}
+
+VideoCaptureT
+
+\subsection{Uses}
+None
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+None
+
+\subsubsection{Exported Types}
+VideoCaptureT = ?
 
 \subsubsection{Exported Access Programs}
 
@@ -1055,40 +1136,38 @@ CameraCaptureT = ?
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
 getLatestFrame & String & Image File & \\
-getLatestClip & String & Video File & \\
 \hline
 \end{tabular}
 
 \subsection{Semantics}
 
 \subsubsection{State Variables}
-\textit{currentFrame}: Image File \\
-\textit{currentClip}: Video File
+\text{currentFrame}: Image File \\
 
 \subsubsection{Environment Variables}
-picamera
+None
 
 \subsubsection{Assumptions}
 None
 
 \subsubsection{Access Routine Semantics}
 
-\noindent getLatestFrame(\textit{directory}):
+\noindent getLatestFrame(\text{url}):
 \begin{itemize}
-\item transition: \textit{currentFrame} := \textit{picamera.capture(directory)}
-\item output: \textit{out} := \textit{currentFrame} 
+\item transition: \text{currentFrame} := \text{youtube.capture(url)}
+\item output: \text{out} := \text{currentFrame} 
 \item exception: None
 \end{itemize}
 
 \noindent getLatestClip():
 \begin{itemize}
-\item transition: \textit{currentClip} := \textit{picamera.record(directory)}
-\item output: \textit{out} := \textit{currentClip} 
+\item transition: \text{currentClip} := \text{picamera.record(directory)}
+\item output: \text{out} := \text{currentClip} 
 \item exception: None
 \end{itemize}
 
 \newpage
-
+\color{black}
 \section{MIS of User Action Handler module} 
 \label{userActionHandler:Module}
 
@@ -1142,34 +1221,35 @@ None
 
 \noindent handleCheckAvailability():
 \begin{itemize}
-    \item output: $out := ModelT.getResult()$
+    \item output: \text{out} := ModelT.getResult()
     \item exception: none
 \end{itemize}
 
 \noindent handleChangeLayout($st, parkingele$):
 \begin{itemize}
-    \item output: $out := AdminT.changeLayout(st, parkingele)$
+    \item output: \text{out} := AdminT.changeLayout(st, parkingele)
     \item exception: none
 \end{itemize}
 
 
-\noindent handleParkingStats($layout, boolArray$):
+\noindent handleParkingStats(layout, boolArray):
 \begin{itemize}
-    \item output: $out := ParkingStatsT.getStat(st, parkingele)$
+    \item output: \text{out} := ParkingStatsT.getStat(st, parkingele)
     \item exception: none
 \end{itemize}
 
 
 
-\noindent handleFindPath($l, startID, stopId$):
+\noindent handleFindPath(\textcolor{red}{l, stopId}):
 \begin{itemize}
-    \item output: $out := navigationT.findPath(layout, String, String)$
+    \item output: \text{out} := navigationT.findPath(\textcolor{red}{layout,
+    String})
     \item exception: none
 \end{itemize}
 
-\noindent handleAuth($id, pass$):
+\noindent handleAuth(id, pass):
 \begin{itemize}
-    \item output: $out := AuthT.authenticateUser(id,pass)$
+    \item output: \text{out} := AuthT.authenticateUser(id,pass)
     \item exception: none
 \end{itemize}
 
@@ -1200,8 +1280,10 @@ viewT = ?
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
 initLogin & ~ & ~ & ~ \\
-initPage & ~ & ~ & ~ \\
-
+\hline
+\textcolor{red}{initPageUser} & ~ & ~ & ~ \\
+\hline
+\textcolor{red}{initPageAdmin} & ~ & ~ & ~ \\
 \hline
 \end{tabular}
 
@@ -1232,54 +1314,70 @@ None
 \item exception: none
 \end{itemize}
 
-\noindent initPage():
+\noindent \textcolor{red}{initPageUser}():
 \begin{itemize} 
 \item transition: modify win with the following:
 \begin{itemize} 
-\item use $showLayout()$ based on the location.
-\item use $showLayout()$ to show a path.
-\item a button to confirm logout.
+\item use showLayout() based on the location.
+\item use showLayout() to show a path.
+\item \textcolor{red}{\st{a button to confirm logout.}}
 \item a panel to show parking stats.
 \end{itemize}
 \item exception: none
 \end{itemize}
 
+\noindent \textcolor{red}{initPageAdmin():
+\begin{itemize} 
+\item transition: modify win with the following:
+\begin{itemize} 
+\item use showLayout() based on the location.
+\item a button to confirm logout.
+\item a panel to show parking stats.
+\item a button to modify parking lots.
+\end{itemize}
+\item exception: none
+\end{itemize}
+}
+
 \subsubsection{Local Functions}
 
-\noindent showLayout($L$):
+\noindent showLayout(L):
 \begin{itemize} 
-\item transition: modify win so the elements $e :ParkingLotLayoutT$ of $L$ are
-displayed on a $L.getSize()$ by $L.getSize()$ grid with the following table: 
+\item transition: modify win so the elements e :ParkingLotLayoutT of L are
+displayed on a L.getSize() by L.getSize() grid with the following table: 
 
+\textcolor{red}{
 \begin{tabular}{l l l l l l}
 \hline
-$getType()$ & $getEnabled()$ & $getHandicapped()$ & $getReserved()$ &
-$getOccupied()$ & character \\
+getEnabled() & getHandicapped() & getReserved() & getOccupied() & character \\
 \hline
-road & ~  & ~  & ~  & ~  & Black +\\
-obstacle & ~  & ~  & ~  & ~  & Black O\\
-spot & true  & false  & false  & false  & Green S\\
-spot & true  & false  & false  & true  & Red S\\
-spot & true  & false  & true  & false  & Green R\\
-spot & true  & false  & true  & true  & Red R\\
-spot & true  & true  & false  & false  & Green H\\
-spot & true  & true  & false  & true  & Red H\\
-spot & false  & ~  & ~  & ~  & Grey S\\
+true  & false  & false  & false  & Green + Green border\\
+true  & false  & false  & true  & Red + green border\\
+true  & false  & true  & false  & Green + red border \\
+true  & false  & true  & true  & Green + red border\\
+true  & true  & false  & false  & Green + blue border\\
+true  & true  & false  & true  & Red + blue border\\
+false  & ~  & ~  & ~  & None\\
 \hline
 \end{tabular}
+}
 \end{itemize}
 
-\newpage
-
-\noindent showPath($L, startId, stopId$):
+\noindent showPath(L, startId, stopId):
 \begin{itemize} 
-\item transition: modify win first with $showLayout(L)$. \\
-$\forall (s : String | s \in NavigationT.findPath(L, startId, stopId) : \\
-\text{bolden the character on } win \text{ corresponding to } L.getElem(s))$ 
+\item transition: \textcolor{red}{modify win first with showLayout(L). \\
+$\forall (\text{s} : \text{String} | \text{s} \in
+\text{NavigationT}.\text{findPath}(L, \text{stopId}) : \\
+\text{then draw a line along each point representing }
+\text{L}.\text{getElem}(\text{s}))$} 
 \item exception: none
 \end{itemize}
 
 \newpage
+
+
+
+
 
 % End of the sample
 \bibliographystyle {plainnat}

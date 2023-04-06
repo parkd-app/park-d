@@ -16,6 +16,7 @@
 \hypersetup{ colorlinks, citecolor=blue, filecolor=black, linkcolor=red,
     urlcolor=blue }
 \usepackage[round]{natbib}
+\usepackage{soul}
 
 \input{../Comments}
 \input{../Common}
@@ -38,6 +39,9 @@
 \midrule
 Nov. 2, 2022 & 1.0 & Revision 0\\
 \bottomrule
+\color{red}{Apr 2, 2023} & \color{red}{1.1} & \color{red}{Revision 1}\\
+\bottomrule
+
 \end{tabularx}
 
 \newpage
@@ -77,30 +81,31 @@ Requirements Specification}.
 \wss{provide an introductory blurb and roadmap of the Verification and Validation plan}
 
 \section{General Information}
-This section provides a brief overview of the software and it's general
-functions, the objective of the verification and validation plan, and outlines
-relevant documentation to support the verification and validation plan.
+This section provides a brief overview of the software and its general
+functions, gives the objective of the Verification and Validation plan, and
+outlines relevant documentation to support the Verification and Validation plan.
 \subsection{Summary}
 We are testing the software named Park'd, our parking assistant application.
 Park'd aims to help drivers find parking spaces by using machine learning
 algorithms to locate empty spaces from overhead cameras. Our application then
 directs drivers to those spaces, taking into account restrictions like reserved
-or accessible spaces. It will maintain a database of spaces as well as a
-navigation layout for a given parking lot.
+or accessible spaces. It will maintain a database of spaces.
+%as well as a navigation layout for a given parking lot.
 
 \wss{Say what software is being tested.  Give its name and a brief overview of
   its general functions.}
 
 \subsection{Objectives}
-Our primary objective, through this verification and validation plan, is to
+Our primary objective, through this Verification and Validation plan, is to
 ensure that our product delivers on the functionality outlined in the functional
 and non-functional requirements outlined in the
 \href{https://github.com/parkd-app/park-d/blob/main/docs/SRS/SRS.pdf}{SRS}
-without fail. Another objective of enacting this plan is to build confidence in
-our software correctness and software consistency. By passing the tests outlined
-in this report and thus, providing the intended outputs, the software will
-ensure correctness. It would also guarantee consistency, as the system should
-always return the same output for a given input. We also wish to use this plan
+without failures. Another objective of enacting this plan is to build confidence
+in our software correctness and software consistency. By passing the tests
+outlined in this report and thus, providing the intended outputs, we intend to
+demonstrate correctness in our software's behaviour. It would also give a
+measure of assurance in the consistency of our software, as the system should
+ideally return the same output for a given input. We also wish to use this plan
 to demonstrate a satisfactory level of usability, as passing the outlined tests
 will give us the confidence that end users will not encounter unintended bugs or
 glitches with the system.
@@ -151,10 +156,13 @@ Kabishan & Design Verification & \hyperref[sec:design]{Design}\\
 \end{table}
 
 Each individual is in charge of the plan whose role they are assigned. They are
-not solely responsible for the implementation of the relevant plan. \wss{Your
-teammates.  Maybe your supervisor. You shoud do more than list names.  You
-should say what each person's role is for the project's verification.  A table
-is a good way to summarize this information.}
+not solely responsible for the implementation of the relevant plan.
+\textcolor{red}{Any team member who has finished their testing can support
+others, particularly those whose testing is the most time consuming or who has
+the least \% of testing completed.} \wss{Your teammates.  Maybe your supervisor.
+You shoud do more than list names.  You should say what each person's role is
+for the project's verification.  A table is a good way to summarize this
+information.}
 
 \subsection{SRS Verification Plan}
 \label{sec:srs}
@@ -199,9 +207,9 @@ complete when there are no outstanding issues.
 
 \subsection{Design Verification Plan}
 \label{sec:design}
-The design verification plan will ensure that our design infrastructure will
-take the necessary inputs and deliver the intended outputs with completeness and
-correctness. 
+The design verification plan will build confidence that our design
+infrastructure will take the necessary inputs and deliver the intended outputs
+with completeness and correctness. 
 
 Our system is multi-tiered, in that it is comprised of a back-end and front-end
 system. The back-end system consists of a machine learning model that will
@@ -306,15 +314,14 @@ plan will be split in two: \hyperref[sec:5.1]{functional} and
 
 For functional requirements, we will split them up according to the back end and
 front end system. For the back end, testing the machine learning algorithm will
-be done with dynamic and manual and automatic testing. At first, we will test
-manually with a small set of data to teach the AI. Then we will test
-automatically with a large amount of data to develop the AI further. For the
-requirements that use the machine learning algorithm, we will use manual dynamic
-tests and verify the correct output. For the front end, we will use automatic
-dynamic tests for requirements such as logging in. The remaining will be done
-manually.
+be done by dynamic, manual, and automatic testing. At first, we will test
+manually with a small set of data. Then we will test automatically with a large
+amount of data to develop the AI further. For the requirements that use the
+machine learning algorithm, we will use manual dynamic tests and verify the
+correct output. For the front end, we will use automatic dynamic tests for
+requirements such as logging in. The remaining will be done manually.
 
-For non function requirements, we will split them up based on system and user
+For non-functional requirements, we will split them up based on system and user
 requirements. System requirements will be verified with dynamic testing, similar
 to functional requirements. Instead of checking the output we will verify the
 system's properties. For \hyperref[sec:5.2.2]{user requirements}, we will create
@@ -347,7 +354,7 @@ With regards to code coverage metrics, as mentioned in the
 Plan}, the plan is to use
 \href{https://coverage.readthedocs.io/en/6.5.0/}{Coverage.py} and
 \href{https://istanbul.js.org/}{Istanbul} to measure the code coverage for our
-Python and Selenium test cases respectively. The goal is to achieve a minimum of
+Python and Cypress test cases respectively. The goal is to achieve a minimum of
 80\% code coverage, putting emphasis on creating high quality test cases that
 test the most critical components of the system.
 
@@ -359,9 +366,9 @@ understanding and changing requirements without effectively communicating with
 the client, a software validation plan is needed to determine whether the
 software satisfies specified requirements. We intend to hold a review session
 with the stakeholders to verify whether we have built the right product.
-Different review sessions should be hold with different types of stakeholders,
-for example, functional requirements 1 to 25 are verified in collaboration with
-a driver who uses the software. Whereas the rest is verified with the parking
+Different review sessions should be held with different types of stakeholders.
+For example, functional requirements 1 to 25 are verified in collaboration with
+a driver who uses the software, whereas the rest is verified with the parking
 lot owner/manager.
 
 The plan is as follows: 
@@ -429,13 +436,28 @@ nearby parking lots so they can navigate to the desired lot.
 How test will be performed: Tester will launch the application with their
 device's location enabled.
 
+\textcolor{red}{\item{BE1-FR3-T1}}
+
+\textcolor{red}{Control: Functional, Dynamic, Manual}
+
+\textcolor{red}{Initial State: System started, device location is disabled}
+					
+\textcolor{red}{Input: N/A}
+					
+\textcolor{red}{Output: System displays to the driver a navigation disabled message.}
+
+\textcolor{red}{Test Case Derivation: The driver needs to know that the system won't show their location or nearby parking lots.}
+
+\textcolor{red}{How test will be performed: Tester will launch the application
+with their device's location disabled.}
+
 \end{enumerate}
 
 \subsubsection{BE2}
 
 \begin{enumerate}
 
-\item{BE2-FR3-T1}
+\item{BE2-FR4-T1}
 
 Control: Structural, Dynamic, Automatic
 					
@@ -451,7 +473,7 @@ using this feed.
 					
 How test will be performed: The backend system will be run with a given video.
 
-\item{BE2-FR4-T1}
+\item{BE2-FR5-T1}
 
 Control: Structural, Dynamic, Automatic
 					
@@ -469,7 +491,7 @@ not suggested to drivers who cannot use them.
 How test will be performed: The system will run with a known disabled space to
 ascertain correct functioning of its space detection.
 
-\item{BE2-FR5-T1}
+\item{BE2-FR6-T1}
 
 Control: Structural, Dynamic, Automatic
 					
@@ -481,12 +503,13 @@ Input: Test space with known location
 Output: The test space and the correct location input to the database.
 
 Test Case Derivation: The location given by the system should be the same as
-that determined by us beforehand.
+that determined by us beforehand \textcolor{red}{with an accuracy of at least
+$\hyperlink{distance_tolerance}{DISTANCE\_TOLERANCE}$ meters.}.
 					
 How test will be performed: The system will run with a space with known location
 to ascertain correct functioning of its space detection.
 
-\item{BE2-FR6-T1}
+\item{BE2-FR7-T1}
 
 Control: Functional, Dynamic, Manual
 					
@@ -503,7 +526,7 @@ select a destination.
 How test will be performed: Tester will select the option to navigate to a
 parking lot with location enabled.
 
-\item{BE2-FR7-T1}
+\item{BE2-FR8-T1}
 
 Control: Functional, Dynamic, Manual
 					
@@ -526,7 +549,7 @@ parking lot with location enabled and observe the output.
 
 \begin{enumerate}
 
-\item{BE3-FR8-T1}
+\item{BE3-FR9-T1}
 
 Control: Functional, Dynamic, Manual
 					
@@ -543,7 +566,7 @@ spaces.
 How test will be performed: Tester will select the option to filter the visible
 spaces at a selected parking lot.
 
-\item{BE3-FR9-T1}
+\item{BE3-FR10-T1}
 
 Control: Functional, Dynamic, Manual
 					
@@ -565,7 +588,7 @@ selected parking lot and no further inputs.
 
 \begin{enumerate}
 
-\item{BE4-FR10-T1}
+\item{BE4-FR11-T1}
 
 Control: Functional, Dynamic, Manual
 					
@@ -580,7 +603,7 @@ selected a space, and that it will work with that space.
 					
 How test will be performed: Tester will select a parking space.
 
-\item{BE4-FR11-T1}
+\item{BE4-FR12-T1}
 
 Control: Functional, Dynamic, Manual
 					
@@ -599,7 +622,7 @@ wrong directions.
 How test will be performed: Tester will pick a parking space and validate that
 the directions take them from their current position to the parking space.
 
-\item{BE4-FR12-T1}
+\item{BE4-FR13-T1}
 
 Control: Functional, Dynamic, Manual
 					
@@ -620,7 +643,7 @@ How test will be performed: Tester will toggle between normal and accessibility
 parking modes and check that the system provides a default parking space that is
 available.
 
-\item{BE4-FR13-T1}
+\item{BE4-FR14-T1}
 
 Control: Functional, Dynamic, Manual
 					
@@ -647,7 +670,7 @@ available.
 
 \begin{enumerate}
 
-\item{BE5-FR14-T1}
+\item{BE5-FR15-T1}
 
 Control: Functional, Dynamic, Manual
 					
@@ -664,7 +687,7 @@ another vehicle.
 How test will be performed: Tester will attempt to select an unavailable parking
 space and validate that they receive a notification from the system.
 
-\item{BE5-FR15-T1}
+\item{BE5-FR16-T1}
 
 Control: Functional, Dynamic, Manual
 					
@@ -689,7 +712,7 @@ be notified by the system.
 
 \begin{enumerate}
 
-\item{BE6-FR16-T1}
+\item{BE6-FR17-T1}
 
 Control: Functional, Dynamic, Manual
 					
@@ -707,7 +730,7 @@ How test will be performed: Tester will follow the instructions and ask another
 tester to stand in front of their vehicle. The directions should change at this
 moment.
 
-\item{BE6-FR17-T1}
+\item{BE6-FR18-T1}
 
 Control: Functional, Dynamic, Manual
 					
@@ -726,7 +749,7 @@ How test will be performed: Tester will drive to the initial parking space.
 Another tester will park at the initial parking space. The first tester will
 receive a recommendation to another parking space.
 
-\item{BE6-FR18-T1}
+\item{BE6-FR19-T1}
 
 Control: Functional, Dynamic, Manual
 					
@@ -745,13 +768,76 @@ How test will be performed: Tester will drive to the initial parking space.
 Another tester will park at the initial parking space. The first tester will be
 given the ability to pick another parking space.
 
+\textcolor{red}{\item{BE6-FR20-T1}}
+
+\textcolor{red}{Control: Functional, Dynamic, Manual}
+
+\textcolor{red}{Initial State: System started, parking space selected, parking space taken}
+					
+\textcolor{red}{Input: N/A}
+					
+\textcolor{red}{Output: System terminates the route and informs the driver to select and new spot.}
+
+\textcolor{red}{Test Case Derivation: The driver needs to know if the spot they're going to is taken by someone else.}
+
+\textcolor{red}{How test will be performed: Tester will drive to the initial
+parking space. Another tester will park at the initial parking space. The first
+tester will be informed of the change.}
+
+\textcolor{red}{\item{BE6-FR21-T1}}
+
+\textcolor{red}{Control: Functional, Dynamic, Manual}
+
+\textcolor{red}{Initial State: System started, parking space selected}
+					
+\textcolor{red}{Input: N/A}
+					
+\textcolor{red}{Output: System terminates the route after a time estimate plus
+$\hyperlink{timeout_tolerance}{TIMEOUT\_TOLERANCE}$ seconds and informs the
+driver to select and new spot.}
+
+\textcolor{red}{Test Case Derivation: The driver needs to know if they've taken too long to drive to the spot}
+
+\textcolor{red}{How test will be performed: Tester will take a long drive to the parking space. The  tester will be informed of the timeout}
+
+\textcolor{red}{\item{BE6-FR22-T1}}
+
+\textcolor{red}{Control: Functional, Dynamic, Manual}
+
+\textcolor{red}{Initial State: System started}
+					
+\textcolor{red}{Input: N/A}
+					
+\textcolor{red}{Output: System displays current location within
+$\hyperlink{distance_tolerance}{DISTANCE\_TOLERANCE}$ meters}
+
+\textcolor{red}{Test Case Derivation: The driver should have an accurate estimation of their location on the map.}
+
+\textcolor{red}{How test will be performed: Tester will start the system and note the location on the map compared to their known location.}
+
+\textcolor{red}{\item{BE6-FR23-T1}}
+
+\textcolor{red}{Control: Functional, Dynamic, Manual}
+
+\textcolor{red}{Initial State: System started, parking spot selected}
+					
+\textcolor{red}{Input: N/A}
+					
+\textcolor{red}{Output: System displays a time estimate to the destination}
+
+\textcolor{red}{Test Case Derivation: The driver should have an accurate
+estimation of the driving time within
+$\hyperlink{driving_estimate_tolerance}{DRIVING\_ESTIMATE\_TOLERANCE}$ seconds.}
+
+\textcolor{red}{How test will be performed: Tester will drive to a selected parking spot and compare the total driving time with the initial estimate.}
+
 \end{enumerate}
 
 \subsubsection{BE7}
 
 \begin{enumerate}
 
-\item{BE7-FR19-T1}
+\item{BE7-FR24-T1}
 
 Control: Functional, Dynamic, Manual
 					
@@ -768,7 +854,7 @@ that they have reached the parking spot of their selection.
 How test will be performed: Tester will drive to their selected parking space
 and validate that they receive a notification.
 
-\item{BE7-FR20-T1}
+\item{BE7-FR25-T1}
 
 Control: Functional, Dynamic, Manual
 					
@@ -786,7 +872,7 @@ How test will be performed: Tester confirms that while driving, the selected
 parking space is available. When they park, the selected parking space should
 become unavailable.
 
-\item{BE7-FR21-T1}
+\item{BE7-FR26-T1}
 
 Control: Functional, Dynamic, Manual
 					
@@ -808,45 +894,46 @@ receive a feedback prompt, and confirm the feedback is saved.
 
 \begin{enumerate}
     
-    \item{BE8-FR22-T1}
+    \item{\textcolor{red}{\st{BE8-FR27-T1}}}
 
-    Control: Functional, Dynamic, Manual
+    \textcolor{red}{\st{Control: Functional, Dynamic, Manual}}
     					
-    Initial State: System started
+    \textcolor{red}{\st{Initial State: System started}}
     					
-    Input: New settings
+    \textcolor{red}{\st{Input: New settings}}
     					
-    Output: The system settings change to the ones given
+    \textcolor{red}{\st{Output: The system settings change to the ones given}}
     
-    Test Case Derivation: Not changing the settings would make being able to
-    enter new ones useless.
+    \textcolor{red}{\st{Test Case Derivation: Not changing the settings would
+    make being able to enter new ones useless.}}
     					
-    How test will be performed: Tester will check the current settings, apply
-    new ones, and verify the change to the system.
+    \textcolor{red}{\st{How test will be performed: Tester will check the
+    current settings, apply new ones, and verify the change to the system.}}
 
-    \item{BE8-FR23-T1}
+    \item{\textcolor{red}{\st{BE8-FR28-T1}}}
 
-    Control: Functional, Dynamic, Manual
+    \textcolor{red}{\st{Control: Functional, Dynamic, Manual}}
     					
-    Initial State: System started
+    \textcolor{red}{\st{Initial State: System started}}
     					
-    Input: N/A
+    \textcolor{red}{\st{Input: N/A}}
     					
-    Output: System settings including volume and sound adjustment, unit
-    identification, vehicle details, and notification preferences
+    \textcolor{red}{\st{Output: System settings including volume and sound
+    adjustment, unit identification, vehicle details, and notification
+    preferences}}
     
-    Test Case Derivation: These settings are specified under the functional
-    requirement.
+    \textcolor{red}{\st{Test Case Derivation: These settings are specified under
+    the functional requirement.}}
     					
-    How test will be performed: Tester will open the settings and verify these
-    settings are present.
+    \textcolor{red}{\st{How test will be performed: Tester will open the
+    settings and verify these settings are present.}}
 \end{enumerate}
 
 \subsubsection{BE9}
 
 \begin{enumerate}
 
-    \item{BE9-FR24-T1}
+    \item{BE9-FR29-T1}
 
     Control: Functional, Dynamic, Manual
     					
@@ -863,7 +950,7 @@ receive a feedback prompt, and confirm the feedback is saved.
     How test will be performed: Tester will choose a parking slot to go to,
     cancel the path, and verify that the selection and path are gone.
 
-    \item{BE9-FR25-T1}
+    \item{BE9-FR30-T1}
 
     Control: Functional, Dynamic, Manual
     					
@@ -886,7 +973,7 @@ receive a feedback prompt, and confirm the feedback is saved.
 
 \begin{enumerate}
 
-    \item{BE10-FR26-T1}
+    \item{BE10-FR31-T1}
 
     Control: Functional, Dynamic, Manual
     					
@@ -902,7 +989,7 @@ receive a feedback prompt, and confirm the feedback is saved.
     How test will be performed: Tester will verify the admin console requires
     admin credentials.
 
-    \item{BE10-FR27-T1}
+    \item{BE10-FR32-T1}
 
     Control: Functional, Dynamic, Manual
     					
@@ -918,7 +1005,7 @@ receive a feedback prompt, and confirm the feedback is saved.
     How test will be performed: Tester will verify the admin console is
     accessible only with the admin credentials.
 
-    \item{BE10-FR28-T1}
+    \item{BE10-FR33-T1}
 
     Control: Functional, Dynamic, Manual
     					
@@ -934,8 +1021,11 @@ receive a feedback prompt, and confirm the feedback is saved.
     					
     How test will be performed: Tester will access the admin console and verify
     the occupancy map is accurate to the parking lot.
+\end{enumerate}
 
-    \item{BE10-FR29-T1}
+\subsubsection{BE11}
+\begin{enumerate}
+    \item{BE11-FR34-T1}
 
     Control: Functional, Dynamic, Manual
     					
@@ -945,19 +1035,32 @@ receive a feedback prompt, and confirm the feedback is saved.
     					
     Output: Parking analytics
     
-    Test Case Derivation: The parking analytics will show trends in the
+    Test Case Derivation: The parking analytics will show live data of the
     availability of all parking spaces in the parking lot as specified under the
     functional requirement.
     					
     How test will be performed: Tester will access the admin console and verify
-    the parking analytics are given.
+    the live parking analytics are given.
+
+    \textcolor{red}{\item{BE11-FR35-T1}}
+    
+    \textcolor{red}{Control: Functional, Dynamic, Manual}
+    
+    \textcolor{red}{Initial State: System started, parking lot selected}
+    					
+    \textcolor{red}{Input: N/A}
+    					
+    \textcolor{red}{Output: Graph with occupancy levels}
+    
+    \textcolor{red}{Test Case Derivation: Twenty-four hours worth of historical information is required to allow the user/admin to make an informed decision about choosing a particular spot, or conducting maintenance work.}
+    
+    \textcolor{red}{How test will be performed: Tester will see if live data for a particular hour is within 20\% of the historical data for that hour.}
 \end{enumerate}
 
-\subsubsection{BE11}
+\subsubsection{BE12}
 
 \begin{enumerate}
-
-    \item{BE11-FR30-T1}
+    \item{BE12-FR36-T1}
 
     Control: Functional, Dynamic, Manual
     					
@@ -973,7 +1076,7 @@ receive a feedback prompt, and confirm the feedback is saved.
     How test will be performed: Tester will access the admin console, make a
     change to the parking lot layout, and verify the new layout is kept.
 
-    \item{BE11-FR31-T1}
+    \item{BE12-FR37-T1}
 
     Control: Functional, Dynamic, Manual
     					
@@ -1046,12 +1149,13 @@ Input/Condition: Go through all pages and uses all interface functions and
 features
 					
 Output/Result: N/A
-					
+
 How test will be performed: Navigation app users will be surveyed. Users will be
 given $\hyperlink{exploration_time}{EXPLORATION\_TIME}$ to explore the app,
 after which they will answer whether or not the app is visually/stylistically
 similar to existing popular navigation apps such as Google Maps, Apple Maps, and
-Waze.
+Waze. \color{red}{At least 5 users will be surveyed. At least 80\% of users
+surveyed should indicate that there is a similarity.}
 					
 \end{enumerate}
 
@@ -1091,6 +1195,8 @@ How test will be performed: Navigation app users will be surveyed. Users will be
 given $\hyperlink{exploration_time}{EXPLORATION\_TIME}$ to explore the app,
 after which they will answer whether or not the app is as easy to use as to
 existing popular navigation apps such as Google Maps, Apple Maps, and Waze.
+\color{red}{At least 5 users will be surveyed. At least 80\% of users surveyed
+should indicate that it is as easy to use.}
 					
 \end{enumerate}
 
@@ -1112,6 +1218,8 @@ How test will be performed: Random variety of users will be surveyed. Users will
 be given $\hyperlink{exploration_time}{EXPLORATION\_TIME}$ to figure out how to
 find and navigate to an available parking spot without any prior instructions.
 Testers will record how many users successfully complete the task.
+\color{red}{At least 5 users will be surveyed. At least 80\% of users should
+successfully complete the task.}
 					
 \end{enumerate}
 
@@ -1363,7 +1471,8 @@ minutes to look through instructions provided in the interface and answer the
 survey if they are satisfied with the instructions and contacts provided. At
 least\\ $\hyperlink{supportability_satisfaction}{SUPPORTABILITY\_SATISFACTION}$
 of surveyed users should be satisfied with the instructions and contacts
-provided.
+provided. \color{red}{At least 5 users will be surveyed. At least 80\% of users
+surveyed should be satisfied with the instructions given.}
 					
 \end{enumerate}
 
@@ -1387,7 +1496,7 @@ Input/Condition: Valid username and password for the parking lot owners/team.
 Output/Result: Redirection to the administrative console with proper parking lot
 data of their parking lot.
 					
-How test will be performed: A Selenium automation script will be created that
+How test will be performed: A Cypress automation script will be created that
 will input a valid username and password and check to ensure that the login is
 successful and that the proper parking lot data of their parking lot is
 displayed.
@@ -1403,7 +1512,7 @@ Input/Condition: Invalid username and password for parking lot owners/team.
 					
 Output/Result: Prompt indicating that the login was unsuccessful.
 					
-How test will be performed: A Selenium automation script will be created that
+How test will be performed: A Cypress automation script will be created that
 will input an invalid username and password and check to ensure that the login
 was unsuccessful, no redirection occurs, and that a prompt is shown that the
 login was unsuccessful.
@@ -1418,7 +1527,7 @@ Input/Condition: Address of a parking lot.
 					
 Output/Result: Unable to see analytics and parking lot data.
 					
-How test will be performed: A Selenium automation script will be created that
+How test will be performed: A Cypress automation script will be created that
 will input a valid address of a parking lot and ensure that analytics and
 parking lot data are not displayed.
 
@@ -1435,7 +1544,7 @@ parking lot.
 Output/Result: Edit view is displayed allowing for editing of the designated
 parking lot.
 					
-How test will be performed: A Selenium automation script will be created that
+How test will be performed: A Cypress automation script will be created that
 will select the edit option and ensure that all the editing options are
 available for the designated parking lot.
 
@@ -1449,7 +1558,7 @@ Input/Condition: Address of a parking lot.
 					
 Output/Result: Edit function is not shown.
 					
-How test will be performed: A Selenium automation script will be created that
+How test will be performed: A Cypress automation script will be created that
 will input a valid address of a parking lot and ensure that no editing
 functionality is enabled.
 
@@ -1465,7 +1574,7 @@ lot.
 					
 Output/Result: Edit functionality disabled and analytics are not displayed.
 
-How test will be performed: A Selenium automation script will be created that
+How test will be performed: A Cypress automation script will be created that
 will input a valid address of a parking lot that is not the designated parking
 lot and ensure that no editing functionality is enabled and analytics are not
 displayed for the parking lot.
@@ -1614,7 +1723,7 @@ Output/Result: Initiates the upload of the parking lot layout, prompts the user
 that an upload is underway, and a prompt will appear upon success indicating
 that the layout is successfully uploaded.
 
-How test will be performed: A Selenium automation script will be created that
+How test will be performed: A Cypress automation script will be created that
 will edit a parking lot layout and prompt the upload of the layout to the
 database server. It will verify that the upload was initiated and completed
 successfully along with the prompts that the upload is underway and that the
@@ -1738,9 +1847,9 @@ disturbing imagery exists
 FR2 & FR3 & FR4 & FR5 & FR6 & FR7 & FR8 & FR9 & FR10 & FR11 & FR12 & FR13  \\
 \cline{1-15} \multicolumn{1}{ |c| }{\multirow{13}{*}{Test Cases} } &
 \multicolumn{1}{|c| } {BE1-FR1-T1}   &X&&&&&&&&&&&& \\ \cline{2-15}
-\multicolumn{1}{|c| }{} 	                  & \multicolumn{1}{|c| }{BE1-FR2-T1}
-&&X&&&&&&&&&&& \\ \cline{2-15} \multicolumn{1}{|c| }{}                        &
-\multicolumn{1}{|c| } {BE2-FR3-T1}   &&&X&&&&&&&&&&\\ \cline{2-15}
+\multicolumn{1}{|c| }{} 	                  & \multicolumn{1}{|c|
+}{BE1-FR2-T1} &&X&&&&&&&&&&& \\ \cline{2-15} \multicolumn{1}{|c| }{} &
+\multicolumn{1}{|c| } {BE1-FR3-T1}   &&&X&&&&&&&&&&\\ \cline{2-15}
 \multicolumn{1}{|c| }{}                        & \multicolumn{1}{ |c| }
 {BE2-FR4-T1}  &&&&X&&&&&&&&& \\ \cline{2-15} \multicolumn{1}{|c| }{} &
 \multicolumn{1}{ |c| } {BE2-FR5-T1}  &&&&&X&&&&&&&&\\ \cline{2-15}
@@ -1748,10 +1857,10 @@ FR2 & FR3 & FR4 & FR5 & FR6 & FR7 & FR8 & FR9 & FR10 & FR11 & FR12 & FR13  \\
 {BE2-FR6-T1}  &&&&&&X&&&&&&& \\ \cline{2-15} \multicolumn{1}{|c| }{} &
 \multicolumn{1}{ |c| } {BE2-FR7-T1}  &&&&&&&X&&&&&& \\ \cline{2-15}
 \multicolumn{1}{|c| }{}                        & \multicolumn{1}{ |c| }
-{BE3-FR8-T1}  &&&&&&&&X&&&&& \\ \cline{2-15} \multicolumn{1}{|c| }{} &
+{BE2-FR8-T1}  &&&&&&&&X&&&&& \\ \cline{2-15} \multicolumn{1}{|c| }{} &
 \multicolumn{1}{ |c| } {BE3-FR9-T1}  &&&&&&&&&X&&&&\\ \cline{2-15}
 \multicolumn{1}{|c| }{}                        & \multicolumn{1}{ |c| }
-{BE4-FR10-T1} &&&&&&&&&&X&&& \\ \cline{2-15} \multicolumn{1}{|c| }{} &
+{BE3-FR10-T1} &&&&&&&&&&X&&& \\ \cline{2-15} \multicolumn{1}{|c| }{} &
 \multicolumn{1}{ |c| } {BE4-FR11-T1} &&&&&&&&&&&X&& \\ \cline{2-15}
 \multicolumn{1}{|c| }{}                        & \multicolumn{1}{ |c| }
 {BE4-FR12-T1} &&&&&&&&&&&&X& \\ \cline{2-15} \multicolumn{1}{|c| }{} &
@@ -1768,43 +1877,71 @@ FR2 & FR3 & FR4 & FR5 & FR6 & FR7 & FR8 & FR9 & FR10 & FR11 & FR12 & FR13  \\
 & & \multicolumn{12}{ c|}{Functional Requirements} \\ \cline{3-14} & & FR14  &
 FR15 & FR16 & FR17 & FR18 & FR19 & FR20 & FR21 & FR22 & FR23 & FR24 & FR25  \\
 \cline{1-14} \multicolumn{1}{ |c| }{\multirow{12}{*}{Test Cases} } &
-\multicolumn{1}{|c| } {BE5-FR14-T1}   &X&&&&&&&&&&& \\ \cline{2-14}
-\multicolumn{1}{|c| }{} 	                  & \multicolumn{1}{|c| }{BE5-FR15-T1}
-&&X&&&&&&&&&& \\ \cline{2-14} \multicolumn{1}{|c| }{}                        &
-\multicolumn{1}{|c| } {BE6-FR16-T1}   &&&X&&&&&&&&&\\ \cline{2-14}
+\multicolumn{1}{|c| } {BE4-FR14-T1}   &X&&&&&&&&&&& \\ \cline{2-14}
+\multicolumn{1}{|c| }{} 	                  & \multicolumn{1}{|c|
+}{BE5-FR15-T1} &&X&&&&&&&&&& \\ \cline{2-14} \multicolumn{1}{|c| }{} &
+\multicolumn{1}{|c| } {BE5-FR16-T1}   &&&X&&&&&&&&&\\ \cline{2-14}
 \multicolumn{1}{|c| }{}                        & \multicolumn{1}{ |c| }
 {BE6-FR17-T1}  &&&&X&&&&&&&& \\ \cline{2-14} \multicolumn{1}{|c| }{} &
 \multicolumn{1}{ |c| } {BE6-FR18-T1}  &&&&&X&&&&&&&\\ \cline{2-14}
 \multicolumn{1}{|c| }{}                        & \multicolumn{1}{ |c| }
-{BE7-FR19-T1}  &&&&&&X&&&&&& \\ \cline{2-14} \multicolumn{1}{|c| }{} &
-\multicolumn{1}{ |c| } {BE7-FR20-T1}  &&&&&&&X&&&&& \\ \cline{2-14}
+{BE6-FR19-T1}  &&&&&&X&&&&&& \\ \cline{2-14} \multicolumn{1}{|c| }{} &
+\multicolumn{1}{ |c| } {BE6-FR20-T1}  &&&&&&&X&&&&& \\ \cline{2-14}
 \multicolumn{1}{|c| }{}                        & \multicolumn{1}{ |c| }
-{BE7-FR21-T1}  &&&&&&&&X&&&& \\ \cline{2-14} \multicolumn{1}{|c| }{} &
-\multicolumn{1}{ |c| } {BE8-FR22-T1}  &&&&&&&&&X&&&\\ \cline{2-14}
+{BE6-FR21-T1}  &&&&&&&&X&&&& \\ \cline{2-14} \multicolumn{1}{|c| }{} &
+\multicolumn{1}{ |c| } {BE6-FR22-T1}  &&&&&&&&&X&&&\\ \cline{2-14}
 \multicolumn{1}{|c| }{}                        & \multicolumn{1}{ |c| }
-{BE8-FR23-T1} &&&&&&&&&&X&& \\ \cline{2-14} \multicolumn{1}{|c| }{} &
-\multicolumn{1}{ |c| } {BE9-FR24-T1} &&&&&&&&&&&X& \\ \cline{2-14}
+{BE6-FR23-T1} &&&&&&&&&&X&& \\ \cline{2-14} \multicolumn{1}{|c| }{} &
+\multicolumn{1}{ |c| } {BE7-FR24-T1} &&&&&&&&&&&X& \\ \cline{2-14}
 \multicolumn{1}{|c| }{}                        & \multicolumn{1}{ |c| }
-{BE9-FR25-T1} &&&&&&&&&&&&X \\ \cline{1-14}
+{BE7-FR25-T1} &&&&&&&&&&&&X \\ \cline{1-14}
 \end{tabularx}
 \end{table}
 
 \newpage
+% \begin{table}[htbp] \caption{Traceability Matrix for Test Cases and Functional
+% Requirements - Part 3} \label{traceMatrix1}
+% \begin{tabularx}{\textwidth}{cc|c|c|c|c|c|c|c|c|c|c|c|c|} \cline{3-14} & &
+% \multicolumn{6}{ c|}{Functional Requirements} \\ \cline{3-8} & & FR26  & FR27
+% & FR28 & FR29 & FR30 & FR31 & FR32 & FR33 & FR34 & FR35 & FR36 & FR37 \\
+% \cline{1-8} \multicolumn{1}{ |c| }{\multirow{6}{*}{Test Cases} } &
+% \multicolumn{1}{|c| } {BE7-FR26-T1}   &X&&&&& \\ \cline{2-8}
+% \multicolumn{1}{|c| }{}                      & \multicolumn{1}{|c|
+% }{BE10-FR27-T1}    &&X&&&& \\ \cline{2-8} \multicolumn{1}{|c| }{} &
+% \multicolumn{1}{|c| } {BE10-FR28-T1}   &&&X&&&\\
+% \cline{2-8} \multicolumn{1}{|c| }{}                        & \multicolumn{1}{
+% |c| } {BE10-FR29-T1}  &&&&X&& \\
+% \cline{2-8} \multicolumn{1}{|c| }{} & \multicolumn{1}{ |c| } {BE11-FR30-T1}
+% &&&&&X&\\ \cline{2-8} \multicolumn{1}{|c| }{}                        &
+% \multicolumn{1}{ |c| } {BE11-FR31-T1}  &&&&&&X \\ \cline{1-8} \end{tabularx}
+% \end{table}
+
 \begin{table}[htbp]
 \caption{Traceability Matrix for Test Cases and Functional Requirements - Part
 3} \label{traceMatrix1}
-\begin{tabularx}{\textwidth}{cc|c|c|c|c|c|c|}
-\cline{3-8}
-& & \multicolumn{6}{ c|}{Functional Requirements} \\ \cline{3-8} & & FR26  &
-FR27 & FR28 & FR29 & FR30 & FR31  \\ \cline{1-8} \multicolumn{1}{ |c|
-}{\multirow{6}{*}{Test Cases} } & \multicolumn{1}{|c| } {BE10-FR26-T1}   &X&&&&&
-\\ \cline{2-8} \multicolumn{1}{|c| }{} 	                  & \multicolumn{1}{|c|
-}{BE10-FR27-T1}    &&X&&&& \\ \cline{2-8} \multicolumn{1}{|c| }{} &
-\multicolumn{1}{|c| } {BE10-FR28-T1}   &&&X&&&\\ \cline{2-8} \multicolumn{1}{|c|
-}{}                        & \multicolumn{1}{ |c| } {BE10-FR29-T1}  &&&&X&& \\
-\cline{2-8} \multicolumn{1}{|c| }{} & \multicolumn{1}{ |c| } {BE11-FR30-T1}
-&&&&&X&\\ \cline{2-8} \multicolumn{1}{|c| }{}                        &
-\multicolumn{1}{ |c| } {BE11-FR31-T1}  &&&&&&X \\ \cline{1-8}
+\begin{tabularx}{\textwidth}{cc|c|c|c|c|c|c|c|c|c|c|c|c|}
+\cline{3-14}
+& & \multicolumn{12}{ c|}{Functional Requirements} \\ \cline{3-14} & & FR26  &
+FR27 & FR28 & FR29 & FR30 & FR31 & FR32 & FR33 & FR34 & FR35 & FR36 & FR37  \\
+\cline{1-14} \multicolumn{1}{ |c| }{\multirow{12}{*}{Test Cases} } &
+\multicolumn{1}{|c| } {BE7-FR26-T1}   &X&&&&&&&&&&& \\ \cline{2-14}
+\multicolumn{1}{|c| }{} 	                  & \multicolumn{1}{|c|
+}{BE8-FR27-T1} &&X&&&&&&&&&& \\ \cline{2-14} \multicolumn{1}{|c| }{} &
+\multicolumn{1}{|c| } {BE8-FR28-T1}   &&&X&&&&&&&&&\\ \cline{2-14}
+\multicolumn{1}{|c| }{}                        & \multicolumn{1}{ |c| }
+{BE9-FR29-T1}  &&&&X&&&&&&&& \\ \cline{2-14} \multicolumn{1}{|c| }{} &
+\multicolumn{1}{ |c| } {BE9-FR30-T1}  &&&&&X&&&&&&&\\ \cline{2-14}
+\multicolumn{1}{|c| }{}                        & \multicolumn{1}{ |c| }
+{BE10-FR31-T1}  &&&&&&X&&&&&& \\ \cline{2-14} \multicolumn{1}{|c| }{} &
+\multicolumn{1}{ |c| } {BE10-FR32-T1}  &&&&&&&X&&&&& \\ \cline{2-14}
+\multicolumn{1}{|c| }{}                        & \multicolumn{1}{ |c| }
+{BE10-FR33-T1}  &&&&&&&&X&&&& \\ \cline{2-14} \multicolumn{1}{|c| }{} &
+\multicolumn{1}{ |c| } {BE11-FR34-T1}  &&&&&&&&&X&&&\\ \cline{2-14}
+\multicolumn{1}{|c| }{}                        & \multicolumn{1}{ |c| }
+{BE11-FR35-T1} &&&&&&&&&&X&& \\ \cline{2-14} \multicolumn{1}{|c| }{} &
+\multicolumn{1}{ |c| } {BE12-FR36-T1} &&&&&&&&&&&X& \\ \cline{2-14}
+\multicolumn{1}{|c| }{}                        & \multicolumn{1}{ |c| }
+{BE12-FR37-T1} &&&&&&&&&&&&X \\ \cline{1-14}
 \end{tabularx}
 \end{table}
 
@@ -1818,8 +1955,8 @@ Look \& Feel, Usability \& Humanity, and Performance} \label{traceMatrix1}
 LF2 & UH1 & UH2 & UH3 & UH4 & PE1 & PE2 & PE3 & PE4 & PE5 & PE6 \\
 \cline{1-14} \multicolumn{1}{ |c| }{\multirow{13}{*}{Test Cases} } &
 \multicolumn{1}{|c| } {NFR-LF1-T1}   &X&&&&&&&&&&& \\ \cline{2-14}
-\multicolumn{1}{|c| }{} 	                  & \multicolumn{1}{|c| }{NFR-LF2-T1}
-&&X&&&&&&&&&& \\ \cline{2-14} \multicolumn{1}{|c| }{}                        &
+\multicolumn{1}{|c| }{} 	                  & \multicolumn{1}{|c|
+}{NFR-LF2-T1} &&X&&&&&&&&&& \\ \cline{2-14} \multicolumn{1}{|c| }{} &
 \multicolumn{1}{|c| } {NFR-UH1-T1}   &&&X&&&&&&&&&\\ \cline{2-14}
 \multicolumn{1}{|c| }{}                        & \multicolumn{1}{ |c| }
 {NFR-UH2-T1}  &&&&X&&&&&&&& \\ \cline{2-14} \multicolumn{1}{|c| }{} &
@@ -1848,10 +1985,10 @@ Operational \& Environmental and Maintainability \& Support}
 & & \multicolumn{4}{ c|}{Non-Functional Requirements} \\ \cline{3-6} & & OE1  &
 OE2 & MA1 & MA2  \\ \cline{1-6} \multicolumn{1}{ |c| }{\multirow{4}{*}{Test
 Cases} } & \multicolumn{1}{|c| } {NFR-OE1-T1}   &X&&& \\ \cline{2-6}
-\multicolumn{1}{|c| }{} 	                  & \multicolumn{1}{|c| }{NFR-OE2-T1}
-&&X&& \\ \cline{2-6} \multicolumn{1}{|c| }{}                        &
-\multicolumn{1}{|c| } {NFR-MA1-T1}   &&&X&\\ \cline{2-6} \multicolumn{1}{|c| }{}
-& \multicolumn{1}{ |c| } {NFR-MA2-T1}  &&&&X\\ \cline{1-6}
+\multicolumn{1}{|c| }{} 	                  & \multicolumn{1}{|c|
+}{NFR-OE2-T1} &&X&& \\ \cline{2-6} \multicolumn{1}{|c| }{} & \multicolumn{1}{|c|
+} {NFR-MA1-T1}   &&&X&\\ \cline{2-6} \multicolumn{1}{|c| }{} & \multicolumn{1}{
+|c| } {NFR-MA2-T1}  &&&&X\\ \cline{1-6}
 \end{tabularx}
 \end{table}
 
@@ -1865,8 +2002,8 @@ Security} \label{traceMatrix1}
 SR2 & SR3 & SR4 & SR5 & SR6 & SR7 & SR8 & SR9 & SR10 & SR11 & SR12 & SR13 & SR14
 \\ \cline{1-16} \multicolumn{1}{ |c| }{\multirow{14}{*}{Test Cases} } &
 \multicolumn{1}{|c| } {NFR-SR1-T1}   &X&&&&&&&&&&&&& \\ \cline{2-16}
-\multicolumn{1}{|c| }{} 	                  & \multicolumn{1}{|c| }{NFR-SR1-T2}
-&X&&&&&&&&&&&&& \\ \cline{2-16} \multicolumn{1}{|c| }{}                        &
+\multicolumn{1}{|c| }{} 	                  & \multicolumn{1}{|c|
+}{NFR-SR1-T2} &X&&&&&&&&&&&&& \\ \cline{2-16} \multicolumn{1}{|c| }{} &
 \multicolumn{1}{|c| } {NFR-SR1-T3}   &X&&&&&&&&&&&&&\\ \cline{2-16}
 \multicolumn{1}{|c| }{}                        & \multicolumn{1}{ |c| }
 {NFR-SR2-T1}  &&X&&&&&&&&&&&& \\ \cline{2-16} \multicolumn{1}{|c| }{} &
@@ -1913,73 +2050,390 @@ HS1  \\ \cline{1-4} \multicolumn{1}{ |c| }{\multirow{2}{*}{Test Cases} } &
 %   philosophy for test case selection.}  
 % \wss{This section should not be filled in until after the MIS (detailed design
 %   document) has been completed.}
-N/A. To be added after the MIS is completed.
+For non-functional requirements, we will utilize a unit test library to perform
+unit testing for this toolbox. To create unit tests for the backend portion of
+the program, we will generate a corresponding test file for two key modules,
+which will include unit tests for every function within the module. These tests
+will consist of a range of inputs, including those that are essential for the
+success of updating the parking spot availability in real time.
+\textcolor{red}{For the frontend user interface portion, we created a couple of
+test files with Cypress, a UI testing framework, one for each main page of the
+application (i.e. Login Screen, User Mode, Admin View). These tests consists of
+input validation logic, ensuring that the CSS of the UI elements are correctly
+defined, and that certain elements are displayed on the screen dependent on
+their user mode (if they are an administrator or a user).}\\
+
+To evaluate the thoroughness of our testing, we will employ coverage metrics.
+Specifically, we will utilize the coverage.py Python library for the backend,
+which enables swift analysis of code coverage for all project modules. Our
+target is to attain 80\% code coverage per module, which will guarantee that all
+functions are tested comprehensively. For the frontend, we be using Istanbul,
+which plays very well with the UI automation framework we are using and allows
+us to get a full analysis of the code coverage. We wish to similarly achieve at
+least 80\% line coverage for the frontend.
+%\wss{Reference your MIS (detailed design document) and explain your overall
+ % philosophy for test case selection.}  
+%\wss{This section should not be filled in until after the MIS (detailed design
+  %document) has been completed.}
 
 \subsection{Unit Testing Scope}
 
-% \wss{What modules are outside of the scope.  If there are modules that are
-%   developed by someone else, then you would say here if you aren't planning on
-%   verifying them.  There may also be modules that are part of your software,
-%   but have a lower priority for verification than others.  If this is the
-%   case, explain your rationale for the ranking of module importance.}
+Database module as well as parking stats module will be verified for correct
+functionality (correct sample inputs output correct sample outputs).
+\textcolor{red}{For the Authentication Module, it would be verified for
+successful logins and error handling.} The machine learning module will not be
+verified through unit testing as the model is obtained from DarkNet with
+pre-trained layers.
+
+\textcolor{red}{In terms of the importance of the modules for verification,
+below is a table that ranks each module in the
+\href{https://github.com/parkd-app/park-d/blob/main/docs/Design/SoftArchitecture/MG.pdf}{Module
+Guide} and
+\href{https://github.com/parkd-app/park-d/blob/main/docs/Design/SoftDetailedDes/MIS.pdf}{Module
+Interface Specification} based on the priority for verification. We rank using
+High, Medium, and Low.}
+
+\begin{table}[H] 
+    \centering
+    \begin{tabularx}{\textwidth}{|X|X|}
+        \toprule
+        \textbf{Module} & \textbf{Priority}\\
+        \midrule
+        Video capture module & High\\
+        View module & High\\
+        Machine learning model module & High\\
+        Database module & High\\
+        Parking Stats module & Medium\\
+        Admin console module & Medium\\
+        Admin module &  Medium\\
+        Parking lot layout module & Medium\\
+        Parking layout element module & Medium\\
+        Parking spot module & Medium\\
+        Authentication module & Medium\\
+        Navigation module & Medium\\
+        User action handler module & Medium\\
+        User module & Low\\
+        Vehicle module & Low\\
+        \bottomrule
+    \end{tabularx}
+\caption{Module Verification Priority} \label{tab:moduleVerificationPriority}
+\end{table}
+
+
+%\wss{What modules are outside of the scope.  If there are modules that are
+%  developed by someone else, then you would say here if you aren't planning on
+%  verifying them.  There may also be modules that are part of your software,
+%  but have a lower priority for verification than others.  If this is the case,
+%  5 explain your rationale for the ranking of module importance.}
 
 \subsection{Tests for Functional Requirements}
+These tests refer to functional requirements outlined in the
+\href{https://github.com/parkd-app/park-d/blob/main/docs/SRS/SRS.pdf}{Software
+Requirements Specification}. \subsubsection{\textcolor{red}{Database Module Test
+Cases}} \textcolor{red}{
+\vspace{0.5cm}
+\hspace{0.5cm}
+\begin{tabular}{|l|p{10cm}|}
+    \hline
+    \bf{Test} 6.2.1.1: & Saving admin annotation coordinates from the user
+    interface into the database. \\
+     \bf{Test file: } &
+     \href{https://github.com/parkd-app/park-d/blob/main/test/TestDB.py}{src/test/testDB.py}\\
+    \bf{Requirements}: &  FR5, FR6, FR7, FR36, FR37\\
+    \bf{Description}: & Tests if the annotation coordinates for ML model is
+    properly saved in the database with a identifier that is unique to a parking
+    lot\\
+    \bf{Type}: & Unit test (static, automated) \\
+    \bf{Initial State}: & The user has enter the annotation page. \\
+    \bf{Input}: & Json object includes the annotation coordinate under the
+    "CamCoords" key. \\
+    \bf{Output}: & Response body object \\
+    \bf{Pass}: & The response body object contains the previously saved
+    CamCoords data. \\
+    \hline
+\end{tabular}}
 
-% \wss{Most of the verification will be through automated unit testing.  If
-%   appropriate specific modules can be verified by a non-testing based
-%   technique.  That can also be documented in this section.}
 
-% \subsubsection{Module 1}
+\vspace*{0.5 cm}
 
-% \wss{Include a blurb here to explain why the subsections below cover the
-%   module. References to the MIS would be good.  You will want tests from a
-%   black box perspective and from a white box perspective.  Explain to the
-%   reader how the tests were selected.}
 
-% \begin{enumerate}
+\textcolor{red}{
+\begin{center}
+\begin{tabular}{|l|p{10cm}|}
+    \hline
+    \bf{Test} 6.2.1.2: & Saving admin annotation coordinates from the user
+    interface into the database. \\
+     \bf{Test file: } &
+     \href{https://github.com/parkd-app/park-d/blob/main/test/TestDB.py}{src/test/testDB.py}\\
+    \bf{Requirements}: & FR5, FR6, FR7, FR8, FR36, FR37  \\
+    \bf{Description}: & Tests if the annotation coordinates for user view is
+    properly saved in the database with a identifier that is unique to a parking
+    lot\\
+    \bf{Type}: & Unit test (static, automated) \\
+    \bf{Initial State}: & The user has enter the annotation page. \\
+    \bf{Input}: & Json object includes the annotation coordinate under the
+    "MapCoords" key. \\
+    \bf{Output}: & Response body object \\
+    \bf{Pass}: & The response body object contains the previously saved
+    MapCoords data. \\
+    \hline
+\end{tabular}
+\end{center}}
 
-% \item{test-id1\\}
 
-% Type: \wss{Functional, Dynamic, Manual, Automatic, Static etc. Most will be
-%   automatic}
-					
-% Initial State: 
-					
-% Input: 
-					
-% Output: \wss{The expected result for the given inputs}
+\vspace*{0.5 cm}
 
-% Test Case Derivation: \wss{Justify the expected value given in the Output
-% field}
 
-% How test will be performed: 
-					
-% \item{test-id2\\}
+\textcolor{red}{
+\begin{center}
+\begin{tabular}{|l|p{10cm}|}
+    \hline
+    \bf{Test} 6.2.1.3: & Saving YouTube stream link \\
+     \bf{Test file: } &
+     \href{https://github.com/parkd-app/park-d/blob/main/test/TestDB.py}{src/test/testDB.py}\\
+    \bf{Requirements}: & FR5, FR6, FR7, FR8 \\
+    \bf{Description}: & Tests if the YouTube stream link with a parking lot is
+    saved in the database with a identifier that is unique to a parking lot\\
+    \bf{Type}: & Unit test (static, automated) \\
+    \bf{Initial State}: &  \\
+    \bf{Input}: & The user has enter the YouTube link. \\
+    \bf{Output}: & Response body object \\
+    \bf{Pass}: & The response body object contains the previously saved YouTube
+    link data. \\
+    \hline
+\end{tabular}
+\end{center}}
 
-% Type: \wss{Functional, Dynamic, Manual, Automatic, Static etc. Most will be
-%   automatic}
-					
-% Initial State: 
-					
-% Input: 
-					
-% Output: \wss{The expected result for the given inputs}
 
-% Test Case Derivation: \wss{Justify the expected value given in the Output
-% field}
+\vspace*{0.5 cm}
 
-% How test will be performed: 
 
-% \item{...\\}
-    
-% \end{enumerate}
+\textcolor{red}{
+\begin{center}
+\begin{tabular}{|l|p{10cm}|}
+    \hline
+    \bf{Test} 6.2.1.4: & Updating model input source \\
+     \bf{Test file: } &
+     \href{https://github.com/parkd-app/park-d/blob/main/test/TestML.py}{src/test/testML.py}\\
+    \bf{Requirements}: & FR5, FR6, FR7, FR8, FR9, FR11 \\
+    \bf{Description}: & Tests if the model input video can be correctly set\\
+    \bf{Type}: & Unit test (static, automated) \\
+    \bf{Initial State}: & Model is running as usual \\
+    \bf{Input}: & The user enter the parking lot owner name and id \\
+    \bf{Output}: & The current\_input key on the database \\
+    \bf{Pass}: & The string URL under the current\_input key should be the same
+    as the YouTube URL for the corresponding parking lot  \\
+    \hline
+\end{tabular}
+\end{center}}
 
-% \subsubsection{Module 2}
 
-% ...
+\vspace*{0.5 cm}
+
+
+\textcolor{red}{
+\begin{center}
+\begin{tabular}{|l|p{10cm}|}
+    \hline
+    \bf{Test} 6.2.1.5: & Updating model input annotation coordinates \\
+    \bf{Test file: } &
+    \href{https://github.com/parkd-app/park-d/blob/main/test/TestML.py}{src/test/testML.py}\\
+    \bf{Requirements}: & FR5, FR6, FR7, FR8, FR9, FR11 \\
+    \bf{Description}: & Tests if the model can correctly retrieve the annotation
+    coordinates\\
+    \bf{Type}: & Unit test (static, automated) \\
+    \bf{Initial State}: & Model is running as usual \\
+    \bf{Input}: & The user enter the parking lot owner name and id \\
+    \bf{Output}: & The current\_coordinate key on the database \\
+    \bf{Pass}: & The JSON object under the current\_coordinate key should be the
+    same as the coordinates for the corresponding parking lot annotations \\
+    \hline
+\end{tabular}
+\end{center}}
+
+
+\vspace*{0.5 cm}
+
+
+\subsubsection{\textcolor{red}{Parking Stats Module Test Cases}}
+\textcolor{red}{
+\begin{center}
+\begin{tabular}{|l|p{10cm}|}
+    \hline
+    \bf{Test} 6.2.2.1: & Analytics data updating \\
+    \bf{Test file: } &
+    \href{https://github.com/parkd-app/park-d/blob/main/test/TestAnaly.py}{src/test/testAnaly.py}\\
+    \bf{Requirements}: & FR34, FR35 \\
+    \bf{Description}: & Tests if hourly analytics data is successfully appended
+    to the database\\
+    \bf{Type}: & Unit test (static, automated) \\
+    \bf{Initial State}: & Model is running \\
+    \bf{Input}: & User append the analytic 1 hour data to the database \\
+    \bf{Output}: & The up to date analytic data with a testing parking lot \\
+    \bf{Pass}: & The returned analytic data should include the recently appended
+    data of the parking lot \\
+    \hline
+\end{tabular}
+\end{center}}
+
+\subsubsection{\textcolor{red}{View Module}} \textcolor{red}{
+\begin{center}
+\begin{tabular}{|l|p{10cm}|}
+    \hline
+    \bf{Test} 6.2.3.1: & Successful Login \\
+    \bf{Test file: } &
+    \href{https://github.com/parkd-app/park-d/blob/main/src/park-d-front-end/src/cypress/e2e/Login_Test_Suite.cy.js}{cypress/e2e/Login\_Test\_Suite.cy.js}\\
+    \bf{Requirements}: & FR31, FR32\\
+    \bf{Description}: & Tests the successful login of an administrator\\
+    \bf{Type}: & Unit test (static, automated) \\
+    \bf{Initial State}: & Login screen is presented. \\
+    \bf{Input}: & Valid email and password for the parking lot owners/team \\
+    \bf{Output}: & Administrative console \\
+    \bf{Pass}: &  Redirected to their respective parking lot administrative
+    console\\
+    \hline
+\end{tabular}
+\end{center}}
+
+\textcolor{red}{
+\begin{center}
+\begin{tabular}{|l|p{10cm}|}
+    \hline
+    \bf{Test} 6.2.3.2: & Unsuccessful Login - Invalid Email \\
+    \bf{Test file: } &
+    \href{https://github.com/parkd-app/park-d/blob/main/src/park-d-front-end/src/cypress/e2e/Login_Test_Suite.cy.js}{cypress/e2e/Login\_Test\_Suite.cy.js}\\
+    \bf{Requirements}: & FR31, FR32\\
+    \bf{Description}: & Tests the unsuccessful login attempt of an administrator
+    with an invalid email\\
+    \bf{Type}: & Unit test (static, automated) \\
+    \bf{Initial State}: & Login screen is presented. \\
+    \bf{Input}: & Invalid email for the parking lot owners/team \\
+    \bf{Output}: & Error message \\
+    \bf{Pass}: &  An error message is shown indicating an invalid email was
+    given and prompts to try again.\\
+    \hline
+\end{tabular}
+\end{center}}
+
+\textcolor{red}{
+\begin{center}
+\begin{tabular}{|l|p{10cm}|}
+    \hline
+    \bf{Test} 6.2.3.3: & Unsuccessful Login - No real user \\
+    \bf{Test file: } &
+    \href{https://github.com/parkd-app/park-d/blob/main/src/park-d-front-end/src/cypress/e2e/Login_Test_Suite.cy.js}{cypress/e2e/Login\_Test\_Suite.cy.js}\\
+    \bf{Requirements}: & FR31, FR32\\
+    \bf{Description}: & Tests the unsuccessful login attempt of an administrator
+    with an email that does not exist \\
+    \bf{Type}: & Unit test (static, automated) \\
+    \bf{Initial State}: & Login screen is presented. \\
+    \bf{Input}: & Non-existent email and password for the parking lot
+    owners/team \\
+    \bf{Output}: & Error message \\
+    \bf{Pass}: &  An error message is shown indicating the email does not exist
+    within the database and prompts to try again.\\
+    \hline
+\end{tabular}
+\end{center}}
+
+\textcolor{red}{
+\begin{center}
+\begin{tabular}{|l|p{10cm}|}
+    \hline
+    \bf{Test} 6.2.3.4: & Unsuccessful Login - No input \\
+    \bf{Test file: } &
+    \href{https://github.com/parkd-app/park-d/blob/main/src/park-d-front-end/src/cypress/e2e/Login_Test_Suite.cy.js}{cypress/e2e/Login\_Test\_Suite.cy.js}\\
+    \bf{Requirements}: & FR31, FR32\\
+    \bf{Description}: & Tests the unsuccessful login attempt of an administrator
+    with no input \\
+    \bf{Type}: & Unit test (static, automated) \\
+    \bf{Initial State}: & Login screen is presented. \\
+    \bf{Input}: &  N/A \\
+    \bf{Output}: & Error message \\
+    \bf{Pass}: &  An error message is shown indicating no input is given and
+    prompts to try again.\\
+    \hline
+\end{tabular}
+\end{center}}
+
+\textcolor{red}{
+\begin{center}
+\begin{tabular}{|l|p{10cm}|}
+    \hline
+    \bf{Test} 6.2.3.5: & Unsuccessful Login - Wrong Password \\
+    \bf{Test file: } &
+    \href{https://github.com/parkd-app/park-d/blob/main/src/park-d-front-end/src/cypress/e2e/Login_Test_Suite.cy.js}{cypress/e2e/Login\_Test\_Suite.cy.js}\\
+    \bf{Requirements}: & FR31, FR32\\
+    \bf{Description}: & Tests the unsuccessful login attempt of an administrator
+    with a valid email but incorrect password \\
+    \bf{Type}: & Unit test (static, automated) \\
+    \bf{Initial State}: & Login screen is presented. \\
+    \bf{Input}: &  Valid email and incorrect password for the parking lot
+    owners/team \\
+    \bf{Output}: & Error message \\
+    \bf{Pass}: &  An error message is shown indicating an incorrect password is
+    given and prompts to try again.\\
+    \hline
+\end{tabular}
+\end{center}}
+
+\textcolor{red}{
+\begin{center}
+\begin{tabular}{|l|p{10cm}|}
+    \hline
+    \bf{Test} 6.2.3.6: & Redirection to User Mode \\
+    \bf{Test file: } &
+    \href{https://github.com/parkd-app/park-d/blob/main/src/park-d-front-end/src/cypress/e2e/Login_Test_Suite.cy.js}{cypress/e2e/Login\_Test\_Suite.cy.js}\\
+    \bf{Requirements}: & FR31, FR32\\
+    \bf{Description}: & Tests the proper redirection to User Mode \\
+    \bf{Type}: & Unit test (static, automated) \\
+    \bf{Initial State}: & Login screen is presented. \\
+    \bf{Input}: &  Click button to navigate to User Mode\\
+    \bf{Output}: & User Screen \\
+    \bf{Pass}: &  Redirected to the user screen\\
+    \hline
+\end{tabular}
+\end{center}}
+
+\textcolor{red}{
+\begin{center}
+\begin{tabular}{|l|p{10cm}|}
+    \hline
+    \bf{Test} 6.2.3.7: & Admin privileges \\
+    \bf{Test file: } &
+    \href{https://github.com/parkd-app/park-d/blob/main/src/park-d-front-end/src/cypress/e2e/Admin_Test_Suite.cy.js}{cypress/e2e/Admin\_Test\_Suite.cy.js}\\
+    \bf{Requirements}: & FR32, FR33, FR34, FR36, FR37\\
+    \bf{Description}: & Test if an admin has all the proper privileges\\
+    \bf{Type}: & Unit test (static, automated) \\
+    \bf{Initial State}: & Admin is logged in\\
+    \bf{Input}: &  Open sidebar\\
+    \bf{Output}: & Sidebar opens\\
+    \bf{Pass}: & Checks if all the correct features are included in the sidebar
+    \\
+    \hline
+\end{tabular}
+\end{center}}
+
+\textcolor{red}{
+\begin{center}
+\begin{tabular}{|l|p{10cm}|}
+    \hline
+    \bf{Test} 6.2.3.8: & Admin Logout \\
+    \bf{Test file: } &
+    \href{https://github.com/parkd-app/park-d/blob/main/src/park-d-front-end/src/cypress/e2e/Admin_Test_Suite.cy.js}{cypress/e2e/Admin\_Test\_Suite.cy.js}\\
+    \bf{Requirements}: & FR31, FR32\\
+    \bf{Description}: & Test if an admin can logout\\
+    \bf{Type}: & Unit test (static, automated) \\
+    \bf{Initial State}: & Admin is logged in\\
+    \bf{Input}: &  Click on logout button\\
+    \bf{Output}: & Login Page\\
+    \bf{Pass}: & Redirected to login page \\
+    \hline
+\end{tabular}
+\end{center}}
 
 \subsection{Tests for Nonfunctional Requirements}
-
+Unit testing for nonfunctional requirements is not applicable for this project.
 % \wss{If there is a module that needs to be independently assessed for
 %   performance, those test cases can go here.  In some projects, planning for
 %   nonfunctional tests of units will not be that relevant.}
@@ -2023,13 +2477,39 @@ N/A. To be added after the MIS is completed.
 % ...
 
 \subsection{Traceability Between Test Cases and Modules}
+\begin{table}[H]
+\centering
+\begin{tabular}{p{0.2\textwidth} p{0.6\textwidth}}
+\toprule
+\textbf{Test Number} & \textbf{Modules}\\
+\midrule
+6.2.1.1 & Database Module\\
+6.2.1.2 & Database Module\\
+6.2.1.3 & Database Module\\
+6.2.1.4 & Database Module\\
+6.2.1.5 & Database Module\\
+\midrule
+6.2.2.1 & Parking Stats Module\\
+\midrule
+6.2.3.1 & View Module\\
+6.2.3.2 & View Module\\
+6.2.3.3 & View Module\\
+6.2.3.4 & View Module\\
+6.2.3.5 & View Module\\
+6.2.3.6 & View Module\\
+6.2.3.7 & View Module\\
+6.2.3.8 & View Module\\
+\bottomrule
+\end{tabular}
+\caption{Trace Between Unit Test Cases and Modules}
+\label{TblRT}
+\end{table}
 
 % \wss{Provide evidence that all of the modules have been considered.}
 				
 % \bibliographystyle{plainnat}
 
 % \bibliography{../../refs/References}
-
 \newpage
 
 \section{Appendix}
@@ -2049,6 +2529,9 @@ $\hypertarget{supportability_satisfaction}{SUPPORTABILITY\_SATISFACTION}$ = 80\%
 \\
 $\hypertarget{exploration_time}{EXPLORATION\_TIME}$ = 5 minutes\% \\
 $\hypertarget{timeframe}{TIMEFRAME}$ = 6 months\% \\
+$\hypertarget{timeout_tolerance}{TIMEOUT\_TOLERANCE}$ = 60 \\
+$\hypertarget{distance_tolerance}{DISTANCE\_TOLERANCE}$ = 5 \\
+$\hypertarget{driving_estimate_tolerance}{DRIVING\_ESTIMATE\_TOLERANCE}$ = 60 \\
 \subsection{Usability Survey Questions?}
 \label{sec:7.2}
 
@@ -2149,16 +2632,16 @@ verification cannot simply be done using an automated approach. \\
 \end{itemize}
 
 \subsubsection{Learning a New Automation Framework}
-Learning how to use new automation frameworks, specifically Selenium, could be
+Learning how to use new automation frameworks, specifically Cypress, could be
 challenging for group members who do not have experience with it.\\
 
 \noindent \textbf{Learning Approaches}
 \begin{enumerate}
     \item Dedicate a time during our meetings for Almen, who has professional
-    experience using Selenium, to explain how to use Selenium and ensure that
+    experience using Cypress, to explain how to use Cypress and ensure that
     people have the general knowledge to automate UI test cases.
     \item Learn individually through online documentation, videos, and tutorials
-    on Selenium's website.
+    on Cypress's website.
 \end{enumerate}
 
 \begin{itemize}
@@ -2173,8 +2656,8 @@ challenging for group members who do not have experience with it.\\
     Android testing through Appium. While the foundations of creating test cases
     are the same, irrespective of platform, scheduling some time with Almen will
     allow me to expedite the exploration of any nuances and subtleties of the
-    Selenium framework.
-    \item David: I will aim to self-learn the Selenium framework, and hopefully
+    Cypress framework.
+    \item David: I will aim to self-learn the Cypress framework, and hopefully
     Almen can provide advice for any specific questions I may have.
     \item Albert: As someone with experience, it would be best to follow Almen
     as she already knows the scope of the framework for our purposes.
