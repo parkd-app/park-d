@@ -799,7 +799,7 @@ function reloadAnalytics() {
 
   let totalSpots = spotData.length;
 
-  spotData.forEach(data => {
+  spotData.forEach((data) => {
     switch (data.type) {
       case 0:
         stdSpots++;
