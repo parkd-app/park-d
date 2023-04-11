@@ -45,7 +45,7 @@ var timeoutTime = -1;
 const positionUpdateTime = 500;
 var routeSteps = null; //next map location
 const autoRouteDist = 0.00005; //Might need to tweek numbers to prevent skipping around, but it can't be perfect
-var autoNavMode = false;
+var autoNavMode = true;
 var autoNavComplete = false;
 
 var lotData; // all parking lots stored in the backedn
